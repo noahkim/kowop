@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'Location':
  * @property integer $Location_ID
+ * @property string $Name
  * @property string $Address
  * @property string $City
  * @property string $State
@@ -46,15 +47,15 @@ class Location extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Address, City, State, Zip, Type', 'required'),
+			array('Name, Address, City, State, Zip, Type', 'required'),
 			array('Type', 'numerical', 'integerOnly'=>true),
 			array('Address', 'length', 'max'=>2000),
-			array('City, Country', 'length', 'max'=>255),
+			array('Name, City, Country', 'length', 'max'=>255),
 			array('State', 'length', 'max'=>80),
 			array('Zip', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Location_ID, Address, City, State, Zip, Country, Type, Created, Updated', 'safe', 'on'=>'search'),
+			array('Location_ID, Name, Address, City, State, Zip, Country, Type, Created, Updated', 'safe', 'on'=>'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -84,6 +85,7 @@ class Location extends CActiveRecord
 	{
 		return array(
 			'Location_ID' => 'Location',
+            'Name' => 'Name',
 			'Address' => 'Address',
 			'City' => 'City',
 			'State' => 'State',
@@ -107,6 +109,7 @@ class Location extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Location_ID',$this->Location_ID);
+        $criteria->compare('Name',$this->Name,true);
 		$criteria->compare('Address',$this->Address,true);
 		$criteria->compare('City',$this->City,true);
 		$criteria->compare('State',$this->State,true);
@@ -120,4 +123,16 @@ class Location extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public static function findExisting($location)
+    {
+        $criteria = array('Address' => $location->Address,
+            'City' => $location->City,
+            'State' => $location->State,
+            'Zip' => $location->Zip,
+            'Country' => $location->Country);
+
+        $result = Location::model()->findByAttributes($criteria);
+        return $result;
+    }
 }

@@ -58,6 +58,18 @@
         <?php echo $form->error($model, 'Max_occupancy'); ?>
     </div>
 
+    <div class="row">
+        <?php echo $form->labelEx($model, 'Category_ID'); ?>
+        <?php echo $form->textField($model, 'Category_ID'); ?>
+        <?php echo $form->error($model, 'Category_ID'); ?>
+    </div>
+
+    <!--Tags-->
+    <div class="row">
+        <label for="tags">Tags</label>
+        <input name="tags" id="tags" type="text" />
+    </div>
+
     <!--Location-->
     <?php
     if (isset($location))

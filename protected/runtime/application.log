@@ -596,3 +596,39 @@ Stack trace:
 REQUEST_URI=/yii/kowop/index.php?r=request/view&id=2
 HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=request/create
 ---
+2012/11/08 21:31:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/RequestController.php:199
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/RequestController.php(58): RequestController->loadModel('1')
+#1 [internal function]: RequestController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(RequestController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(RequestController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('request/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=request/view&id=1
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=request/create
+---
+2012/11/09 10:44:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/RequestController.php:207
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/RequestController.php(58): RequestController->loadModel('1')
+#1 [internal function]: RequestController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(RequestController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(RequestController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('request/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=request/view&id=1
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=request/create
+---

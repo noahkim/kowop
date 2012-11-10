@@ -26,8 +26,6 @@ $this->menu=array(
 		'Type',
 		'Name',
 		'Description',
-		'Cost',
-		'MinimumRating',
 		'Created_Class_ID',
 		'Location_ID',
 		'Created',

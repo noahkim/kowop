@@ -41,11 +41,12 @@ class ClassToTag extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Class_ID, Tag_ID, Created', 'required'),
-			array('Class_ID, Tag_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Class_to_tag_ID, Class_ID, Tag_ID, Created', 'safe', 'on'=>'search'),
+            array('Created', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 

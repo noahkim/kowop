@@ -27,9 +27,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $searchModel = new SearchForm;
+
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
-        $this->render('index');
+        $this->render('index', array('searchModel' => $searchModel));
     }
 
     /**
@@ -56,6 +58,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $model = new LoginForm();
+        $searchModel = new SearchForm;
 
         // if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form')
@@ -75,7 +78,21 @@ class SiteController extends Controller
             }
         }
         // display the login form
-        $this->render('index', array('model' => $model));
+        $this->render('index', array('model' => $model, 'searchModel' => $searchModel));
+    }
+
+    public function actionSearch()
+    {
+        $model = new SearchForm;
+
+        if(isset($_POST['SearchForm']))
+        {
+            $model->attributes = $_POST['SearchForm'];
+
+            $results = $model->getResults();
+        }
+
+        $this->render('search', array('model' => $model, 'results' => $results));
     }
 
     /**

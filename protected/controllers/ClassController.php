@@ -76,13 +76,7 @@ class ClassController extends Controller
             $model->attributes = $_POST['KClass'];
             $location->attributes = $_POST['Location'];
 
-            $criteria = array('Address' => $location->Address,
-                'City' => $location->City,
-                'State' => $location->State,
-                'Zip' => $location->Zip,
-                'Country' => $location->Country);
-
-            $result = Location::model()->findByAttributes($criteria);
+            $result = Location::model()->findExisting($location);
 
             if ($result !== null)
             {
@@ -98,6 +92,20 @@ class ClassController extends Controller
 
             if ($model->save())
             {
+                if (isset($_POST['tags']))
+                {
+                    $tags = Tag::model()->string2array($_POST['tags']);
+                    foreach ($tags as $tagName)
+                    {
+                        $tag = Tag::model()->findOrCreate($tagName);
+
+                        $classToTag = new ClassToTag;
+                        $classToTag->Class_ID = $model->Class_ID;
+                        $classToTag->Tag_ID = $tag->Tag_ID;
+                        $classToTag->save();
+                    }
+                }
+
                 $this->redirect(array('view', 'id' => $model->Class_ID));
             }
         }

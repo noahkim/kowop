@@ -25,14 +25,6 @@
 	<?php echo CHtml::encode($data->Description); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Cost')); ?>:</b>
-	<?php echo CHtml::encode($data->Cost); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('MinimumRating')); ?>:</b>
-	<?php echo CHtml::encode($data->MinimumRating); ?>
-	<br />
-
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Created_Class_ID')); ?>:</b>
 	<?php echo CHtml::encode($data->Created_Class_ID); ?>

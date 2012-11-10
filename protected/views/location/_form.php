@@ -1,4 +1,10 @@
 <div class="row">
+    <?php echo $form->labelEx($model,'Name'); ?>
+    <?php echo $form->textField($model,'Name',array('size'=>60,'maxlength'=>255)); ?>
+    <?php echo $form->error($model,'Name'); ?>
+</div>
+
+<div class="row">
     <?php echo $form->labelEx($model,'Address'); ?>
     <?php echo $form->textField($model,'Address',array('size'=>60,'maxlength'=>2000)); ?>
     <?php echo $form->error($model,'Address'); ?>

@@ -13,14 +13,16 @@
  * @property integer $Min_occupancy
  * @property integer $Max_occupancy
  * @property integer $Location_ID
+ * @property integer $Category_ID
+ * @property string $Tuition
  * @property string $Created
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property ClassToCategory[] $classToCategories
  * @property ClassToTag[] $classToTags
  * @property Course $course
  * @property Location $location
+ * @property Category $category
  * @property Rating[] $ratings
  * @property Request[] $requests
  * @property Session[] $sessions
@@ -53,12 +55,12 @@ class KClass extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('Name, Type, Start, End, Min_occupancy, Max_occupancy', 'required'),
-            array('Type, Min_occupancy, Max_occupancy', 'numerical', 'integerOnly' => true),
+            array('Name, Type, Start, End, Min_occupancy, Max_occupancy, Category_ID', 'required'),
+            array('Type, Min_occupancy, Max_occupancy, Category_ID', 'numerical', 'integerOnly' => true),
             array('Name', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Class_ID, Course_ID, Name, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Created, Updated', 'safe', 'on' => 'search'),
+            array('Class_ID, Course_ID, Name, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Created, Updated', 'safe', 'on' => 'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -76,10 +78,10 @@ class KClass extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'classToCategories' => array(self::HAS_MANY, 'ClassToCategory', 'Class_ID'),
             'classToTags' => array(self::HAS_MANY, 'ClassToTag', 'Class_ID'),
             'course' => array(self::BELONGS_TO, 'Course', 'Course_ID'),
             'location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
+            'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
             'ratings' => array(self::HAS_MANY, 'Rating', 'Class_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Class_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Class_ID'),
@@ -101,6 +103,8 @@ class KClass extends CActiveRecord
             'Min_occupancy' => 'Min Occupancy',
             'Max_occupancy' => 'Max Occupancy',
             'Location_ID' => 'Location',
+            'Category_ID' => 'Category',
+            'Tuition' => 'Tuition',
             'Created' => 'Created',
             'Updated' => 'Updated',
         );
@@ -126,6 +130,8 @@ class KClass extends CActiveRecord
         $criteria->compare('Min_occupancy', $this->Min_occupancy);
         $criteria->compare('Max_occupancy', $this->Max_occupancy);
         $criteria->compare('Location_ID', $this->Location_ID);
+        $criteria->compare('Category_ID', $this->Category_ID);
+        $criteria->compare('Tuition', $this->Tuition);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);
 

@@ -9,8 +9,8 @@
  * @property string $Created
  *
  * The followings are the available model relations:
- * @property ClassToCategory[] $classToCategories
- * @property RequestToCategory[] $requestToCategories
+ * @property KClass[] $kClasses
+ * @property Request[] $requests
  */
 class Category extends CActiveRecord
 {
@@ -56,8 +56,8 @@ class Category extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'classToCategories' => array(self::HAS_MANY, 'ClassToCategory', 'Category_ID'),
-			'requestToCategories' => array(self::HAS_MANY, 'RequestToCategory', 'Category_ID'),
+			'kClasses' => array(self::HAS_MANY, 'KClass', 'Category_ID'),
+			'requests' => array(self::HAS_MANY, 'Request', 'Category_ID'),
 		);
 	}
 

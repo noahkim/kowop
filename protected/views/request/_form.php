@@ -38,22 +38,22 @@
 		<?php echo $form->error($model,'Description'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'Cost'); ?>
-		<?php echo $form->textField($model,'Cost',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'Cost'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'MinimumRating'); ?>
-		<?php echo $form->textField($model,'MinimumRating'); ?>
-		<?php echo $form->error($model,'MinimumRating'); ?>
-	</div>
-
     <div class="row">
         <?php echo $form->labelEx($model,'Type'); ?>
         <?php echo $form->textField($model,'Type'); ?>
         <?php echo $form->error($model,'Type'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'Category_ID'); ?>
+        <?php echo $form->textField($model, 'Category_ID'); ?>
+        <?php echo $form->error($model, 'Category_ID'); ?>
+    </div>
+
+    <!--Tags-->
+    <div class="row">
+        <label for="tags">Tags</label>
+        <input name="tags" id="tags" type="text" />
     </div>
 
     <!--Request_to_user-->

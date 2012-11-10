@@ -9,10 +9,10 @@
  * @property integer $Type
  * @property string $Name
  * @property string $Description
- * @property string $Cost
- * @property integer $MinimumRating
  * @property integer $Created_Class_ID
  * @property integer $Location_ID
+ * @property integer $Category_ID
+ * @property integer $HasTuition
  * @property string $Created
  * @property string $Updated
  *
@@ -20,7 +20,8 @@
  * @property User $createUser
  * @property KClass $createdClass
  * @property Location $location
- * @property RequestToCategory[] $requestToCategories
+ * @property Category $category
+ * @property RequestToTag[] $requestToTags
  * @property RequestToUser[] $requestToUsers
  */
 class Request extends CActiveRecord
@@ -51,14 +52,13 @@ class Request extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Type, Name', 'required'),
-			array('Type, MinimumRating', 'numerical', 'integerOnly'=>true),
+			array('Type, Name, Category_ID, HasTuition', 'required'),
+			array('Type, Category_ID, HasTuition', 'numerical', 'integerOnly'=>true),
 			array('Name', 'length', 'max'=>255),
 			array('Description', 'length', 'max'=>2000),
-			array('Cost', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Request_ID, Create_User_ID, Type, Name, Description, Cost, MinimumRating, Created_Class_ID, Location_ID, Created, Updated', 'safe', 'on'=>'search'),
+			array('Request_ID, Create_User_ID, Type, Name, Description, Created_Class_ID, Location_ID, Category_ID, HasTuition, Created, Updated', 'safe', 'on'=>'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -79,7 +79,8 @@ class Request extends CActiveRecord
 			'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
 			'createdClass' => array(self::BELONGS_TO, 'KClass', 'Created_Class_ID'),
 			'location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
-			'requestToCategories' => array(self::HAS_MANY, 'RequestToCategory', 'Request_ID'),
+            'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
+			'requestToTags' => array(self::HAS_MANY, 'RequestToTag', 'Request_ID'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'Request_ID'),
 		);
 	}
@@ -95,10 +96,10 @@ class Request extends CActiveRecord
 			'Type' => 'Type',
 			'Name' => 'Name',
 			'Description' => 'Description',
-			'Cost' => 'Cost',
-			'MinimumRating' => 'Minimum Rating',
 			'Created_Class_ID' => 'Created Class',
 			'Location_ID' => 'Location',
+            'Category_ID' => 'Category',
+            'HasTuition' => 'Has Tuition',
 			'Created' => 'Created',
 			'Updated' => 'Updated',
 		);
@@ -120,10 +121,10 @@ class Request extends CActiveRecord
 		$criteria->compare('Type',$this->Type);
 		$criteria->compare('Name',$this->Name,true);
 		$criteria->compare('Description',$this->Description,true);
-		$criteria->compare('Cost',$this->Cost,true);
-		$criteria->compare('MinimumRating',$this->MinimumRating);
 		$criteria->compare('Created_Class_ID',$this->Created_Class_ID);
 		$criteria->compare('Location_ID',$this->Location_ID);
+        $criteria->compare('Category_ID',$this->Category_ID);
+        $criteria->compare('HasTuition',$this->HasTuition);
 		$criteria->compare('Created',$this->Created,true);
 		$criteria->compare('Updated',$this->Updated,true);
 

@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "Class_to_category".
+ * This is the model class for table "Request_to_tag".
  *
- * The followings are the available columns in table 'Class_to_category':
- * @property integer $Class_to_category_ID
- * @property integer $Class_ID
- * @property integer $Category_ID
- * @property string $Updated
+ * The followings are the available columns in table 'Request_to_tag':
+ * @property integer $Request_to_tag_ID
+ * @property integer $Request_ID
+ * @property integer $Tag_ID
+ * @property string $Created
  *
  * The followings are the available model relations:
- * @property KClass $class
- * @property Category $category
+ * @property Request $request
+ * @property Tag $tag
  */
-class ClassToCategory extends CActiveRecord
+class RequestToTag extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return ClassToCategory the static model class
+	 * @return RequestToTag the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +30,7 @@ class ClassToCategory extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Class_to_category';
+		return 'Request_to_tag';
 	}
 
 	/**
@@ -41,11 +41,12 @@ class ClassToCategory extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Class_ID, Category_ID, Updated', 'required'),
-			array('Class_ID, Category_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Class_to_category_ID, Class_ID, Category_ID, Updated', 'safe', 'on'=>'search'),
+			array('Request_to_tag_ID, Request_ID, Tag_ID, Created', 'safe', 'on'=>'search'),
+            array('Created', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 
@@ -57,8 +58,8 @@ class ClassToCategory extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
-			'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
+			'request' => array(self::BELONGS_TO, 'Request', 'Request_ID'),
+			'tag' => array(self::BELONGS_TO, 'Tag', 'Tag_ID'),
 		);
 	}
 
@@ -68,10 +69,10 @@ class ClassToCategory extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Class_to_category_ID' => 'Class To Category',
-			'Class_ID' => 'Class',
-			'Category_ID' => 'Category',
-			'Updated' => 'Updated',
+			'Request_to_tag_ID' => 'Request To Tag',
+			'Request_ID' => 'Request',
+			'Tag_ID' => 'Tag',
+			'Created' => 'Created',
 		);
 	}
 
@@ -86,10 +87,10 @@ class ClassToCategory extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Class_to_category_ID',$this->Class_to_category_ID);
-		$criteria->compare('Class_ID',$this->Class_ID);
-		$criteria->compare('Category_ID',$this->Category_ID);
-		$criteria->compare('Updated',$this->Updated,true);
+		$criteria->compare('Request_to_tag_ID',$this->Request_to_tag_ID);
+		$criteria->compare('Request_ID',$this->Request_ID);
+		$criteria->compare('Tag_ID',$this->Tag_ID);
+		$criteria->compare('Created',$this->Created,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

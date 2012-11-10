@@ -78,13 +78,7 @@ class RequestController extends Controller
             $requestToUser->attributes = $_POST['RequestToUser'];
             $location->attributes = $_POST['Location'];
 
-            $criteria = array('Address' => $location->Address,
-                'City' => $location->City,
-                'State' => $location->State,
-                'Zip' => $location->Zip,
-                'Country' => $location->Country);
-
-            $result = Location::model()->findByAttributes($criteria);
+            $result = Location::model()->findExisting($location);
 
             if ($result !== null)
             {
@@ -100,6 +94,20 @@ class RequestController extends Controller
 
             if ($model->save())
             {
+                if (isset($_POST['tags']))
+                {
+                    $tags = Tag::model()->string2array($_POST['tags']);
+                    foreach ($tags as $tagName)
+                    {
+                        $tag = Tag::model()->findOrCreate($tagName);
+
+                        $requestToTag = new RequestToTag;
+                        $requestToTag->Request_ID = $model->Request_ID;
+                        $requestToTag->Tag_ID = $tag->Tag_ID;
+                        $requestToTag->save();
+                    }
+                }
+
                 $requestToUser->Request_ID = $model->Request_ID;
 
                 if($requestToUser->save())

@@ -37,16 +37,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'Cost'); ?>
-		<?php echo $form->textField($model,'Cost',array('size'=>10,'maxlength'=>10)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'MinimumRating'); ?>
-		<?php echo $form->textField($model,'MinimumRating'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'Created_Class_ID'); ?>
 		<?php echo $form->textField($model,'Created_Class_ID'); ?>
 	</div>
