@@ -19,7 +19,7 @@ $this->pageTitle = Yii::app()->name;
 
 if (!Yii::app()->user->isGuest)
 {
-    echo CHtml::link('User profile', array('/user/update', 'id' => Yii::app()->user->id)) . '<br />';
+    echo CHtml::link('User profile', array('/user/view', 'id' => Yii::app()->user->id)) . '<br />';
 
     echo CHtml::link('Create class', array('/class/create')) . '<br />';
     echo CHtml::link('Create request', array('/request/create')) . '<br />';

@@ -632,3 +632,428 @@ Stack trace:
 REQUEST_URI=/yii/kowop/index.php?r=request/view&id=1
 HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=request/create
 ---
+2012/11/10 11:00:39 [error] [php] Trying to get property of non-object (/var/www/yii/kowop/protected/views/site/search.php:12)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(870): SiteController->renderFile()
+#1 /var/www/yii/framework/web/CController.php(783): SiteController->renderPartial()
+#2 /var/www/yii/kowop/protected/controllers/SiteController.php(95): SiteController->render()
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionSearch()
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#5 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#6 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#7 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#8 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#9 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/views/site/search.php (12)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (95)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:05:13 [error] [php] Undefined offset: 0 (/var/www/yii/kowop/protected/models/SearchForm.php:50)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#1 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#2 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#3 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#4 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#5 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#6 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (50)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:06:58 [error] [php] Undefined offset: 0 (/var/www/yii/kowop/protected/models/SearchForm.php:53)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#1 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#2 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#3 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#4 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#5 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#6 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (53)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:07:28 [error] [php] Undefined offset: 0 (/var/www/yii/kowop/protected/models/SearchForm.php:55)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#1 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#2 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#3 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#4 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#5 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#6 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (55)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:08:17 [error] [php] array_push() expects parameter 1 to be array, null given (/var/www/yii/kowop/protected/models/SearchForm.php:38)
+Stack trace:
+#0 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionSearch()
+#1 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#2 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#3 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#4 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#5 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#6 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (38)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:09:38 [error] [php] Undefined offset: 0 (/var/www/yii/kowop/protected/models/SearchForm.php:53)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#1 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#2 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#3 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#4 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#5 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#6 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (53)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:09:58 [error] [php] Undefined offset: 0 (/var/www/yii/kowop/protected/models/SearchForm.php:54)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#1 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#2 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#3 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#4 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#5 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#6 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+in /var/www/yii/kowop/protected/models/SearchForm.php (54)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (92)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:21:02 [error] [exception.CException] exception 'CException' with message 'Property "KClass.0" is not defined.' in /var/www/yii/framework/base/CComponent.php:131
+Stack trace:
+#0 /var/www/yii/framework/db/ar/CActiveRecord.php(144): CComponent->__get('0')
+#1 /var/www/yii/framework/base/CModel.php(593): CActiveRecord->__get('0')
+#2 /var/www/yii/kowop/protected/views/site/search.php(14): CModel->offsetGet(0)
+#3 /var/www/yii/framework/web/CBaseController.php(127): require('/var/www/yii/ko...')
+#4 /var/www/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/yii/ko...', Array, true)
+#5 /var/www/yii/framework/web/CController.php(870): CBaseController->renderFile('/var/www/yii/ko...', Array, true)
+#6 /var/www/yii/framework/web/CController.php(783): CController->renderPartial('search', Array, true)
+#7 /var/www/yii/kowop/protected/controllers/SiteController.php(95): CController->render('search', Array)
+#8 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionSearch()
+#9 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /var/www/yii/framework/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#11 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('search')
+#13 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('site/search')
+#14 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/yii/kowop/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:22:12 [error] [exception.CException] exception 'CException' with message 'Property "KClass.0" is not defined.' in /var/www/yii/framework/base/CComponent.php:131
+Stack trace:
+#0 /var/www/yii/framework/db/ar/CActiveRecord.php(144): CComponent->__get('0')
+#1 /var/www/yii/framework/base/CModel.php(593): CActiveRecord->__get('0')
+#2 /var/www/yii/kowop/protected/views/site/search.php(14): CModel->offsetGet(0)
+#3 /var/www/yii/framework/web/CBaseController.php(127): require('/var/www/yii/ko...')
+#4 /var/www/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/yii/ko...', Array, true)
+#5 /var/www/yii/framework/web/CController.php(870): CBaseController->renderFile('/var/www/yii/ko...', Array, true)
+#6 /var/www/yii/framework/web/CController.php(783): CController->renderPartial('search', Array, true)
+#7 /var/www/yii/kowop/protected/controllers/SiteController.php(95): CController->render('search', Array)
+#8 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionSearch()
+#9 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /var/www/yii/framework/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#11 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('search')
+#13 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('site/search')
+#14 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/yii/kowop/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:23:08 [error] [exception.CException] exception 'CException' with message 'Property "KClass.0" is not defined.' in /var/www/yii/framework/base/CComponent.php:131
+Stack trace:
+#0 /var/www/yii/framework/db/ar/CActiveRecord.php(144): CComponent->__get('0')
+#1 /var/www/yii/framework/base/CModel.php(593): CActiveRecord->__get('0')
+#2 /var/www/yii/kowop/protected/views/site/search.php(14): CModel->offsetGet(0)
+#3 /var/www/yii/framework/web/CBaseController.php(127): require('/var/www/yii/ko...')
+#4 /var/www/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/yii/ko...', Array, true)
+#5 /var/www/yii/framework/web/CController.php(870): CBaseController->renderFile('/var/www/yii/ko...', Array, true)
+#6 /var/www/yii/framework/web/CController.php(783): CController->renderPartial('search', Array, true)
+#7 /var/www/yii/kowop/protected/controllers/SiteController.php(95): CController->render('search', Array)
+#8 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionSearch()
+#9 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#10 /var/www/yii/framework/web/CController.php(287): CController->runAction(Object(CInlineAction))
+#11 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('search')
+#13 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('site/search')
+#14 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /var/www/yii/kowop/index.php(13): CApplication->run()
+#16 {main}
+REQUEST_URI=/yii/kowop/index.php?r=site/search
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:26:28 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii/framework/web/CController.php:337
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(310): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#3 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update')
+#5 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update')
+#6 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/yii/kowop/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:26:38 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "update?id=1".' in /var/www/yii/framework/web/CController.php:484
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(271): CController->missingAction('update?id=1')
+#1 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update?id=1')
+#2 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update?id=...')
+#3 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/yii/kowop/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update?id=1
+---
+2012/11/10 11:31:32 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "update?id=1".' in /var/www/yii/framework/web/CController.php:484
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(271): CController->missingAction('update?id=1')
+#1 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update?id=1')
+#2 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update?id=...')
+#3 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/yii/kowop/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update?id=1
+---
+2012/11/10 11:31:32 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii/framework/web/CController.php:337
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(310): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#3 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update')
+#5 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update')
+#6 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/yii/kowop/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:31:33 [error] [php] Undefined variable: model (/var/www/yii/kowop/protected/views/site/index.php:22)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(870): SiteController->renderFile()
+#1 /var/www/yii/framework/web/CController.php(783): SiteController->renderPartial()
+#2 /var/www/yii/kowop/protected/controllers/SiteController.php(34): SiteController->render()
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#5 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#6 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#7 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#8 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#9 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php
+in /var/www/yii/kowop/protected/views/site/index.php (22)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (34)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:31:34 [error] [php] Undefined variable: model (/var/www/yii/kowop/protected/views/site/index.php:22)
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(870): SiteController->renderFile()
+#1 /var/www/yii/framework/web/CController.php(783): SiteController->renderPartial()
+#2 /var/www/yii/kowop/protected/controllers/SiteController.php(34): SiteController->render()
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(50): SiteController->actionIndex()
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#5 /var/www/yii/framework/web/CController.php(287): SiteController->runAction()
+#6 /var/www/yii/framework/web/CController.php(266): SiteController->runActionWithFilters()
+#7 /var/www/yii/framework/web/CWebApplication.php(283): SiteController->run()
+#8 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#9 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#10 /var/www/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php
+in /var/www/yii/kowop/protected/views/site/index.php (22)
+in /var/www/yii/kowop/protected/controllers/SiteController.php (34)
+in /var/www/yii/kowop/index.php (13)
+2012/11/10 11:32:56 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "update?id=1".' in /var/www/yii/framework/web/CController.php:484
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(271): CController->missingAction('update?id=1')
+#1 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update?id=1')
+#2 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update?id=...')
+#3 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /var/www/yii/kowop/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update?id=1
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:36:02 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "yii/kowop/index.php?r=user/update".' in /var/www/yii/framework/web/CWebApplication.php:287
+Stack trace:
+#0 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('yii/kowop/index...')
+#1 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#2 /var/www/yii/kowop/index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii/kowop/index.php?r=yii/kowop/index.php?r=user/update&id=1
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:39:17 [error] [exception.CException] exception 'CException' with message 'Property "User.Name" is not defined.' in /var/www/yii/framework/base/CComponent.php:131
+Stack trace:
+#0 /var/www/yii/framework/db/ar/CActiveRecord.php(144): CComponent->__get('Name')
+#1 /var/www/yii/kowop/protected/views/user/update.php(19): CActiveRecord->__get('Name')
+#2 /var/www/yii/framework/web/CBaseController.php(127): require('/var/www/yii/ko...')
+#3 /var/www/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/yii/ko...', Array, true)
+#4 /var/www/yii/framework/web/CController.php(870): CBaseController->renderFile('/var/www/yii/ko...', Array, true)
+#5 /var/www/yii/framework/web/CController.php(783): CController->renderPartial('update', Array, true)
+#6 /var/www/yii/kowop/protected/controllers/UserController.php(112): CController->render('update', Array)
+#7 [internal function]: UserController->actionUpdate('1')
+#8 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(UserController), Array)
+#9 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(UserController), Object(ReflectionMethod), Array)
+#10 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#11 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#12 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#13 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#14 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('update')
+#15 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/update')
+#16 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#17 /var/www/yii/kowop/index.php(13): CApplication->run()
+#18 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/update&id=1
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php
+---
+2012/11/10 11:45:36 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii/framework/web/CController.php:337
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(310): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#3 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#5 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#6 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/yii/kowop/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view
+---
+2012/11/10 11:45:42 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/ClassController.php:200
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/ClassController.php(58): ClassController->loadModel('1')
+#1 [internal function]: ClassController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(ClassController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(ClassController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view&id=1
+---
+2012/11/10 11:46:01 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/ClassController.php:200
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/ClassController.php(58): ClassController->loadModel('1')
+#1 [internal function]: ClassController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(ClassController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(ClassController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view&id=1
+---
+2012/11/10 13:29:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/ClassController.php:200
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/ClassController.php(58): ClassController->loadModel('1')
+#1 [internal function]: ClassController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(ClassController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(ClassController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view&id=1
+---
+2012/11/10 14:10:55 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/ClassController.php:200
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/ClassController.php(58): ClassController->loadModel('1')
+#1 [internal function]: ClassController->actionView('1')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(ClassController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(ClassController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view&id=1
+---
+2012/11/10 14:10:56 [error] [exception.CHttpException.400] exception 'CHttpException' with message 'Your request is invalid.' in /var/www/yii/framework/web/CController.php:337
+Stack trace:
+#0 /var/www/yii/framework/web/CController.php(310): CController->invalidActionParams(Object(CInlineAction))
+#1 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#2 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#3 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#5 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/view')
+#6 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#7 /var/www/yii/kowop/index.php(13): CApplication->run()
+#8 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/view
+---
+2012/11/10 16:08:50 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The requested page does not exist.' in /var/www/yii/kowop/protected/controllers/UserController.php:169
+Stack trace:
+#0 /var/www/yii/kowop/protected/controllers/UserController.php(58): UserController->loadModel('2')
+#1 [internal function]: UserController->actionView('2')
+#2 /var/www/yii/framework/web/actions/CAction.php(107): ReflectionMethod->invokeArgs(Object(UserController), Array)
+#3 /var/www/yii/framework/web/actions/CInlineAction.php(48): CAction->runWithParamsInternal(Object(UserController), Object(ReflectionMethod), Array)
+#4 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#5 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#6 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#7 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#8 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('view')
+#9 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('user/view')
+#10 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#11 /var/www/yii/kowop/index.php(13): CApplication->run()
+#12 {main}
+REQUEST_URI=/yii/kowop/index.php?r=user/view&id=2
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=user
+---
+2012/11/10 17:17:43 [error] [exception.CException] exception 'CException' with message 'Property "RatingController.breadcrumbs" is not defined.' in /var/www/yii/framework/base/CComponent.php:174
+Stack trace:
+#0 /var/www/yii/kowop/protected/views/rating/index.php(5): CComponent->__set('breadcrumbs', Array)
+#1 /var/www/yii/framework/web/CBaseController.php(127): require('/var/www/yii/ko...')
+#2 /var/www/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/var/www/yii/ko...', Array, true)
+#3 /var/www/yii/framework/web/CController.php(870): CBaseController->renderFile('/var/www/yii/ko...', Array, true)
+#4 /var/www/yii/framework/web/CController.php(783): CController->renderPartial('index', Array, true)
+#5 /var/www/yii/kowop/protected/controllers/RatingController.php(128): CController->render('index', Array)
+#6 /var/www/yii/framework/web/actions/CInlineAction.php(50): RatingController->actionIndex()
+#7 /var/www/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#8 /var/www/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#9 /var/www/yii/framework/web/filters/CFilter.php(41): CFilterChain->run()
+#10 /var/www/yii/framework/web/CController.php(1146): CFilter->filter(Object(CFilterChain))
+#11 /var/www/yii/framework/web/filters/CInlineFilter.php(59): CController->filterAccessControl(Object(CFilterChain))
+#12 /var/www/yii/framework/web/filters/CFilterChain.php(131): CInlineFilter->filter(Object(CFilterChain))
+#13 /var/www/yii/framework/web/CController.php(292): CFilterChain->run()
+#14 /var/www/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /var/www/yii/framework/web/CWebApplication.php(283): CController->run('')
+#16 /var/www/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('rating')
+#17 /var/www/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /var/www/yii/kowop/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/yii/kowop/index.php?r=rating
+HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=gii/crud
+---

@@ -51,6 +51,12 @@
         <?php echo $form->error($model, 'Description'); ?>
     </div>
 
+    <div class="row">
+        <?php echo $form->labelEx($model, 'Teacher_alias'); ?>
+        <?php echo $form->textField($model, 'Teacher_alias', array('size' => 60, 'maxlength' => 255)); ?>
+        <?php echo $form->error($model, 'Teacher_alias'); ?>
+    </div>
+
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>

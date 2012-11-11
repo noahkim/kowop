@@ -11,15 +11,19 @@
  * @property string $Email
  * @property string $Phone_number
  * @property string $Description
+ * @property string $Teacher_alias
  * @property integer $IsAdmin
  * @property string $Created
  * @property string $Updated
  *
  * The followings are the available model relations:
+ * @property ClassUpdates[] $classUpdates
+ * @property KClass[] $kClasses
  * @property Rating[] $ratings
  * @property Rating[] $ratings1
  * @property Request[] $requests
  * @property RequestToUser[] $requestToUsers
+ * @property UserToClass[] $userToClasses
  * @property UserToContent[] $userToContents
  */
 class User extends CActiveRecord
@@ -51,11 +55,11 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('First_name, Last_name, Password, Email', 'required'),
-			array('First_name, Last_name, Password, Email, Description', 'length', 'max'=>255),
+			array('First_name, Last_name, Password, Email, Description, Teacher_alias', 'length', 'max'=>255),
 			array('Phone_number', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('User_ID, First_name, Last_name, Password, Email, Phone_number, Description, IsAdmin, Created, Updated', 'safe', 'on'=>'search'),
+			array('User_ID, First_name, Last_name, Password, Email, Phone_number, Description, Teacher_alias, IsAdmin, Created, Updated', 'safe', 'on'=>'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -73,10 +77,13 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'classUpdates' => array(self::HAS_MANY, 'ClassUpdates', 'User_ID'),
+            'kClasses' => array(self::HAS_MANY, 'KClass', 'Create_user_ID'),
 			'ratings' => array(self::HAS_MANY, 'Rating', 'User_ID'),
-			'ratedfrom' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
+			'rated' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
 			'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'User_ID'),
+            'userToClasses' => array(self::HAS_MANY, 'UserToClass', 'User_ID'),
 			'userToContents' => array(self::HAS_MANY, 'UserToContent', 'User_ID'),
 		);
 	}
@@ -94,6 +101,7 @@ class User extends CActiveRecord
 			'Email' => 'Email',
 			'Phone_number' => 'Phone Number',
 			'Description' => 'Description',
+            'Teacher_alias' => 'Teacher Alias',
 			'IsAdmin' => 'Is Admin',
 			'Created' => 'Created',
 			'Updated' => 'Updated',
@@ -118,6 +126,7 @@ class User extends CActiveRecord
 		$criteria->compare('Email',$this->Email,true);
 		$criteria->compare('Phone_number',$this->Phone_number,true);
 		$criteria->compare('Description',$this->Description,true);
+        $criteria->compare('Teacher_alias',$this->Teacher_alias,true);
 		$criteria->compare('IsAdmin',$this->IsAdmin);
 		$criteria->compare('Created',$this->Created,true);
 		$criteria->compare('Updated',$this->Updated,true);

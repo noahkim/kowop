@@ -50,6 +50,12 @@
         <?php echo $form->error($model, 'Category_ID'); ?>
     </div>
 
+    <div class="row">
+        <?php echo $form->labelEx($model,'HasTuition'); ?>
+        <?php echo $form->textField($model,'HasTuition'); ?>
+        <?php echo $form->error($model,'HasTuition'); ?>
+    </div>
+
     <!--Tags-->
     <div class="row">
         <label for="tags">Tags</label>

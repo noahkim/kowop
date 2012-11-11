@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'KClass':
  * @property integer $Class_ID
  * @property integer $Course_ID
+ * @property integer $Create_User_ID
  * @property string $Name
  * @property integer $Type
  * @property string $Start
@@ -20,12 +21,15 @@
  *
  * The followings are the available model relations:
  * @property ClassToTag[] $classToTags
+ * @property ClassUpdates[] $classUpdates
  * @property Course $course
  * @property Location $location
  * @property Category $category
+ * @property User $createUser
  * @property Rating[] $ratings
  * @property Request[] $requests
  * @property Session[] $sessions
+ * @property UserToClass[] $userToClasses
  */
 class KClass extends CActiveRecord
 {
@@ -60,7 +64,7 @@ class KClass extends CActiveRecord
             array('Name', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Class_ID, Course_ID, Name, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Created, Updated', 'safe', 'on' => 'search'),
+            array('Class_ID, Course_ID, Create_User_ID, Name, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Created, Updated', 'safe', 'on' => 'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -79,12 +83,15 @@ class KClass extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'classToTags' => array(self::HAS_MANY, 'ClassToTag', 'Class_ID'),
+            'classUpdates' => array(self::HAS_MANY, 'ClassUpdates', 'Class_ID'),
             'course' => array(self::BELONGS_TO, 'Course', 'Course_ID'),
             'location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
             'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
+            'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
             'ratings' => array(self::HAS_MANY, 'Rating', 'Class_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Class_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Class_ID'),
+            'userToClasses' => array(self::HAS_MANY, 'UserToClass', 'Class_ID'),
         );
     }
 
@@ -96,6 +103,7 @@ class KClass extends CActiveRecord
         return array(
             'Class_ID' => 'Class',
             'Course_ID' => 'Course',
+            'Create_User_ID' => 'Teacher',
             'Name' => 'Name',
             'Type' => 'Type',
             'Start' => 'Start',
@@ -123,6 +131,7 @@ class KClass extends CActiveRecord
 
         $criteria->compare('Class_ID', $this->Class_ID);
         $criteria->compare('Course_ID', $this->Course_ID);
+        $criteria->compare('Create_User_ID', $this->Create_user_ID);
         $criteria->compare('Name', $this->Name, true);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Start', $this->Start, true);
@@ -151,6 +160,8 @@ class KClass extends CActiveRecord
         {
             $this->End = date('Y-m-d', strtotime($this->End));
         }
+
+        $this->Create_User_ID = Yii::app()->user->id;
 
         return parent::beforeSave();
     }
