@@ -51,7 +51,7 @@ class Location extends CActiveRecord
 			array('Type', 'numerical', 'integerOnly'=>true),
 			array('Address', 'length', 'max'=>2000),
 			array('Name, City, Country', 'length', 'max'=>255),
-			array('State', 'length', 'max'=>80),
+			array('State', 'length', 'max'=>2),
 			array('Zip', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
