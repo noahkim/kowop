@@ -24,7 +24,7 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'kowop123',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1','192.168.*'),
+			'ipFilters'=>array('127.0.0.1','::1','*'),
 		),
 	),
 
@@ -52,9 +52,9 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=kowop',
+			'connectionString' => 'mysql:host=localhost;dbname=rebuttme_kowop',
 			'emulatePrepare' => true,
-			'username' => 'root',
+			'username' => 'rebuttme_kowop',
 			'password' => 'kowop123',
 			'charset' => 'utf8',
 		),

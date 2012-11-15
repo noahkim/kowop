@@ -1,16 +1,29 @@
 <?php
 
-Yii::import('zii.widgets.CPortlet');
-
-class LoginWidget extends CPortlet
+class LoginWidget extends CWidget
 {
     public function init()
     {
-        parent::init();
+    }
+
+    public function run()
+    {
+        $this->renderContent();
     }
 
     protected function renderContent()
     {
-        $this->render('loginWidget', array('model' => new LoginForm()));
+        $form = new LoginForm();
+
+        if(isset($_POST['LoginForm']))
+        {
+            $form->attributes = $_POST['LoginForm'];
+            if ($form->validate() && $form->login())
+            {
+                $this->controller->redirect(Yii::app()->user->returnUrl);
+            }
+        }
+
+        $this->render('loginWidget', array('form' => $form));
     }
 }

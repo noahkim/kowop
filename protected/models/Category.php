@@ -92,4 +92,17 @@ class Category extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public static function GetCategories()
+    {
+        $cats = Category::model()->findAll();
+
+        $lookup = array();
+        foreach($cats as $cat)
+        {
+            $lookup[$cat->Category_ID] = $cat->Name;
+        }
+
+        return $lookup;
+    }
 }

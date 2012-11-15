@@ -65,55 +65,60 @@ class ClassController extends Controller
      */
     public function actionCreate()
     {
-        $model = new KClass;
-        $location = new Location;
+        $this->layout = '//layouts/class';
+        $model = new ClassCreateForm;
+        $step = 1;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['KClass'], $_POST['Location']))
+        if (isset($_POST['step2']))
         {
-            $model->attributes = $_POST['KClass'];
-            $location->attributes = $_POST['Location'];
+            $step = 2;
 
-            $result = Location::model()->findExisting($location);
+            $this->setPageState('step1', $_POST['ClassCreateForm']);
 
-            if ($result !== null)
+            $model = new ClassCreateForm("step1");
+            $model->attributes = $_POST['ClassCreateForm'];
+
+            if (! $model->validate())
             {
-                $model->Location_ID = $result->Location_ID;
+                $step = 1;
             }
-            else
+        }
+        elseif (isset($_POST['step3']))
+        {
+            $step = 3;
+
+            $this->setPageState('step2', $_POST['ClassCreateForm']);
+
+            $model = new ClassCreateForm("step2");
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $_POST['ClassCreateForm'];
+
+            if (! $model->validate())
             {
-                if ($location->save())
-                {
-                    $model->Location_ID = $location->Location_ID;
-                }
+                $step = 2;
             }
+        }
+        elseif (isset($_POST['submit']))
+        {
+            $model = new ClassCreateForm('submit');
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $_POST['ClassCreateForm'];
 
             if ($model->save())
             {
-                if (isset($_POST['tags']))
-                {
-                    $tags = Tag::model()->string2array($_POST['tags']);
-                    foreach ($tags as $tagName)
-                    {
-                        $tag = Tag::model()->findOrCreate($tagName);
-
-                        $classToTag = new ClassToTag;
-                        $classToTag->Class_ID = $model->Class_ID;
-                        $classToTag->Tag_ID = $tag->Tag_ID;
-                        $classToTag->save();
-                    }
-                }
-
-                $this->redirect(array('view', 'id' => $model->Class_ID));
+                $this->redirect(array('view', 'id' => $model->class->Class_ID));
+            }
+            else
+            {
+                $step = 3;
             }
         }
 
-        $this->render('create', array(
-            'model' => $model,
-            'location' => $location
-        ));
+        $this->render('create', array('model' => $model, 'step' => $step));
     }
 
     /**
@@ -199,6 +204,7 @@ class ClassController extends Controller
         {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
+
         return $model;
     }
 

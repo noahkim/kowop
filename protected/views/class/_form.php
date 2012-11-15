@@ -29,8 +29,14 @@
     </div>
 
     <div class="row">
+        <?php echo $form->labelEx($model, 'Description'); ?>
+        <?php echo $form->textField($model, 'Description', array('size' => 60, 'maxlength' => 2000)); ?>
+        <?php echo $form->error($model, 'Description'); ?>
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($model, 'Type'); ?>
-        <?php echo $form->textField($model, 'Type'); ?>
+        <?php echo $form->dropDownList($model, 'Type', ClassType::$Lookup); ?>
         <?php echo $form->error($model, 'Type'); ?>
     </div>
 
@@ -60,20 +66,21 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'Category_ID'); ?>
-        <?php echo $form->textField($model, 'Category_ID'); ?>
+        <?php echo $form->dropDownList($model, 'Category_ID', Category::GetCategories()); ?>
         <?php echo $form->error($model, 'Category_ID'); ?>
     </div>
 
     <!--Tags-->
     <div class="row">
         <label for="tags">Tags</label>
-        <input name="tags" id="tags" type="text" />
+        <input name="tags" id="tags" type="text"/>
     </div>
 
     <!--Location-->
     <?php
     if (isset($location))
     {
+        echo '<h2>Class Location</h2>';
         echo $this->renderPartial('//location/_form', array('model' => $location, 'form' => $form));
     }
     ?>

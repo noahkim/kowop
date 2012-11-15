@@ -85,13 +85,13 @@ class Location extends CActiveRecord
 	{
 		return array(
 			'Location_ID' => 'Location',
-            'Name' => 'Name',
+            'Name' => 'Location Name',
 			'Address' => 'Address',
 			'City' => 'City',
 			'State' => 'State',
 			'Zip' => 'Zip',
 			'Country' => 'Country',
-			'Type' => 'Type',
+			'Type' => 'Location Type',
 			'Created' => 'Created',
 			'Updated' => 'Updated',
 		);

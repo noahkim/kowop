@@ -10,8 +10,8 @@ final class LocationType
     const PrivateLocation = 2;
     const PrivateVisible = 3;
 
-    public static $Lookup = array(PublicLocation => 'Public',
-        PrivateLocation => 'Private',
-        PrivateVisible => 'Private but visible'
+    public static $Lookup = array(LocationType::PublicLocation => 'Public',
+        LocationType::PrivateLocation => 'Private',
+        LocationType::PrivateVisible => 'Private but visible'
     );
 }

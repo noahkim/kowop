@@ -12,9 +12,10 @@
 
 <div class="container">
     <div>
-        <?php
-        $this->widget('LoginWidget');
-        ?>
+        <?php echo CHtml::link('Home', Yii::app()->homeUrl); ?>
+    </div>
+    <div>
+        <?php $this->widget('LoginWidget'); ?>
     </div>
 
     <div>

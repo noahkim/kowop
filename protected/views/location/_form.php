@@ -36,6 +36,6 @@
 
 <div class="row">
     <?php echo $form->labelEx($model,'Type'); ?>
-    <?php echo $form->textField($model,'Type'); ?>
+    <?php echo $form->dropDownList($model,'Type', LocationType::$Lookup); ?>
     <?php echo $form->error($model,'Type'); ?>
 </div>

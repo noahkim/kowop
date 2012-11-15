@@ -1,34 +1,31 @@
-<?php
-if (Yii::app()->user->isGuest)
-{
-    echo CHtml::beginForm(array('/site/login'));
+<?php if (Yii::app()->user->isGuest) : ?>
 
-    $link = '//' . Yii::app()->controller->uniqueid . '/' . Yii::app()->controller->action->id;
-    echo CHtml::hiddenField('quicklogin', $link);
-    ?>
+<?php echo CHtml::beginForm(Yii::app()->homeUrl); ?>
 
-<?php echo CHtml::errorSummary($model); ?>
-
-<div class="row">
-    <?php echo CHtml::activeLabelEx($model, 'username'); ?>
-    <?php echo CHtml::activeTextField($model, 'username') ?>
+<div>
+    <?php echo CHtml::activeLabelEx($form, 'username'); ?>
+    <?php echo CHtml::activeTextField($form, 'username') ?>
 </div>
 
-<div class="row" style="padding-top:12px;">
-    <?php echo CHtml::activeLabelEx($model, 'password'); ?>
-    <?php echo CHtml::activePasswordField($model, 'password'); ?>
+<div>
+    <?php echo CHtml::activeLabelEx($form, 'password'); ?>
+    <?php echo CHtml::activePasswordField($form, 'password'); ?>
 </div>
 
-<div class="row submit">
+<div>
     <?php echo CHtml::submitButton('Login'); ?>
 </div>
-<?php
-    echo CHtml::endForm();
-    echo CHtml::link('Create account', array('/user/create'));
-}
-else
-{
-    echo Yii::app()->user->Name . '<br />';
-    echo CHtml::link('Logout', array('/site/logout'));
-}
-?>
+
+<?php echo CHtml::error($form, 'password'); ?>
+<?php echo CHtml::error($form, 'username'); ?>
+
+<?php echo CHtml::endForm(); ?>
+
+<?php echo CHtml::link('Create account', array('/user/create')); ?>
+
+<?php else : ?>
+
+<?php echo Yii::app()->user->Name . '<br />'; ?>
+<?php echo CHtml::link('Logout', array('/site/logout')); ?>
+
+<?php endif; ?>

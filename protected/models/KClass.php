@@ -8,6 +8,7 @@
  * @property integer $Course_ID
  * @property integer $Create_User_ID
  * @property string $Name
+ * @property string $Description
  * @property integer $Type
  * @property string $Start
  * @property string $End
@@ -16,6 +17,8 @@
  * @property integer $Location_ID
  * @property integer $Category_ID
  * @property string $Tuition
+ * @property string $Prerequisites
+ * @property string $Materials
  * @property string $Created
  * @property string $Updated
  *
@@ -59,12 +62,13 @@ class KClass extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('Name, Type, Start, End, Min_occupancy, Max_occupancy, Category_ID', 'required'),
+            array('Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Category_ID', 'required'),
             array('Type, Min_occupancy, Max_occupancy, Category_ID', 'numerical', 'integerOnly' => true),
             array('Name', 'length', 'max' => 255),
+            array('Prerequisites, Materials', 'length', 'max'=>1000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Class_ID, Course_ID, Create_User_ID, Name, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Created, Updated', 'safe', 'on' => 'search'),
+            array('Class_ID, Course_ID, Create_User_ID, Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Prerequisites, Materials, Created, Updated', 'safe', 'on' => 'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -105,7 +109,8 @@ class KClass extends CActiveRecord
             'Course_ID' => 'Course',
             'Create_User_ID' => 'Teacher',
             'Name' => 'Name',
-            'Type' => 'Type',
+            'Description' => 'Description',
+            'Type' => 'Class Type',
             'Start' => 'Start',
             'End' => 'End',
             'Min_occupancy' => 'Min Occupancy',
@@ -113,6 +118,8 @@ class KClass extends CActiveRecord
             'Location_ID' => 'Location',
             'Category_ID' => 'Category',
             'Tuition' => 'Tuition',
+            'Prerequisites' => 'Prerequisites',
+            'Materials' => 'Materials',
             'Created' => 'Created',
             'Updated' => 'Updated',
         );
@@ -133,6 +140,7 @@ class KClass extends CActiveRecord
         $criteria->compare('Course_ID', $this->Course_ID);
         $criteria->compare('Create_User_ID', $this->Create_user_ID);
         $criteria->compare('Name', $this->Name, true);
+        $criteria->compare('Description',$this->Description,true);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Start', $this->Start, true);
         $criteria->compare('End', $this->End, true);
@@ -140,6 +148,8 @@ class KClass extends CActiveRecord
         $criteria->compare('Max_occupancy', $this->Max_occupancy);
         $criteria->compare('Location_ID', $this->Location_ID);
         $criteria->compare('Category_ID', $this->Category_ID);
+        $criteria->compare('Prerequisites',$this->Prerequisites,true);
+        $criteria->compare('Materials',$this->Materials,true);
         $criteria->compare('Tuition', $this->Tuition);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);

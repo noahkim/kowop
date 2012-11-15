@@ -9,7 +9,7 @@ final class ClassType
     const Online = 1;
     const Physical = 2;
 
-    public static $Lookup = array(Online => 'Online',
-        Physical => 'Physical'
+    public static $Lookup = array(ClassType::Online => 'Online',
+        ClassType::Physical => 'Physical'
     );
 }

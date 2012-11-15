@@ -7,11 +7,8 @@
  * @property integer $Course_ID
  * @property string $Name
  * @property string $Description
- * @property string $Prerequisites
- * @property string $Course_materials
  * @property string $Start
  * @property string $End
- * @property string $Cost
  * @property string $Created
  * @property string $Updated
  *
@@ -47,13 +44,12 @@ class Course extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Description, Start, End, Cost, Created, Updated', 'required'),
+			array('Name, Description, Start, End, Created, Updated', 'required'),
 			array('Name', 'length', 'max'=>255),
-			array('Description, Prerequisites, Course_materials', 'length', 'max'=>2000),
-			array('Cost', 'length', 'max'=>10),
+			array('Description', 'length', 'max'=>2000),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Course_ID, Name, Description, Prerequisites, Course_materials, Start, End, Cost, Created, Updated', 'safe', 'on'=>'search'),
+			array('Course_ID, Name, Description, Start, End, Created, Updated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,11 +75,8 @@ class Course extends CActiveRecord
 			'Course_ID' => 'Course',
 			'Name' => 'Name',
 			'Description' => 'Description',
-			'Prerequisites' => 'Prerequisites',
-			'Course_materials' => 'Course Materials',
 			'Start' => 'Start',
 			'End' => 'End',
-			'Cost' => 'Cost',
 			'Created' => 'Created',
 			'Updated' => 'Updated',
 		);
@@ -103,11 +96,8 @@ class Course extends CActiveRecord
 		$criteria->compare('Course_ID',$this->Course_ID);
 		$criteria->compare('Name',$this->Name,true);
 		$criteria->compare('Description',$this->Description,true);
-		$criteria->compare('Prerequisites',$this->Prerequisites,true);
-		$criteria->compare('Course_materials',$this->Course_materials,true);
 		$criteria->compare('Start',$this->Start,true);
 		$criteria->compare('End',$this->End,true);
-		$criteria->compare('Cost',$this->Cost,true);
 		$criteria->compare('Created',$this->Created,true);
 		$criteria->compare('Updated',$this->Updated,true);
 

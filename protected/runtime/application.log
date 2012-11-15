@@ -1057,3 +1057,86 @@ Stack trace:
 REQUEST_URI=/yii/kowop/index.php?r=rating
 HTTP_REFERER=http://192.168.1.59/yii/kowop/index.php?r=gii/crud
 ---
+2012/11/13 13:44:46 [error] [exception.CDbException] exception 'CDbException' with message 'CDbConnection failed to open the DB connection: SQLSTATE[28000] [1045] Access denied for user 'root'@'localhost' (using password: YES)' in /home4/rebuttme/public_html/yii/framework/db/CDbConnection.php:382
+Stack trace:
+#0 /home4/rebuttme/public_html/yii/framework/db/CDbConnection.php(331): CDbConnection->open()
+#1 /home4/rebuttme/public_html/yii/framework/db/CDbConnection.php(309): CDbConnection->setActive(true)
+#2 /home4/rebuttme/public_html/yii/framework/base/CModule.php(388): CDbConnection->init()
+#3 /home4/rebuttme/public_html/yii/framework/base/CApplication.php(431): CModule->getComponent('db')
+#4 /home4/rebuttme/public_html/yii/framework/db/ar/CActiveRecord.php(624): CApplication->getDb()
+#5 /home4/rebuttme/public_html/yii/framework/db/ar/CActiveRecord.php(2311): CActiveRecord->getDbConnection()
+#6 /home4/rebuttme/public_html/yii/framework/db/ar/CActiveRecord.php(388): CActiveRecordMetaData->__construct(Object(KClass))
+#7 /home4/rebuttme/public_html/yii/framework/db/ar/CActiveRecord.php(403): CActiveRecord::model('KClass')
+#8 /home4/rebuttme/public_html/yii/framework/db/ar/CActiveRecord.php(78): CActiveRecord->getMetaData()
+#9 /home4/rebuttme/public_html/yii/kowop/protected/controllers/ClassController.php(68): CActiveRecord->__construct()
+#10 /home4/rebuttme/public_html/yii/framework/web/actions/CInlineAction.php(50): ClassController->actionCreate()
+#11 /home4/rebuttme/public_html/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#12 /home4/rebuttme/public_html/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#13 /home4/rebuttme/public_html/yii/framework/web/CController.php(292): CFilterChain->run()
+#14 /home4/rebuttme/public_html/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(283): CController->run('create')
+#16 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/create')
+#17 /home4/rebuttme/public_html/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#18 /home4/rebuttme/public_html/yii/kowop/index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/create
+HTTP_REFERER=http://rebutt.me/yii/kowop/
+---
+2012/11/13 13:47:03 [error] [php] Use of undefined constant Online - assumed 'Online' (/home4/rebuttme/public_html/yii/kowop/protected/views/class/_form.php:33)
+Stack trace:
+#0 /home4/rebuttme/public_html/yii/framework/web/CController.php(870): ClassController->renderFile()
+#1 /home4/rebuttme/public_html/yii/kowop/protected/views/class/create.php(18): ClassController->renderPartial()
+#2 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(127): require()
+#3 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(96): ClassController->renderInternal()
+#4 /home4/rebuttme/public_html/yii/framework/web/CController.php(870): ClassController->renderFile()
+#5 /home4/rebuttme/public_html/yii/framework/web/CController.php(783): ClassController->renderPartial()
+#6 /home4/rebuttme/public_html/yii/kowop/protected/controllers/ClassController.php(116): ClassController->render()
+#7 /home4/rebuttme/public_html/yii/framework/web/actions/CInlineAction.php(50): ClassController->actionCreate()
+#8 /home4/rebuttme/public_html/yii/framework/web/CController.php(309): CInlineAction->runWithParams()
+#9 /home4/rebuttme/public_html/yii/framework/web/filters/CFilterChain.php(134): ClassController->runAction()
+#10 /home4/rebuttme/public_html/yii/framework/web/CController.php(292): CFilterChain->run()
+#11 /home4/rebuttme/public_html/yii/framework/web/CController.php(266): ClassController->runActionWithFilters()
+#12 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(283): ClassController->run()
+#13 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(142): CWebApplication->runController()
+#14 /home4/rebuttme/public_html/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#15 /home4/rebuttme/public_html/yii/kowop/index.php(13): CWebApplication->run()
+REQUEST_URI=/yii/kowop/index.php?r=class/create
+in /home4/rebuttme/public_html/yii/kowop/protected/views/class/_form.php (33)
+in /home4/rebuttme/public_html/yii/kowop/protected/views/class/create.php (18)
+in /home4/rebuttme/public_html/yii/kowop/protected/controllers/ClassController.php (116)
+2012/11/13 13:47:47 [error] [exception.CException] exception 'CException' with message 'CActiveForm and its behaviors do not have a method or closure named "activeDropDownList".' in /home4/rebuttme/public_html/yii/framework/base/CComponent.php:266
+Stack trace:
+#0 /home4/rebuttme/public_html/yii/kowop/protected/views/class/_form.php(33): CComponent->__call('activeDropDownL...', Array)
+#1 /home4/rebuttme/public_html/yii/kowop/protected/views/class/_form.php(33): CActiveForm->activeDropDownList(Object(KClass), 'Type', Array)
+#2 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(127): require('/home4/rebuttme...')
+#3 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/home4/rebuttme...', Array, true)
+#4 /home4/rebuttme/public_html/yii/framework/web/CController.php(870): CBaseController->renderFile('/home4/rebuttme...', Array, true)
+#5 /home4/rebuttme/public_html/yii/kowop/protected/views/class/create.php(18): CController->renderPartial('_form', Array)
+#6 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(127): require('/home4/rebuttme...')
+#7 /home4/rebuttme/public_html/yii/framework/web/CBaseController.php(96): CBaseController->renderInternal('/home4/rebuttme...', Array, true)
+#8 /home4/rebuttme/public_html/yii/framework/web/CController.php(870): CBaseController->renderFile('/home4/rebuttme...', Array, true)
+#9 /home4/rebuttme/public_html/yii/framework/web/CController.php(783): CController->renderPartial('create', Array, true)
+#10 /home4/rebuttme/public_html/yii/kowop/protected/controllers/ClassController.php(116): CController->render('create', Array)
+#11 /home4/rebuttme/public_html/yii/framework/web/actions/CInlineAction.php(50): ClassController->actionCreate()
+#12 /home4/rebuttme/public_html/yii/framework/web/CController.php(309): CInlineAction->runWithParams(Array)
+#13 /home4/rebuttme/public_html/yii/framework/web/filters/CFilterChain.php(134): CController->runAction(Object(CInlineAction))
+#14 /home4/rebuttme/public_html/yii/framework/web/CController.php(292): CFilterChain->run()
+#15 /home4/rebuttme/public_html/yii/framework/web/CController.php(266): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(283): CController->run('create')
+#17 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('class/create')
+#18 /home4/rebuttme/public_html/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#19 /home4/rebuttme/public_html/yii/kowop/index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/yii/kowop/index.php?r=class/create
+HTTP_REFERER=http://rebutt.me/yii/kowop/
+---
+2012/11/13 15:03:45 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in /home4/rebuttme/public_html/yii/framework/gii/GiiModule.php:169
+Stack trace:
+#0 /home4/rebuttme/public_html/yii/framework/web/CController.php(264): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(283): CController->run('')
+#2 /home4/rebuttme/public_html/yii/framework/web/CWebApplication.php(142): CWebApplication->runController('gii')
+#3 /home4/rebuttme/public_html/yii/framework/base/CApplication.php(162): CWebApplication->processRequest()
+#4 /home4/rebuttme/public_html/yii/kowop/index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/yii/kowop/?r=gii
+---
