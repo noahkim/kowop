@@ -70,6 +70,12 @@
         <?php echo $form->error($model, 'Category_ID'); ?>
     </div>
 
+    <div class="row">
+        <?php echo $form->labelEx($model, 'Tuition'); ?>
+        <?php echo $form->textField($model, 'Tuition'); ?>
+        <?php echo $form->error($model, 'Tuition'); ?>
+    </div>
+
     <!--Tags-->
     <div class="row">
         <label for="tags">Tags</label>

@@ -7,7 +7,8 @@
 
 <?php
     echo 'Taught by ';
-    echo CHtml::link($model->createUser->fullname, array('/user/view', 'id' => $model->Create_User_ID));
+    $name = ($model->createUser->Teacher_alias == null) ? $model->createUser->fullname : $model->createUser->Teacher_alias;
+    echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
     echo '<br /><br />';
 ?>
 
@@ -24,6 +25,19 @@
         echo "End: {$session->End}<br /><br />";
     }
 ?>
+
+<br />
+
+Currently enrolled: <br />
+<?php
+foreach($model->userToClasses as $userToClass)
+{
+    $user = $userToClass->user;
+    $link = CHtml::link($user->fullname, array('/user/view', 'id' => $user->User_ID));
+    echo "{$link}<br />";
+}
+?>
+<br />
 
 <?php echo CHtml::link('Join class', array('/class/join', 'id' => $model->Class_ID)) . '<br />'; ?>
 

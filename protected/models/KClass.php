@@ -68,7 +68,7 @@ class KClass extends CActiveRecord
             array('Prerequisites, Materials', 'length', 'max' => 1000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Class_ID, Course_ID, Create_User_ID, Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Prerequisites, Materials, Created, Updated', 'safe', 'on' => 'search'),
+            array('Class_ID, Course_ID, Create_User_ID, Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Prerequisites, Materials, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),

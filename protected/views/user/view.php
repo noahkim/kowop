@@ -14,13 +14,18 @@
 <?php echo CHtml::encode($model->Last_name); ?>
 <br/>
 
-<?php echo CHtml::encode($model->getAttributeLabel('Email')); ?>:
-<?php echo CHtml::encode($model->Email); ?>
-<br/>
+<?php
+if (Yii::app()->user->id == $model->User_ID)
+{
+    echo CHtml::encode($model->getAttributeLabel('Email')) . ':';
+    echo CHtml::encode($model->Email);
+    echo '<br/>';
 
-<?php echo CHtml::encode($model->getAttributeLabel('Phone_number')); ?>:
-<?php echo CHtml::encode($model->Phone_number); ?>
-<br/>
+    echo CHtml::encode($model->getAttributeLabel('Phone_number')) . ':';
+    echo CHtml::encode($model->Phone_number);
+    echo '<br/>';
+}
+?>
 
 <?php echo CHtml::encode($model->getAttributeLabel('Description')); ?>:
 <?php echo CHtml::encode($model->Description); ?>
@@ -43,7 +48,7 @@ if (count($model->kClasses) > 0)
     {
         echo CHtml::encode($class->getAttributeLabel('Name')) . ':';
 
-        if(Yii::app()->user->id != $model->User_ID)
+        if (Yii::app()->user->id != $model->User_ID)
         {
             echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
         }
@@ -52,9 +57,9 @@ if (count($model->kClasses) > 0)
             echo CHtml::link($class->Name, array('/class/update', 'id' => $class->Class_ID)) . '<br />';
         }
 
-        foreach($model->ratings as $rating)
+        foreach ($model->ratings as $rating)
         {
-            if($rating->Class_ID == $class->Class_ID)
+            if ($rating->Class_ID == $class->Class_ID)
             {
                 echo 'Comment by ' . $rating->rateUser->fullname . ':<br />';
                 echo $rating->Comment . '<br />';
