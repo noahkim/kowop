@@ -41,11 +41,12 @@ class UserToClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('User_ID, Class_ID, Created', 'required'),
-			array('User_ID, Class_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('User_to_class_ID, User_ID, Class_ID, Created', 'safe', 'on'=>'search'),
+            array('Created', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 

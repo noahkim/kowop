@@ -136,6 +136,11 @@ class User extends CActiveRecord
 		));
 	}
 
+    public function getFullName()
+    {
+        return $this->First_name . ' ' . $this->Last_name;
+    }
+
     public function beforeSave()
     {
         if (isset($this->Password))

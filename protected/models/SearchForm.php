@@ -5,80 +5,87 @@ class SearchForm extends CFormModel
     const NameValue = 4;
     const TagValue = 3;
     const CategoryValue = 2;
+    const LocationMultiplier = 10;
 
     public $keywords;
-    public $location;
 
     public function rules()
     {
         return array(
-            array('keywords, location', 'safe'),
+            array('keywords', 'safe'),
         );
     }
 
     public function attributeLabels()
     {
         return array(
-            'keywords' => 'keywords',
-            'location' => 'location',
+            'keywords' => 'keywords'
         );
     }
 
-    public function getResults()
+    public function search()
     {
-        if(! isset($this->location))
-        {
-            $items = $this->getLocationResults();
-        }
-        else
-        {
-            $classes = KClass::model()->findAll();
-            $requests = Request::model()->findAll();
-
-            $items = array_merge($classes, $requests);
-        }
+        $criteria = new CDbCriteria;
+        $criteria->with = array('location', 'category', 'tags');
 
         $keywords = explode(' ', $this->keywords);
+        foreach($keywords as $keyword)
+        {
+            $criteria->compare('t.Name', $keyword, true, 'OR');
+            $criteria->compare('t.Description', $keyword, true, 'OR');
+            $criteria->compare('location.Name', $keyword, true, 'OR');
+            $criteria->compare('location.Address', $keyword, true, 'OR');
+            $criteria->compare('location.City', $keyword, true, 'OR');
+            $criteria->compare('location.State', $keyword, true, 'OR');
+            $criteria->compare('location.Zip', $keyword, true, 'OR');
+            $criteria->compare('category.Name', $keyword, true, 'OR');
+            $criteria->compare('tags.Name', $keyword, true, 'OR');
+        }
+
+        $classes = KClass::model()->findAll($criteria);
+        $requests = Request::model()->findAll($criteria);
+
+        $items = array_merge($classes, $requests);
 
         $scores = array();
-        foreach ($items as $item)
+        foreach($items as $item)
         {
-            $score = 0;
+            $score = 1;
+            $locationFound = false;
 
-            foreach ($keywords as $keyword)
+            foreach($keywords as $keyword)
             {
                 if(strlen($keyword) == 0)
                 {
                     continue;
                 }
 
-                $needle = strtolower($keyword);
-
-                if (strstr(strtolower($item->Name), $needle))
+                if (stristr($item->Name, $keyword))
                 {
                     $score += SearchForm::NameValue;
                 }
 
-                if ($item instanceof KClass)
+                if (stristr($item->Description, $keyword))
                 {
-                    $tagMappings = ClassToTag::model()->findAll('Class_ID=:Class_ID', array(':Class_ID' => $item->Class_ID));
-                    foreach ($tagMappings as $tagMapping)
-                    {
-                        if (strstr(strtolower($tagMapping->tag->Name), $needle))
-                        {
-                            $score += SearchForm::TagValue;
-                        }
-                    }
+                    $score += SearchForm::NameValue;
                 }
-                elseif ($item instanceof Request)
+
+                if (stristr($item->category->Name, $keyword))
                 {
-                    $tagMappings = RequestToTag::model()->findAll('Request_ID=:Request_ID', array(':Request_ID' => $item->Request_ID));
-                    foreach ($tagMappings as $tagMapping)
+                    $score += SearchForm::CategoryValue;
+                }
+
+                if (stristr($item->tagstring, $keyword))
+                {
+                    $score += SearchForm::TagValue;
+                }
+
+                if(($item->location != null) && (! $locationFound))
+                {
+                    if (stristr($item->location->fulladdress, $keyword))
                     {
-                        if (strstr(strtolower($tagMapping->tag->Name), $needle))
-                        {
-                            $score += SearchForm::TagValue;
-                        }
+                        $score *= SearchForm::LocationMultiplier;
+                        $locationFound = true;
                     }
                 }
             }
@@ -95,60 +102,5 @@ class SearchForm extends CFormModel
         }
 
         return $sortedItems;
-    }
-
-    public function getLocationResults()
-    {
-        $locations = array();
-
-        if (isset($this->location))
-        {
-            if (is_numeric($this->location))
-            {
-                $locations = Location::model()->with('kClasses', 'requests')->findAll('Zip=:Zip', array(':Zip' => $this->location));
-            }
-            else
-            {
-                $parts = explode(',', $this->location);
-                $city = trim($parts[0]);
-                if (count($parts) > 1)
-                {
-                    $state = strtoupper(trim($parts[1]));
-                }
-
-                $criteria['City'] = $city;
-                if (isset($state))
-                {
-                    $criteria['State'] = $state;
-                }
-
-                $locations = Location::model()->with('kClasses', 'requests')->findAllByAttributes($criteria);
-            }
-        }
-
-        $items = array();
-
-        foreach ($locations as $location)
-        {
-            if (isset($location->requests))
-            {
-                $requests = $location->requests;
-                if (count($requests) > 0)
-                {
-                    $items = array_merge($items, $requests);
-                }
-            }
-
-            if (isset($location->kClasses))
-            {
-                $classes = $location->kClasses;
-                if (count($classes) > 0)
-                {
-                    $items = array_merge($items, $classes);
-                }
-            }
-        }
-
-        return $items;
     }
 }

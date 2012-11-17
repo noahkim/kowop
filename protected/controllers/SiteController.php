@@ -52,20 +52,6 @@ class SiteController extends Controller
         }
     }
 
-    public function actionSearch()
-    {
-        $model = new SearchForm;
-
-        if(isset($_POST['SearchForm']))
-        {
-            $model->attributes = $_POST['SearchForm'];
-
-            $results = $model->getResults();
-        }
-
-        $this->render('search', array('model' => $model, 'results' => $results));
-    }
-
     /**
      * Logs out the current user and redirect to homepage.
      */

@@ -81,6 +81,7 @@ class Request extends CActiveRecord
 			'location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
             'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
 			'requestToTags' => array(self::HAS_MANY, 'RequestToTag', 'Request_ID'),
+            'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'requestToTags'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'Request_ID'),
 		);
 	}
@@ -132,6 +133,23 @@ class Request extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getTagList()
+    {
+        $tags = array();
+
+        foreach($this->tags as $tag)
+        {
+            array_push($tags, $tag->Name);
+        }
+
+        return $tags;
+    }
+
+    public function getTagString()
+    {
+        return Tag::model()->array2string($this->taglist);
+    }
 
     public function beforeSave()
     {

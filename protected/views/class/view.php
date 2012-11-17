@@ -1,36 +1,30 @@
 <?php
 /* @var $this ClassController */
 /* @var $model KClass */
-
-$this->breadcrumbs=array(
-	'Kclasses'=>array('index'),
-	$model->Name,
-);
-
-$this->menu=array(
-	array('label'=>'List KClass', 'url'=>array('index')),
-	array('label'=>'Create KClass', 'url'=>array('create')),
-	array('label'=>'Update KClass', 'url'=>array('update', 'id'=>$model->Class_ID)),
-	array('label'=>'Delete KClass', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->Class_ID),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage KClass', 'url'=>array('admin')),
-);
 ?>
 
-<h1>View KClass #<?php echo $model->Class_ID; ?></h1>
+<h1>Viewing class <?php echo $model->Name; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'Class_ID',
-		'Course_ID',
-		'Name',
-		'Type',
-		'Start',
-		'End',
-		'Min_occupancy',
-		'Max_occupancy',
-		'Location_ID',
-		'Created',
-		'Updated',
-	),
-)); ?>
+<?php
+    echo 'Taught by ';
+    echo CHtml::link($model->createUser->fullname, array('/user/view', 'id' => $model->Create_User_ID));
+    echo '<br /><br />';
+?>
+
+<?php echo "Tags: {$model->tagstring}<br />"; ?>
+
+<?php if($model->location != null) { echo "<br />{$model->location->fulladdress}<br />"; } ?>
+
+<?php
+    foreach($model->sessions as $i => $session)
+    {
+        $sessionNumber = $i + 1;
+        echo "Session {$sessionNumber}<br />";
+        echo "Start: {$session->Start}<br />";
+        echo "End: {$session->End}<br /><br />";
+    }
+?>
+
+<?php echo CHtml::link('Join class', array('/class/join', 'id' => $model->Class_ID)) . '<br />'; ?>
+
+

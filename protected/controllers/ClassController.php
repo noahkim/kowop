@@ -81,7 +81,7 @@ class ClassController extends Controller
             $model = new ClassCreateForm("step1");
             $model->attributes = $_POST['ClassCreateForm'];
 
-            if (! $model->validate())
+            if (!$model->validate())
             {
                 $step = 1;
             }
@@ -96,7 +96,7 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            if (! $model->validate())
+            if (!$model->validate())
             {
                 $step = 2;
             }
@@ -175,6 +175,20 @@ class ClassController extends Controller
         ));
     }
 
+    public function actionSearch()
+    {
+        $model = new SearchForm;
+
+        if(isset($_REQUEST['SearchForm']))
+        {
+            $model->attributes = $_REQUEST['SearchForm'];
+
+            $results = $model->search();
+        }
+
+        $this->render('search', array('model' => $model, 'results' => $results));
+    }
+
     /**
      * Manages all models.
      */
@@ -188,6 +202,26 @@ class ClassController extends Controller
         }
 
         $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionJoin($id)
+    {
+        $model = $this->loadModel($id);
+
+        $user_ID = Yii::app()->user->id;
+        $existing = UserToClass::model()->find('User_ID=:User_ID AND Class_ID=:Class_ID', array(':User_ID' => $user_ID, ':Class_ID' => $model->Class_ID));
+        if ($existing == null)
+        {
+            $userToClass = new UserToClass();
+            $userToClass->Class_ID = $model->Class_ID;
+            $userToClass->User_ID = $user_ID;
+
+            $userToClass->save();
+        }
+
+        $this->render('join', array(
             'model' => $model,
         ));
     }

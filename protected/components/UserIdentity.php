@@ -32,7 +32,7 @@ class UserIdentity extends CUserIdentity
         else
         {
             $this->user_ID = $user->User_ID;
-            $this->setState('Name', $user->First_name . ' ' . $user->Last_name);
+            $this->setState('Name', $user->fullname);
             $this->errorCode = self::ERROR_NONE;
         }
         return !$this->errorCode;

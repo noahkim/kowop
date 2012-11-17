@@ -73,7 +73,7 @@
     <!--Tags-->
     <div class="row">
         <label for="tags">Tags</label>
-        <input name="tags" id="tags" type="text"/>
+        <?php echo "<input name='tags' id='tags' type='text' value='{$model->tagstring}'/>"; ?>
     </div>
 
     <!--Location-->

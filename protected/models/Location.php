@@ -124,6 +124,16 @@ class Location extends CActiveRecord
 		));
 	}
 
+    public function getFullAddress()
+    {
+        $fullAddress = $this->Address . ', ';
+        $fullAddress .= $this->City . ', ';
+        $fullAddress .= $this->State . ' ';
+        $fullAddress .= $this->Zip;
+
+        return $fullAddress;
+    }
+
     public static function findExisting($location)
     {
         $criteria = array('Address' => $location->Address,

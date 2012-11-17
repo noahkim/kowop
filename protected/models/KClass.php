@@ -65,7 +65,7 @@ class KClass extends CActiveRecord
             array('Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Category_ID', 'required'),
             array('Type, Min_occupancy, Max_occupancy, Category_ID', 'numerical', 'integerOnly' => true),
             array('Name', 'length', 'max' => 255),
-            array('Prerequisites, Materials', 'length', 'max'=>1000),
+            array('Prerequisites, Materials', 'length', 'max' => 1000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('Class_ID, Course_ID, Create_User_ID, Name, Description, Type, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, Prerequisites, Materials, Created, Updated', 'safe', 'on' => 'search'),
@@ -87,6 +87,7 @@ class KClass extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'classToTags' => array(self::HAS_MANY, 'ClassToTag', 'Class_ID'),
+            'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'classToTags'),
             'classUpdates' => array(self::HAS_MANY, 'ClassUpdates', 'Class_ID'),
             'course' => array(self::BELONGS_TO, 'Course', 'Course_ID'),
             'location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
@@ -140,7 +141,7 @@ class KClass extends CActiveRecord
         $criteria->compare('Course_ID', $this->Course_ID);
         $criteria->compare('Create_User_ID', $this->Create_user_ID);
         $criteria->compare('Name', $this->Name, true);
-        $criteria->compare('Description',$this->Description,true);
+        $criteria->compare('Description', $this->Description, true);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Start', $this->Start, true);
         $criteria->compare('End', $this->End, true);
@@ -148,8 +149,8 @@ class KClass extends CActiveRecord
         $criteria->compare('Max_occupancy', $this->Max_occupancy);
         $criteria->compare('Location_ID', $this->Location_ID);
         $criteria->compare('Category_ID', $this->Category_ID);
-        $criteria->compare('Prerequisites',$this->Prerequisites,true);
-        $criteria->compare('Materials',$this->Materials,true);
+        $criteria->compare('Prerequisites', $this->Prerequisites, true);
+        $criteria->compare('Materials', $this->Materials, true);
         $criteria->compare('Tuition', $this->Tuition);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);
@@ -157,6 +158,23 @@ class KClass extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+
+    public function getTagList()
+    {
+        $tags = array();
+
+        foreach($this->tags as $tag)
+        {
+            array_push($tags, $tag->Name);
+        }
+
+        return $tags;
+    }
+
+    public function getTagString()
+    {
+        return Tag::model()->array2string($this->taglist);
     }
 
     public function beforeSave()

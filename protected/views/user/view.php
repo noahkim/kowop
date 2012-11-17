@@ -42,13 +42,21 @@ if (count($model->kClasses) > 0)
     foreach ($model->kClasses as $class)
     {
         echo CHtml::encode($class->getAttributeLabel('Name')) . ':';
-        echo CHtml::link($class->Name, array('/class/update', 'id' => $class->Class_ID)) . '<br />';
+
+        if(Yii::app()->user->id != $model->User_ID)
+        {
+            echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
+        }
+        else
+        {
+            echo CHtml::link($class->Name, array('/class/update', 'id' => $class->Class_ID)) . '<br />';
+        }
 
         foreach($model->ratings as $rating)
         {
             if($rating->Class_ID == $class->Class_ID)
             {
-                echo 'Comment by ' . $rating->rateUser->First_name . ' ' . $rating->rateUser->Last_name . ':<br />';
+                echo 'Comment by ' . $rating->rateUser->fullname . ':<br />';
                 echo $rating->Comment . '<br />';
                 echo 'Reaction: ' . $rating->Reaction . '<br />';
             }
@@ -66,7 +74,7 @@ foreach ($model->userToClasses as $userToClass)
 {
     $class = $userToClass->class;
     echo CHtml::encode($class->getAttributeLabel('Name')) . ':';
-    echo CHtml::encode($class->Name) . '<br />';
+    echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
 }
 ?>
 
@@ -77,6 +85,6 @@ Class requests: <br/>
 foreach ($model->requests as $request)
 {
     echo CHtml::encode($request->getAttributeLabel('Name')) . ':';
-    echo CHtml::encode($request->Name) . '<br />';
+    echo CHtml::link($request->Name, array('/request/view', 'id' => $request->Request_ID)) . '<br />';
 }
 ?>

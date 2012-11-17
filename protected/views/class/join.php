@@ -1,0 +1,1 @@
+Joined class <?php echo $model->Name; ?>.
