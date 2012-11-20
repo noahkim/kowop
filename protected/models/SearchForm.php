@@ -9,10 +9,19 @@ class SearchForm extends CFormModel
 
     public $keywords;
 
+    // Filters
+    public $seatsInNextClass;
+    public $minTuition;
+    public $maxTuition;
+    public $nextClassStartsBy;
+    public $classType;
+    public $daysOfWeek;
+    public $categories;
+
     public function rules()
     {
         return array(
-            array('keywords', 'safe'),
+            array('keywords, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, classType, daysOfWeek, categories', 'safe'),
         );
     }
 
@@ -25,37 +34,100 @@ class SearchForm extends CFormModel
 
     public function search()
     {
-        $criteria = new CDbCriteria;
-        $criteria->with = array('location', 'category', 'tags');
+        $requestCriteria = new CDbCriteria;
+        $classCriteria = new CDbCriteria;
+
+        $requestCriteria->with = array('location', 'category', 'tags');
+        $classCriteria->with = array('location', 'category', 'tags');
 
         $keywords = explode(' ', $this->keywords);
-        foreach($keywords as $keyword)
+        foreach ($keywords as $keyword)
         {
-            $criteria->compare('t.Name', $keyword, true, 'OR');
-            $criteria->compare('t.Description', $keyword, true, 'OR');
-            $criteria->compare('location.Name', $keyword, true, 'OR');
-            $criteria->compare('location.Address', $keyword, true, 'OR');
-            $criteria->compare('location.City', $keyword, true, 'OR');
-            $criteria->compare('location.State', $keyword, true, 'OR');
-            $criteria->compare('location.Zip', $keyword, true, 'OR');
-            $criteria->compare('category.Name', $keyword, true, 'OR');
-            $criteria->compare('tags.Name', $keyword, true, 'OR');
+            $requestCriteria->compare('t.Name', $keyword, true, 'OR');
+            $requestCriteria->compare('t.Description', $keyword, true, 'OR');
+            $requestCriteria->compare('location.Name', $keyword, true, 'OR');
+            $requestCriteria->compare('location.Address', $keyword, true, 'OR');
+            $requestCriteria->compare('location.City', $keyword, true, 'OR');
+            $requestCriteria->compare('location.State', $keyword, true, 'OR');
+            $requestCriteria->compare('location.Zip', $keyword, true, 'OR');
+            $requestCriteria->compare('category.Name', $keyword, true, 'OR');
+            $requestCriteria->compare('tags.Name', $keyword, true, 'OR');
+
+            $classCriteria->compare('t.Name', $keyword, true, 'OR');
+            $classCriteria->compare('t.Description', $keyword, true, 'OR');
+            $classCriteria->compare('location.Name', $keyword, true, 'OR');
+            $classCriteria->compare('location.Address', $keyword, true, 'OR');
+            $classCriteria->compare('location.City', $keyword, true, 'OR');
+            $classCriteria->compare('location.State', $keyword, true, 'OR');
+            $classCriteria->compare('location.Zip', $keyword, true, 'OR');
+            $classCriteria->compare('category.Name', $keyword, true, 'OR');
+            $classCriteria->compare('tags.Name', $keyword, true, 'OR');
         }
 
-        $classes = KClass::model()->findAll($criteria);
-        $requests = Request::model()->findAll($criteria);
+        if (($this->minTuition != null) && ($this->minTuition > 0))
+        {
+            $classCriteria->compare('t.Tuition', '>=' . $this->minTuition);
+        }
+        if (($this->maxTuition != null) && ($this->maxTuition > 0))
+        {
+            $classCriteria->compare('t.Tuition', '<=' . $this->maxTuition);
+        }
+        if (($this->nextClassStartsBy != null) && (strlen($this->nextClassStartsBy) > 0))
+        {
+            $classCriteria->compare('t.Start', '<=' . $this->nextClassStartsBy);
+        }
+        if (($this->classType != null) && ($this->classType > 0))
+        {
+            $classCriteria->compare('t.Type', $this->classType);
+        }
+
+        $classes = KClass::model()->findAll($classCriteria);
+        if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
+        {
+            foreach ($classes as $i => $class)
+            {
+                $enrolled = count($class->userToClasses);
+
+                switch ($this->seatsInNextClass)
+                {
+                    case 2:
+                        if ($enrolled > 0)
+                        {
+                            unset($classes[$i]);
+                        }
+                        break;
+                    case 3:
+                        if ($enrolled < 1)
+                        {
+                            unset($classes[$i]);
+                        }
+                        break;
+                    case 4:
+                        $pctFull = $enrolled / $class->Max_occupancy;
+                        if ($pctFull < 0.75)
+                        {
+                            unset($classes[$i]);
+                        }
+                        break;
+                }
+            }
+        }
+
+        $classes = array_values($classes);
+
+        $requests = Request::model()->findAll($requestCriteria);
 
         $items = array_merge($classes, $requests);
 
         $scores = array();
-        foreach($items as $item)
+        foreach ($items as $item)
         {
             $score = 1;
             $locationFound = false;
 
-            foreach($keywords as $keyword)
+            foreach ($keywords as $keyword)
             {
-                if(strlen($keyword) == 0)
+                if (strlen($keyword) == 0)
                 {
                     continue;
                 }
@@ -80,7 +152,7 @@ class SearchForm extends CFormModel
                     $score += SearchForm::TagValue;
                 }
 
-                if(($item->location != null) && (! $locationFound))
+                if (($item->location != null) && (!$locationFound))
                 {
                     if (stristr($item->location->fulladdress, $keyword))
                     {
@@ -96,11 +168,18 @@ class SearchForm extends CFormModel
         arsort($scores);
 
         $sortedItems = array();
-        foreach($scores as $i => $score)
+        foreach ($scores as $i => $score)
         {
             $sortedItems[] = $items[$i];
         }
 
         return $sortedItems;
     }
+
+    public static $seatsInNextClassLookup = array(
+        1 => "don't care",
+        2 => 'empty',
+        3 => 'at least 1 enrolled',
+        4 => 'almost full!'
+    );
 }

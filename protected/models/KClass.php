@@ -23,6 +23,7 @@
  * @property string $Updated
  *
  * The followings are the available model relations:
+ * @property ClassToContent[] $classToContents
  * @property ClassToTag[] $classToTags
  * @property ClassUpdates[] $classUpdates
  * @property Course $course
@@ -86,6 +87,8 @@ class KClass extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'classToContents' => array(self::HAS_MANY, 'ClassToContent', 'Class_ID'),
+            'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'classToContents'),
             'classToTags' => array(self::HAS_MANY, 'ClassToTag', 'Class_ID'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'classToTags'),
             'classUpdates' => array(self::HAS_MANY, 'ClassUpdates', 'Class_ID'),

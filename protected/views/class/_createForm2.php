@@ -29,6 +29,11 @@
     </div>
 
     <div class="row">
+        Class Image URL:
+        <input name='imageURL' type='text' />
+    </div>
+
+    <div class="row">
         <?php echo $form->labelEx($model, 'tuition'); ?>
         <?php echo $form->textField($model, 'tuition'); ?>
         <?php echo $form->error($model, 'tuition'); ?>

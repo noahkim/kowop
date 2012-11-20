@@ -27,11 +27,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchForm;
-
+        $this->layout = '//layouts/mainNoSearch';
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
-        $this->render('index', array('searchModel' => $searchModel));
+        $this->render('index');
     }
 
     /**
@@ -52,12 +51,30 @@ class SiteController extends Controller
         }
     }
 
+    public function actionLogin()
+    {
+        $form = new LoginForm();
+
+        if(isset($_POST['LoginForm']))
+        {
+            $form->attributes = $_POST['LoginForm'];
+            if ($form->validate() && $form->login())
+            {
+                $this->redirect(Yii::app()->user->returnUrl);
+            }
+        }
+
+        $this->render('login', array('form' => $form));
+    }
+
     /**
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout()
     {
         Yii::app()->user->logout();
+        Yii::app()->session->clear();
+        Yii::app()->session->destroy();
         $this->redirect(Yii::app()->homeUrl);
     }
 }

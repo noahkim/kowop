@@ -96,6 +96,12 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
+            $imageURL = $_POST['imageURL'];
+            if (strlen($imageURL) > 0)
+            {
+                $this->setPageState('imageURL', $imageURL);
+            }
+
             if (!$model->validate())
             {
                 $step = 2;
@@ -110,6 +116,31 @@ class ClassController extends Controller
 
             if ($model->save())
             {
+                $transaction = Yii::app()->db->beginTransaction();
+                try
+                {
+                    $imageURL = $this->getPageState('imageURL');
+                    if (strlen($imageURL) > 0)
+                    {
+                        $content = new Content;
+                        $content->Content_name = 'Class Image URL';
+                        $content->Content_type = ContentType::Image;
+                        $content->Link = $imageURL;
+                        $content->save();
+
+                        $classToContent = new ClassToContent;
+                        $classToContent->Class_ID = $model->class->Class_ID;
+                        $classToContent->Content_ID = $content->Content_ID;
+                        $classToContent->save();
+                    }
+
+                    $transaction->commit();
+                }
+                catch (Exception $e)
+                {
+                    print_r($e);
+                    $transaction->rollback();
+                }
                 $this->redirect(array('view', 'id' => $model->class->Class_ID));
             }
             else
@@ -179,12 +210,13 @@ class ClassController extends Controller
     {
         $model = new SearchForm;
 
-        if(isset($_REQUEST['SearchForm']))
+        if (isset($_REQUEST['SearchForm']))
         {
             $model->attributes = $_REQUEST['SearchForm'];
-
-            $results = $model->search();
+            Yii::app()->session['lastSearch'] = $model->keywords;
         }
+
+        $results = $model->search();
 
         $this->render('search', array('model' => $model, 'results' => $results));
     }
