@@ -8,6 +8,7 @@ class SearchForm extends CFormModel
     const LocationMultiplier = 10;
 
     public $keywords;
+    public $category;
 
     // Filters
     public $seatsInNextClass;
@@ -21,7 +22,7 @@ class SearchForm extends CFormModel
     public function rules()
     {
         return array(
-            array('keywords, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, classType, daysOfWeek, categories', 'safe'),
+            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, classType, daysOfWeek, categories', 'safe'),
         );
     }
 
@@ -62,6 +63,12 @@ class SearchForm extends CFormModel
             $classCriteria->compare('location.Zip', $keyword, true, 'OR');
             $classCriteria->compare('category.Name', $keyword, true, 'OR');
             $classCriteria->compare('tags.Name', $keyword, true, 'OR');
+        }
+
+        if(isset($this->category) && is_numeric($this->category))
+        {
+            $requestCriteria->compare('t.Category_ID', $this->category);
+            $classCriteria->compare('t.Category_ID', $this->category);
         }
 
         if (($this->minTuition != null) && ($this->minTuition > 0))

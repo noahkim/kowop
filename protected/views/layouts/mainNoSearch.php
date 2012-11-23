@@ -21,6 +21,23 @@
     <link rel="stylesheet" href="/ui/site/stylesheets/main.css">
     <script src="/ui/site/javascripts/modernizr.foundation.js"></script>
 
+    <!-- Included JS Files (Compressed) -->
+    <script src="/ui/site/javascripts/jquery.js"></script>
+    <script src="/ui/site/javascripts/foundation.min.js"></script>
+    <!-- Initialize JS Plugins -->
+    <script src="/ui/site/javascripts/app.js"></script>
+
+    <!-- Calendar stuff -->
+    <link href="/ux/css/fullcalendar.css" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.css'/>
+    <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.print.css' media='print'/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+
+    <!-- Calendar stuff -->
+    <script src='/ux/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script src='/yii/kowop/js/date.js'></script>
+
     <title>Kowop | teach anything. learn everything.</title>
 </head>
 <body>
@@ -113,10 +130,7 @@
   <script src="/ui/site/javascripts/jquery.foundation.clearing.js"></script>
   <script src="/ui/site/javascripts/jquery.foundation.magellan.js"></script>
   -->
-<!-- Included JS Files (Compressed) -->
-<script src="/ui/site/javascripts/jquery.js"></script>
-<script src="/ui/site/javascripts/foundation.min.js"></script>
-<!-- Initialize JS Plugins -->
-<script src="/ui/site/javascripts/app.js"></script>
+
+
 </body>
 </html>

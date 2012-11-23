@@ -65,7 +65,7 @@ class ClassController extends Controller
      */
     public function actionCreate()
     {
-        $this->layout = '//layouts/class';
+        $this->layout = '//layouts/mainNoSearch';
         $model = new ClassCreateForm;
         $step = 1;
 
@@ -218,7 +218,14 @@ class ClassController extends Controller
 
         $results = $model->search();
 
-        $this->render('search', array('model' => $model, 'results' => $results));
+        if (isset($_REQUEST['json']))
+        {
+            echo CJSON::encode($results);
+        }
+        else
+        {
+            $this->render('search', array('model' => $model, 'results' => $results));
+        }
     }
 
     /**

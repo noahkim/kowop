@@ -45,7 +45,7 @@ class RequestToUser extends CActiveRecord
             array('Day, Time_of_day', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Request_to_user_ID, Request_ID, User_ID, Day, Time_of_day', 'safe', 'on' => 'search'),
+            array('Request_to_user_ID, Request_ID, User_ID, Day, Time_of_day', 'safe'),
         );
     }
 

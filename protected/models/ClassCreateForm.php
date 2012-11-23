@@ -40,8 +40,8 @@ class ClassCreateForm extends CFormModel
     public function rules()
     {
         return array(
-            array('name, description, category, start, end, numSessions, classType, minOccupancy', 'required', 'on' => 'step1'),
-            array('tuition', 'required', 'on' => 'step2'),
+            array('name, category', 'required', 'on' => 'step1'),
+            array('start, end, minOccupancy, maxOccupancy, numSessions, tuition, locationType, description', 'required', 'on' => 'step2'),
             array('category, numSessions, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),

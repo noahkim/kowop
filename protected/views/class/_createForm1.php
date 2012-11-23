@@ -1,122 +1,144 @@
-<?php
-/* @var $this ClassController */
-/* @var $model KClass */
-/* @var $form CActiveForm */
-?>
+<!--------- main content container------>
+<div class="row" id="wrapper">
+    <!--------- end left column ------------->
+    <div class="nine columns">
+        <div class=" createContainer">
+            <h1>Create a class</h1>
+            <?php $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'class-create-form',
+            'enableAjaxValidation' => false,
+            'stateful' => true
+        )); ?>
+            <div class="row">
+                <div class="three columns">
+                    <label class="right inline">Name your class</label>
+                </div>
+                <div class="nine columns">
+                    <?php echo $form->textField($model, 'name',
+                    array('size' => 60, 'maxlength' => 255, 'class' => 'ten', 'placeholder' => 'ex. Real Life Guitar Hero for the absolute beginner')); ?>
+                    <!--<input type="text" placeholder="ex. Real Life Guitar Hero for the absolute beginner" class="ten" />-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="three columns">
+                    <label class="right inline">Category</label>
+                </div>
+                <div class="nine columns">
+                    <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'five')); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="three columns">
+                    <label class="right inline">Tags</label>
+                </div>
+                <div class="nine columns">
+                    <?php echo $form->textField($model, 'tags', array('placeholder' => 'ex. music, guitar, acoustic')); ?>
+                    <!--<input type="text" placeholder="ex. music, guitar, acoustic"/>-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="three columns">
+                    <label class="right inline">Zip Code</label>
+                </div>
+                <div class="nine columns">
+                    <?php echo $form->textField($model, 'locationZip', array('size' => 45, 'maxlength' => 5, 'class' => 'five')); ?>
+                    <!--<input type="text" class="five"/>-->
+                </div>
+            </div>
 
-<div class="form">
+            <div class="row borderTop">
+                <div id="searchExisting">
+                    Similar classes and requests: <br />
+                    <div id="results"></div>
+                </div>
 
-    <?php $form = $this->beginWidget('CActiveForm', array(
-    'id' => 'class-create-form',
-    'enableAjaxValidation' => false,
-    'stateful' => true
-)); ?>
-
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
-
-    <?php echo $form->errorSummary($model); ?>
-
-    <div class="row">
-        <?php echo $form->labelEx($model, 'name'); ?>
-        <?php echo $form->textField($model, 'name', array('size' => 60, 'maxlength' => 255)); ?>
-        <?php echo $form->error($model, 'name'); ?>
+                <div class="twelve columns alignRight">
+                    <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step2', 'class' => 'button radius')); ?>
+                    <?php $this->endWidget(); ?>
+                    <!--<a href="create_class2.html" class="button radius">Save &amp; Continue</a>-->
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="row">
-        <?php echo $form->labelEx($model, 'description'); ?>
-        <?php echo $form->textField($model, 'description', array('size' => 60, 'maxlength' => 2000)); ?>
-        <?php echo $form->error($model, 'description'); ?>
+    <!-------------- end left column ----------->
+    <!-------------- right column -------------->
+    <div class="three columns">
+        <h3>FAQ</h3>
     </div>
+    <!---------------end right column---------->
+    <!------- end main content container----->
+</div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'classType'); ?>
-        <?php echo $form->dropDownList($model, 'classType', ClassType::$Lookup); ?>
-        <?php echo $form->error($model, 'classType'); ?>
-    </div>
+<!--
+        <?php /*echo $form->labelEx($model, 'classType'); */?>
+        <?php /*echo $form->dropDownList($model, 'classType', ClassType::$Lookup); */?>
+        <?php /*echo $form->error($model, 'classType'); */?>
+-->
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'start'); ?>
-        <?php echo $form->textField($model, 'start'); ?>
-        <?php echo $form->error($model, 'start'); ?>
-    </div>
+<script type='text/javascript'>
+    $(document).ready(function () {
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'end'); ?>
-        <?php echo $form->textField($model, 'end'); ?>
-        <?php echo $form->error($model, 'end'); ?>
-    </div>
+        $('#searchExisting').hide();
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'minOccupancy'); ?>
-        <?php echo $form->textField($model, 'minOccupancy'); ?>
-        <?php echo $form->error($model, 'minOccupancy'); ?>
-    </div>
+        var timeoutHandle1;
+        var timeoutHandle2;
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'maxOccupancy'); ?>
-        <?php echo $form->textField($model, 'maxOccupancy'); ?>
-        <?php echo $form->error($model, 'maxOccupancy'); ?>
-    </div>
+        var timeout = 1000;
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'category'); ?>
-        <?php echo $form->dropDownList($model, 'category', Category::GetCategories()); ?>
-        <?php echo $form->error($model, 'category'); ?>
-    </div>
+        $('form :input[type=text]').keyup (function() {
+            clearTimeout(timeoutHandle1);
+            timeoutHandle1 = setTimeout(updateSearch, timeout);
+        });
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'tags'); ?>
-        <?php echo $form->textField($model, 'tags'); ?>
-        <?php echo $form->error($model, 'tags'); ?>
-    </div>
+        $('form select').change(function() {
+            clearTimeout(timeoutHandle2);
+            timeoutHandle2 = setTimeout(updateSearch, timeout);
+        });
+    });
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'numSessions'); ?>
-        <?php echo $form->textField($model, 'numSessions'); ?>
-        <?php echo $form->error($model, 'numSessions'); ?>
-    </div>
+    function updateSearch()
+    {
+        var keywords = '';
+        $('form :input[type=text]').each(function() {
+            keywords += $(this).val() + ' ';
+        });
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationName'); ?>
-        <?php echo $form->textField($model,'locationName',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'locationName'); ?>
-    </div>
+        var category = $('form select').val();
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationStreet'); ?>
-        <?php echo $form->textField($model,'locationStreet',array('size'=>60,'maxlength'=>2000)); ?>
-        <?php echo $form->error($model,'locationStreet'); ?>
-    </div>
+        $('#searchExisting').show();
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationCity'); ?>
-        <?php echo $form->textField($model,'locationCity',array('size'=>60,'maxlength'=>255)); ?>
-        <?php echo $form->error($model,'locationCity'); ?>
-    </div>
+        getResults(keywords, category);
+    }
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationState'); ?>
-        <?php echo $form->textField($model,'locationState',array('size'=>60,'maxlength'=>2)); ?>
-        <?php echo $form->error($model,'locationState'); ?>
-    </div>
+    function getResults(keywords, category)
+    {
+        var data = "SearchForm[keywords]=" + keywords;
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationZip'); ?>
-        <?php echo $form->textField($model,'locationZip',array('size'=>45,'maxlength'=>5)); ?>
-        <?php echo $form->error($model,'locationZip'); ?>
-    </div>
+        if(arguments.length == 2)
+        {
+            data += '&SearchForm[category]=' + category;
+        }
 
-    <div class="row">
-        <?php echo $form->labelEx($model,'locationType'); ?>
-        <?php echo $form->dropDownList($model,'locationType', LocationType::$Lookup); ?>
-        <?php echo $form->error($model,'locationType'); ?>
-    </div>
+        data +=  "&json";
 
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Next', array('name' => 'step2')); ?>
-    </div>
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo Yii::app()->createAbsoluteUrl("class/search"); ?>',
+            data: data,
+            dataType: 'json',
+            success: function(data)
+            {
+                var output = '';
 
-    <?php $this->endWidget(); ?>
+                for(i in data)
+                {
+                    var item = data[i];
+                    output += item.Name + '<br />';
+                    output += item.Description + '<br /><br />';
+                }
 
-</div><!-- form -->
-
+                $('#results').html(output);
+            }
+        });
+    }
+</script>

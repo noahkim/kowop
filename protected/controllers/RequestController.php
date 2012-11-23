@@ -194,6 +194,26 @@ class RequestController extends Controller
         ));
     }
 
+    public function actionJoin($id)
+    {
+        $model = $this->loadModel($id);
+
+        $user_ID = Yii::app()->user->id;
+        $existing = RequestToUser::model()->find('User_ID=:User_ID AND Request_ID=:Request_ID', array(':User_ID' => $user_ID, ':Request_ID' => $model->Request_ID));
+        if ($existing == null)
+        {
+            $requestToUser = new RequestToUser();
+            $requestToUser->User_ID = $user_ID;
+            $requestToUser->Request_ID = $model->Request_ID;
+
+            $requestToUser->save();
+        }
+
+        $this->render('join', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
