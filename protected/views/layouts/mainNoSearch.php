@@ -31,7 +31,7 @@
     <link href="/ux/css/fullcalendar.css" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.css'/>
     <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.print.css' media='print'/>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
 
     <!-- Calendar stuff -->
     <script src='/ux/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
@@ -49,20 +49,26 @@
         <div class="three columns logo">
             <?php echo CHtml::link('<img src="/ui/site/images/logo_small.png">', Yii::app()->homeUrl); ?>
         </div>
+
+        <?php if (Yii::app()->user->isGuest) : ?>
         <div class="six columns blurb"> teach anything. learn everything.</div>
         <div class="three columns headernav">
             <ul>
                 <li><a href="how_it_works.html">How it Works</a></li>
                 <li><?php echo CHtml::link('Sign Up', array('/user/create')); ?></li>
-                <li>
-                    <?php if (Yii::app()->user->isGuest) { ?>
-                    <?php echo CHtml::link('Login', array('/site/login')); ?>
-                    <?php } else { ?>
-                    <?php echo CHtml::link('Logout', array('/site/logout'));; ?>
-                    <?php } ?>
-                </li>
+                <li><?php echo CHtml::link('Login', array('/site/login')); ?></li>
             </ul>
         </div>
+        <?php else : ?>
+        <div class="five columns blurb"> teach anything. learn everything.</div>
+        <div class="four columns headernav">
+            <ul>
+                <li><a href="how_it_works.html">How it Works</a></li>
+                <li><?php echo CHtml::link('Logout', array('/site/logout')); ?></li>
+                <li><?php echo CHtml::link('My Account', array('/user/view', 'id' => Yii::app()->user->id)); ?></li>
+            </ul>
+        </div>
+        <?php endif; ?>
     </div>
 </div>
 

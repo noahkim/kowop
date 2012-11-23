@@ -23,7 +23,23 @@ $this->pageTitle = Yii::app()->name;
                 </div>
                 <div class="row homeBlurbAction">
                     <div class="six columns">
-                        <input type="text" placeholder="zip code">
+                        <?php
+                        $searchModel = new SearchForm;
+
+                        $form = $this->beginWidget('CActiveForm', array(
+                        'id' => 'search-form',
+                        'action' => Yii::app()->createUrl('/class/search'),
+                        'enableAjaxValidation' => false,
+                        'method' => 'get'
+                    )); ?>
+
+                        <?php echo $form->textField($searchModel, 'keywords',
+                        array(
+                            'value' => $searchModel->keywords,
+                            'placeholder' => 'zip code',
+                            'onkeypress' => 'if ((e.which || e.keyCode) == 13) { document.forms["search-form"].submit(); return false; }'
+                        )); ?>
+                        <?php $this->endWidget('CActiveForm'); ?>
                     </div>
                     <div class="six columns">
                         <?php echo CHtml::link('Teach a class', array('/class/create'), array('class' => 'button primary radius')); ?>

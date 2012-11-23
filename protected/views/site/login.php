@@ -15,7 +15,7 @@
             </div>
 
             <div class="six columns">
-                <?php echo CHtml::submitButton('Login', array('class' => 'button large radius twelve')); ?>
+                <?php echo CHtml::submitButton('Login', array('class' => 'button large radius twelve primary')); ?>
             </div>
         </div>
         <?php echo CHtml::endForm(); ?>
