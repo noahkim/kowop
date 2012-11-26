@@ -37,6 +37,9 @@ class ClassCreateForm extends CFormModel
     private $location;
     public $class;
 
+    // Other
+    public $fromRequest_ID;
+
     public function rules()
     {
         return array(
@@ -45,7 +48,7 @@ class ClassCreateForm extends CFormModel
             array('category, numSessions, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,videoURL,start,end,numSessions,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions', 'safe'),
+            array('name,description,category,tags,imageURL,videoURL,start,end,numSessions,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -101,6 +104,17 @@ class ClassCreateForm extends CFormModel
             }
 
             $this->class->save();
+
+            if(isset($this->fromRequest_ID))
+            {
+                $request = Request::model()->findByPk($this->fromRequest_ID);
+                if($request != null)
+                {
+                    $request->Created_Class_ID = $this->class->Class_ID;
+
+                    $request->save();
+                }
+            }
 
             $tagsArray = Tag::model()->string2array($this->tags);
             foreach ($tagsArray as $tagName)

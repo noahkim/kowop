@@ -55,7 +55,7 @@ class RequestController extends Controller
     public function actionView($id)
     {
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => $this->loadModel($id)
         ));
     }
 
@@ -66,34 +66,38 @@ class RequestController extends Controller
     public function actionCreate()
     {
         $model = new Request;
-        $requestToUser = new RequestToUser;
-        $location = new Location;
+        $modelJoin = new RequestJoinForm;
+        $modelLocation = new Location;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Request'], $_POST['RequestToUser'], $_POST['Location']))
+        if (isset($_POST['Request'], $_POST['RequestJoinForm'], $_POST['Location']))
         {
             $model->attributes = $_POST['Request'];
-            $requestToUser->attributes = $_POST['RequestToUser'];
-            $location->attributes = $_POST['Location'];
+            $modelJoin->attributes = $_POST['RequestJoinForm'];
+            $modelLocation->attributes = $_POST['Location'];
 
-            $result = Location::model()->findExisting($location);
+            $transaction = Yii::app()->db->beginTransaction();
+            try
+            {
+                // TODO: add location crap
+                /* $result = Location::model()->findExisting($modelLocation);
 
-            if ($result !== null)
-            {
-                $model->Location_ID = $result->Location_ID;
-            }
-            else
-            {
-                if ($location->save())
+                if ($result !== null)
                 {
-                    $model->Location_ID = $location->Location_ID;
+                    $model->Location_ID = $result->Location_ID;
                 }
-            }
+                else
+                {
+                    if ($modelLocation->save())
+                    {
+                        $model->Location_ID = $modelLocation->Location_ID;
+                    }
+                }*/
 
-            if ($model->save())
-            {
+                $model->save();
+
                 if (isset($_POST['tags']))
                 {
                     $tags = Tag::model()->string2array($_POST['tags']);
@@ -108,19 +112,25 @@ class RequestController extends Controller
                     }
                 }
 
-                $requestToUser->Request_ID = $model->Request_ID;
+                $modelJoin->request_ID = $model->Request_ID;
+                $modelJoin->user_ID = $model->Create_User_ID;
 
-                if($requestToUser->save())
-                {
-                    $this->redirect(array('view', 'id' => $model->Request_ID));
-                }
+                $modelJoin->save();
+
+                $transaction->commit();
+
+                $this->redirect(array('view', 'id' => $model->Request_ID));
+            }
+            catch (Exception $e)
+            {
+                $transaction->rollback();
             }
         }
 
         $this->render('create', array(
             'model' => $model,
-            'requestToUser' => $requestToUser,
-            'location' => $location
+            'modelJoin' => $modelJoin,
+            'modelLocation' => $modelLocation
         ));
     }
 
@@ -196,22 +206,56 @@ class RequestController extends Controller
 
     public function actionJoin($id)
     {
-        $model = $this->loadModel($id);
-
         $user_ID = Yii::app()->user->id;
-        $existing = RequestToUser::model()->find('User_ID=:User_ID AND Request_ID=:Request_ID', array(':User_ID' => $user_ID, ':Request_ID' => $model->Request_ID));
-        if ($existing == null)
-        {
-            $requestToUser = new RequestToUser();
-            $requestToUser->User_ID = $user_ID;
-            $requestToUser->Request_ID = $model->Request_ID;
 
-            $requestToUser->save();
+        $joinForm = new RequestJoinForm;
+        if (isset($_REQUEST['RequestJoinForm']))
+        {
+            $joinForm->attributes = $_REQUEST['RequestJoinForm'];
         }
 
-        $this->render('join', array(
-            'model' => $model,
-        ));
+        $transaction = Yii::app()->db->beginTransaction();
+        try
+        {
+            $joinForm->request_ID = $id;
+            $joinForm->user_ID = $user_ID;
+            $joinForm->save();
+
+            $transaction->commit();
+        }
+        catch (Exception $e)
+        {
+            $transaction->rollback();
+        }
+
+        $this->redirect(array('view', 'id' => $id));
+    }
+
+    public function actionLeave($id)
+    {
+        $model = $this->loadModel($id);
+        $user_ID = Yii::app()->user->id;
+
+        $existing = RequestToUser::model()->find(
+            'User_ID=:User_ID AND Request_ID=:Request_ID',
+            array(':User_ID' => $user_ID, ':Request_ID' => $model->Request_ID)
+        );
+
+        if ($existing != null)
+        {
+            RequestToUser::model()->deleteAll(
+                'User_ID=:User_ID AND Request_ID=:Request_ID',
+                array(':User_ID' => $user_ID, ':Request_ID' => $model->Request_ID)
+            );
+        }
+
+        $leftOver = RequestToUser::model()->find('Request_ID=:Request_ID', array(':Request_ID' => $model->Request_ID));
+        if($leftOver == null)
+        {
+            // TODO: de-activate request
+        }
+
+        $this->redirect(array('view', 'id' => $id));
     }
 
     /**
@@ -226,6 +270,7 @@ class RequestController extends Controller
         {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
+
         return $model;
     }
 

@@ -14,12 +14,12 @@ final class DayOfWeek
     const Friday = 6;
     const Saturday = 7;
 
-    public static $Lookup = array(Sunday => 'Sunday',
-        Monday => 'Monday',
-        Tuesday => 'Tuesday',
-        Wednesday => 'Wednesday',
-        Thursday => 'Thursday',
-        Friday => 'Friday',
-        Saturday => 'Saturday'
+    public static $Lookup = array(DayOfWeek::Sunday => 'Sunday',
+        DayOfWeek::Monday => 'Monday',
+        DayOfWeek::Tuesday => 'Tuesday',
+        DayOfWeek::Wednesday => 'Wednesday',
+        DayOfWeek::Thursday => 'Thursday',
+        DayOfWeek::Friday => 'Friday',
+        DayOfWeek::Saturday => 'Saturday'
     );
 }

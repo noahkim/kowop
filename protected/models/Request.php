@@ -58,7 +58,7 @@ class Request extends CActiveRecord
 			array('Description', 'length', 'max'=>2000),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Request_ID, Create_User_ID, Type, Name, Description, Created_Class_ID, Location_ID, Category_ID, HasTuition, Created, Updated', 'safe', 'on'=>'search'),
+			array('Request_ID, Create_User_ID, Type, Name, Description, Created_Class_ID, Location_ID, Category_ID, HasTuition, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -149,6 +149,22 @@ class Request extends CActiveRecord
     public function getTagString()
     {
         return Tag::model()->array2string($this->taglist);
+    }
+
+    public function hasUserJoined($user_ID)
+    {
+        $hasJoined = false;
+
+        foreach($this->requestToUsers as $user)
+        {
+            if($user->User_ID == $user_ID)
+            {
+                $hasJoined = true;
+                break;
+            }
+        }
+
+        return $hasJoined;
     }
 
     public function beforeSave()

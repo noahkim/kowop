@@ -11,9 +11,9 @@ final class TimeOfDay
     const Evening = 3;
     const AllDay = 4;
 
-    public static $Lookup = array(NotAvailable => 'NotAvailable',
-        Daytime => 'Daytime',
-        Evening => 'Evening',
-        AllDay => 'All day'
+    public static $Lookup = array(TimeOfDay::NotAvailable => 'NotAvailable',
+        TimeOfDay::Daytime => 'Daytime',
+        TimeOfDay::Evening => 'Evening',
+        TimeOfDay::AllDay => 'All day'
     );
 }

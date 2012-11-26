@@ -9,16 +9,18 @@ $this->pageTitle = Yii::app()->name;
 ------------------------------------------>
 <div class="mainpic">
     <div class="row">
-        <div class="six columns">
+        <div class="eight columns">
             <div class="homeBlurbContainer">
                 <div class="row homeBlurb">
                     <div class="six columns">
-                        Neighborhood classes for just about <strong>anything</strong>. Taught by locals like you, in the
-                        comfort of small groups.
-                        <span class="blurbSearch">see what new experiences are waiting</span>
+                        <img src="/ui/site/images/blurb_andonline.png" class="blurbAndOnline">
+                        Neighborhood classes on just about <strong>anything</strong> for people who are short on time,
+                        but want to learn. Taught by locals like you in the comfort of small groups.
+                        <span class="blurbHighlight">See what's out there.</span>
                     </div>
                     <div class="six columns">
-                        Meet new people, teach &amp; learn new things. Experience the joy of imparting knowledge.
+                        Meet new people, teach &amp; learn new things.
+                        <span class="blurbHighlight">Experience the joy of imparting knowledge (and make a little beer money if you'd like).</span>
                     </div>
                 </div>
                 <div class="row homeBlurbAction">
@@ -27,11 +29,12 @@ $this->pageTitle = Yii::app()->name;
                         $searchModel = new SearchForm;
 
                         $form = $this->beginWidget('CActiveForm', array(
-                        'id' => 'search-form',
-                        'action' => Yii::app()->createUrl('/class/search'),
-                        'enableAjaxValidation' => false,
-                        'method' => 'get'
-                    )); ?>
+                            'id' => 'search-form',
+                            'action' => Yii::app()->createUrl('/class/search'),
+                            'enableAjaxValidation' => false,
+                            'method' => 'get',
+                            'htmlOptions' => array('style' => 'margin: 0;')
+                        )); ?>
 
                         <?php echo $form->textField($searchModel, 'keywords',
                         array(
@@ -47,14 +50,14 @@ $this->pageTitle = Yii::app()->name;
                 </div>
             </div>
         </div>
-        <div class="six columns">
+        <div class="four columns">
             <div class="mainpicCaption">
                 <a href="class_detail.html">
                     <span class="captionBullet"></span>
 
                     <h3>West LA Noobtastic Python Class</h3>
 
-                    <p>next available class, Tuesday Dec.14</p>
+                    <p>4 sessions, next available class: Tuesday Dec.14</p>
                 </a>
             </div>
         </div>

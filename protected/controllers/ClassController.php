@@ -66,7 +66,7 @@ class ClassController extends Controller
     public function actionCreate()
     {
         $this->layout = '//layouts/mainNoSearch';
-        $model = new ClassCreateForm;
+        $model = new ClassCreateForm("step1");
         $step = 1;
 
         // Uncomment the following line if AJAX validation is needed
@@ -78,7 +78,6 @@ class ClassController extends Controller
 
             $this->setPageState('step1', $_POST['ClassCreateForm']);
 
-            $model = new ClassCreateForm("step1");
             $model->attributes = $_POST['ClassCreateForm'];
 
             if (!$model->validate())
@@ -146,6 +145,13 @@ class ClassController extends Controller
             else
             {
                 $step = 3;
+            }
+        }
+        else
+        {
+            if(isset($_POST['ClassCreateForm']))
+            {
+                $model->attributes = $_POST['ClassCreateForm'];
             }
         }
 

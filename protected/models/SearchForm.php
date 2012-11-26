@@ -65,6 +65,8 @@ class SearchForm extends CFormModel
             $classCriteria->compare('tags.Name', $keyword, true, 'OR');
         }
 
+        $requestCriteria->addCondition('t.Created_Class_ID is NULL');
+
         if(isset($this->category) && is_numeric($this->category))
         {
             $requestCriteria->compare('t.Category_ID', $this->category);
