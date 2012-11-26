@@ -39,7 +39,7 @@ $this->pageTitle = Yii::app()->name;
                         <?php echo $form->textField($searchModel, 'keywords',
                         array(
                             'value' => $searchModel->keywords,
-                            'placeholder' => 'zip code',
+                            //'placeholder' => 'zip code',
                             'onkeypress' => 'if ((e.which || e.keyCode) == 13) { document.forms["search-form"].submit(); return false; }'
                         )); ?>
                         <?php $this->endWidget('CActiveForm'); ?>

@@ -79,17 +79,19 @@ class ClassCreateForm extends CFormModel
 
     public function save()
     {
-        $saved = false;
-        $transaction = Yii::app()->db->beginTransaction();
+        $isSaved = false;
+
+        $this->class = new KClass;
+        $transaction = $this->class->dbConnection->beginTransaction();
+
         try
         {
-            $this->class = new KClass;
             $this->class->Name = $this->name;
             $this->class->Description = $this->description;
             $this->class->Category_ID = $this->category;
             $this->class->Start = $this->start;
             $this->class->End = $this->end;
-            $this->class->Type = $this->classType;
+            $this->class->Type = $this->classType ? $this->classType : ClassType::Online;
             $this->class->Min_occupancy = $this->minOccupancy;
             $this->class->Max_occupancy = $this->maxOccupancy;
             $this->class->Prerequisites = $this->prerequisites;
@@ -105,10 +107,25 @@ class ClassCreateForm extends CFormModel
 
             $this->class->save();
 
-            if(isset($this->fromRequest_ID))
+            if (strlen($this->imageURL) > 0)
+            {
+                $content = new Content;
+                $content->Content_name = 'Class Image URL';
+                $content->Content_type = ContentType::Image;
+                $content->Link = $this->imageURL;
+                $content->save();
+
+                $classToContent = new ClassToContent;
+                $classToContent->Class_ID = $this->class->Class_ID;
+                $classToContent->Content_ID = $content->Content_ID;
+                $classToContent->save();
+            }
+
+            if (isset($this->fromRequest_ID) && is_numeric($this->fromRequest_ID))
             {
                 $request = Request::model()->findByPk($this->fromRequest_ID);
-                if($request != null)
+
+                if ($request != null)
                 {
                     $request->Created_Class_ID = $this->class->Class_ID;
 
@@ -140,13 +157,14 @@ class ClassCreateForm extends CFormModel
             }
 
             $transaction->commit();
-            $saved = true;
+            $isSaved = true;
         }
         catch (Exception $e)
         {
             $transaction->rollback();
+            print_r($e);
         }
 
-        return $saved;
+        return $isSaved;
     }
 }

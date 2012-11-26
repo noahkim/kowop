@@ -16,7 +16,6 @@
                 <div class="nine columns">
                     <?php echo $form->textField($model, 'name',
                     array('size' => 60, 'maxlength' => 255, 'class' => 'ten', 'placeholder' => 'ex. Real Life Guitar Hero for the absolute beginner')); ?>
-                    <!--<input type="text" placeholder="ex. Real Life Guitar Hero for the absolute beginner" class="ten" />-->
                 </div>
             </div>
             <div class="row">
@@ -33,7 +32,6 @@
                 </div>
                 <div class="nine columns">
                     <?php echo $form->textField($model, 'tags', array('placeholder' => 'ex. music, guitar, acoustic')); ?>
-                    <!--<input type="text" placeholder="ex. music, guitar, acoustic"/>-->
                 </div>
             </div>
             <div class="row">
@@ -42,9 +40,11 @@
                 </div>
                 <div class="nine columns">
                     <?php echo $form->textField($model, 'locationZip', array('size' => 45, 'maxlength' => 5, 'class' => 'five')); ?>
-                    <!--<input type="text" class="five"/>-->
                 </div>
             </div>
+
+            <?php echo $form->hiddenField($model, 'classType', array('value' => ClassType::Online)); ?>
+            <?php echo $form->hiddenField($model, 'fromRequest_ID'); ?>
 
             <div class="row borderTop">
                 <div id="searchExisting">
@@ -54,10 +54,11 @@
 
                 <div class="twelve columns alignRight">
                     <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step2', 'class' => 'button radius')); ?>
-                    <?php $this->endWidget(); ?>
-                    <!--<a href="create_class2.html" class="button radius">Save &amp; Continue</a>-->
+
                 </div>
             </div>
+
+            <?php $this->endWidget(); ?>
         </div>
     </div>
     <!-------------- end left column ----------->
@@ -68,12 +69,6 @@
     <!---------------end right column---------->
     <!------- end main content container----->
 </div>
-
-<!--
-        <?php /*echo $form->labelEx($model, 'classType'); */?>
-        <?php /*echo $form->dropDownList($model, 'classType', ClassType::$Lookup); */?>
-        <?php /*echo $form->error($model, 'classType'); */?>
--->
 
 <script type='text/javascript'>
     $(document).ready(function () {

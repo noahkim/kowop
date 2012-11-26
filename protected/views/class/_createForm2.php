@@ -14,7 +14,7 @@
                     <label class="right inline">Image</label>
                 </div>
                 <div class="nine columns">
-                    <input name='imageURL' type='text' placeholder="upload"/>
+                    <?php echo $form->textField($model, 'imageURL', array('placeholder' => 'upload')); ?>
                 </div>
             </div>
             <div class="row">

@@ -76,6 +76,7 @@
                 echo $formTeach->hiddenField($modelTeach, 'name', array('value' => $model->Name));
                 echo $formTeach->hiddenField($modelTeach, 'category', array('value' => $model->Category_ID));
                 echo $formTeach->hiddenField($modelTeach, 'tags', array('value' => $model->tagstring));
+                echo $formTeach->hiddenField($modelTeach, 'fromRequest_ID', array('value' => $model->Request_ID));
 
                 if($model->location != null)
                 {
@@ -263,6 +264,6 @@ BLOCK;
         can join again later if you'd like.</p>
     <a href="#" onclick="$('#leaveRequest').trigger('reveal:close'); return false;"
        class="button secondary radius stretch spacebot10">No, take me back</a>
-    <?php echo CHtml::link('Yes, leave this request', array('/request/leave', 'id' => $userID), array('class' => 'button secondary radius stretch twelve')); ?>
+    <?php echo CHtml::link('Yes, leave this request', array('/request/leave', 'id' => $model->Request_ID), array('class' => 'button secondary radius stretch twelve')); ?>
     <a class="close-reveal-modal">&#215;</a>
 </div>
