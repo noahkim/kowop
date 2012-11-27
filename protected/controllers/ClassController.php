@@ -107,7 +107,7 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            if($model->save())
+            if ($model->save())
             {
                 $this->redirect(array('view', 'id' => $model->class->Class_ID));
             }
@@ -223,20 +223,26 @@ class ClassController extends Controller
     public function actionJoin($id)
     {
         $model = $this->loadModel($id);
-
         $user_ID = Yii::app()->user->id;
-        $existing = UserToClass::model()->find('User_ID=:User_ID AND Class_ID=:Class_ID', array(':User_ID' => $user_ID, ':Class_ID' => $model->Class_ID));
-        if ($existing == null)
-        {
-            $userToClass = new UserToClass();
-            $userToClass->Class_ID = $model->Class_ID;
-            $userToClass->User_ID = $user_ID;
 
-            $userToClass->save();
+        $hasJoined = false;
+
+        if ($model->Create_User_ID != $user_ID)
+        {
+            $existing = UserToClass::model()->find('User_ID=:User_ID AND Class_ID=:Class_ID', array(':User_ID' => $user_ID, ':Class_ID' => $model->Class_ID));
+            if ($existing == null)
+            {
+                $userToClass = new UserToClass();
+                $userToClass->Class_ID = $model->Class_ID;
+                $userToClass->User_ID = $user_ID;
+
+                $hasJoined = $userToClass->save();
+            }
         }
 
         $this->render('join', array(
             'model' => $model,
+            'hasJoined' => $hasJoined
         ));
     }
 

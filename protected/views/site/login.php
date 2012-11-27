@@ -18,6 +18,12 @@
                 <?php echo CHtml::submitButton('Login', array('class' => 'button large radius twelve primary')); ?>
             </div>
         </div>
+
+        <div>
+            <?php echo CHtml::error($form, 'password'); ?>
+            <?php echo CHtml::error($form, 'username'); ?>
+        </div>
+
         <?php echo CHtml::endForm(); ?>
         <a href="#">Forgot my password</a> |
         <?php echo CHtml::link('Get an account', array('/user/create')); ?>

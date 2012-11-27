@@ -163,7 +163,11 @@
                     droppable:true, // this allows things to be dropped onto the calendar !!!
                     drop:function (date, allDay) { // this function is called when something is dropped
 
-                        if (date < (new Date())) {
+                        if (
+                                (date < (new Date()))
+                                        || (date < Date.parse("<?php echo $model->start; ?>"))
+                                        || (date > Date.parse("<?php echo $model->end; ?>"))
+                                ) {
                             return;
                         }
                         // retrieve the dropped element's stored Event Object
@@ -187,9 +191,14 @@
                         $(this).remove();
                     },
                     eventDrop:function (event, dayDelta, minuteDelta, allDay, revertFunc) {
-                        if (event.start < (new Date()) || allDay) {
+                        if (
+                                (event.start < (new Date()) || allDay)
+                                        || (event.start < Date.parse("<?php echo $model->start; ?>"))
+                                        || (event.end > Date.parse("<?php echo $model->end; ?>"))
+                                ) {
                             revertFunc();
                         }
+
                     },
                     eventClick:function (event, jsEvent, view) {
                         var startHour = event.start.getHours();

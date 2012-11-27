@@ -48,14 +48,7 @@ if (count($model->kClasses) > 0)
     {
         echo CHtml::encode($class->getAttributeLabel('Name')) . ':';
 
-        if (Yii::app()->user->id != $model->User_ID)
-        {
-            echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
-        }
-        else
-        {
-            echo CHtml::link($class->Name, array('/class/update', 'id' => $class->Class_ID)) . '<br />';
-        }
+        echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
 
         foreach ($model->ratings as $rating)
         {

@@ -100,6 +100,7 @@ class KClass extends CActiveRecord
             'requests' => array(self::HAS_MANY, 'Request', 'Class_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Class_ID'),
             'userToClasses' => array(self::HAS_MANY, 'UserToClass', 'Class_ID'),
+            'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToClasses')
         );
     }
 

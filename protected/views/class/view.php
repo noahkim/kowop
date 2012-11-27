@@ -72,11 +72,14 @@
                 <?php endif; ?>
 
             </div>
-            <div class="four columns"> <span class="infopoint">
-        <h5>Type</h5>
-        Local </span> <span class="infopoint">
+            <div class="four columns">
+                <span class="infopoint">
+                    <h5>Type</h5>
+                    <?php echo ClassType::$Lookup[$model->Type]; ?>
+                </span>
+                <span class="infopoint">
         <h5># of Seats</h5>
-                <?php echo $model->Max_occupancy; ?> </span> <span class="infopoint">
+                    <?php echo $model->Max_occupancy; ?> </span> <span class="infopoint">
         <h5>Minimum to Start</h5>
                 <?php echo $model->Min_occupancy; ?> </span> <span class="infopoint">
         <h5>Total Sessions</h5>
@@ -104,11 +107,17 @@
                 <p>Click on an empty seat to join the next available class.Please remember, classes only start with at
                     least 2 people.</p>
 
-                <div class="enrollStudents"><a href="#"><img src="http://placehold.it/100x100"></a> <a href="#"><img
-                        src="http://placehold.it/100x100"></a> <a href="#"><img src="http://placehold.it/100x100"></a>
-                    <a href="#"><img src="http://placehold.it/100x100"></a> <a href="#"><img
-                            src="http://placehold.it/100x100"></a> <a href="#"><img
-                            src="http://placehold.it/100x100"></a></div>
+                <div class="enrollStudents">
+                    <?php
+
+                    foreach ($model->students as $student)
+                    {
+                        $linkText = "<img src='http://placehold.it/100x100' alt='{$student->fullname}'>";
+                        echo CHtml::link($linkText, array('/user/view', 'id' => $student->User_ID), array('title' => $student->fullname));
+                    }
+
+                    ?>
+                </div>
 
                 <?php echo CHtml::link('Enroll', array('/class/join', 'id' => $model->Class_ID), array('class' => 'button large radius')); ?>
 
