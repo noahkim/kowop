@@ -1,15 +1,16 @@
 <?php
 
-class ClassController extends Controller
+class ContentController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    //public $layout='//layouts/default/column2';
-
+    //public $layout='//layouts/column2';
     public $breadcrumbs;
     public $menu;
+
+    const FileSavePath = "";
 
     /**
      * @return array action filters
@@ -65,72 +66,43 @@ class ClassController extends Controller
      */
     public function actionCreate()
     {
-        $this->layout = '//layouts/mainNoSearch';
-        $model = new ClassCreateForm("step1");
-        $step = 1;
+        $model = new Content;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['step2']))
+        if (isset($_POST['Content']))
         {
-            $step = 2;
-
-            $this->setPageState('step1', $_POST['ClassCreateForm']);
-
-            $model->attributes = $_POST['ClassCreateForm'];
-
-            if (!$model->validate())
-            {
-                $step = 1;
-            }
-        }
-        elseif (isset($_POST['step3']))
-        {
-            $step = 3;
-
-            $this->setPageState('step2', $_POST['ClassCreateForm']);
-
-            $model = new ClassCreateForm("step2");
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $_POST['ClassCreateForm'];
-
-            $imageFile = CUploadedFile::getInstance($model, 'imageFile');
-            $this->setPageState('imageFile', $imageFile);
-
-            if (!$model->validate())
-            {
-                $step = 2;
-            }
-        }
-        elseif (isset($_POST['submit']))
-        {
-            $model = new ClassCreateForm('submit');
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $_POST['ClassCreateForm'];
-
-            $model->imageFile = $this->getPageState('imageFile', array());
-
+            $model->attributes = $_POST['Content'];
             if ($model->save())
             {
-                $this->redirect(array('view', 'id' => $model->class->Class_ID));
-            }
-            else
-            {
-                $step = 3;
-            }
-        }
-        else
-        {
-            if (isset($_POST['ClassCreateForm']))
-            {
-                $model->attributes = $_POST['ClassCreateForm'];
+                $this->redirect(array('view', 'id' => $model->Content_ID));
             }
         }
 
-        $this->render('_createForm' . $step, array(
-            'model' => $model
+        $this->render('create', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionUpload($id)
+    {
+        $model = $this->loadModel($id);
+        $modelFileUpload = new FileUpload;
+
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+
+        if (isset($_POST['FileUpload']))
+        {
+            $modelFileUpload->attributes = $_POST['FileUpload'];
+            $modelFileUpload->file = CUploadedFile::getInstance($modelFileUpload, 'file');
+            $modelFileUpload->save($model);
+        }
+
+        $this->render('upload', array(
+            'model' => $model,
+            'modelFileUpload' => $modelFileUpload
         ));
     }
 
@@ -146,13 +118,12 @@ class ClassController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['KClass']))
+        if (isset($_POST['Content']))
         {
-            $model->attributes = $_POST['KClass'];
-
+            $model->attributes = $_POST['Content'];
             if ($model->save())
             {
-                $this->redirect(array('view', 'id' => $model->Class_ID));
+                $this->redirect(array('view', 'id' => $model->Content_ID));
             }
         }
 
@@ -182,32 +153,10 @@ class ClassController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('KClass');
+        $dataProvider = new CActiveDataProvider('Content');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));
-    }
-
-    public function actionSearch()
-    {
-        $model = new SearchForm;
-
-        if (isset($_REQUEST['SearchForm']))
-        {
-            $model->attributes = $_REQUEST['SearchForm'];
-            Yii::app()->session['lastSearch'] = $model->keywords;
-        }
-
-        $results = $model->search();
-
-        if (isset($_REQUEST['json']))
-        {
-            echo CJSON::encode($results);
-        }
-        else
-        {
-            $this->render('search', array('model' => $model, 'results' => $results));
-        }
     }
 
     /**
@@ -215,41 +164,15 @@ class ClassController extends Controller
      */
     public function actionAdmin()
     {
-        $model = new KClass('search');
+        $model = new Content('search');
         $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['KClass']))
+        if (isset($_GET['Content']))
         {
-            $model->attributes = $_GET['KClass'];
+            $model->attributes = $_GET['Content'];
         }
 
         $this->render('admin', array(
             'model' => $model,
-        ));
-    }
-
-    public function actionJoin($id)
-    {
-        $model = $this->loadModel($id);
-        $user_ID = Yii::app()->user->id;
-
-        $hasJoined = false;
-
-        if ($model->Create_User_ID != $user_ID)
-        {
-            $existing = UserToClass::model()->find('User_ID=:User_ID AND Class_ID=:Class_ID', array(':User_ID' => $user_ID, ':Class_ID' => $model->Class_ID));
-            if ($existing == null)
-            {
-                $userToClass = new UserToClass();
-                $userToClass->Class_ID = $model->Class_ID;
-                $userToClass->User_ID = $user_ID;
-
-                $hasJoined = $userToClass->save();
-            }
-        }
-
-        $this->render('join', array(
-            'model' => $model,
-            'hasJoined' => $hasJoined
         ));
     }
 
@@ -260,12 +183,11 @@ class ClassController extends Controller
      */
     public function loadModel($id)
     {
-        $model = KClass::model()->findByPk($id);
+        $model = Content::model()->findByPk($id);
         if ($model === null)
         {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
-
         return $model;
     }
 
@@ -275,7 +197,7 @@ class ClassController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'kclass-form')
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'content-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

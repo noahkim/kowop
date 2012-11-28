@@ -7,14 +7,17 @@
             <?php $form = $this->beginWidget('CActiveForm', array(
             'id' => 'class-create-form',
             'enableAjaxValidation' => false,
-            'stateful' => true
+            'stateful' => true,
+            'htmlOptions' => array('enctype' => 'multipart/form-data'),
         )); ?>
             <div class="row">
                 <div class="three columns">
                     <label class="right inline">Image</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->textField($model, 'imageURL', array('placeholder' => 'upload')); ?>
+                    <?php echo $form->textField($model, 'imageURL', array('placeholder' => 'image URL')); ?>
+                    or upload
+                    <?php echo $form->fileField($model, 'imageFile'); ?>
                 </div>
             </div>
             <div class="row">

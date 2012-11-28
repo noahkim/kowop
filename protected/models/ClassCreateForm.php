@@ -8,7 +8,9 @@ class ClassCreateForm extends CFormModel
     public $category;
     public $tags;
     public $imageURL;
+    public $imageFile;
     public $videoURL;
+    public $videoFile;
     public $start;
     public $end;
     public $numSessions;
@@ -48,7 +50,7 @@ class ClassCreateForm extends CFormModel
             array('category, numSessions, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,videoURL,start,end,numSessions,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numSessions,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -111,8 +113,29 @@ class ClassCreateForm extends CFormModel
             {
                 $content = new Content;
                 $content->Content_name = 'Class Image URL';
-                $content->Content_type = ContentType::Image;
+                $content->Content_type = ContentType::ImageURL;
                 $content->Link = $this->imageURL;
+                $content->save();
+
+                $classToContent = new ClassToContent;
+                $classToContent->Class_ID = $this->class->Class_ID;
+                $classToContent->Content_ID = $content->Content_ID;
+                $classToContent->save();
+            }
+            elseif ($this->imageFile != null)
+            {
+                $content = new Content;
+                $content->Content_name = 'Class Image';
+                $content->Content_type = ContentType::ImageID;
+
+                $content->save();
+                $content->refresh();
+
+                //$imageFile = CUploadedFile::getInstance($this, 'imageFile');
+
+                $this->imageFile->saveAs(Yii::app()->params['uploads'] . '/' . $content->Content_ID);
+
+                $content->Link = Yii::app()->params['uploads'] . '/' . $content->Content_ID;
                 $content->save();
 
                 $classToContent = new ClassToContent;
