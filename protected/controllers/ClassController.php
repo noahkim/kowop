@@ -17,7 +17,7 @@ class ClassController extends Controller
     public function filters()
     {
         return array(
-            //'accessControl', // perform access control for CRUD operations
+            'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
@@ -31,11 +31,11 @@ class ClassController extends Controller
     {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
+                'actions' => array('index', 'view', 'search'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'join'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -95,8 +95,15 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
+            $imageFileName = 'temp' . uniqid();
             $imageFile = CUploadedFile::getInstance($model, 'imageFile');
-            $this->setPageState('imageFile', $imageFile);
+
+            $pathParts = pathinfo($imageFile->getName());
+            $imageFileName .= '.' . $pathParts['extension'];
+
+            $imageFile->saveAs(Yii::app()->params['temp'] . '/' . $imageFileName);
+
+            $this->setPageState('imageFileName', $imageFileName);
 
             if (!$model->validate())
             {
@@ -110,7 +117,7 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            $model->imageFile = $this->getPageState('imageFile', array());
+            $model->imageFile = $this->getPageState('imageFileName', array());
 
             if ($model->save())
             {

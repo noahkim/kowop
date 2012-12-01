@@ -1,24 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "User_to_class".
+ * This is the model class for table "storage".
  *
- * The followings are the available columns in table 'User_to_class':
- * @property integer $User_to_class_ID
- * @property integer $User_ID
- * @property integer $Class_ID
- * @property string $Created
- *
- * The followings are the available model relations:
- * @property User $user
- * @property KClass $class
+ * The followings are the available columns in table 'storage':
+ * @property string $key
+ * @property string $value
  */
-class UserToClass extends CActiveRecord
+class Storage extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return UserToClass the static model class
+	 * @return Storage the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +24,7 @@ class UserToClass extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'User_to_class';
+		return '{{storage}}';
 	}
 
 	/**
@@ -41,12 +35,12 @@ class UserToClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('key, value', 'required'),
+			array('key', 'length', 'max'=>100),
+			array('value', 'length', 'max'=>512),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('User_to_class_ID, User_ID, Class_ID, Created', 'safe', 'on'=>'search'),
-            array('Created', 'default',
-                'value' => new CDbExpression('NOW()'),
-                'setOnEmpty' => false, 'on' => 'insert')
+			array('key, value', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,8 +52,6 @@ class UserToClass extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'User_ID'),
-			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
 		);
 	}
 
@@ -69,10 +61,8 @@ class UserToClass extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'User_to_class_ID' => 'User To Class',
-			'User_ID' => 'User',
-			'Class_ID' => 'Class',
-			'Created' => 'Created',
+			'key' => 'Key',
+			'value' => 'Value',
 		);
 	}
 
@@ -87,10 +77,8 @@ class UserToClass extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('User_to_class_ID',$this->User_to_class_ID);
-		$criteria->compare('User_ID',$this->User_ID);
-		$criteria->compare('Class_ID',$this->Class_ID);
-		$criteria->compare('Created',$this->Created,true);
+		$criteria->compare('key',$this->key,true);
+		$criteria->compare('value',$this->value,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

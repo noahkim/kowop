@@ -6,8 +6,8 @@
     <span>
         <?php echo count($results); ?> Search results for "<?php echo $model->keywords; ?>".
     </span>
-    Can't find what you're looking for?
-    <?php echo CHtml::link('Request it', array('/request/create'), array('class' => 'button small radius')); ?>
+        Can't find what you're looking for?
+        <?php echo CHtml::link('Request it', array('/request/create'), array('class' => 'button small radius')); ?>
     </div>
 </div>
 <!--------- main content container------>
@@ -20,7 +20,8 @@
         <?php
         foreach ($results as $i => $item)
         {
-            $teacherLink = CHtml::link($item->createUser->fullname, array('/user/view', 'id' => $item->Create_User_ID));
+            $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
+            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
             $description = $item->Description;
             if (strlen($description) > 100)
             {
@@ -64,51 +65,58 @@
 
             if ($item instanceof KClass)
             {
-                echo <<<BLOCK
-<!----- 1 tile/result ------->
-<div class="four columns spacebot20 {$end}">
-    <div class="resultsTile"><span class="tilenumber">{$itemNumber}</span>
+                //<span class="ribbon staffpick"></span>
 
-        <div class="resultsImage"><img src="http://placehold.it/400x300" class="spacebot10"></div>
-        <div class="row" class="spacebot10">
-            <!----- row with the current enrollees thumbnails---->
-            <div class="twelve columns enrollees"><img src="http://placehold.it/100x100"> <img
-                    src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100"> <img
-                    src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100"></div>
-        </div>
-        {$name}
-                <span class="resultsInstructor">with {$teacherLink}
-                </span> <span class="resultsCategory food">in {$item->category->Name}</span> <span
-                class="resultsDescription spacebot10"> {$description} </span>
+                echo <<<BLOCK
+  <!----- 1 tile/result ------->
+  <div class="four columns spacebot20 {$end}">
+    <div class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
+      <div class="resultsImage">
+        <img src="http://flickholdr.com/400/300/bbq"/>
+      </div>
+      <div class="row" class="spacebot10">
+      <!----- row with the current enrollees thumbnails---->
+      <div class="twelve columns enrollees">
+        <img src="http://placeskull.com/100/100/868686">
+        <img src="http://placeskull.com/100/100/868686">
+        <img src="http://placeskull.com/100/100/868686">
+        <img src="http://placeskull.com/100/100/868686">
+        <img src="http://placeskull.com/100/100/868686">
+      </div>
     </div>
-    <div class="resultsSession">
-        <div>{$sessionHTML}</div>
-    </div>
+    {$name}
+     <span class="resultsInstructor">with {$teacherLink}</span>
+     <span class="resultsCategory food">in {$item->category->Name}</span>
+     <span class="resultsDescription spacebot10"> {$description} </span>
+     </div>
+  <div class="resultsSession">
+    <div>{$sessionHTML}</div>
+  </div>
 </div>
 <!----- End 1 tile/result---->
 BLOCK;
             }
             elseif ($item instanceof Request)
             {
-                $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID), array('class' => 'button small secondary radius twelve spacebot10'));
+                $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
 
                 echo <<<BLOCK
 <!----- 1 tile/result REQUEST ------->
 <div class="four columns spacebot20 {$end}">
-    <span class="ribbon request"></span>
-    <div class="requestTile">
-        <div class="row" class="spacebot10"></div>
-        {$name}
-        <span class="resultsCategory food">in {$item->category->Name}</span>
-        <span class="resultsDescription spacebot10"> {$description} </span>
-    </div>
-    <div class="requestJoin">
-        {$joinLink}
-        <!----- row with the current enrollees thumbnails---->
-        <div class="enrollees">
-            <img src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100"> <img src="http://placehold.it/100x100">
-        </div>
-        <span class="requestHow"><a href="how_it_works.html">how do requests work?</a></span>
+<span class="ribbon request"></span>
+  <div class="requestTile">
+    <div class="row" class="spacebot10"></div>
+  {$name}
+  <span class="resultsCategory food">in {$item->category->Name}</span>
+  <span class="resultsDescription spacebot10"> {$description} </span>
+  <!----- row with the current enrollees thumbnails---->
+  <div class="row">
+    <div class="twelve columns enrollees"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> </div>
+  </div>
+  <!---- end enrollees ----->
+</div>
+    <div class="requestQuickjoin">
+    {$joinLink}
     </div>
 </div>
 <!----- End 1 tile/result REQUEST---->
@@ -163,6 +171,7 @@ BLOCK;
         $classTypeData = array(0 => "don't care");
         $classTypeData = array_merge($classTypeData, ClassType::$Lookup);
         ?>
+        <label>Class type:</label>
         <?php echo $form->dropDownList($model, 'classType', $classTypeData); ?>
 
         <?php echo $form->hiddenField($model, 'keywords', array('value' => $model->keywords)); ?>

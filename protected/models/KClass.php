@@ -33,7 +33,7 @@
  * @property Rating[] $ratings
  * @property Request[] $requests
  * @property Session[] $sessions
- * @property UserToClass[] $userToClasses
+ * @property UserToSession[] $userToSessions
  */
 class KClass extends CActiveRecord
 {
@@ -99,8 +99,8 @@ class KClass extends CActiveRecord
             'ratings' => array(self::HAS_MANY, 'Rating', 'Class_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Class_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Class_ID'),
-            'userToClasses' => array(self::HAS_MANY, 'UserToClass', 'Class_ID'),
-            'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToClasses')
+            'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
+            'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions')
         );
     }
 

@@ -26,6 +26,13 @@ return array(
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => array('127.0.0.1', '::1', '*'),
         ),
+        'iwi' => array(
+            'class' => 'application.extensions.iwi.IwiComponent',
+            // GD or ImageMagick
+            'driver' => 'GD',
+            // ImageMagick setup path
+            //'params'=>array('directory'=>'C:/ImageMagick'),
+        ),
     ),
 
     // application components
@@ -85,6 +92,8 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
-        'uploads' => '/uploads'
+        'siteBase' => '/yii/kowop',
+        'uploads' => '/home4/rebuttme/public_html/yii/kowop/uploads',
+        'temp' => '/home4/rebuttme/public_html/yii/kowop/temp'
     ),
 );

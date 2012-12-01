@@ -23,8 +23,8 @@
  * @property Rating[] $ratings1
  * @property Request[] $requests
  * @property RequestToUser[] $requestToUsers
- * @property UserToClass[] $userToClasses
  * @property UserToContent[] $userToContents
+ * @property UserToSession[] $userToSessions
  */
 class User extends CActiveRecord
 {
@@ -83,8 +83,8 @@ class User extends CActiveRecord
 			'rated' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
 			'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'User_ID'),
-            'userToClasses' => array(self::HAS_MANY, 'UserToClass', 'User_ID'),
 			'userToContents' => array(self::HAS_MANY, 'UserToContent', 'User_ID'),
+            'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
 		);
 	}
 

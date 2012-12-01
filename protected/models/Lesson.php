@@ -1,24 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "Session".
+ * This is the model class for table "Lesson".
  *
- * The followings are the available columns in table 'Session':
+ * The followings are the available columns in table 'Lesson':
+ * @property integer $Lesson_ID
  * @property integer $Session_ID
- * @property integer $Class_ID
+ * @property string $Start
+ * @property string $End
  * @property string $Created
+ * @property string $Updated
  *
  * The followings are the available model relations:
- * @property Lesson[] $lessons
- * @property KClass $class
- * @property UserToSession[] $userToSessions
+ * @property Session $session
  */
-class Session extends CActiveRecord
+class Lesson extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Session the static model class
+	 * @return Lesson the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +31,7 @@ class Session extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Session';
+		return 'Lesson';
 	}
 
 	/**
@@ -41,11 +42,11 @@ class Session extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Class_ID, Created', 'required'),
-			array('Class_ID', 'numerical', 'integerOnly'=>true),
+			array('Session_ID, Start, End, Created, Updated', 'required'),
+			array('Session_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Session_ID, Class_ID, Created', 'safe', 'on'=>'search'),
+			array('Lesson_ID, Session_ID, Start, End, Created, Updated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,9 +58,7 @@ class Session extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'lessons' => array(self::HAS_MANY, 'Lesson', 'Session_ID'),
-			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
-			'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'Session_ID'),
+			'session' => array(self::BELONGS_TO, 'Session', 'Session_ID'),
 		);
 	}
 
@@ -69,9 +68,12 @@ class Session extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'Lesson_ID' => 'Lesson',
 			'Session_ID' => 'Session',
-			'Class_ID' => 'Class',
+			'Start' => 'Start',
+			'End' => 'End',
 			'Created' => 'Created',
+			'Updated' => 'Updated',
 		);
 	}
 
@@ -86,9 +88,12 @@ class Session extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('Lesson_ID',$this->Lesson_ID);
 		$criteria->compare('Session_ID',$this->Session_ID);
-		$criteria->compare('Class_ID',$this->Class_ID);
+		$criteria->compare('Start',$this->Start,true);
+		$criteria->compare('End',$this->End,true);
 		$criteria->compare('Created',$this->Created,true);
+		$criteria->compare('Updated',$this->Updated,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

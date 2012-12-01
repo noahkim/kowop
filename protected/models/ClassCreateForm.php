@@ -1,5 +1,7 @@
 <?php
 
+Yii::import('ext.iwi.Iwi');
+
 class ClassCreateForm extends CFormModel
 {
     // Step 1
@@ -131,11 +133,35 @@ class ClassCreateForm extends CFormModel
                 $content->save();
                 $content->refresh();
 
-                //$imageFile = CUploadedFile::getInstance($this, 'imageFile');
+                $path = Yii::app()->params['uploads'] . '/' . $content->Content_ID;
+                $link = Yii::app()->params['siteBase'] . '/uploads/' . $content->Content_ID;
 
-                $this->imageFile->saveAs(Yii::app()->params['uploads'] . '/' . $content->Content_ID);
+                $pathParts = pathinfo($this->imageFile);
+                $path .= '.' . $pathParts['extension'];
+                $link .= '.' . $pathParts['extension'];
 
-                $content->Link = Yii::app()->params['uploads'] . '/' . $content->Content_ID;
+                rename(Yii::app()->params['temp'] . '/' . $this->imageFile, $path);
+
+                $image = new Iwi($path);
+
+                $sourceRatio = $image->width / $image->height;
+                $targetRatio = 4 / 3;
+
+                if ($sourceRatio > $targetRatio)
+                {
+                    $height = $image->height;
+                    $width = (int)$height * $targetRatio;
+                }
+                elseif ($sourceRatio < $targetRatio)
+                {
+                    $width = $image->width;
+                    $height = (int)$width / $targetRatio;
+                }
+
+                $image->adaptive($width, $height);
+                $image->save();
+
+                $content->Link = $link;
                 $content->save();
 
                 $classToContent = new ClassToContent;
