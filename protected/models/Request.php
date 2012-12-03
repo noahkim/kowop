@@ -83,6 +83,7 @@ class Request extends CActiveRecord
 			'requestToTags' => array(self::HAS_MANY, 'RequestToTag', 'Request_ID'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'requestToTags'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'Request_ID'),
+            'requestors' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'requestToUsers'),
 		);
 	}
 

@@ -75,16 +75,16 @@
                 }
 
                 $enrollees = '';
-                foreach($item->students as $student)
+                foreach ($item->students as $student)
                 {
                     $picLink = 'http://placeskull.com/100/100/868686';
 
-                    if(count($student->contents) > 0)
+                    if (count($student->contents) > 0)
                     {
                         $picLink = $student->contents[0]->Link;
                     }
 
-                    $enrollees .= "<img src='{$picLink}' />\n";
+                    $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
                 }
 
                 echo <<<BLOCK
@@ -116,6 +116,19 @@ BLOCK;
             {
                 $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
 
+                $enrollees = '';
+                foreach ($item->requestors as $student)
+                {
+                    $picLink = 'http://placeskull.com/100/100/868686';
+
+                    if (count($student->contents) > 0)
+                    {
+                        $picLink = $student->contents[0]->Link;
+                    }
+
+                    $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                }
+
                 echo <<<BLOCK
 <!----- 1 tile/result REQUEST ------->
 <div class="four columns spacebot20 {$end}">
@@ -127,7 +140,9 @@ BLOCK;
   <span class="resultsDescription spacebot10"> {$description} </span>
   <!----- row with the current enrollees thumbnails---->
   <div class="row">
-    <div class="twelve columns enrollees"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> <img src="http://placeskull.com/100/100/868686"> </div>
+    <div class="twelve columns enrollees">
+        {$enrollees}
+    </div>
   </div>
   <!---- end enrollees ----->
 </div>
