@@ -68,9 +68,9 @@ if (count($model->kClasses) > 0)
 Enrolled in: <br/>
 
 <?php
-foreach ($model->userToClasses as $userToClass)
+foreach ($model->userToSessions as $userToSession)
 {
-    $class = $userToClass->class;
+    $class = $userToSession->session->class;
     echo CHtml::encode($class->getAttributeLabel('Name')) . ':';
     echo CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID)) . '<br />';
 }

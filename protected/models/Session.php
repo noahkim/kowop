@@ -41,11 +41,13 @@ class Session extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Class_ID, Created', 'required'),
 			array('Class_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Session_ID, Class_ID, Created', 'safe', 'on'=>'search'),
+			array('Session_ID, Class_ID, Created', 'safe'),
+            array('Created', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 

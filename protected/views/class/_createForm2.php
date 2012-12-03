@@ -52,10 +52,10 @@
             </div>
             <div class="row">
                 <div class="three columns">
-                    <label class="right inline">How many sessions in a class?</label>
+                    <label class="right inline">How many lessons in a session?</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->textField($model, 'numSessions', array('placeholder' => 'ex. 3', 'class' => 'three')); ?>
+                    <?php echo $form->textField($model, 'numLessons', array('placeholder' => 'ex. 3', 'class' => 'three')); ?>
                 </div>
             </div>
             <div class="row">
@@ -66,7 +66,7 @@
                     <?php echo $form->textField($model, 'tuition', array('placeholder' => 'ex. 25.00')); ?>
                 </div>
                 <div class="one column end">
-                    per hour
+                    per lesson
                 </div>
             </div>
             <div class="row">

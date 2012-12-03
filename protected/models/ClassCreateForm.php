@@ -15,7 +15,7 @@ class ClassCreateForm extends CFormModel
     public $videoFile;
     public $start;
     public $end;
-    public $numSessions;
+    public $numLessons;
     public $classType;
     public $minOccupancy;
     public $maxOccupancy;
@@ -48,11 +48,11 @@ class ClassCreateForm extends CFormModel
     {
         return array(
             array('name, category', 'required', 'on' => 'step1'),
-            array('start, end, minOccupancy, maxOccupancy, numSessions, tuition, locationType, description', 'required', 'on' => 'step2'),
-            array('category, numSessions, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
+            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, locationType, description', 'required', 'on' => 'step2'),
+            array('category, numLessons, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numSessions,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -195,14 +195,21 @@ class ClassCreateForm extends CFormModel
 
             $sessionData = json_decode($this->sessions);
 
-            foreach ($sessionData->sessions as $item)
+            foreach ($sessionData->sessions as $i => $item)
             {
                 $session = new Session;
                 $session->Class_ID = $this->class->Class_ID;
-                $session->Start = $item->start;
-                $session->End = $item->end;
-
                 $session->save();
+
+                foreach($item as $j => $lessonItem)
+                {
+                    $lesson = new Lesson;
+                    $lesson->Session_ID = $session->Session_ID;
+                    $lesson->Start = $lessonItem->start;
+                    $lesson->End = $lessonItem->end;
+
+                    $lesson->save();
+                }
             }
 
             $transaction->commit();

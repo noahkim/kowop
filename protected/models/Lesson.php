@@ -42,11 +42,16 @@ class Lesson extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Session_ID, Start, End, Created, Updated', 'required'),
 			array('Session_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Lesson_ID, Session_ID, Start, End, Created, Updated', 'safe', 'on'=>'search'),
+			array('Lesson_ID, Session_ID, Start, End, Created, Updated', 'safe'),
+            array('Updated', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'update'),
+            array('Created,Updated', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 

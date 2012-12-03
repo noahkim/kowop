@@ -84,6 +84,7 @@ class User extends CActiveRecord
 			'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
 			'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'User_ID'),
 			'userToContents' => array(self::HAS_MANY, 'UserToContent', 'User_ID'),
+            'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
             'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
 		);
 	}

@@ -67,21 +67,37 @@
             {
                 //<span class="ribbon staffpick"></span>
 
+                $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
+                if (count($item->contents) > 0)
+                {
+                    $link = $item->contents[0]->Link;
+                    $imageHTML = "<img src='{$link}' />";
+                }
+
+                $enrollees = '';
+                foreach($item->students as $student)
+                {
+                    $picLink = 'http://placeskull.com/100/100/868686';
+
+                    if(count($student->contents) > 0)
+                    {
+                        $picLink = $student->contents[0]->Link;
+                    }
+
+                    $enrollees .= "<img src='{$picLink}' />\n";
+                }
+
                 echo <<<BLOCK
   <!----- 1 tile/result ------->
   <div class="four columns spacebot20 {$end}">
     <div class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
       <div class="resultsImage">
-        <img src="http://flickholdr.com/400/300/bbq"/>
+        {$imageHTML}
       </div>
       <div class="row" class="spacebot10">
       <!----- row with the current enrollees thumbnails---->
       <div class="twelve columns enrollees">
-        <img src="http://placeskull.com/100/100/868686">
-        <img src="http://placeskull.com/100/100/868686">
-        <img src="http://placeskull.com/100/100/868686">
-        <img src="http://placeskull.com/100/100/868686">
-        <img src="http://placeskull.com/100/100/868686">
+        {$enrollees}
       </div>
     </div>
     {$name}

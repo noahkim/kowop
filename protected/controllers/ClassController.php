@@ -98,12 +98,15 @@ class ClassController extends Controller
             $imageFileName = 'temp' . uniqid();
             $imageFile = CUploadedFile::getInstance($model, 'imageFile');
 
-            $pathParts = pathinfo($imageFile->getName());
-            $imageFileName .= '.' . $pathParts['extension'];
+            if ($imageFile)
+            {
+                $pathParts = pathinfo($imageFile->getName());
+                $imageFileName .= '.' . $pathParts['extension'];
 
-            $imageFile->saveAs(Yii::app()->params['temp'] . '/' . $imageFileName);
+                $imageFile->saveAs(Yii::app()->params['temp'] . '/' . $imageFileName);
 
-            $this->setPageState('imageFileName', $imageFileName);
+                $this->setPageState('imageFileName', $imageFileName);
+            }
 
             if (!$model->validate())
             {
@@ -243,14 +246,23 @@ class ClassController extends Controller
 
         if ($model->Create_User_ID != $user_ID)
         {
-            $existing = UserToClass::model()->find('User_ID=:User_ID AND Class_ID=:Class_ID', array(':User_ID' => $user_ID, ':Class_ID' => $model->Class_ID));
-            if ($existing == null)
+            if (count($model->sessions) > 0)
             {
-                $userToClass = new UserToClass();
-                $userToClass->Class_ID = $model->Class_ID;
-                $userToClass->User_ID = $user_ID;
+                $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
+                    array(':User_ID' => $user_ID, ':Session_ID' => $model->sessions[0]->Session_ID));
 
-                $hasJoined = $userToClass->save();
+                if ($existing == null)
+                {
+                    $userToSession = new UserToSession();
+                    $userToSession->Session_ID = $model->sessions[0]->Session_ID;
+                    $userToSession->User_ID = $user_ID;
+
+                    $hasJoined = $userToSession->save();
+                }
+                else
+                {
+                    $hasJoined = true;
+                }
             }
         }
 
