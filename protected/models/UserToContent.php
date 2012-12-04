@@ -41,11 +41,16 @@ class UserToContent extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('User_ID, Content_ID, Updated', 'required'),
 			array('User_ID, Content_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('User_to_content_ID, User_ID, Content_ID, Updated', 'safe', 'on'=>'search'),
+			array('User_to_content_ID, User_ID, Content_ID, Updated', 'safe'),
+            array('Updated', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'update'),
+            array('Updated', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 

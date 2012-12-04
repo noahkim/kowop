@@ -126,7 +126,9 @@ class ClassCreateForm extends CFormModel
             }
             elseif ($this->imageFile != null)
             {
-                $content = new Content;
+                $content = Content::AddContent($this->imageFile, 'Class Image', ContentType::ImageID);
+
+/*                $content = new Content;
                 $content->Content_name = 'Class Image';
                 $content->Content_type = ContentType::ImageID;
 
@@ -162,7 +164,7 @@ class ClassCreateForm extends CFormModel
                 $image->save();
 
                 $content->Link = $link;
-                $content->save();
+                $content->save();*/
 
                 $classToContent = new ClassToContent;
                 $classToContent->Class_ID = $this->class->Class_ID;

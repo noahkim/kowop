@@ -2,8 +2,29 @@
 <div class="row" id="wrapper">
 <!---- left sidebar------>
 <div class="three columns">
-    <img src="http://placehold.it/300x300">
+
+    <?php
+    $imageLink = 'http://placehold.it/300x300';
+    if (count($model->contents) > 0)
+    {
+        $imageLink = $model->contents[0]->Link;
+    }
+    echo "<img src='{$imageLink}' alt='{$model->fullname}' title='{$model->fullname}' />\n";
+    ?>
+
     <a href="#" class="twelve button secondary" data-reveal-id="myModal">Send a message</a>
+
+    <?php $form = $this->beginWidget('CActiveForm', array(
+    'id' => 'update-form',
+    'enableAjaxValidation' => false,
+    'action' => array('user/update'),
+    'htmlOptions' => array('enctype' => 'multipart/form-data'),
+)); ?>
+
+    <?php echo CHtml::fileField('profilePic'); ?>
+    <?php echo CHtml::submitButton(); ?>
+
+    <?php $this->endWidget(); ?>
 
     <div class="profileBadges">
         <span class="profileCount">15</span>
@@ -198,10 +219,10 @@ BLOCK;
     <h2>Classes I've taught</h2>
 
     <div class="row">
-<!--        <div class="three columns end">
-            <div class="profileTile"><img src="http://placehold.it/400x300"> <span class="profileClassTitle"><a
-                    href="class_detail.html">Class Title</a></span></div>
-        </div>-->
+        <!--        <div class="three columns end">
+                    <div class="profileTile"><img src="http://placehold.it/400x300"> <span class="profileClassTitle"><a
+                            href="class_detail.html">Class Title</a></span></div>
+                </div>-->
     </div>
 </div>
 <!------- end main content container----->

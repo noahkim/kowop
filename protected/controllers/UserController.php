@@ -85,31 +85,31 @@ class UserController extends Controller
         ));
     }
 
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdate($id)
+    public function actionUpdate()
     {
+        $id = Yii::app()->user->id;
+
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['User']))
-        {
-            $model->attributes = $_POST['User'];
+        $imageFile = CUploadedFile::getInstanceByName('profilePic');
 
-            if ($model->save())
+        if ($imageFile != null)
+        {
+            $imageContent = Content::AddContent($imageFile, 'User Image', ContentType::ImageID);
+
+            if ($imageContent != null)
             {
-                $this->redirect(array('view', 'id' => $model->User_ID));
+                $userToContent = new UserToContent;
+                $userToContent->User_ID = $model->User_ID;
+                $userToContent->Content_ID = $imageContent->Content_ID;
+                $userToContent->save();
             }
         }
 
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        $this->redirect(array('view', 'id' => $model->User_ID));
     }
 
     /**

@@ -62,6 +62,7 @@ class Session extends CActiveRecord
 			'lessons' => array(self::HAS_MANY, 'Lesson', 'Session_ID'),
 			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
 			'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'Session_ID'),
+            'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions')
 		);
 	}
 
