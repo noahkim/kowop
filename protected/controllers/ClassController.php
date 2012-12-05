@@ -3,15 +3,6 @@
 class ClassController extends Controller
 {
     /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    //public $layout='//layouts/default/column2';
-
-    public $breadcrumbs;
-    public $menu;
-
-    /**
      * @return array action filters
      */
     public function filters()
@@ -266,10 +257,21 @@ class ClassController extends Controller
             }
         }
 
-        $this->render('join', array(
-            'model' => $model,
-            'hasJoined' => $hasJoined
-        ));
+        $this->redirect(array('view', 'id' => $model->Class_ID));
+    }
+
+    public function actionEnrollDialog($id)
+    {
+        $model = $this->loadModel($id);
+
+        $session = isset($_REQUEST['Session_ID']) ? Session::model()->findByPk($_REQUEST['Session_ID']) : $model->sessions[0];
+
+        if(isset($_REQUEST['submit']))
+        {
+            // do something
+        }
+
+        $this->render('enrollDialog', array('model' => $model, 'session' => $session));
     }
 
     /**

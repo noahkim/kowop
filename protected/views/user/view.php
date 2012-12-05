@@ -5,10 +5,12 @@
 
     <?php
     $imageLink = 'http://placehold.it/300x300';
-    if (count($model->contents) > 0)
+
+    if($model->profilePic != null)
     {
-        $imageLink = $model->contents[0]->Link;
+        $imageLink = $model->profilePic;
     }
+
     echo "<img src='{$imageLink}' alt='{$model->fullname}' title='{$model->fullname}' />\n";
     ?>
 
@@ -136,6 +138,7 @@
         foreach ($model->kClasses as $class)
         {
             $imgLink = 'http://placehold.it/400x300';
+
             if (count($class->contents) > 0)
             {
                 $imgLink = $class->contents[0]->Link;

@@ -165,6 +165,11 @@ class Content extends CActiveRecord
             $width = $image->width;
             $height = (int)$width / $targetRatio;
         }
+        else
+        {
+            $height = $image->height;
+            $width = $image->width;
+        }
 
         $image->adaptive($width, $height);
         $image->save();

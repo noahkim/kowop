@@ -4,35 +4,48 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<!--------- main content container------>
+<div class="row" id="wrapper">
+    <!--------- end left column ------------->
+    <div class="nine columns">
+        <div class="createContainer">
+            <h1>Class Schedule</h1>
 
-    <?php $form = $this->beginWidget('CActiveForm', array(
-    'id' => 'class-create-form',
-    'enableAjaxValidation' => false,
-    'stateful' => true
-)); ?>
+            <div class="row">
+                <div class="three columns">
+                    <div id='external-events'>
+                    </div>
+                    <a href="#" onclick='addSession(); return false;' class="button radius twelve">Add a session</a>
+                </div>
+                <div class="nine columns">
+                    <div id='calendar'></div>
+                </div>
+            </div>
 
-    <div id="external-events" style="width: 200px;">
+            <div class="row borderTop">
+                <div class="twelve columns alignRight">
+                    <?php $form = $this->beginWidget('CActiveForm', array(
+                    'id' => 'class-create-form',
+                    'enableAjaxValidation' => false,
+                    'stateful' => true,
+                    'htmlOptions' => array('style' => 'margin: 0;')
+                )); ?>
+                    <?php echo $form->hiddenField($model, 'sessions'); ?>
+
+                    <?php echo CHtml::submitButton('Review your class', array('name' => 'submit', 'id' => 'submit', 'class' => 'button radius')); ?>
+                    <?php $this->endWidget(); ?>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <button onclick='addSession(); return false;'>Add session</button>
+    <!-------------- end left column ----------->
+    <!-------------- right column -------------->
+    <div class="three columns">
+        <h3>FAQ</h3>
     </div>
-
-    <div>
-        <div id="calendar" style="width: 600px;"></div>
-    </div>
-
-    <div class="row">
-        <?php echo $form->hiddenField($model, 'sessions'); ?>
-    </div>
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Create', array('name' => 'submit', 'id' => 'submit')); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
-
-</div><!-- form -->
+    <!---------------end right column---------->
+    <!------- end main content container----->
+</div>
 
 <div id="hover">
     Starts:
@@ -128,8 +141,7 @@ $(document).ready(function () {
 
             sessionArray = new Array();
 
-            if(sessions[events[i].session] != null)
-            {
+            if (sessions[events[i].session] != null) {
                 sessionArray = sessions[events[i].session];
             }
 
@@ -151,7 +163,7 @@ $(document).ready(function () {
                 header:{
                     left:'prev,next today',
                     center:'title',
-                    right:'month,agendaWeek,agendaDay'
+                    right:'month'
                 },
                 editable:true,
                 droppable:true, // this allows things to be dropped onto the calendar !!!
@@ -183,6 +195,26 @@ $(document).ready(function () {
                     // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
                     $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
                     $(this).remove();
+
+                    $('div.fc-event').each(function () {
+                        $(this).qtip(
+                                {
+                                    content: $('#hover').html(),
+                                    position:{
+                                        corner:{
+                                            target:'topLeft',
+                                            tooltip:'bottomMiddle'
+                                        }
+                                    },
+                                    hide:{
+                                        fixed: true // Make it fixed so it can be hovered over
+                                    },
+                                    style:{
+                                        padding:'10px' // Give it some extra padding
+                                    },
+                                    show:'mouseover'
+                                });
+                    });
                 },
                 eventDrop:function (event, dayDelta, minuteDelta, allDay, revertFunc) {
                     if (
@@ -192,7 +224,29 @@ $(document).ready(function () {
                             ) {
                         revertFunc();
                     }
+                },
+                eventMouseover:function (event, jsEvent, view) {
+                    var startHour = event.start.getHours();
+                    if (startHour >= 12) {
+                        $('#startAMPM').val('PM');
+                        $('#startHour').val(startHour - 12);
+                    }
+                    else {
+                        $('#startAMPM').val('AM');
+                        $('#startHour').val(startHour);
+                    }
+                    $('#startMinute').val(event.start.getMinutes());
 
+                    var endHour = event.end.getHours();
+                    if (endHour >= 12) {
+                        $('#endAMPM').val('PM');
+                        $('#endHour').val(endHour - 12);
+                    }
+                    else {
+                        $('#endAMPM').val('AM');
+                        $('#endHour').val(endHour);
+                    }
+                    $('#endMinute').val(event.end.getMinutes());
                 },
                 eventClick:function (event, jsEvent, view) {
                     var startHour = event.start.getHours();
@@ -217,7 +271,8 @@ $(document).ready(function () {
                     }
                     $('#endMinute').val(event.end.getMinutes());
 
-                    $('#hover').dialog({
+
+                    /*$('#hover').dialog({
                         position:{
                             my:"center bottom",
                             at:"center top",
@@ -281,7 +336,7 @@ $(document).ready(function () {
                                 $(this).dialog("close");
                             }
                         }
-                    }).dialog("open");
+                    }).dialog("open");*/
                 }
             });
 });
@@ -314,28 +369,5 @@ function addSession() {
             revertDuration:0  //  original position after the drag
         });
     }
-
-    /* initialize the external events
------------------------------------------------------------------*/
-
-    /*        $('#external-events div.external-event').each(function () {
-                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-                // it doesn't need to have a start or end
-                var eventObject = {
-                    title:$.trim($(this).text()), // use the element's text as the event title
-                    session: settings.currentSession
-                };
-
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject);
-
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex:999,
-                    revert:true, // will cause the event to go back to its
-                    revertDuration:0  //  original position after the drag
-                });
-
-            });*/
 }
 </script>

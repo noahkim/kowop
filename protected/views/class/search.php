@@ -79,9 +79,9 @@
                 {
                     $picLink = 'http://placeskull.com/100/100/868686';
 
-                    if (count($student->contents) > 0)
+                    if ($student->profilePic != null)
                     {
-                        $picLink = $student->contents[0]->Link;
+                        $picLink = $student->profilePic;
                     }
 
                     $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
@@ -121,9 +121,9 @@ BLOCK;
                 {
                     $picLink = 'http://placeskull.com/100/100/868686';
 
-                    if (count($student->contents) > 0)
+                    if ($student->profilePic != null)
                     {
-                        $picLink = $student->contents[0]->Link;
+                        $picLink = $student->profilePic;
                     }
 
                     $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";

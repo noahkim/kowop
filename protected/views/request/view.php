@@ -122,7 +122,12 @@
 
         foreach ($usersAvailability as $userID => $days)
         {
-            $profileImageLink = CHtml::link('<img src="http://placehold.it/200x200">', array('/user/view', 'id' => $userID));
+            $imageLink = '<img src="http://placehold.it/200x200">';
+
+            //$userContent = Content::model()->find("User_ID=:User_ID", array(':User_ID' => $userID));
+            // TODO: finish
+
+            $profileImageLink = CHtml::link('', array('/user/view', 'id' => $userID));
             $profileLink = CHtml::link($users[$userID]->fullname, array('/user/view', 'id' => $userID));
 
             $creator = '';

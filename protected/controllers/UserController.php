@@ -98,7 +98,7 @@ class UserController extends Controller
 
         if ($imageFile != null)
         {
-            $imageContent = Content::AddContent($imageFile, 'User Image', ContentType::ImageID);
+            $imageContent = Content::AddContent($imageFile, 'User Image', ContentType::ImageID, 1);
 
             if ($imageContent != null)
             {

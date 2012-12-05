@@ -144,6 +144,17 @@ class User extends CActiveRecord
         return $this->First_name . ' ' . $this->Last_name;
     }
 
+    public function getProfilePic()
+    {
+        $numContents = count($this->contents);
+        if($numContents > 0)
+        {
+            return $this->contents[$numContents-1]->Link;
+        }
+
+        return null;
+    }
+
     public function beforeSave()
     {
         if (isset($this->Password))

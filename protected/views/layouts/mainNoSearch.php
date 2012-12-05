@@ -10,40 +10,32 @@
     <meta charset="utf-8"/>
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width"/>
-    <!-- Included CSS Files (Uncompressed) -->
-    <!--
-      <link rel="stylesheet" href="stylesheets/foundation.css">
-      -->
 
-    <script src="/ui/site/javascripts/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/hero/stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/bryant/stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/susa/stylesheet.css" />
+    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.css' />
+    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.print.css' media='print' />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Copse" />
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/main.css" />
 
-    <!-- Included CSS Files (Compressed) -->
-    <link rel="stylesheet" href="/ui/site/fonts/hero/stylesheet.css">
-    <link rel="stylesheet" href="/ui/site/fonts/bryant/stylesheet.css">
-    <link rel="stylesheet" href="/ui/site/fonts/susa/stylesheet.css">
-    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/ui/site/stylesheets/nivo-default.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/ui/site/stylesheets/nivo-slider.css" type="text/css" media="screen"/>
-    <link rel="stylesheet" href="/ui/site/stylesheets/foundation.min.css">
-    <link rel="stylesheet" href="/ui/site/stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-default.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-slider.css" media="screen" />
+
+
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/yii/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+    <script src='/yii/kowop/js/date.js'></script>
+    <script src='/ui/site/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
+
     <script src="/ui/site/javascripts/modernizr.foundation.js"></script>
-
-    <!-- Included JS Files (Compressed) -->
-    <script src="/ui/site/javascripts/jquery.js"></script>
-    <script src="/ui/site/javascripts/foundation.min.js"></script>
-    <!-- Initialize JS Plugins -->
     <script src="/ui/site/javascripts/app.js"></script>
 
-    <!-- Calendar stuff -->
-    <link href="/ux/css/fullcalendar.css" rel="stylesheet">
-    <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.css'/>
-    <link rel='stylesheet' type='text/css' href='/ux/fullcalendar/fullcalendar/fullcalendar.print.css' media='print'/>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"/>
+    <script src="/ui/site/javascripts/jquery.nivo.slider.pack.js"></script>
 
-    <!-- Calendar stuff -->
-    <script src='/ux/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
-    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
-    <script src='/yii/kowop/js/date.js'></script>
+    <script src="/ui/site/javascripts/qtip.js"></script>
 
     <title>Kowop | teach anything. learn everything.</title>
 </head>
@@ -122,40 +114,6 @@
         <div class="two columns offset-by-five"><img src="/ui/site/images/logo_small.png"></div>
     </div>
 </div>
-
-<script type="text/javascript" src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
-<script type="text/javascript">
-    $(window).load(function () {
-        $('#slider').nivoSlider({
-            effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
-            slices:15, // For slice animations
-            boxCols:8, // For box animations
-            boxRows:4, // For box animations
-            animSpeed:1000, // Slide transition speed
-            pauseTime:4000, // How long each slide will show
-            startSlide:0, // Set starting Slide (0 index)
-            directionNav:true, // Next & Prev navigation
-            controlNav:true, // 1,2,3... navigation
-            controlNavThumbs:true, // Use thumbnails for Control Nav
-            pauseOnHover:true, // Stop animation while hovering
-            manualAdvance:false, // Force manual transitions
-            prevText:'Prev', // Prev directionNav text
-            nextText:'Next', // Next directionNav text
-            randomStart:false, // Start on a random slide
-            beforeChange:function () {
-            }, // Triggers before a slide transition
-            afterChange:function () {
-            }, // Triggers after a slide transition
-            slideshowEnd:function () {
-            }, // Triggers after all slides have been shown
-            lastSlide:function () {
-            }, // Triggers when last slide is shown
-            afterLoad:function () {
-            } // Triggers when slider has loaded
-        });
-    });
-</script>
-
 
 </body>
 </html>
