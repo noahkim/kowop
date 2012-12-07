@@ -26,7 +26,7 @@ class ClassController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'join'),
+                'actions' => array('create', 'update', 'join', 'enrollDialog'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -45,6 +45,8 @@ class ClassController extends Controller
      */
     public function actionView($id)
     {
+        $this->layout = '//layouts/mainNoSearch';
+
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -233,27 +235,36 @@ class ClassController extends Controller
         $model = $this->loadModel($id);
         $user_ID = Yii::app()->user->id;
 
-        $hasJoined = false;
+        $session = null;
+        if (count($model->sessions) > 0)
+        {
+            if(isset($_REQUEST['session']))
+            {
+                $session_ID = $_REQUEST['session'];
+                $sessionFind = Session::model()->findByPk($session_ID);
+                if($sessionFind != null)
+                {
+                    $session = $sessionFind;
+                }
+            }
+            else
+            {
+                $session = $model->sessions[0];
+            }
+        }
 
         if ($model->Create_User_ID != $user_ID)
         {
-            if (count($model->sessions) > 0)
+            $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
+                array(':User_ID' => $user_ID, ':Session_ID' => $session->Session_ID));
+
+            if ($existing == null)
             {
-                $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
-                    array(':User_ID' => $user_ID, ':Session_ID' => $model->sessions[0]->Session_ID));
+                $userToSession = new UserToSession();
+                $userToSession->Session_ID = $session->Session_ID;
+                $userToSession->User_ID = $user_ID;
 
-                if ($existing == null)
-                {
-                    $userToSession = new UserToSession();
-                    $userToSession->Session_ID = $model->sessions[0]->Session_ID;
-                    $userToSession->User_ID = $user_ID;
-
-                    $hasJoined = $userToSession->save();
-                }
-                else
-                {
-                    $hasJoined = true;
-                }
+                $userToSession->save();
             }
         }
 
@@ -262,14 +273,10 @@ class ClassController extends Controller
 
     public function actionEnrollDialog($id)
     {
+        $this->layout = false;
         $model = $this->loadModel($id);
 
-        $session = isset($_REQUEST['Session_ID']) ? Session::model()->findByPk($_REQUEST['Session_ID']) : $model->sessions[0];
-
-        if(isset($_REQUEST['submit']))
-        {
-            // do something
-        }
+        $session = isset($_REQUEST['session']) ? Session::model()->findByPk($_REQUEST['session']) : $model->sessions[0];
 
         $this->render('enrollDialog', array('model' => $model, 'session' => $session));
     }

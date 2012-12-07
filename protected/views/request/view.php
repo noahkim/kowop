@@ -122,12 +122,17 @@
 
         foreach ($usersAvailability as $userID => $days)
         {
-            $imageLink = '<img src="http://placehold.it/200x200">';
+            $imageLink = 'http://placehold.it/200x200';
 
-            //$userContent = Content::model()->find("User_ID=:User_ID", array(':User_ID' => $userID));
-            // TODO: finish
+            $user = User::model()->findByPk($userID);
 
-            $profileImageLink = CHtml::link('', array('/user/view', 'id' => $userID));
+            if($user->profilePic != null)
+            {
+                $imageLink = $user->profilePic;
+            }
+
+            $imageHTML = "<img src='{$imageLink}' alt='{$user->fullname}' title='{$user->fullname}' />";
+            $profileImageLink = CHtml::link($imageHTML, array('/user/view', 'id' => $userID));
             $profileLink = CHtml::link($users[$userID]->fullname, array('/user/view', 'id' => $userID));
 
             $creator = '';
@@ -272,3 +277,6 @@ BLOCK;
     <?php echo CHtml::link('Yes, leave this request', array('/request/leave', 'id' => $model->Request_ID), array('class' => 'button secondary radius stretch twelve')); ?>
     <a class="close-reveal-modal">&#215;</a>
 </div>
+
+
+<script src="/ui/site/javascripts/foundation.min.js"></script>

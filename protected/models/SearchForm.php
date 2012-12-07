@@ -125,6 +125,13 @@ class SearchForm extends CFormModel
         $classes = array_values($classes);
 
         $requests = Request::model()->findAll($requestCriteria);
+        foreach ($requests as $i => $request)
+        {
+            if(count($request->requestors) == 0)
+            {
+                unset($requests[$i]);
+            }
+        }
 
         $items = array_merge($classes, $requests);
 

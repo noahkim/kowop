@@ -47,9 +47,7 @@
                     }
 
                     echo "<img src='{$instructorPic}' class='detailsInstructorpic'>\n";
-
                     ?>
-
 
                     <div class="detailsInstructor">
                         <div class="detailsReccomendations">31</div>
@@ -59,7 +57,6 @@
                             echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
-                        <a href="#" class="tiny button radius secondary twelve">ask a question</a>
                     </div>
                 </div>
                 <!------------ Right column ------------------>
@@ -110,12 +107,6 @@
                             }
 
                             ?>
-                            <!--                            <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                                                        <a href="#"><img src="http://placeskull.com/100/100/d70060"></a>
-                                                        <a href="#"><img src="http://placeskull.com/100/100/113f8c"></a>
-                                                        <a href="#"><img src="http://placehold.it/100x100"></a>
-                                                        <a href="#"><img src="http://placehold.it/100x100"></a>
-                                                        <a href="#"><img src="http://placehold.it/100x100"></a>-->
                         </div>
                         <div class="detailsShareclass">
                             <span>Think this class is perfect for somebody?</span>
@@ -129,8 +120,17 @@
                     </span>
                         </div>
                     </div>
-                    <a href="#" class="button twelve secondary radius" data-reveal-id="enrollLater">Enroll in a later
-                        session</a>
+                    <div class="detailsCategory">
+                        <span>Category</span> <a href="#"><?php echo $model->category->Name; ?></a></div>
+                    <div class="detailsTags">
+                        <span>Tags</span>
+                        <?php
+                        foreach ($model->taglist as $tag)
+                        {
+                            echo "<a href='#'>{$tag}</a>\n";
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -142,60 +142,45 @@
                 <?php echo $model->Description; ?>
             </div>
             <!--- end left column---->
-            <!---------------------------------------
-                             middle column
-            ---------------------------------------->
-            <div class="two columns">
-      	<span class="infopoint">
-        <h5>Type</h5>
-              <?php echo ClassType::$Lookup[$model->Type]; ?>
-        </span>
-        <span class="infopoint">
-        <h5>Location</h5>
-            <?php echo $model->location ? $model->location->Zip : 'Online'; ?>
-        </span>
-        <span class="infopoint">
-        <h5>Total Seats</h5>
-            <?php echo $model->Max_occupancy; ?>
-        </span>
-        <span class="infopoint">
-        <h5>Needed to start</h5>
-            <?php echo $model->Min_occupancy; ?>
-        </span>
-        <span class="infopoint">
-        <h5>Total Sessions</h5>
-            <?php echo count($model->sessions); ?>
-        </span>
-        <span class="infopoint">
-        <h5>Length per Session</h5>
-        1 hour
-        </span>
-        <span class="infopoint">
-        <h5>Category</h5>
-            <?php echo $model->category->Name; ?>
-        </span>
-
-        <span class="infopoint">
-        <h5>Availability</h5>
-            <?php echo $model->Start; ?>
-            -
-            <?php echo $model->End; ?>
-        </span>
-            </div>
-            <!--- end middle column---->
 
             <!---------------------------------------
-                          Right Column
+                             right column
             ---------------------------------------->
-            <div class="four columns">
-                <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+            <div class="six columns">
+                <div class="detailSidebar">
+                    <div class="row">
+                        <div class="six columns">
+                            <ul>
+                                <li><span>Type</span><?php echo ClassType::$Lookup[$model->Type]; ?></li>
+                                <li>
+                                    <span>Location</span><?php echo $model->location ? $model->location->Zip : 'Online'; ?>
+                                </li>
+                                <li><span>Total Seats</span><?php echo $model->Max_occupancy; ?></li>
+                                <li><span>Needed to Start</span><?php echo $model->Min_occupancy; ?></li>
+                                <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
+                                <li><span>1 Lesson time</span>60 min</li>
+                                <li><span>Availability</span><?php echo $model->Start; ?>
+                                    -
+                                    <?php echo $model->End; ?></li>
+                            </ul>
+                        </div>
+                        <div class="six columns spacebot10">
+                            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
+                                    marginwidth="0"
+                                    src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+                        </div>
+                    </div>
+                    <div class="detailEnrolllater">
+                        <h4 class="spacebot10">Enroll for a later session</h4>
+
+                        <div id='calendar'></div>
+                    </div>
+                </div>
             </div>
-            <!--- end right column ----->
         </div>
-        <!------- end main content container----->
     </div>
 </div>
+<!------- end main content container----->
 
 <script type="text/javascript" src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
 <script type="text/javascript">
@@ -227,5 +212,126 @@
             afterLoad:function () {
             } // Triggers when slider has loaded
         });
+    });
+</script>
+
+<script type='text/javascript'>
+
+    $(document).ready(function () {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header:{
+                left:'',
+                center:'title',
+                right:'prev,next'
+            },
+            editable:false,
+            events:[
+            <?php
+            $calendarJS = '';
+            foreach ($model->sessions as $i => $session)
+            {
+                $title = 'Session ' . ($i + 1);
+                $link = $this->createAbsoluteUrl('/class/join', array('id' => $model->Class_ID, 'session' => $session->Session_ID));
+
+                foreach ($session->lessons as $lesson)
+                {
+                    $calendarJS .= <<<BLOCK
+                {
+                    id: {$lesson->Lesson_ID},
+                    title: '{$title}',
+                    start: new Date('{$lesson->Start}'),
+                    end: new Date('{$lesson->End}'),
+                    allDay: false,
+                    url: '{$link}',
+                    session: {$session->Session_ID}
+                },
+BLOCK;
+                }
+            }
+
+            $calendarJS = rtrim($calendarJS, ",");
+            echo $calendarJS;
+            ?>
+            ],
+            eventMouseover:function (event, jsEvent, view) {
+                if (typeof $(this).data("qtip") !== "object") {
+                    $(this).qtip({
+                        content:{
+                            url:'<?php echo $this->createAbsoluteUrl("/class/enrollDialog", array("id" => $model->Class_ID)); ?>' + '?session=' + event.session
+                        },
+                        position:{
+                            corner:{
+                                target:'topLeft',
+                                tooltip:'bottomMiddle'
+                            }
+                        },
+                        hide:{
+                            fixed:true // Make it fixed so it can be hovered over
+                        },
+                        style:{
+                            padding:'10px' // Give it some extra padding
+                        }});
+                }
+            }
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    // Only create tooltips when document is ready
+    $(document).ready(function () {
+/*        var clientEvents = $('#calendar').fullCalendar('clientEvents');
+
+        for (var i = 0; i < clientEvents.length; i++) {
+            $(clientEvents[i]).qtip(
+                    {
+                        content:{
+                            url:'<?php echo $this->createAbsoluteUrl("/class/join", array("id" => $model->Class_ID)); ?>' + '?session=' + clientEvents[i].session
+                        },
+                        position:{
+                            corner:{
+                                target:'topLeft',
+                                tooltip:'bottomMiddle'
+                            }
+                        },
+                        hide:{
+                            fixed:true // Make it fixed so it can be hovered over
+                        },
+                        style:{
+                            padding:'10px' // Give it some extra padding
+                        }
+                    });
+        }*/
+
+        // Use the each() method to gain access to each of the elements attributes
+        /*        $('a.fc-event').each(function()
+                {
+                    $(this).qtip(
+                            {
+                                content: {
+                                    url: '<?php echo $this->createAbsoluteUrl("/class/join", array("id" => $model->Class_ID, "session" => $session->Session_ID)); ?>'
+                        },
+                        position: {
+                            corner:{
+                                target:'topLeft',
+                                tooltip:'bottomMiddle'
+                            }
+                        },
+                        hide: {
+                            fixed: true // Make it fixed so it can be hovered over
+                        },
+                        style: {
+                            padding: '10px' // Give it some extra padding
+                        }
+                    });
+        });*/
     });
 </script>

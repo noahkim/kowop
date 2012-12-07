@@ -21,28 +21,32 @@ class RequestJoinForm extends CFormModel
     public function save()
     {
         $hasSpecifiedAvailability = false;
-        foreach ($this->availability as $day => $timeOfDay)
+
+        if ($this->availability != null)
         {
-            if ($timeOfDay == 0)
+            foreach ($this->availability as $day => $timeOfDay)
             {
-                continue;
-            }
+                if ($timeOfDay == 0)
+                {
+                    continue;
+                }
 
-            $hasSpecifiedAvailability = true;
+                $hasSpecifiedAvailability = true;
 
-            $existing = RequestToUser::model()->find(
-                'User_ID=:User_ID AND Request_ID=:Request_ID AND Day=:Day',
-                array(':User_ID' => $this->user_ID, ':Request_ID' => $this->request_ID, ':Day' => $day)
-            );
-            if ($existing == null)
-            {
-                $requestToUser = new RequestToUser();
-                $requestToUser->User_ID = $this->user_ID;
-                $requestToUser->Request_ID = $this->request_ID;
-                $requestToUser->Day = $day;
-                $requestToUser->Time_of_day = $timeOfDay;
+                $existing = RequestToUser::model()->find(
+                    'User_ID=:User_ID AND Request_ID=:Request_ID AND Day=:Day',
+                    array(':User_ID' => $this->user_ID, ':Request_ID' => $this->request_ID, ':Day' => $day)
+                );
+                if ($existing == null)
+                {
+                    $requestToUser = new RequestToUser();
+                    $requestToUser->User_ID = $this->user_ID;
+                    $requestToUser->Request_ID = $this->request_ID;
+                    $requestToUser->Day = $day;
+                    $requestToUser->Time_of_day = $timeOfDay;
 
-                $requestToUser->save();
+                    $requestToUser->save();
+                }
             }
         }
 
