@@ -106,14 +106,29 @@ class ClassController extends Controller
                 $step = 2;
             }
         }
+        elseif (isset($_POST['step4']))
+        {
+            $model = new ClassCreateForm("step3");
+            $this->setPageState('step3', $_POST['ClassCreateForm']);
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $_POST['ClassCreateForm'];
+
+            $model->imageFile = $this->getPageState('imageFileName');
+
+            $model->user = User::model()->findByPk(Yii::app()->user->id);
+
+            $step = 4;
+        }
         elseif (isset($_POST['submit']))
         {
             $model = new ClassCreateForm('submit');
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            $model->imageFile = $this->getPageState('imageFileName', array());
+            $model->imageFile = $this->getPageState('imageFileName');
 
             if ($model->save())
             {
@@ -121,7 +136,7 @@ class ClassController extends Controller
             }
             else
             {
-                $step = 3;
+                $step = 4;
             }
         }
         else

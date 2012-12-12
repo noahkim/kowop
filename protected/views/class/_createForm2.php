@@ -15,9 +15,9 @@
                     <label class="right inline">Image</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->textField($model, 'imageURL', array('placeholder' => 'image URL')); ?>
-                    or upload
-                    <?php echo $form->fileField($model, 'imageFile'); ?>
+                    <?php /*echo $form->textField($model, 'imageURL', array('placeholder' => 'image URL')); */?><!--
+                    or upload-->
+                    <?php echo $form->fileField($model, 'imageFile', array('placeholder' => 'upload')); ?>
                 </div>
             </div>
             <div class="row">
@@ -33,10 +33,10 @@
                     <label class="right inline">Availability</label>
                 </div>
                 <div class="two columns">
-                    <?php echo $form->textField($model, 'start', array('placeholder' => 'from')); ?>
+                    <?php echo $form->textField($model, 'start', array('id' => 'startDate', 'placeholder' => 'from')); ?>
                 </div>
                 <div class="two columns end">
-                    <?php echo $form->textField($model, 'end', array('placeholder' => 'to')); ?>
+                    <?php echo $form->textField($model, 'end', array('id' => 'endDate', 'placeholder' => 'to')); ?>
                 </div>
             </div>
             <div class="row">
@@ -52,12 +52,41 @@
             </div>
             <div class="row">
                 <div class="three columns">
-                    <label class="right inline">How many lessons in a session?</label>
+                    <label class="right inline">How many lessons make up one session?</label>
                 </div>
                 <div class="nine columns">
                     <?php echo $form->textField($model, 'numLessons', array('placeholder' => 'ex. 3', 'class' => 'three')); ?>
                 </div>
             </div>
+            <div class="row">
+                <div class="three columns">
+                    <label class="right inline">What's the length of one lesson?</label>
+                </div>
+                <div class="two columns">
+                    <select id="hourPicker">
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>
+                </div>
+                <div class="one column end">
+                    <label class="left inline">hours</label>
+                </div>
+                <div class="two columns">
+                    <select id="minutePicker">
+                        <option>0</option>
+                        <option>30</option>
+                    </select>
+                </div>
+                <div class="one column end">
+                    <label class="left inline">minutes</label>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="three columns">
                     <label class="right inline">Tuition</label>
@@ -106,7 +135,7 @@
                         students can expect from this class. Remember to include any prerequisites, such as things
                         students should already know before taking your class or class materials they need to bring that
                         you won't be providing.</p>
-                    <?php echo $form->textArea($model, 'description', array('rows' => 15, 'maxlength' => 2000)); ?>
+                    <?php echo $form->textArea($model, 'description', array('id' => 'description', 'maxlength' => 2000)); ?>
                 </div>
             </div>
 
@@ -116,6 +145,7 @@
                     <!--<a href="create_class3.html" class="button radius">Save &amp; Continue</a>-->
                 </div>
             </div>
+            <?php echo $form->hiddenField($model, 'lessonDuration', array('id' => 'lessonDuration')); ?>
             <?php $this->endWidget(); ?>
         </div>
     </div>
@@ -128,43 +158,27 @@
     <!------- end main content container----->
 </div>
 
-<!--<div class="form">
+<script>
+    $(document).ready(function () {
+        $('#startDate').Zebra_DatePicker({
+            direction:1,
+            format:'m/d/Y',
+            pair:$('#endDate')
+        });
 
+        $('#endDate').Zebra_DatePicker({
+            format:'m/d/Y',
+            direction:1
+        });
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
+        $('#hourPicker, #minutePicker').change(function() {
+            var duration = Number($('#hourPicker').val());
+            if(Number($('#minutePicker').val()) != 0)
+            {
+                duration += 0.5;
+            }
 
-    <?php /*echo $form->errorSummary($model); */?>
-
-    <div class="row">
-        <?php /*echo $form->labelEx($model, 'prerequisites'); */?>
-        <?php /*echo $form->textField($model, 'prerequisites'); */?>
-        <?php /*echo $form->error($model, 'prerequisites'); */?>
-    </div>
-
-    <div class="row">
-        <?php /*echo $form->labelEx($model, 'materials'); */?>
-        <?php /*echo $form->textField($model, 'materials'); */?>
-        <?php /*echo $form->error($model, 'materials'); */?>
-    </div>
-
-    <div class="row">
-        Class Image URL:
-        <input name='imageURL' type='text'/>
-    </div>
-
-    <div class="row">
-        <?php /*echo $form->labelEx($model, 'tuition'); */?>
-        <?php /*echo $form->textField($model, 'tuition'); */?>
-        <?php /*echo $form->error($model, 'tuition'); */?>
-    </div>
-
-
-    <div class="row">
-        <?php /*echo $form->labelEx($model, 'numSessions'); */?>
-        <?php /*echo $form->textField($model, 'numSessions'); */?>
-        <?php /*echo $form->error($model, 'numSessions'); */?>
-    </div>
-
-
-</div><!-- form -->
--->
+            $('#lessonDuration').val(duration);
+        });
+    });
+</script>

@@ -158,7 +158,7 @@
                                 <li><span>Total Seats</span><?php echo $model->Max_occupancy; ?></li>
                                 <li><span>Needed to Start</span><?php echo $model->Min_occupancy; ?></li>
                                 <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
-                                <li><span>1 Lesson time</span>60 min</li>
+                                <li><span>1 Lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
                                 <li><span>Availability</span><?php echo $model->Start; ?>
                                     -
                                     <?php echo $model->End; ?></li>
@@ -182,7 +182,6 @@
 </div>
 <!------- end main content container----->
 
-<script type="text/javascript" src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
 <script type="text/javascript">
     $(window).load(function () {
         $('#slider').nivoSlider({
@@ -283,55 +282,4 @@ BLOCK;
 
     });
 
-</script>
-
-<script type="text/javascript">
-    // Only create tooltips when document is ready
-    $(document).ready(function () {
-/*        var clientEvents = $('#calendar').fullCalendar('clientEvents');
-
-        for (var i = 0; i < clientEvents.length; i++) {
-            $(clientEvents[i]).qtip(
-                    {
-                        content:{
-                            url:'<?php echo $this->createAbsoluteUrl("/class/join", array("id" => $model->Class_ID)); ?>' + '?session=' + clientEvents[i].session
-                        },
-                        position:{
-                            corner:{
-                                target:'topLeft',
-                                tooltip:'bottomMiddle'
-                            }
-                        },
-                        hide:{
-                            fixed:true // Make it fixed so it can be hovered over
-                        },
-                        style:{
-                            padding:'10px' // Give it some extra padding
-                        }
-                    });
-        }*/
-
-        // Use the each() method to gain access to each of the elements attributes
-        /*        $('a.fc-event').each(function()
-                {
-                    $(this).qtip(
-                            {
-                                content: {
-                                    url: '<?php echo $this->createAbsoluteUrl("/class/join", array("id" => $model->Class_ID, "session" => $session->Session_ID)); ?>'
-                        },
-                        position: {
-                            corner:{
-                                target:'topLeft',
-                                tooltip:'bottomMiddle'
-                            }
-                        },
-                        hide: {
-                            fixed: true // Make it fixed so it can be hovered over
-                        },
-                        style: {
-                            padding: '10px' // Give it some extra padding
-                        }
-                    });
-        });*/
-    });
 </script>

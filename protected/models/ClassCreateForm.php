@@ -33,6 +33,7 @@ class ClassCreateForm extends CFormModel
     public $prerequisites;
     public $materials;
     public $tuition;
+    public $lessonDuration;
 
     // Step 3
     public $sessions;
@@ -40,6 +41,7 @@ class ClassCreateForm extends CFormModel
     // Models used
     private $location;
     public $class;
+    public $user;
 
     // Other
     public $fromRequest_ID;
@@ -48,11 +50,11 @@ class ClassCreateForm extends CFormModel
     {
         return array(
             array('name, category', 'required', 'on' => 'step1'),
-            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, locationType, description', 'required', 'on' => 'step2'),
+            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, lessonDuration, locationType, description', 'required', 'on' => 'step2'),
             array('category, numLessons, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,sessions,fromRequest_ID', 'safe'),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,lessonDuration,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -101,6 +103,7 @@ class ClassCreateForm extends CFormModel
             $this->class->Prerequisites = $this->prerequisites;
             $this->class->Materials = $this->materials;
             $this->class->Tuition = $this->tuition;
+            $this->class->LessonDuration = $this->lessonDuration;
 
             $this->location = $this->getLocation();
 
@@ -127,44 +130,6 @@ class ClassCreateForm extends CFormModel
             elseif ($this->imageFile != null)
             {
                 $content = Content::AddContent($this->imageFile, 'Class Image', ContentType::ImageID);
-
-/*                $content = new Content;
-                $content->Content_name = 'Class Image';
-                $content->Content_type = ContentType::ImageID;
-
-                $content->save();
-                $content->refresh();
-
-                $path = Yii::app()->params['uploads'] . '/' . $content->Content_ID;
-                $link = Yii::app()->params['siteBase'] . '/uploads/' . $content->Content_ID;
-
-                $pathParts = pathinfo($this->imageFile);
-                $path .= '.' . $pathParts['extension'];
-                $link .= '.' . $pathParts['extension'];
-
-                rename(Yii::app()->params['temp'] . '/' . $this->imageFile, $path);
-
-                $image = new Iwi($path);
-
-                $sourceRatio = $image->width / $image->height;
-                $targetRatio = 4 / 3;
-
-                if ($sourceRatio > $targetRatio)
-                {
-                    $height = $image->height;
-                    $width = (int)$height * $targetRatio;
-                }
-                elseif ($sourceRatio < $targetRatio)
-                {
-                    $width = $image->width;
-                    $height = (int)$width / $targetRatio;
-                }
-
-                $image->adaptive($width, $height);
-                $image->save();
-
-                $content->Link = $link;
-                $content->save();*/
 
                 $classToContent = new ClassToContent;
                 $classToContent->Class_ID = $this->class->Class_ID;

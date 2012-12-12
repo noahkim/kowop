@@ -11,31 +11,31 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width"/>
 
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/hero/stylesheet.css" />
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/bryant/stylesheet.css" />
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/susa/stylesheet.css" />
-    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.css' />
-    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.print.css' media='print' />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Copse" />
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/foundation.min.css" />
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/main.css" />
-
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-default.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-slider.css" media="screen" />
-
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/hero/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/bryant/stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/susa/stylesheet.css"/>
+    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.css'/>
+    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.print.css'
+          media='print'/>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Copse"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/foundation.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-default.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-slider.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/zebra_datepicker.css"/>
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/yii/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
 
     <script src='/yii/kowop/js/date.js'></script>
     <script src='/ui/site/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
-
     <script src="/ui/site/javascripts/modernizr.foundation.js"></script>
     <script src="/ui/site/javascripts/app.js"></script>
-
     <script src="/ui/site/javascripts/jquery.nivo.slider.pack.js"></script>
-
+    <script src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
     <script src="/ui/site/javascripts/qtip.js"></script>
+    <script src="/ui/site/javascripts/zebra_datepicker.js"></script>
+    <script src="/ui/site/javascripts/jquery.timepicker.js"></script>
 
     <title>Kowop | teach anything. learn everything.</title>
 </head>
