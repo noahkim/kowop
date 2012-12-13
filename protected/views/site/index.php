@@ -14,7 +14,7 @@ $this->pageTitle = Yii::app()->name;
                 <div class="row homeBlurb">
                     <div class="six columns"><img src="/ui/site/images/blurb_andonline.png" class="blurbAndOnline"> Neighborhood
                         classes on just about <strong>anything</strong> for people who are short on time, but want to
-                        learn. Taught by locals like you in the comfort of small groups. <span class="blurbHighlight">See what's out there.</span>
+                        learn. Taught by locals like you in the comfort of small groups.
                     </div>
                     <div class="six columns"> Meet new people, teach &amp; learn new things. <span
                             class="blurbHighlight">Experience the joy of imparting knowledge (and make a little beer money if you'd like).</span>
@@ -39,6 +39,9 @@ $this->pageTitle = Yii::app()->name;
                             'placeholder' => 'search by topic or location',
                             'onkeypress' => 'if ((e.which || e.keyCode) == 13) { document.forms["search-form"].submit(); return false; }'
                         )); ?>
+
+                        <?php echo CHtml::link('or just browse all classes', array('/class/search')); ?>
+
                         <?php $this->endWidget('CActiveForm'); ?>
                     </div>
                     <div class="six columns">

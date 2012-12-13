@@ -162,13 +162,13 @@ class ClassCreateForm extends CFormModel
 
             $sessionData = json_decode($this->sessions);
 
-            foreach ($sessionData->sessions as $i => $item)
+            foreach ($sessionData as $sessionItem)
             {
                 $session = new Session;
                 $session->Class_ID = $this->class->Class_ID;
                 $session->save();
 
-                foreach($item as $j => $lessonItem)
+                foreach($sessionItem->lessons as $lessonItem)
                 {
                     $lesson = new Lesson;
                     $lesson->Session_ID = $session->Session_ID;

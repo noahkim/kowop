@@ -22,7 +22,7 @@
                         <label class="right inline">Date</label>
                     </div>
                     <div class="three columns end">
-                        <input class='datepicker' id="date{$i}" type="text">
+                        <input class='datepicker' id="date{$i}" type="text" />
                     </div>
                 </div>
                 <div class="row">
@@ -30,7 +30,7 @@
                         <label class="right inline">Start Time</label>
                     </div>
                     <div class="five columns end">
-                        <input class='timepicker' id="startTime{$i}" type="text">
+                        <input class='timepicker' id="startTime{$i}" type="text" />
                     </div>
                 </div>
                 <div class="row">
@@ -38,7 +38,7 @@
                         <label class="right inline">End Time</label>
                     </div>
                     <div class="five columns end">
-                        <input type="text" id="endTime{$i}" readonly>
+                        <input type="text" id="endTime{$i}" readonly="readonly" />
                     </div>
                 </div>
                 <!----- end lesson---->
@@ -73,13 +73,10 @@ BLOCK;
     <div id="addedSessions" class="four columns">
         <h3>Added Sessions</h3>
 
-        <div class="addedSession">
+        <div id="sessionPrototype" style="display: none;">
             <a href="#" class="tiny secondary button radius">X</a>
-            <h5>Session 1</h5>
+            <h5>Session Number</h5>
             <ul>
-                <li>December 5, 2012</li>
-                <li>December 6, 2012</li>
-                <li>December 7, 2012</li>
             </ul>
         </div>
     </div>
@@ -95,30 +92,45 @@ BLOCK;
         settings.currentSession = 1;
         settings.numLessons = <?php echo $model->numLessons; ?>;
         settings.lessonDuration = <?php echo $model->lessonDuration; ?>;
+        settings.availabilityStart = Date.parse('<?php echo $model->start; ?>');
+        settings.availabilityEnd = Date.parse('<?php echo $model->end; ?>');
 
-        $('#sessionNum').text(settings.currentSession);
+        var existingSessions = '<?php echo $model->sessions; ?>';
+        if (existingSessions.length > 0) {
+            sessions = jQuery.parseJSON(existingSessions);
+            for (i in sessions) {
+                for (j in sessions[i].lessons) {
+                    var dateFormat = "yyyy-MM-ddTHH:mm:ss.000Z"; // 2012-12-21T17:15:00.000Z
+                    sessions[i].lessons[j].start = Date.parseExact(sessions[i].lessons[j].start, dateFormat);
+                    sessions[i].lessons[j].end = Date.parseExact(sessions[i].lessons[j].end, dateFormat);
+                }
+            }
+
+            settings.currentSession = sessions.length + 1;
+
+            displaySessions();
+        }
 
         $('.datepicker').Zebra_DatePicker({
-            direction:1
+            direction:[settings.availabilityStart.toString('yyyy-MM-dd'), settings.availabilityEnd.toString('yyyy-MM-dd')]
         });
 
-        $('.timepicker').timepicker();
+        $('.timepicker').timepicker({
+            step:15
+        });
 
         for (var i = 1; i <= settings.numLessons; i++) {
-            $('#startTime' + i).change(function () {
-                alert(i + ':' + $(this).val());
-                var start = Date.parse($('#startTime' + i).val());
-                if (start != null) {
-                    var end = start.addHours(settings.lessonDuration);
-                    $('#endTime' + i).val(end.toString('h:mmtt').toLowerCase());
-                }
+            $('#startTime' + i).on('changeTime', function () {
+                var index = parseInt($(this).attr('id').replace('startTime', ''));
+                var start = Date.parse($(this).val());
+                var end = start.addHours(settings.lessonDuration);
+                var endString = end.toString('h:mmtt').toLowerCase();
+                $('#endTime' + index).val(endString);
             });
         }
 
-        $('#submit').click(function () {
-            $('#sessions').val(JSON.stringify(data));
-            alert($('#sessions').val());
-            return false;
+        $('#submit').click(function (event) {
+            $('#sessions').val(JSON.stringify(sessions));
         });
     });
 
@@ -132,9 +144,7 @@ BLOCK;
             var lesson = {};
 
             lesson.start = Date.parse($('#date' + i).val() + ' ' + $('#startTime' + i).val());
-            lesson.end = lesson.start.add({
-                hours:settings.lessonDuration
-            });
+            lesson.end = Date.parse($('#date' + i).val() + ' ' + $('#endTime' + i).val());
 
             session.lessons.push(lesson);
 
@@ -143,12 +153,38 @@ BLOCK;
             $('#endTime' + i).val('');
         }
 
-        sessions[settings.currentSession] = session;
-
+        sessions.push(session);
         settings.currentSession++;
+        displaySessions();
     }
 
     function displaySessions() {
-        $('.addedSessions .addedSession').remove();
+        $('#addedSessions .addedSession').remove();
+
+        for (var i = 1; i < settings.currentSession; i++) {
+            var newSession = $('#sessionPrototype').clone();
+            newSession.removeAttr('style id');
+            newSession.addClass('addedSession');
+            newSession.attr('id', 'session' + i);
+
+            newSession.find('h5').text('Session ' + i);
+            newSession.find('a').attr('onclick', 'removeSession(' + i + '); return false;');
+
+            for (var j = 0; j < sessions[i - 1].lessons.length; j++) {
+                var startTime = sessions[i - 1].lessons[j].start.toString('MMMM d, yyyy');
+                newSession.find('ul').append('<li>' + startTime + '</li>');
+            }
+
+            newSession.appendTo('#addedSessions');
+        }
+
+        $('#sessionNum').text(settings.currentSession);
+    }
+
+    function removeSession(session)
+    {
+        sessions.splice(session - 1, 1);
+        settings.currentSession--;
+        displaySessions();
     }
 </script>

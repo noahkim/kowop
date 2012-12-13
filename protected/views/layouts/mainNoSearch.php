@@ -31,6 +31,7 @@
     <script src='/ui/site/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
     <script src="/ui/site/javascripts/modernizr.foundation.js"></script>
     <script src="/ui/site/javascripts/app.js"></script>
+    <script src="/ui/site/javascripts/account_toggle.js"></script>
     <script src="/ui/site/javascripts/jquery.nivo.slider.pack.js"></script>
     <script src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
     <script src="/ui/site/javascripts/qtip.js"></script>
@@ -58,14 +59,25 @@
                 <li><?php echo CHtml::link('Login', array('/site/login')); ?></li>
             </ul>
         </div>
+
         <?php else : ?>
         <div class="five columns blurb"> teach anything. learn everything.</div>
         <div class="four columns headernav">
-            <ul>
-                <li><a href="how_it_works.html">How it Works</a></li>
-                <li><?php echo CHtml::link('Logout', array('/site/logout')); ?></li>
-                <li><?php echo CHtml::link('My Account', array('/user/view', 'id' => Yii::app()->user->id)); ?></li>
-            </ul>
+            <!----- My account dropdown ------->
+            <div class="dropdown">
+                <a class="account">
+                    <span class="notifications">99</span>
+                    <span>My Account</span>
+                </a>
+                <div class="submenu" style="display: none;">
+                    <ul class="root">
+                        <li><a href="account_manage1.html">My Classes</a> </li>
+                        <li><?php echo CHtml::link('My Profile', array('/user/view', 'id' => Yii::app()->user->id)); ?> </li>
+                        <li><?php echo CHtml::link('Sign Out', array('/site/logout')); ?></li>
+                    </ul>
+                </div>
+            </div>
+            <!----- end my account dropdown----->
         </div>
         <?php endif; ?>
     </div>

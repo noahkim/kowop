@@ -7,7 +7,6 @@
             <p>This is how your class will appear. Just make sure everything looks right, then post. Don't worry if you
                 missed a detail or need to change something in the future. You can always come back to it and edit it
                 later.</p>
-            <a href="#" class="button large radius">Make Changes</a>
 
             <?php $form = $this->beginWidget('CActiveForm', array(
             'id' => 'class-create-form',
@@ -15,6 +14,7 @@
             'stateful' => true,
             'htmlOptions' => array('style' => 'margin: 0;')
         )); ?>
+            <?php echo CHtml::submitButton('Make Changes', array('name' => 'change', 'class' => 'button large radius')); ?>
             <?php echo CHtml::submitButton('Post my class', array('name' => 'submit', 'id' => 'submit', 'class' => 'button large primary radius')); ?>
             <?php $this->endWidget(); ?>
         </div>
@@ -34,7 +34,7 @@
                 <div class="six columns">
                     <div class="slider-wrapper theme-default">
                         <div id="slider" class="nivoSlider">
-                            <?php echo "<img src='{$model->imageFile}' data-thumb='{$model->imageFile}' alt=''/>\n"; ?>
+                            <?php echo "<img src='/yii/kowop/temp/{$model->imageFile}' data-thumb='/yii/kowop/temp/{$model->imageFile}' alt=''/>\n"; ?>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 
                             $nextSession = json_decode($model->sessions)[0];
 
-                            foreach ($nextSession as $lesson)
+                            foreach ($nextSession->lessons as $lesson)
                             {
                                 echo "<li>{$lesson->start}</li>\n";
                             }
@@ -116,11 +116,11 @@
                         </div>
                     </div>
                     <div class="detailsCategory">
-                        <span>Category</span> <a href="#"><?php echo $model->category; ?></a></div>
+                        <span>Category</span> <a href="#"><?php echo Category::GetCategories()[$model->category]; ?></a></div>
                     <div class="detailsTags">
                         <span>Tags</span>
                         <?php
-                        $tagsArray = Tag::model()->string2array($this->tags);
+                        $tagsArray = Tag::model()->string2array($model->tags);
 
                         foreach ($tagsArray as $tag)
                         {
@@ -179,3 +179,34 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(window).load(function () {
+        $('#slider').nivoSlider({
+            effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
+            slices:15, // For slice animations
+            boxCols:8, // For box animations
+            boxRows:4, // For box animations
+            animSpeed:1000, // Slide transition speed
+            pauseTime:4000, // How long each slide will show
+            startSlide:0, // Set starting Slide (0 index)
+            directionNav:true, // Next & Prev navigation
+            controlNav:true, // 1,2,3... navigation
+            controlNavThumbs:true, // Use thumbnails for Control Nav
+            pauseOnHover:true, // Stop animation while hovering
+            manualAdvance:false, // Force manual transitions
+            prevText:'Prev', // Prev directionNav text
+            nextText:'Next', // Next directionNav text
+            randomStart:false, // Start on a random slide
+            beforeChange:function () {
+            }, // Triggers before a slide transition
+            afterChange:function () {
+            }, // Triggers after a slide transition
+            slideshowEnd:function () {
+            }, // Triggers after all slides have been shown
+            lastSlide:function () {
+            }, // Triggers when last slide is shown
+            afterLoad:function () {
+            } // Triggers when slider has loaded
+        });
+    });
+</script>

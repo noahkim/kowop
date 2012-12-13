@@ -71,6 +71,9 @@ class ClassController extends Controller
 
             $this->setPageState('step1', $_POST['ClassCreateForm']);
 
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
             if (!$model->validate())
@@ -86,6 +89,8 @@ class ClassController extends Controller
 
             $model = new ClassCreateForm("step2");
             $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
             $imageFileName = 'temp' . uniqid();
@@ -112,6 +117,7 @@ class ClassController extends Controller
             $this->setPageState('step3', $_POST['ClassCreateForm']);
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
             $model->imageFile = $this->getPageState('imageFileName');
@@ -126,7 +132,6 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $_POST['ClassCreateForm'];
 
             $model->imageFile = $this->getPageState('imageFileName');
 
@@ -138,6 +143,15 @@ class ClassController extends Controller
             {
                 $step = 4;
             }
+        }
+        elseif (isset($_POST['change']))
+        {
+            $step = 1;
+
+            $model = new ClassCreateForm('submit');
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
         }
         else
         {

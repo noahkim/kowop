@@ -142,7 +142,6 @@
             <div class="row borderTop">
                 <div class="twelve columns alignRight">
                     <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step3', 'class' => 'button radius')); ?>
-                    <!--<a href="create_class3.html" class="button radius">Save &amp; Continue</a>-->
                 </div>
             </div>
             <?php echo $form->hiddenField($model, 'lessonDuration', array('id' => 'lessonDuration')); ?>
@@ -160,6 +159,9 @@
 
 <script>
     $(document).ready(function () {
+
+        var existingDuration = parseFloat('<?php echo $model->lessonDuration; ?>') || 0;
+
         $('#startDate').Zebra_DatePicker({
             direction:1,
             format:'m/d/Y',
@@ -180,5 +182,14 @@
 
             $('#lessonDuration').val(duration);
         });
+
+        if(existingDuration > 0)
+        {
+            var hours = Math.floor(existingDuration);
+            var minutes = existingDuration - hours;
+
+            $('#hourPicker').val(hours);
+            $('#minutePicker').val(minutes);
+        }
     });
 </script>
