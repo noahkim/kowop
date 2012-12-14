@@ -26,7 +26,7 @@ class ClassController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'join', 'enrollDialog'),
+                'actions' => array('create', 'update', 'join', 'enrollDialog', 'viewDialog'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -308,6 +308,17 @@ class ClassController extends Controller
         $session = isset($_REQUEST['session']) ? Session::model()->findByPk($_REQUEST['session']) : $model->sessions[0];
 
         $this->render('enrollDialog', array('model' => $model, 'session' => $session));
+    }
+
+    public function actionViewDialog()
+    {
+        $this->layout = false;
+
+        if(isset($_REQUEST['lesson']))
+        {
+            $lesson = Lesson::model()->findByPk($_REQUEST['lesson']);
+            $this->render('viewDialog', array('model' => $lesson));
+        }
     }
 
     /**

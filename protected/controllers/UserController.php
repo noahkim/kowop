@@ -3,15 +3,6 @@
 class UserController extends Controller
 {
     /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    //public $layout = '//layouts/default/column2';
-
-    public $breadcrumbs;
-    public $menu;
-
-    /**
      * @return array action filters
      */
     public function filters()
@@ -54,7 +45,20 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $section = 0;
+
+        if(isset($_REQUEST['s']))
+        {
+            $section = $_REQUEST['s'];
+        }
+
+        if($id != Yii::app()->user->id)
+        {
+            //$section = 0;
+        }
+
         $this->render('view', array(
+            'section' => $section,
             'model' => $this->loadModel($id),
         ));
     }

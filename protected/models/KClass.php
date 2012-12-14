@@ -100,6 +100,7 @@ class KClass extends CActiveRecord
             'ratings' => array(self::HAS_MANY, 'Rating', 'Class_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Class_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Class_ID'),
+            'lessons' => array(self::HAS_MANY, 'Lesson', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
             'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
             'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions')
         );
@@ -182,6 +183,17 @@ class KClass extends CActiveRecord
     public function getTagString()
     {
         return Tag::model()->array2string($this->taglist);
+    }
+
+    public function getPicture()
+    {
+        $numContents = count($this->contents);
+        if($numContents > 0)
+        {
+            return $this->contents[$numContents-1]->Link;
+        }
+
+        return null;
     }
 
     public function beforeSave()

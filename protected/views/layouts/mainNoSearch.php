@@ -51,13 +51,11 @@
         </div>
 
         <?php if (Yii::app()->user->isGuest) : ?>
-        <div class="six columns blurb"> teach anything. learn everything.</div>
-        <div class="three columns headernav">
-            <ul>
-                <li><a href="how_it_works.html">How it Works</a></li>
-                <li><?php echo CHtml::link('Sign Up', array('/user/create')); ?></li>
-                <li><?php echo CHtml::link('Login', array('/site/login')); ?></li>
-            </ul>
+        <div class="five columns blurb"> teach anything. learn everything.</div>
+        <div class="four columns headerlinks">
+            <a href="how_it_works.html">How it Works</a>
+            <?php echo CHtml::link('Sign Up', array('/user/create')); ?>
+            <?php echo CHtml::link('Login', array('/site/login')); ?>
         </div>
 
         <?php else : ?>
@@ -69,10 +67,11 @@
                     <span class="notifications">99</span>
                     <span>My Account</span>
                 </a>
+
                 <div class="submenu" style="display: none;">
                     <ul class="root">
-                        <li><a href="account_manage1.html">My Classes</a> </li>
-                        <li><?php echo CHtml::link('My Profile', array('/user/view', 'id' => Yii::app()->user->id)); ?> </li>
+                        <li><?php echo CHtml::link('My Classes', array('/user/view', 'id' => Yii::app()->user->id, 's' => 1)); ?></li>
+                        <li><?php echo CHtml::link('My Profile', array('/user/view', 'id' => Yii::app()->user->id, 's' => 4)); ?> </li>
                         <li><?php echo CHtml::link('Sign Out', array('/site/logout')); ?></li>
                     </ul>
                 </div>

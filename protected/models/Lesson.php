@@ -104,4 +104,9 @@ class Lesson extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function getClass()
+    {
+        return $this->session->class;
+    }
 }
