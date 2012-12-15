@@ -26,6 +26,7 @@
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/yii/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="/ui/site/javascripts/foundation.min.js"></script>
 
     <script src='/yii/kowop/js/date.js'></script>
     <script src='/ui/site/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
@@ -92,20 +93,32 @@
         <div class="two columns footerlinks discover">
             <h5>Discover</h5>
             <ul>
-                <li><a href="#">teach a class</a></li>
-                <li><a href="#">take a class</a></li>
-                <li><a href="#">request a class</a></li>
+                <li>
+                    <?php echo CHtml::link("teach a class", $this->createUrl("class/create")); ?>
+                </li>
+                <li>
+                    <?php echo CHtml::link("take a class", $this->createUrl("class/search")); ?>
+                </li>
+                <li>
+                    <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>
+                </li>
                 <li><a href="#">how it works</a></li>
             </ul>
         </div>
         <div class="two columns footerlinks company">
             <h5>Company</h5>
             <ul>
-                <li><a href="#">about us</a></li>
-                <li><a href="#">join the team</a></li>
+                <li>
+                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
+                </li>
+                <li>
+                    <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
+                </li>
                 <li><a href="#">press</a></li>
                 <li><a href="#">blog</a></li>
-                <li><a href="#">FaQ</a></li>
+                <li>
+                    <?php echo CHtml::link("FaQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
+                </li>
                 <li><a href="#">policies</a></li>
                 <li><a href="#">terms &amp; privacy</a></li>
             </ul>

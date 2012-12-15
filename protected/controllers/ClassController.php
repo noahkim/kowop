@@ -22,11 +22,11 @@ class ClassController extends Controller
     {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'search'),
+                'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'join', 'enrollDialog', 'viewDialog'),
+                'actions' => array('create', 'update', 'join', 'leave'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -47,9 +47,28 @@ class ClassController extends Controller
     {
         $this->layout = '//layouts/mainNoSearch';
 
-        $this->render('view', array(
-            'model' => $this->loadModel($id),
-        ));
+        $view = 'view/_default';
+
+        $model = $this->loadModel($id);
+
+        if (!Yii::app()->user->isGuest)
+        {
+            if (Yii::app()->user->id == $model->Create_User_ID)
+            {
+                $view = 'view/_teacher';
+            }
+            else
+            {
+                $isEnrolled = count($model->students(array('condition' => 'students.User_ID = ' . Yii::app()->user->id))) > 0;
+
+                if($isEnrolled)
+                {
+                    $view = 'view/_enrolled';
+                }
+            }
+        }
+
+        $this->render('view', array('model' => $model, 'view' => $view));
     }
 
     /**
@@ -173,6 +192,8 @@ class ClassController extends Controller
      */
     public function actionUpdate($id)
     {
+        $this->layout = '//layouts/mainNoSearch';
+
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -267,11 +288,11 @@ class ClassController extends Controller
         $session = null;
         if (count($model->sessions) > 0)
         {
-            if(isset($_REQUEST['session']))
+            if (isset($_REQUEST['session']))
             {
                 $session_ID = $_REQUEST['session'];
                 $sessionFind = Session::model()->findByPk($session_ID);
-                if($sessionFind != null)
+                if ($sessionFind != null)
                 {
                     $session = $sessionFind;
                 }
@@ -300,6 +321,16 @@ class ClassController extends Controller
         $this->redirect(array('view', 'id' => $model->Class_ID));
     }
 
+    public function actionLeave($id)
+    {
+        $model = $this->loadModel($id);
+        $user_ID = Yii::app()->user->id;
+
+        UserToSession::model()->deleteAll('User_ID=:User_ID', array(':User_ID' => $user_ID));
+
+        $this->redirect(array('view', 'id' => $model->Class_ID));
+    }
+
     public function actionEnrollDialog($id)
     {
         $this->layout = false;
@@ -307,17 +338,17 @@ class ClassController extends Controller
 
         $session = isset($_REQUEST['session']) ? Session::model()->findByPk($_REQUEST['session']) : $model->sessions[0];
 
-        $this->render('enrollDialog', array('model' => $model, 'session' => $session));
+        $this->render('dialogs/enrollDialog', array('model' => $model, 'session' => $session));
     }
 
     public function actionViewDialog()
     {
         $this->layout = false;
 
-        if(isset($_REQUEST['lesson']))
+        if (isset($_REQUEST['lesson']))
         {
             $lesson = Lesson::model()->findByPk($_REQUEST['lesson']);
-            $this->render('viewDialog', array('model' => $lesson));
+            $this->render('dialogs/viewDialog', array('model' => $lesson));
         }
     }
 
