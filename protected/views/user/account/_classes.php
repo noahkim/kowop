@@ -19,7 +19,7 @@
                 </div>-->
     </div>
     <!---- enrolled classes ---------->
-    <span class="profileCount"><?php echo count($model->kClasses); ?></span>
+    <span class="profileCount"><?php echo count($model->enrolledIn); ?></span>
 
     <h2>Enrolled classes</h2>
 

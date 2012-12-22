@@ -115,7 +115,8 @@
             </div>
 
             <?php echo CHtml::link("Edit Class Details", array('/class/update', 'id' => $model->Class_ID), array('class' => 'button twelve secondary radius spacebot10')); ?>
-            <a href="#" class="button twelve secondary radius spacebot10" data-reveal-id="enrollLater">Manage sessions</a>
+            <a href="#" class="button twelve secondary radius spacebot10" data-reveal-id="enrollLater">Manage
+                sessions</a>
             <a href="#" class="button twelve secondary radius" data-reveal-id="enrollLater">Delete Class</a>
         </div>
     </div>
@@ -162,44 +163,106 @@
         <div class="detailStats">
             <h4>To Date</h4>
 
+            <?php
+            $lessonsToDate = count($model->lessons(array('condition' => 'Start < now()')));
+            $pastStudents = 0;
+
+            foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
+            {
+                $pastStudents += count($session->students);
+            }
+
+            $netIncome = $lessonsToDate * $model->Tuition * $pastStudents;
+            $hoursTaught = $lessonsToDate * $model->LessonDuration;
+            ?>
+            <div class="statBox">
+                Students<span><?php echo $pastStudents; ?></span>
+            </div>
+            <div class="statBox">
+                Net Income<span>$<?php echo $netIncome; ?></span>
+            </div>
+            <div class="statBox">
+                Hours Taught<span><?php echo $hoursTaught; ?></span>
+            </div>
+            <h4>Enrolled</h4>
+
+            <?php
+            $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
+            $projectedIncome = $lessonsToTeach * $model->Tuition * $model->Max_occupancy;
+            $hoursToTeach = $lessonsToTeach * $model->LessonDuration;
+            ?>
             <div class="statBox">
                 Students<span><?php echo count($model->students); ?></span>
             </div>
             <div class="statBox">
-                Net Income<span>$1,920.00</span>
+                Projected Income<span>$<?php echo $projectedIncome; ?></span>
             </div>
             <div class="statBox">
-                Hours Taught<span>12</span>
-            </div>
-            <h4>Enrolled</h4>
-
-            <div class="statBox">
-                Students<span>25</span>
-            </div>
-            <div class="statBox">
-                Projected Income<span>$1,500.00</span>
-            </div>
-            <div class="statBox">
-                Hours to Teach<span>10</span>
+                Hours to Teach<span><?php echo $hoursToTeach; ?></span>
             </div>
             <h4>Instructor Stats</h4>
 
+            <?php
+            $totalTuition = 0;
+            $totalHours = 0;
+
+            foreach ($model->createUser->kClasses as $class)
+            {
+                $totalTuition += $class->Tuition;
+                $totalHours += $class->LessonDuration;
+            }
+
+            $avgPerClass = $totalTuition / count($model->createUser->kClasses);
+            $avgPerHour = $totalTuition / $totalHours;
+
+            ?>
             <div class="statBox">
-                Avg. per Class<span>$258</span>
+                Avg. per Class<span>$<?php echo number_format($avgPerClass, 2); ?></span>
             </div>
             <div class="statBox">
-                Avg. per Hour<span>$258</span>
+                Avg. per Hour<span>$<?php echo number_format($avgPerHour, 2); ?></span>
             </div>
             <div class="statBox">
-                Net Income<span>$1,500.00</span>
+                Net Income<span>$<?php echo $totalTuition; ?></span>
             </div>
             <h4>Class stats</h4>
 
+            <?php
+            $totalSeats = 0;
+            $daysOfWeek = array();
+
+            foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
+            {
+                $totalSeats += count($session->students);
+            }
+
+            foreach ($model->sessions as $session)
+            {
+                foreach ($session->lessons as $lesson)
+                {
+                    $dayOfWeek = date('l', strtotime($lesson->Start));
+                    if (!isset($daysOfWeek[$dayOfWeek]))
+                    {
+                        $daysOfWeek[$dayOfWeek] = 0;
+                    }
+                    $daysOfWeek[$dayOfWeek]++;
+                }
+            }
+
+            arsort($daysOfWeek);
+            reset($daysOfWeek);
+            $busiestDay = key($daysOfWeek);
+
+            $pastSessionCount = count($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')));
+            $avgClassSize = $pastSessionCount > 0 ? $totalSeats / $pastSessionCount : 0;
+
+            ?>
+
             <div class="statBox">
-                Avg Class Size<span>4.3</span>
+                Avg Class Size<span><?php echo number_format($avgClassSize, 2); ?></span>
             </div>
             <div class="statBox">
-                Busiest Day<span>Saturday</span>
+                Busiest Day<span><?php echo $busiestDay; ?></span>
             </div>
             <div class="statBox">
                 Views<span>268</span>
