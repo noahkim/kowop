@@ -61,7 +61,7 @@ class ClassController extends Controller
             {
                 $isEnrolled = count($model->students(array('condition' => 'students.User_ID = ' . Yii::app()->user->id))) > 0;
 
-                if($isEnrolled)
+                if ($isEnrolled)
                 {
                     $view = 'view/_enrolled';
                 }

@@ -160,6 +160,19 @@ class UserController extends Controller
         ));
     }
 
+    public function actionClassReport()
+    {
+        $this->layout = false;
+
+        $id = Yii::app()->user->id;
+        $model = $this->loadModel($id);
+
+        $filter = json_decode($_REQUEST['filter']);
+        $results = $model->getClassReport($filter);
+
+        echo json_encode($results);
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.

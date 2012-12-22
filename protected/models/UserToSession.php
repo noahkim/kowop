@@ -61,6 +61,7 @@ class UserToSession extends CActiveRecord
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'User_ID'),
 			'session' => array(self::BELONGS_TO, 'Session', 'Session_ID'),
+            'lessons' => array(self::HAS_MANY, 'Lesson', array('Session_ID' => 'Session_ID'), 'through' => 'session')
 		);
 	}
 
