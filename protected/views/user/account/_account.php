@@ -26,11 +26,6 @@
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
     <div class="row accountEditrow">
-        <div class="three columns accountEditlabel">Password</div>
-        <div class="eight columns">**********</div>
-        <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
-    </div>
-    <div class="row accountEditrow">
         <div class="three columns accountEditlabel">About yourself</div>
         <div class="eight columns">
             <?php echo $model->Description; ?>

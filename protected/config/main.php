@@ -37,23 +37,17 @@ return array(
             'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yii/kowop/hybridauth',
             'withYiiUser' => false, // Set to true if using yii-user
             "providers" => array(
-                "OpenID" => array(
-                    "enabled" => true
-                ),
-
                 "Google" => array(
                     "enabled" => true,
                     "keys" => array("id" => "346522202623.apps.googleusercontent.com", "secret" => "n1mpAUFpf4oOos1dFqsfEuJc"),
                     "scope" => ""
                 ),
-
                 "Facebook" => array(
                     "enabled" => true,
                     "keys" => array("id" => "555427844485684", "secret" => "c55b742bb2cfba2943f5180850c90269"),
-                    "scope" => "email,publish_stream",
+                    "scope" => "email,user_about_me,publish_stream",
                     "display" => ""
                 ),
-
                 "Twitter" => array(
                     "enabled" => true,
                     "keys" => array("key" => "VHPB3OgTBtZCvvMGBB8iQ", "secret" => "MRXO9L9Yj4LCCR9cJFZjAXgulPq40O1OFXn3akagbM")

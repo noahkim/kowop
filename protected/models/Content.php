@@ -113,6 +113,18 @@ class Content extends CActiveRecord
         ));
     }
 
+    public static function AddContentFromURL($url, $name, $type, $targetRatio = null)
+    {
+        $content = new Content;
+        $content->Content_name = $name;
+        $content->Content_type = $type;
+        $content->Link = $url;
+
+        $content->save();
+
+        return $content;
+    }
+
     public static function AddContent($imageFile, $name, $type, $targetRatio = null)
     {
         if ($targetRatio == null)

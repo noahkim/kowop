@@ -7,7 +7,6 @@
  * @property integer $User_ID
  * @property string $First_name
  * @property string $Last_name
- * @property string $Password
  * @property string $Email
  * @property string $Phone_number
  * @property string $Description
@@ -54,12 +53,11 @@ class User extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('First_name, Last_name, Password, Email', 'required'),
-            array('First_name, Last_name, Password, Email, Description, Teacher_alias', 'length', 'max' => 255),
+            array('First_name, Last_name, Email, Description, Teacher_alias', 'length', 'max' => 255),
             array('Phone_number', 'length', 'max' => 45),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('User_ID, First_name, Last_name, Password, Email, Phone_number, Description, Teacher_alias, IsAdmin, Created, Updated', 'safe', 'on' => 'search'),
+            array('User_ID, First_name, Last_name, Email, Phone_number, Description, Teacher_alias, IsAdmin, Created, Updated', 'safe', 'on' => 'search'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -126,7 +124,6 @@ class User extends CActiveRecord
         $criteria->compare('User_ID', $this->User_ID);
         $criteria->compare('First_name', $this->First_name, true);
         $criteria->compare('Last_name', $this->Last_name, true);
-        $criteria->compare('Password', $this->Password, true);
         $criteria->compare('Email', $this->Email, true);
         $criteria->compare('Phone_number', $this->Phone_number, true);
         $criteria->compare('Description', $this->Description, true);
@@ -248,7 +245,7 @@ class User extends CActiveRecord
         return $results;
     }
 
-    public function beforeSave()
+/*    public function beforeSave()
     {
         if (isset($this->Password))
         {
@@ -256,5 +253,5 @@ class User extends CActiveRecord
         }
 
         return parent::beforeSave();
-    }
+    }*/
 }

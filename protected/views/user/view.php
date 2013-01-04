@@ -7,7 +7,7 @@
     <div class="three columns sideNav">
         <?php
 
-        $imageLink = '/ui/site/images/sample_amit.jpg';
+        $imageLink = 'http://placehold.it/800x800';
 
         if ($model->profilePic != null)
         {
