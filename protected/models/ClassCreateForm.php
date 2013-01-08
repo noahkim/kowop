@@ -50,7 +50,7 @@ class ClassCreateForm extends CFormModel
     {
         return array(
             array('name, category', 'required', 'on' => 'step1'),
-            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, lessonDuration, locationType, description', 'required', 'on' => 'step2'),
+            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, lessonDuration, description, locationType, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step2'),
             array('category, numLessons, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
@@ -60,11 +60,6 @@ class ClassCreateForm extends CFormModel
 
     private function getLocation()
     {
-        if ($this->locationName == null)
-        {
-            return null;
-        }
-
         $location = new Location;
         $location->Name = $this->locationName;
         $location->Address = $this->locationStreet;
@@ -106,11 +101,7 @@ class ClassCreateForm extends CFormModel
             $this->class->LessonDuration = $this->lessonDuration;
 
             $this->location = $this->getLocation();
-
-            if ($this->location != null)
-            {
-                $this->class->Location_ID = $this->location->Location_ID;
-            }
+            $this->class->Location_ID = $this->location->Location_ID;
 
             $this->class->save();
 
@@ -168,7 +159,7 @@ class ClassCreateForm extends CFormModel
                 $session->Class_ID = $this->class->Class_ID;
                 $session->save();
 
-                foreach($sessionItem->lessons as $lessonItem)
+                foreach ($sessionItem->lessons as $lessonItem)
                 {
                     $lesson = new Lesson;
                     $lesson->Session_ID = $session->Session_ID;

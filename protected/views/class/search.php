@@ -90,7 +90,7 @@
                 echo <<<BLOCK
   <!----- 1 tile/result ------->
   <div class="four columns spacebot20 {$end}">
-    <div class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
+    <div id="result{$i}" class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
       <div class="resultsImage">
         {$imageHTML}
       </div>
@@ -133,7 +133,7 @@ BLOCK;
 <!----- 1 tile/result REQUEST ------->
 <div class="four columns spacebot20 {$end}">
 <span class="ribbon request"></span>
-  <div class="requestTile">
+  <div id="result{$i}" class="requestTile">
     <div class="row" class="spacebot10"></div>
   {$name}
   <span class="resultsCategory food">in {$item->category->Name}</span>
@@ -175,8 +175,9 @@ BLOCK;
 ---------------------------------------->
 <div class="three columns sidebar">
     <div class="resultsMap">
-        <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020479,-118.411732&amp;sspn=0.841143,1.461182&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+        <div id="map" style="width: 100%; height: 200px;"></div>
+        <!--<iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020479,-118.411732&amp;sspn=0.841143,1.461182&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>-->
     </div>
 
     <?php $form = $this->beginWidget('CActiveForm', array(
@@ -262,4 +263,73 @@ BLOCK;
 <!------- end main content container----->
 </div>
 
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4&sensor=false">
+</script>
+<script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $("#map").gmap3({
+            map:{
+                options:{
+                    mapTypeId:google.maps.MapTypeId.ROADMAP,
+                    zoom:5
+                },
+                zoom_changed: function () {
+                    //todo: get all markers in bounds
+                }
+            },
+            marker:{
+                values:[
+
+                <?php
+                $markerValues = '';
+
+                foreach ($results as $i => $item)
+                {
+                    if ($item->location != null)
+                    {
+                        $address = str_replace("'", "\\'", $item->location->fullAddress);
+
+                        if ($item instanceof KClass)
+                        {
+                            $link = $this->createUrl('/class/view', array('id' => $item->Class_ID));
+                        }
+                        elseif ($item instanceof Request)
+                        {
+                            $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
+                        }
+
+                        $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}' } },\n";
+                    }
+                }
+
+                $markerValues = Utils::str_lreplace(',', '', $markerValues);
+                echo $markerValues;
+                ?>
+
+                ],
+                options:{
+                    draggable:false
+                },
+                events:{
+                    mouseover:function (marker, event, context) {
+                        var index = context.data.index;
+                        $('#result' + index).css('border-width', '2');
+                        $('#result' + index).css('border-color', 'blue');
+                    },
+                    mouseout:function (marker, event, context) {
+                        var index = context.data.index;
+                        $('#result' + index).css('border-width', '');
+                        $('#result' + index).css('border-color', '');
+                    },
+                    click: function (marker, event, context) {
+                        window.location.replace(context.data.link);
+                    }
+                }
+            },
+            autofit:{}
+        });
+    });
+</script>

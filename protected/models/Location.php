@@ -47,7 +47,7 @@ class Location extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Address, City, State, Zip, Type', 'required'),
+			array('Address, City, State, Zip, Type', 'required'),
 			array('Type', 'numerical', 'integerOnly'=>true),
 			array('Address', 'length', 'max'=>2000),
 			array('Name, City, Country', 'length', 'max'=>255),
