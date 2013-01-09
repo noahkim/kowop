@@ -89,7 +89,7 @@
 
                 echo <<<BLOCK
   <!----- 1 tile/result ------->
-  <div class="four columns spacebot20 {$end}">
+  <div id="resultContainer{$i}" class="four columns spacebot20 {$end}">
     <div id="result{$i}" class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
       <div class="resultsImage">
         {$imageHTML}
@@ -131,7 +131,7 @@ BLOCK;
 
                 echo <<<BLOCK
 <!----- 1 tile/result REQUEST ------->
-<div class="four columns spacebot20 {$end}">
+<div id="resultContainer{$i}" class="four columns spacebot20 {$end}">
 <span class="ribbon request"></span>
   <div id="result{$i}" class="requestTile">
     <div class="row" class="spacebot10"></div>
@@ -276,13 +276,53 @@ BLOCK;
                     mapTypeId:google.maps.MapTypeId.ROADMAP,
                     zoom:5
                 },
-                zoom_changed: function () {
-                    //todo: get all markers in bounds
+                events:{
+                    zoom_changed:function () {
+                        var map = $("#map").gmap3("get");
+
+                        $("#map").gmap3({
+                            get:{
+                                name:"marker",
+                                all:true,
+                                full:true,
+                                callback:function (objs) {
+                                    $.each(objs, function (i, obj) {
+                                        if (!map.getBounds().contains(obj.object.getPosition())) {
+                                            $('#resultContainer' + obj.data.index).hide();
+                                        }
+                                        else {
+                                            $('#resultContainer' + obj.data.index).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    },
+                    center_changed:function () {
+                        var map = $("#map").gmap3("get");
+
+                        $("#map").gmap3({
+                            get:{
+                                name:"marker",
+                                all:true,
+                                full:true,
+                                callback:function (objs) {
+                                    $.each(objs, function (i, obj) {
+                                        if (!map.getBounds().contains(obj.object.getPosition())) {
+                                            $('#resultContainer' + obj.data.index).hide();
+                                        }
+                                        else {
+                                            $('#resultContainer' + obj.data.index).show();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
                 }
             },
             marker:{
                 values:[
-
                 <?php
                 $markerValues = '';
 
@@ -308,7 +348,6 @@ BLOCK;
                 $markerValues = Utils::str_lreplace(',', '', $markerValues);
                 echo $markerValues;
                 ?>
-
                 ],
                 options:{
                     draggable:false
@@ -324,7 +363,7 @@ BLOCK;
                         $('#result' + index).css('border-width', '');
                         $('#result' + index).css('border-color', '');
                     },
-                    click: function (marker, event, context) {
+                    click:function (marker, event, context) {
                         window.location.replace(context.data.link);
                     }
                 }
