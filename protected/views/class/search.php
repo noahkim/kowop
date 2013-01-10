@@ -274,6 +274,7 @@ BLOCK;
             map:{
                 options:{
                     mapTypeId:google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl: false,
                     zoom:5
                 },
                 events:{

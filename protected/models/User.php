@@ -18,6 +18,7 @@
  * The followings are the available model relations:
  * @property ClassUpdates[] $classUpdates
  * @property KClass[] $kClasses
+ * @property Message[] $messages
  * @property Rating[] $ratings
  * @property Rating[] $ratings1
  * @property Request[] $requests
@@ -87,6 +88,7 @@ class User extends CActiveRecord
             'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToSessions'),
             'enrolledIn' => array(self::HAS_MANY, 'KClass', array('Class_ID' => 'Class_ID'), 'through' => 'sessions'),
             'teachingSessions' => array(self::HAS_MANY, 'Session', array('Class_ID' => 'Class_ID'), 'through' => 'kClasses'),
+            'messages' => array(self::HAS_MANY, 'Message', 'To'),
         );
     }
 

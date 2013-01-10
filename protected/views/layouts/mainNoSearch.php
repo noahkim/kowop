@@ -52,6 +52,7 @@
         </div>
 
         <?php if (Yii::app()->user->isGuest) : ?>
+
         <div class="five columns blurb"> teach anything. learn everything.</div>
         <div class="four columns headerlinks">
             <a href="how_it_works.html">How it Works</a>
@@ -60,12 +61,14 @@
         </div>
 
         <?php else : ?>
+        <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
+
         <div class="five columns blurb"> teach anything. learn everything.</div>
         <div class="four columns headernav">
             <!----- My account dropdown ------->
             <div class="dropdown">
                 <a class="account">
-                    <span class="notifications">99</span>
+                    <span class="notifications"><?php echo count($user->messages); ?></span>
                     <span>My Account</span>
                 </a>
 
@@ -74,6 +77,16 @@
                         <li><?php echo CHtml::link('My Classes', array('/user/view', 'id' => Yii::app()->user->id, 's' => 1)); ?></li>
                         <li><?php echo CHtml::link('My Profile', array('/user/view', 'id' => Yii::app()->user->id, 's' => 4)); ?> </li>
                         <li><?php echo CHtml::link('Sign Out', array('/site/logout')); ?></li>
+                        <li><a href='#'>Notifications</a></li>
+                        <?php
+                            foreach($user->messages as $message)
+                            {
+                                if($message->Type == MessageType::Notification)
+                                {
+                                    echo "<li>{$message->Subject}</li>\n";
+                                }
+                            }
+                        ?>
                     </ul>
                 </div>
             </div>
