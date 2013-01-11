@@ -175,6 +175,9 @@ BLOCK;
 ---------------------------------------->
 <div class="three columns sidebar">
     <div class="resultsMap">
+        <div>
+            <input type="checkbox" id="redoSearch"/> Redo search with map?
+        </div>
         <div id="map" style="width: 100%; height: 200px;"></div>
         <!--<iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
                 src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020479,-118.411732&amp;sspn=0.841143,1.461182&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>-->
@@ -191,7 +194,7 @@ BLOCK;
         <h4>Filter Results</h4>
 
         <label>Seats in next class</label>
-        <?php echo $form->dropDownList($model, 'seatsInNextClass', SearchForm::$seatsInNextClassLookup); ?>
+        <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup); ?>
 
         <label>Tuition</label>
         <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
@@ -199,12 +202,6 @@ BLOCK;
 
         <label>Next class starts by:</label>
         <?php echo $form->textField($model, 'nextClassStartsBy', array('placeholder' => 'ex.10/24/13')); ?>
-        <?php
-        $classTypeData = array(0 => "don't care");
-        $classTypeData = array_merge($classTypeData, ClassType::$Lookup);
-        ?>
-        <label>Class type:</label>
-        <?php echo $form->dropDownList($model, 'classType', $classTypeData); ?>
 
         <?php echo $form->hiddenField($model, 'keywords', array('value' => $model->keywords)); ?>
         <a href="#" class="button radius" onclick="document.forms['search-form-filters'].submit(); return false;">Apply
@@ -274,11 +271,15 @@ BLOCK;
             map:{
                 options:{
                     mapTypeId:google.maps.MapTypeId.ROADMAP,
-                    mapTypeControl: false,
+                    mapTypeControl:false,
                     zoom:5
                 },
                 events:{
                     zoom_changed:function () {
+                        if (! $('#redoSearch').is(':checked')) {
+                            return;
+                        }
+
                         var map = $("#map").gmap3("get");
 
                         $("#map").gmap3({
@@ -300,6 +301,10 @@ BLOCK;
                         });
                     },
                     center_changed:function () {
+                        if (! $('#redoSearch').is(':checked')) {
+                            return;
+                        }
+
                         var map = $("#map").gmap3("get");
 
                         $("#map").gmap3({

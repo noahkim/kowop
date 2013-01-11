@@ -16,7 +16,6 @@ class ClassCreateForm extends CFormModel
     public $start;
     public $end;
     public $numLessons;
-    public $classType;
     public $minOccupancy;
     public $maxOccupancy;
 
@@ -54,7 +53,7 @@ class ClassCreateForm extends CFormModel
             array('category, numLessons, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,classType,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,lessonDuration,sessions,fromRequest_ID', 'safe'),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,lessonDuration,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -92,7 +91,6 @@ class ClassCreateForm extends CFormModel
             $this->class->Category_ID = $this->category;
             $this->class->Start = $this->start;
             $this->class->End = $this->end;
-            $this->class->Type = $this->classType ? $this->classType : ClassType::Online;
             $this->class->Min_occupancy = $this->minOccupancy;
             $this->class->Max_occupancy = $this->maxOccupancy;
             $this->class->Prerequisites = $this->prerequisites;
@@ -176,7 +174,6 @@ class ClassCreateForm extends CFormModel
         catch (Exception $e)
         {
             $transaction->rollback();
-            print_r($e);
         }
 
         return $isSaved;

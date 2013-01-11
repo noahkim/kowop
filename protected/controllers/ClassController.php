@@ -199,18 +199,61 @@ class ClassController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['KClass']))
-        {
-            $model->attributes = $_POST['KClass'];
+        $section = '_updateFormDetails';
 
-            if ($model->save())
+        if(isset($_REQUEST['sessions']))
+        {
+            $section = '_updateFormSessions';
+
+            if(isset($_POST['sessionsData']))
             {
-                $this->redirect(array('view', 'id' => $model->Class_ID));
+                $sessionData = json_decode($_POST['sessionsData']);
+
+                $keptSessions = array();
+
+                foreach ($sessionData as $sessionItem)
+                {
+                    if($sessionItem->existingSessionID > 0)
+                    {
+                        $keptSessions[] = $sessionItem->existingSessionID;
+                    }
+                    else
+                    {
+                        $session = new Session;
+                        $session->Class_ID = $model->Class_ID;
+                        $session->save();
+
+                        foreach ($sessionItem->lessons as $lessonItem)
+                        {
+                            $lesson = new Lesson;
+                            $lesson->Session_ID = $session->Session_ID;
+                            $lesson->Start = $lessonItem->start;
+                            $lesson->End = $lessonItem->end;
+
+                            $lesson->save();
+                        }
+
+                        $keptSessions[] = $session->Session_ID;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (isset($_POST['KClass']))
+            {
+                $model->attributes = $_POST['KClass'];
+
+                if ($model->save())
+                {
+                    $this->redirect(array('view', 'id' => $model->Class_ID));
+                }
             }
         }
 
         $this->render('update', array(
             'model' => $model,
+            'section' => $section
         ));
     }
 
@@ -243,11 +286,11 @@ class ClassController extends Controller
 
     public function actionSearch()
     {
-        $model = new SearchForm;
+        $model = new ClassSearchForm;
 
-        if (isset($_REQUEST['SearchForm']))
+        if (isset($_REQUEST['ClassSearchForm']))
         {
-            $model->attributes = $_REQUEST['SearchForm'];
+            $model->attributes = $_REQUEST['ClassSearchForm'];
             Yii::app()->session['lastSearch'] = $model->keywords;
         }
 
@@ -316,6 +359,14 @@ class ClassController extends Controller
 
                 $userToSession->save();
             }
+
+            $user = User::model()->findByPk($user_ID);
+
+            $notification = new Message();
+            $notification->Type = MessageType::Notification;
+            $notification->To = $model->Create_User_ID;
+            $notification->Subject = "{$user->fullName} has joined your class \"{$model->Name}\".";
+            $notification->save();
         }
 
         $this->redirect(array('view', 'id' => $model->Class_ID));

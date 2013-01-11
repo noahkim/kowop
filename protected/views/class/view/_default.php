@@ -151,9 +151,8 @@
                     <div class="row">
                         <div class="six columns">
                             <ul>
-                                <li><span>Type</span><?php echo ClassType::$Lookup[$model->Type]; ?></li>
                                 <li>
-                                    <span>Location</span><?php echo $model->location ? $model->location->Zip : 'Online'; ?>
+                                    <span>Location</span><?php echo $model->location->Zip; ?>
                                 </li>
                                 <li><span>Total Seats</span><?php echo $model->Max_occupancy; ?></li>
                                 <li><span>Needed to Start</span><?php echo $model->Min_occupancy; ?></li>

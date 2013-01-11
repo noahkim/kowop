@@ -138,7 +138,6 @@
                     <div class="row">
                         <div class="six columns">
                             <ul>
-                                <li><span>Type</span><?php echo ClassType::$Lookup[$model->Type]; ?></li>
                                 <li>
                                     <span>Location</span><?php echo $model->location ? $model->location->Zip : 'Online'; ?>
                                 </li>

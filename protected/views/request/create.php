@@ -75,20 +75,6 @@
     </div>
     <div class="row">
         <div class="three columns">
-            <label class="right inline">Type</label>
-        </div>
-        <div class="nine columns">
-            <?php
-            echo $form->dropDownList($model, 'Type', array(
-                RequestType::Physical => 'Local',
-                RequestType::Online => 'Online',
-                RequestType::NoPreference => 'No preference'
-            ), array('class' => 'five'));
-            ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="three columns">
             <label class="right inline">Zip Code</label>
         </div>
         <div class="nine columns">

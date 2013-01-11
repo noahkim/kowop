@@ -23,7 +23,7 @@ $this->pageTitle = Yii::app()->name;
                 <div class="row homeBlurbAction">
                     <div class="six columns">
                         <?php
-                        $searchModel = new SearchForm;
+                        $searchModel = new ClassSearchForm;
 
                         $form = $this->beginWidget('CActiveForm', array(
                             'id' => 'search-form',

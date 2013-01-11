@@ -20,16 +20,7 @@
             ?>
         </span>
         <span class="requestLocation">
-            <?php
-            if ($model->location != null)
-            {
-                echo "This is a local request centered in <span>{$model->location->Zip}</span>";
-            }
-            else
-            {
-                echo "This is a request for an online class";
-            }
-            ?>
+            <?php echo "This is a request centered in <span>{$model->location->Zip}</span>"; ?>
         </span>
 
         <div class="requestMap">

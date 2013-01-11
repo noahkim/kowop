@@ -58,5 +58,14 @@ class RequestJoinForm extends CFormModel
 
             $requestToUser->save();
         }
+
+        $request = Request::model()->findByPk($this->request_ID);
+        $user = User::model()->findByPk($this->user_ID);
+
+        $notification = new Message();
+        $notification->Type = MessageType::Notification;
+        $notification->To = $request->Create_User_ID;
+        $notification->Subject = "{$user->fullName} has joined your class request \"{$request->Name}\".";
+        $notification->save();
     }
 }

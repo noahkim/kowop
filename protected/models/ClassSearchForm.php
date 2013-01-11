@@ -1,6 +1,6 @@
 <?php
 
-class SearchForm extends CFormModel
+class ClassSearchForm extends CFormModel
 {
     const NameValue = 4;
     const TagValue = 3;
@@ -15,14 +15,13 @@ class SearchForm extends CFormModel
     public $minTuition;
     public $maxTuition;
     public $nextClassStartsBy;
-    public $classType;
     public $daysOfWeek;
     public $categories;
 
     public function rules()
     {
         return array(
-            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, classType, daysOfWeek, categories', 'safe'),
+            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories', 'safe'),
         );
     }
 
@@ -85,10 +84,6 @@ class SearchForm extends CFormModel
         {
             $classCriteria->compare('t.Start', '<=' . $this->nextClassStartsBy);
         }
-        if (($this->classType != null) && ($this->classType > 0))
-        {
-            $classCriteria->compare('t.Type', $this->classType);
-        }
 
         $classes = KClass::model()->findAll($classCriteria);
         if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
@@ -150,29 +145,29 @@ class SearchForm extends CFormModel
 
                 if (stristr($item->Name, $keyword))
                 {
-                    $score += SearchForm::NameValue;
+                    $score += ClassSearchForm::NameValue;
                 }
 
                 if (stristr($item->Description, $keyword))
                 {
-                    $score += SearchForm::NameValue;
+                    $score += ClassSearchForm::NameValue;
                 }
 
                 if (stristr($item->category->Name, $keyword))
                 {
-                    $score += SearchForm::CategoryValue;
+                    $score += ClassSearchForm::CategoryValue;
                 }
 
                 if (stristr($item->tagstring, $keyword))
                 {
-                    $score += SearchForm::TagValue;
+                    $score += ClassSearchForm::TagValue;
                 }
 
                 if (($item->location != null) && (!$locationFound))
                 {
                     if (stristr($item->location->fulladdress, $keyword))
                     {
-                        $score *= SearchForm::LocationMultiplier;
+                        $score *= ClassSearchForm::LocationMultiplier;
                         $locationFound = true;
                     }
                 }

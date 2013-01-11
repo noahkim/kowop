@@ -115,9 +115,10 @@
             </div>
 
             <?php echo CHtml::link("Edit Class Details", array('/class/update', 'id' => $model->Class_ID), array('class' => 'button twelve secondary radius spacebot10')); ?>
-            <a href="#" class="button twelve secondary radius spacebot10" data-reveal-id="enrollLater">Manage
-                sessions</a>
-            <a href="#" class="button twelve secondary radius" data-reveal-id="enrollLater">Delete Class</a>
+
+            <?php echo CHtml::link("Manage sessions", array('/class/update', 'id' => $model->Class_ID, 'sessions' => 1), array('class' => 'button twelve secondary radius spacebot10')); ?>
+
+            <a href="#" class="button twelve secondary radius">Delete Class</a>
         </div>
     </div>
 </div>
@@ -138,7 +139,6 @@
             <div class="row">
                 <div class="six columns">
                     <ul>
-                        <li><span>Type</span><?php echo ClassType::$Lookup[$model->Type]; ?></li>
                         <li>
                             <span>Location</span><?php echo $model->location ? $model->location->Zip : 'Online'; ?>
                         </li>
