@@ -201,11 +201,11 @@ class ClassController extends Controller
 
         $section = '_updateFormDetails';
 
-        if(isset($_REQUEST['sessions']))
+        if (isset($_REQUEST['sessions']))
         {
             $section = '_updateFormSessions';
 
-            if(isset($_POST['sessionsData']))
+            if (isset($_POST['sessionsData']))
             {
                 $sessionData = json_decode($_POST['sessionsData']);
 
@@ -213,7 +213,7 @@ class ClassController extends Controller
 
                 foreach ($sessionData as $sessionItem)
                 {
-                    if($sessionItem->existingSessionID > 0)
+                    if ($sessionItem->existingSessionID > 0)
                     {
                         $keptSessions[] = $sessionItem->existingSessionID;
                     }
@@ -246,6 +246,15 @@ class ClassController extends Controller
 
                 if ($model->save())
                 {
+                    // Notify the students
+                    foreach ($model->students as $student)
+                    {
+                        if ($student->User_ID != $model->Create_User_ID)
+                        {
+                            Message::SendNotification($student->User_ID, "{$model->createUser->fullName} has updated the class details for \"{$model->Name}\".");
+                        }
+                    }
+
                     $this->redirect(array('view', 'id' => $model->Class_ID));
                 }
             }
@@ -346,6 +355,8 @@ class ClassController extends Controller
             }
         }
 
+        $user = User::model()->findByPk($user_ID);
+
         if ($model->Create_User_ID != $user_ID)
         {
             $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
@@ -360,13 +371,16 @@ class ClassController extends Controller
                 $userToSession->save();
             }
 
-            $user = User::model()->findByPk($user_ID);
+            Message::SendNotification($model->Create_User_ID, "{$user->fullName} has joined your class \"{$model->Name}\".");
+        }
 
-            $notification = new Message();
-            $notification->Type = MessageType::Notification;
-            $notification->To = $model->Create_User_ID;
-            $notification->Subject = "{$user->fullName} has joined your class \"{$model->Name}\".";
-            $notification->save();
+        // Notify the students
+        foreach ($model->students as $student)
+        {
+            if ($student->User_ID != $user_ID)
+            {
+                Message::SendNotification($student->User_ID, "{$user->fullName} has also joined the class \"{$model->Name}\".");
+            }
         }
 
         $this->redirect(array('view', 'id' => $model->Class_ID));

@@ -135,6 +135,15 @@ class ClassCreateForm extends CFormModel
                     $request->Created_Class_ID = $this->class->Class_ID;
 
                     $request->save();
+
+                    // Notify the students
+                    foreach ($request->requestors as $student)
+                    {
+                        if ($student->User_ID != $this->class->Create_User_ID)
+                        {
+                            Message::SendNotification($student->User_ID, "{$this->class->createUser->fullName} has picked up the class request \"{$request->Name}\".");
+                        }
+                    }
                 }
             }
 
