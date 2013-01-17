@@ -35,12 +35,6 @@
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'Type'); ?>
-        <?php echo $form->dropDownList($model, 'Type', ClassType::$Lookup); ?>
-        <?php echo $form->error($model, 'Type'); ?>
-    </div>
-
-    <div class="row">
         <?php echo $form->labelEx($model, 'Start'); ?>
         <?php echo $form->textField($model, 'Start'); ?>
         <?php echo $form->error($model, 'Start'); ?>

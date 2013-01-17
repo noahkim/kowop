@@ -1,135 +1,146 @@
 <!---------------------------------------
-                 Search Summary
+                 Search
 ---------------------------------------->
-<div class="row spacebot20">
-    <div class="twelve columns">
-    <span>
-        <?php echo count($results); ?> Search results for "<?php echo $model->keywords; ?>".
-    </span>
-        Can't find what you're looking for?
-        <?php echo CHtml::link('Request it', array('/request/create'), array('class' => 'button small radius')); ?>
+<div class="bigsearchbar">
+
+    <?php $form = $this->beginWidget('CActiveForm', array(
+    'id' => 'search-form',
+    'action' => Yii::app()->createUrl('/class/search'),
+    'enableAjaxValidation' => false,
+    'method' => 'get'
+)); ?>
+
+    <div class="row">
+        <div class="seven columns">
+            <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve', 'placeholder' => 'What are you looking for?')); ?>
+        </div>
+        <div class="three columns">
+            <input type="text" class="homeSearchinput twelve" placeholder="city,state or zip">
+        </div>
+        <div class="two columns">
+            <a href="#" onclick="document.forms['search-form'].submit(); return false;"
+               class="large button twelve">Search</a>
+        </div>
     </div>
+
+    <?php $this->endWidget('CActiveForm'); ?>
+
 </div>
+
 <!--------- main content container------>
 <div class="row" id="wrapper">
-<!---------------------------------------
-            Results Grid
----------------------------------------->
-<div class="nine columns resultsGrid spacebot20">
-    <div class="row">
-        <?php
-        foreach ($results as $i => $item)
+
+<!----- Left Column for search results---->
+<div class="nine columns">
+    <?php
+
+    echo "<div class='row'>\n";
+
+    $remaining = 0;
+
+    foreach ($results as $i => $item)
+    {
+        $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
+        $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
+        $description = $item->Description;
+        if (strlen($description) > 100)
         {
-            $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
-            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
-            $description = $item->Description;
-            if (strlen($description) > 100)
+            $description = substr($description, 0, 100);
+            $description .= ' ...';
+        }
+
+        $sessionHTML = 'Request';
+        if ($item instanceof KClass)
+        {
+            if (($item->Tuition == null) || ($item->Tuition == 0) || (count($item->sessions) == 0))
             {
-                $description = substr($description, 0, 100);
-                $description .= ' ...';
+                $sessionHTML = 'This class is free!';
+            }
+            else
+            {
+                $sessionCount = count($item->sessions);
+                $tuition = $item->Tuition * $sessionCount;
+
+                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+            }
+        }
+
+        $itemNumber = $i + 1;
+
+        $name = "<h5> {$item->Name} </h5>";
+        if ($item instanceof KClass)
+        {
+            $name = CHtml::link($name, array('/class/view', 'id' => $item->Class_ID));
+        }
+        elseif ($item instanceof Request)
+        {
+            $name = CHtml::link($name, array('/request/view', 'id' => $item->Request_ID));
+        }
+
+        if ($item instanceof KClass)
+        {
+            //<span class="ribbon staffpick"></span>
+
+            $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
+            if (count($item->contents) > 0)
+            {
+                $link = $item->contents[0]->Link;
+                $imageHTML = "<img src='{$link}' />";
             }
 
-            $sessionHTML = 'Request';
-            if ($item instanceof KClass)
+            $enrollees = '';
+            foreach ($item->students as $student)
             {
-                if (($item->Tuition == null) || ($item->Tuition == 0) || (count($item->sessions) == 0))
+                $picLink = 'http://placeskull.com/100/100/868686';
+
+                if ($student->profilePic != null)
                 {
-                    $sessionHTML = 'This class is free!';
-                }
-                else
-                {
-                    $sessionCount = count($item->sessions);
-                    $tuition = $item->Tuition * $sessionCount;
-
-                    $sessionHTML = "\${$tuition} ({$sessionCount} sessions)";
-                }
-            }
-
-            $itemNumber = $i + 1;
-
-            $name = "<h3> {$item->Name} </h3>";
-            if ($item instanceof KClass)
-            {
-                $name = CHtml::link($name, array('/class/view', 'id' => $item->Class_ID));
-            }
-            elseif ($item instanceof Request)
-            {
-                $name = CHtml::link($name, array('/request/view', 'id' => $item->Request_ID));
-            }
-
-            $end = '';
-            if ($itemNumber == count($results))
-            {
-                $end = 'end';
-            }
-
-            if ($item instanceof KClass)
-            {
-                //<span class="ribbon staffpick"></span>
-
-                $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
-                if (count($item->contents) > 0)
-                {
-                    $link = $item->contents[0]->Link;
-                    $imageHTML = "<img src='{$link}' />";
-                }
-
-                $enrollees = '';
-                foreach ($item->students as $student)
-                {
-                    $picLink = 'http://placeskull.com/100/100/868686';
-
-                    if ($student->profilePic != null)
-                    {
-                        $picLink = $student->profilePic;
-                    }
-
-                    $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                    $picLink = $student->profilePic;
                 }
 
-                echo <<<BLOCK
-  <!----- 1 tile/result ------->
-  <div id="resultContainer{$i}" class="four columns spacebot20 {$end}">
-    <div id="result{$i}" class="resultsTile"> <span class="tilenumber">{$itemNumber}</span>
-      <div class="resultsImage">
-        {$imageHTML}
-      </div>
-      <div class="row" class="spacebot10">
-      <!----- row with the current enrollees thumbnails---->
-      <div class="twelve columns enrollees">
-        {$enrollees}
-      </div>
+                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+            }
+
+            echo <<<BLOCK
+
+    <!----------- 1 tile ---------->
+    <div id="resultContainer{$i}" class="four columns">
+        <div id="result{$i}" class="classTile">
+            <span class="tilenumber">{$itemNumber}</span>
+            {$imageHTML}
+            {$name}
+            <span class="tileInstructor">by {$teacherLink}</span>
+            <span class="tileDescription">{$description}</span>
+            <div class="tileStudents">
+                {$enrollees}
+            </div>
+        </div>
+        <div class="classCost">
+            {$sessionHTML}
+        </div>
     </div>
-    {$name}
-     <span class="resultsInstructor">with {$teacherLink}</span>
-     <span class="resultsCategory food">in {$item->category->Name}</span>
-     <span class="resultsDescription spacebot10"> {$description} </span>
-     </div>
-  <div class="resultsSession">
-    <div>{$sessionHTML}</div>
-  </div>
-</div>
-<!----- End 1 tile/result---->
+    <!------- end 1 tile -------->
+
 BLOCK;
-            }
-            elseif ($item instanceof Request)
+        }
+        elseif ($item instanceof Request)
+        {
+            $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
+
+            $enrollees = '';
+            foreach ($item->requestors as $student)
             {
-                $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
+                $picLink = 'http://placeskull.com/100/100/868686';
 
-                $enrollees = '';
-                foreach ($item->requestors as $student)
+                if ($student->profilePic != null)
                 {
-                    $picLink = 'http://placeskull.com/100/100/868686';
-
-                    if ($student->profilePic != null)
-                    {
-                        $picLink = $student->profilePic;
-                    }
-
-                    $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                    $picLink = $student->profilePic;
                 }
 
-                echo <<<BLOCK
+                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+            }
+
+            echo <<<BLOCK
 <!----- 1 tile/result REQUEST ------->
 <div id="resultContainer{$i}" class="four columns spacebot20 {$end}">
 <span class="ribbon request"></span>
@@ -153,11 +164,27 @@ BLOCK;
 <!----- End 1 tile/result REQUEST---->
 BLOCK;
 
-            }
         }
-        ?>
-        <!----- End results grid----->
-    </div>
+
+        if (($itemNumber % 3) == 0)
+        {
+            echo "</div>\n";
+            echo "<div class='row'>\n";
+        }
+
+        $remaining = 3 - ($itemNumber % 3);
+    }
+
+    for ($i = 0; $i < $remaining; $i++)
+    {
+        echo "<div class='four columns'>\n";
+        echo "</div>\n";
+    }
+
+    echo "</div>\n";
+    ?>
+
+    <!--- pagination --->
     <ul class="pagination">
         <li class="arrow unavailable"><a href="">&laquo;</a></li>
         <li class="current"><a href="">1</a></li>
@@ -169,96 +196,88 @@ BLOCK;
         <li><a href="">13</a></li>
         <li class="arrow"><a href="">&raquo;</a></li>
     </ul>
+    <!----- end pagination--->
 </div>
-<!---------------------------------------
-             Sidebar
----------------------------------------->
-<div class="three columns sidebar">
-    <div class="resultsMap">
-        <div>
-            <input type="checkbox" id="redoSearch"/> Redo search with map?
+<!------ end left column------------------>
+
+<!------ right column for map, etc.------->
+<div class="three columns">
+    <div class="searchSidebar">
+        <div class="spacebot10">
+            <?php echo CHtml::link("teach a class", $this->createUrl("class/create"), array('class' => 'large button twelve')); ?>
         </div>
-        <div id="map" style="width: 100%; height: 200px;"></div>
-        <!--<iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020479,-118.411732&amp;sspn=0.841143,1.461182&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>-->
-    </div>
+        <div class="spacebot10">
+            <?php echo CHtml::link("request a class", $this->createUrl("request/create"), array('class' => 'large button twelve')); ?>
+        </div>
+        <div class="searchMap">
 
-    <?php $form = $this->beginWidget('CActiveForm', array(
-    'id' => 'search-form-filters',
-    'action' => Yii::app()->createUrl('/class/search'),
-    'enableAjaxValidation' => false,
-    'method' => 'get'
-)); ?>
-    <!------ Search Filters ------->
-    <div class="searchFilters">
-        <h4>Filter Results</h4>
+            <label for="redoSearch">
+                <input type="checkbox" id="redoSearch">
+                <span class="custom checkbox"></span>
+                Redo search when map moves?
+            </label>
 
-        <label>Seats in next class</label>
-        <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup); ?>
+            <div id="map" style="width: 100%; height: 200px;"></div>
+        </div>
+        <!---- Sidebar box for filters----->
+        <div class="sidebarBox">
+            <h5>Organize Results</h5>
 
-        <label>Tuition</label>
-        <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
-        <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
+            <?php $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'search-form-filters',
+            'action' => Yii::app()->createUrl('/class/search'),
+            'enableAjaxValidation' => false,
+            'method' => 'get'
+        )); ?>
 
-        <label>Next class starts by:</label>
-        <?php echo $form->textField($model, 'nextClassStartsBy', array('placeholder' => 'ex.10/24/13')); ?>
+            <label>Open seats in next session</label>
+            <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup, array('class' => 'stretch')); ?>
 
-        <?php echo $form->hiddenField($model, 'keywords', array('value' => $model->keywords)); ?>
-        <a href="#" class="button radius" onclick="document.forms['search-form-filters'].submit(); return false;">Apply
-            Filters</a>
-    </div>
-    <!---- Categories & tags resulting from search return ----->
-    <div class="searchCategories">
-        <h4>Categories &amp; Tags</h4>
+            <label>Category</label>
+            <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'stretch')); ?>
 
-        <?php
-        $categories = array();
-        $tags = array();
+            <label>Tution</label>
 
-        foreach ($results as $item)
-        {
-            $categories[$item->category->Category_ID] = $item->category->Name;
-            $tags = array_merge($tags, $item->taglist);
-        }
+            <div class="row">
+                <div class="six columns">
+                    <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
+                </div>
+                <div class="six columns">
+                    <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
+                </div>
+            </div>
+            <label>Next class starts by:</label>
+            <?php echo $form->textField($model, 'nextClassStartsBy'); ?>
 
-        $tags = array_unique($tags);
-        $tags = array_values($tags);
+            <?php $this->endWidget('CActiveForm'); ?>
 
-        /*            print_r($model->categories);
-                    foreach ($categories as $i => $category)
-                    {
-                        $checked = null;
-
-                        $opts = array('id' => "checkbox{$i}");
-                        if(isset($model->categories[$i]) && ($model->categories[$i] == '1'))
-                        {
-                            $opts = array_merge($opts, array('checked' => 'checked'));
-                        }
-
-                        echo "<label for='checkbox{$i}'>";
-                        echo $form->checkBox($model, 'categories[]', $opts);
-                        echo "<span class='custom checkbox'></span> {$category} </label>\n";
-                    }*/
-
-        $opts = array('separator' => "\n");
-        echo $form->checkBoxList($model, 'categories', $categories, $opts);
-
-        ?>
-        <ul class="sidebartags">
-            <?php
-            foreach ($tags as $tag)
-            {
-                $link = CHtml::link($tag, array('/class/search', 'SearchForm[keywords]' => $tag));
-                echo "<li>{$link}</li>";
-            }
-            ?>
-        </ul>
-
-        <?php $this->endWidget('CActiveForm'); ?>
+            <div class="row">
+                <div class="six columns">
+                    <a href="#" onclick="document.forms['search-form-filters'].submit(); return false;"
+                       class="button twelve">Apply</a>
+                </div>
+                <div class="six columns">
+                    <?php $form = $this->beginWidget('CActiveForm', array(
+                    'id' => 'search-form-filters-blank',
+                    'action' => Yii::app()->createUrl('/class/search'),
+                    'enableAjaxValidation' => false,
+                    'method' => 'get',
+                    'htmlOptions' => array('style' => 'margin: 0;')
+                )); ?>
+                    <?php $this->endWidget('CActiveForm'); ?>
+                    <a href="#" onclick="document.forms['search-form-filters-blank'].submit(); return false;"
+                       class="button twelve">Reset</a>
+                </div>
+            </div>
+        </div>
+        <!----- End Sidebar Box----->
     </div>
 </div>
+<!------- end right column --------------->
+
 <!------- end main content container----->
 </div>
+
 
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4&sensor=false">
@@ -276,7 +295,7 @@ BLOCK;
                 },
                 events:{
                     zoom_changed:function () {
-                        if (! $('#redoSearch').is(':checked')) {
+                        if (!$('#redoSearch').is(':checked')) {
                             return;
                         }
 
@@ -301,7 +320,7 @@ BLOCK;
                         });
                     },
                     center_changed:function () {
-                        if (! $('#redoSearch').is(':checked')) {
+                        if (!$('#redoSearch').is(':checked')) {
                             return;
                         }
 

@@ -147,7 +147,6 @@
                     <div class="row">
                         <div class="six columns spacebot10">
                             <ul>
-                                <li><span>Type</span><?php echo ClassType::$Lookup[$model->classType]; ?></li>
                                 <li>
                                     <span>Location</span><?php echo $model->locationZip ? $model->locationZip : 'Online'; ?>
                                 </li>

@@ -1,156 +1,81 @@
-<!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-<!--<![endif]-->
-<head>
-    <meta charset="utf-8"/>
-    <!-- Set the viewport width to device width for mobile -->
-    <meta name="viewport" content="width=device-width"/>
-
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/hero/stylesheet.css"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/bryant/stylesheet.css"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/fonts/susa/stylesheet.css"/>
-    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.css'/>
-    <link rel='stylesheet' type='text/css' href='/ui/site/fullcalendar/fullcalendar/fullcalendar.print.css'
-          media='print'/>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Copse"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/foundation.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/main.css"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-default.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/nivo-slider.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/ui/site/stylesheets/zebra_datepicker.css"/>
-
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/yii/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="/ui/site/javascripts/foundation.min.js"></script>
-
-    <script src='/yii/kowop/js/date.js'></script>
-    <script src='/ui/site/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
-    <script src="/ui/site/javascripts/modernizr.foundation.js"></script>
-    <script src="/ui/site/javascripts/app.js"></script>
-    <script src="/ui/site/javascripts/account_toggle.js"></script>
-    <script src="/ui/site/javascripts/jquery.nivo.slider.pack.js"></script>
-    <script src="/ui/site/javascripts/jquery.nivo.slider.js"></script>
-    <script src="/ui/site/javascripts/qtip.js"></script>
-    <script src="/ui/site/javascripts/zebra_datepicker.js"></script>
-    <script src="/ui/site/javascripts/jquery.timepicker.js"></script>
-
-    <title>Kowop | teach anything. learn everything.</title>
-</head>
-<body>
+<?php $this->beginContent('//layouts/mainOuter'); ?>
 <!---------------------------------------
                  Header
 ---------------------------------------->
+<?php if (Yii::app()->user->isGuest) : ?>
+
+<!----- Homepage logo and header nav ---------->
 <div class="header spacebot20">
     <div class="row">
-        <div class="three columns logo">
-            <?php echo CHtml::link('<img src="/ui/site/images/logo_small.png">', Yii::app()->homeUrl); ?>
+        <div class="three columns">
+            <div class="logo">
+                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                Teach. Learn. Meet.
+            </div>
         </div>
 
-        <?php if (Yii::app()->user->isGuest) : ?>
+        <div class="three columns notlogged">
+            <span class="navWhatskowop"><a href="how_it_works.html">what's Kowop?</a></span>
+            <span class="navSignup">
+                <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
+            </span>
+            <span class="navLogin">
+                <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
+            </span>
+        </div>
+    </div>
+</div>
+<!----- End Homepage logo and header nav ---------->
 
-        <div class="five columns blurb"> teach anything. learn everything.</div>
-        <div class="four columns headerlinks">
-            <a href="how_it_works.html">How it Works</a>
-            <?php echo CHtml::link('Sign Up', array('/user/create')); ?>
-            <?php echo CHtml::link('Login', array('/site/login')); ?>
+    <?php else: ?>
+    <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
+
+<div class="header spacebot20">
+    <div class="row">
+        <div class="three columns">
+            <div class="logo">
+                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                Teach. Learn. Meet.
+            </div>
         </div>
 
-        <?php else : ?>
-        <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
-
-        <div class="five columns blurb"> teach anything. learn everything.</div>
-        <div class="four columns headernav">
+        <div class="three columns headernav">
+            <span class="notifications">
+                <?php echo CHtml::link(count($user->messages(array('condition' => '`Read` = 0'))), array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
+            </span>
             <!----- My account dropdown ------->
             <div class="dropdown">
-                <a class="account">
-                    <span class="notifications"><?php echo count($user->messages); ?></span>
-                    <span>My Account</span>
+                <a href="#" class="account">
+                    <span class="headerAccount">my account</span>
                 </a>
 
                 <div class="submenu" style="display: none;">
                     <ul class="root">
-                        <li><?php echo CHtml::link('My Classes', array('/user/view', 'id' => Yii::app()->user->id, 's' => 1)); ?></li>
-                        <li><?php echo CHtml::link('My Profile', array('/user/view', 'id' => Yii::app()->user->id, 's' => 4)); ?> </li>
-                        <li><?php echo CHtml::link('Sign Out', array('/site/logout')); ?></li>
-                        <li><a href='#'>Notifications</a></li>
-                        <?php
-                            foreach($user->messages as $message)
-                            {
-                                if($message->Type == MessageType::Notification)
-                                {
-                                    echo "<li>{$message->Subject}</li>\n";
-                                }
-                            }
-                        ?>
+                        <li>
+                            <?php echo CHtml::link('notifications', array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 2)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 4)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
+                        </li>
                     </ul>
                 </div>
             </div>
             <!----- end my account dropdown----->
         </div>
-        <?php endif; ?>
     </div>
 </div>
+
+    <?php endif; ?>
 
 <?php echo $content; ?>
 
-<!---------------------------------------
-              Footer
----------------------------------------->
-<div class="footer">
-    <div class="row">
-        <div class="two columns footerlinks discover">
-            <h5>Discover</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("teach a class", $this->createUrl("class/create")); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("take a class", $this->createUrl("class/search")); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>
-                </li>
-                <li><a href="#">how it works</a></li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks company">
-            <h5>Company</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
-                </li>
-                <li><a href="#">press</a></li>
-                <li><a href="#">blog</a></li>
-                <li>
-                    <?php echo CHtml::link("FaQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
-                </li>
-                <li><a href="#">policies</a></li>
-                <li><a href="#">terms &amp; privacy</a></li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks joinuson">
-            <h5>Join us on:</h5>
-            <ul>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Google+</a></li>
-                <li><a href="#">Newsletter</a></li>
-            </ul>
-        </div>
-        <div class="six columns"></div>
-    </div>
-    <div class="row footerlogo">
-        <div class="two columns offset-by-five"><img src="/ui/site/images/logo_small.png"></div>
-    </div>
-</div>
-
-</body>
-</html>
+<?php $this->endContent(); ?>

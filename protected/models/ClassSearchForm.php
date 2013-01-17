@@ -90,7 +90,7 @@ class ClassSearchForm extends CFormModel
         {
             foreach ($classes as $i => $class)
             {
-                $enrolled = count($class->userToClasses);
+                $enrolled = count($class->students);
 
                 switch ($this->seatsInNextClass)
                 {
@@ -188,9 +188,9 @@ class ClassSearchForm extends CFormModel
     }
 
     public static $seatsInNextClassLookup = array(
-        1 => "don't care",
-        2 => 'empty',
-        3 => 'at least 1 enrolled',
-        4 => 'almost full!'
+        1 => "Doesn't matter",
+        2 => 'Empty',
+        3 => 'At least 1 filled',
+        4 => 'Almost full'
     );
 }

@@ -50,7 +50,7 @@ class ClassCreateForm extends CFormModel
         return array(
             array('name, category', 'required', 'on' => 'step1'),
             array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, lessonDuration, description, locationType, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step2'),
-            array('category, numLessons, classType, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
+            array('category, numLessons, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
             array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,lessonDuration,sessions,fromRequest_ID', 'safe'),

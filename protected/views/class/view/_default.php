@@ -3,10 +3,16 @@
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-    ---------------------------------------->
+        ---------------------------------------->
+        <!----- Class title------->
+        <div class="row">
+            <div class="twelve columns">
+                <div class="followClass"><a href="#" class="button ">Follow Class</a></div>
+                <h1><?php echo $model->Name; ?></h1>
+            </div>
+        </div>
+        <!-------- main class details ---->
         <div class="detailsMain">
-            <h1><?php echo $model->Name; ?></h1>
-
             <div class="row">
                 <div class="six columns">
                     <div class="slider-wrapper theme-default">
@@ -24,18 +30,12 @@
                 </div>
                 <!---------- Middle column ------------------->
                 <div class="two columns">
-                    <div class="infoTuition">
-                        <span class="tuitionValue">
-                            <sup class="dollarsign">$</sup> <?php echo $model->Tuition; ?>
-                            <span class="persession">per lesson</span>
+                    <div class=" infoTuition">
+                        <span class="classTuition">
+                            <sup class="dollarsign">$</sup>120
+                            <span class="persession">4 lesson class</span>
                         </span>
-                        <?php
-
-                        $numLessons = count($model->sessions[0]->lessons);
-                        $total = $model->Tuition * $numLessons;
-
-                        ?>
-                        <span class="tuitionTotal">$<?php echo $total; ?> Total</span>
+                        <span class="breakdown">$30 per lesson</span>
                     </div>
 
                     <?php
@@ -46,30 +46,25 @@
                         $instructorPic = $model->createUser->profilePic;
                     }
 
-                    echo "<img src='{$instructorPic}' class='detailsInstructorpic'>\n";
+                    echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />", array('/user/view', 'id' => $model->Create_User_ID));
                     ?>
 
                     <div class="detailsInstructor">
-                        <div class="detailsReccomendations">31</div>
+                        Instructor
                         <span class="detailsName">
                             <?php
                             $name = ($model->createUser->Teacher_alias == null) ? $model->createUser->fullname : $model->createUser->Teacher_alias;
                             echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
+
+                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
                     </div>
                 </div>
                 <!------------ Right column ------------------>
                 <div class="four columns">
-                    <?php
-                    echo CHtml::link('Enroll for next available session',
-                        array('/class/join', 'id' => $model->Class_ID),
-                        array('class' => 'button twelve primary radius enrollButton')
-                    );
-                    ?>
-
                     <div class="detailsNextSession">
-                        <span>Next session scheduled for</span>
+                        <span>Next available session scheduled for</span>
                         <ul>
                             <?php
 
@@ -77,7 +72,18 @@
 
                             foreach ($nextSession->lessons as $lesson)
                             {
-                                echo "<li>{$lesson->Start}</li>\n";
+                                $time = strtotime($lesson->Start);
+
+                                $dayOfWeek = date('l', $time);
+                                $date = date('F j', $time);
+                                $start = date('g:i a', $time);
+
+                                // Get lesson duration in seconds
+                                $offset = $model->LessonDuration * 60 * 60;
+
+                                $end = date('g:i a', ($time + $offset));
+
+                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-{$end}</span></li>\n";
                             }
 
                             ?>
@@ -108,28 +114,18 @@
 
                             ?>
                         </div>
-                        <div class="detailsShareclass">
-                            <span>Think this class is perfect for somebody?</span>
-                    <span class="shareIcons">
-                    <a href="#" class="detailsShare twitter"></a>
-                    <a href="#" class="detailsShare facebook"></a>
-                    <a href="#" class="detailsShare googleplus"></a>
-                    <a href="#" class="detailsShare linkedin"></a>
-                    <a href="#" class="detailsShare pinterest"></a>
-                    <a href="#" class="detailsShare email"></a>
-                    </span>
-                        </div>
+
                     </div>
-                    <div class="detailsCategory">
-                        <span>Category</span> <a href="#"><?php echo $model->category->Name; ?></a></div>
-                    <div class="detailsTags">
-                        <span>Tags</span>
+                    <div class="spacebot10">
                         <?php
-                        foreach ($model->taglist as $tag)
-                        {
-                            echo "<a href='#'>{$tag}</a>\n";
-                        }
+                        echo CHtml::link('Enroll for this session',
+                            array('/class/join', 'id' => $model->Class_ID),
+                            array('class' => 'button large twelve enrollButton')
+                        );
                         ?>
+                    </div>
+                    <div>
+                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
                     </div>
                 </div>
             </div>
@@ -142,34 +138,52 @@
                 <?php echo $model->Description; ?>
             </div>
             <!--- end left column---->
-
             <!---------------------------------------
                              right column
             ---------------------------------------->
             <div class="six columns">
+                <!------- Stats------->
+                <div class="row">
+                    <div class="twelve columns">
+                        <div class="detailStats">
+                            <div class="statBox">
+                                Graduates<span><?php echo count($model->students); ?></span>
+                            </div>
+                            <div class="statBox">
+                                Enrollees<span><?php echo count($model->students); ?></span>
+                            </div>
+                            <div class="statBox">
+                                Views<span>536</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-------- end stats---------->
                 <div class="detailSidebar">
                     <div class="row">
-                        <div class="six columns">
+                        <div class="twelve columns">
                             <ul>
-                                <li>
-                                    <span>Location</span><?php echo $model->location->Zip; ?>
-                                </li>
-                                <li><span>Total Seats</span><?php echo $model->Max_occupancy; ?></li>
-                                <li><span>Needed to Start</span><?php echo $model->Min_occupancy; ?></li>
+                                <li><span>Location</span><?php echo $model->location->Zip; ?></li>
+                                <?php
+                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j', strtotime($model->End));
+                                echo "<li><span>Availability</span>{$availability}</li>\n";
+                                ?>
+                                <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
+                                <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
                                 <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
-                                <li><span>1 Lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
-                                <li><span>Availability</span><?php echo $model->Start; ?>
-                                    -
-                                    <?php echo $model->End; ?></li>
+                                <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
+
                             </ul>
                         </div>
-                        <div class="six columns spacebot10">
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns spacebot10 detailsMap">
                             <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
                                     marginwidth="0"
                                     src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
                         </div>
                     </div>
-                    <div class="detailEnrolllater">
+                    <div class="detailEnrolllater" id="enrolllater">
                         <h4 class="spacebot10">Enroll for a later session</h4>
 
                         <div id='calendar'></div>
@@ -178,8 +192,8 @@
             </div>
         </div>
     </div>
+    <!------- end main content container----->
 </div>
-<!------- end main content container----->
 
 <script type="text/javascript">
     $(window).load(function () {

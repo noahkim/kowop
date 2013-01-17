@@ -45,7 +45,7 @@ class ClassController extends Controller
      */
     public function actionView($id)
     {
-        $this->layout = '//layouts/mainNoSearch';
+        $this->layout = '//layouts/main';
 
         $view = 'view/_default';
 
@@ -77,7 +77,7 @@ class ClassController extends Controller
      */
     public function actionCreate()
     {
-        $this->layout = '//layouts/mainNoSearch';
+        $this->layout = '//layouts/main';
         $model = new ClassCreateForm("step1");
         $step = 1;
 
@@ -192,7 +192,7 @@ class ClassController extends Controller
      */
     public function actionUpdate($id)
     {
-        $this->layout = '//layouts/mainNoSearch';
+        $this->layout = '//layouts/main';
 
         $model = $this->loadModel($id);
 
@@ -295,6 +295,8 @@ class ClassController extends Controller
 
     public function actionSearch()
     {
+        $this->layout = '//layouts/mainNoSearch';
+
         $model = new ClassSearchForm;
 
         if (isset($_REQUEST['ClassSearchForm']))

@@ -43,7 +43,6 @@
                 </div>
             </div>
 
-            <?php echo $form->hiddenField($model, 'classType', array('value' => ClassType::Online)); ?>
             <?php echo $form->hiddenField($model, 'fromRequest_ID'); ?>
 
             <div class="row borderTop">
