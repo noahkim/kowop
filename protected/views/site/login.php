@@ -1,34 +1,39 @@
-<div class="row" id="wrapper">
-    <div class="six columns offset-by-three login">
-        <!---------------------------------------
-                    Login
-    ---------------------------------------->
-        <?php $this->widget('application.modules.hybridauth.widgets.renderProviders'); ?>
+<div class="loginsplash">
 
-<!--        <h1>login to Kowop</h1>
-        <?php /*echo CHtml::beginForm(array('class' => 'custom')); */?>
-        <?php /*echo CHtml::activeTextField($form, 'username', array('placeholder' => 'email')); */?>
-        <?php /*echo CHtml::activePasswordField($form, 'password', array('placeholder' => 'password')); */?>
+    <!----- Homepage logo and header nav ---------->
+    <div class="header spacebot20">
         <div class="row">
-            <div class="six columns">
-                <label for="checkbox1">
-                    <input type="checkbox" id="checkbox1" style="display: none;">
-                    <span class="custom checkbox"></span> Remember me</label>
+            <div class="three columns">
+                <div class="logo">
+                    <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                    Teach. Learn. Meet.
+                </div>
             </div>
 
-            <div class="six columns">
-                <?php /*echo CHtml::submitButton('Login', array('class' => 'button large radius twelve primary')); */?>
+            <div class="three columns notlogged">
+                <span class="navWhatskowop"><a href="how_it_works.html">what's Kowop?</a></span>
+            <span class="navSignup">
+                <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
+            </span>
+            <span class="navLogin">
+                <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
+            </span>
             </div>
         </div>
-
-        <div>
-            <?php /*echo CHtml::error($form, 'password'); */?>
-            <?php /*echo CHtml::error($form, 'username'); */?>
-        </div>
-
-        <?php /*echo CHtml::endForm(); */?>
-        <a href="#">Forgot my password</a> |
-        --><?php /*echo CHtml::link('Get an account', array('/user/create')); */?>
     </div>
-    <!------- end main content container----->
+    <!----- End Homepage logo and header nav ---------->
+
+    <!--------- main content container------>
+    <div class="row" id="wrapper">
+        <div class="six columns offset-by-three">
+            <div class="login">
+                <span class="homeBlurbcopy">Log in or create an account with Facebook</span>
+                <a href="/yii/kowop/hybridauth/default/login/?provider=facebook">
+                    <img src="/ui/sitev2/images/facebook.jpg">
+                </a>
+            </div>
+        </div>
+        <!------- end main content container----->
+    </div>
 </div>
+

@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="/ui/sitev2/fonts/susa/stylesheet.css">
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/ui/sitev2/stylesheets/foundation.css">
-    <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css">
 
     <link rel='stylesheet' type='text/css' href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.css'/>
     <link rel='stylesheet' type='text/css' href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.print.css'
@@ -25,9 +23,13 @@
     <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/nivo-slider.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/zebra_datepicker.css"/>
 
+    <link rel="stylesheet" href="/ui/sitev2/stylesheets/foundation.css" />
+    <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css" />
+
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="/yii/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="/ui/sitev2/javascripts/foundation.min.js"></script>
+
 
     <script src='/yii/kowop/js/date.js'></script>
     <script src='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.min.js'></script>

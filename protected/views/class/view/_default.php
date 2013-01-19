@@ -32,10 +32,10 @@
                 <div class="two columns">
                     <div class=" infoTuition">
                         <span class="classTuition">
-                            <sup class="dollarsign">$</sup>120
-                            <span class="persession">4 lesson class</span>
+                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Tuition; ?>
+                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?> lesson class</span>
                         </span>
-                        <span class="breakdown">$30 per lesson</span>
+                        <span class="breakdown">$<?php echo $model->Tuition; ?> per lesson</span>
                     </div>
 
                     <?php

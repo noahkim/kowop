@@ -108,7 +108,17 @@ class DefaultController extends Controller
 
                 if (isset($profile->photoURL))
                 {
-                    $content = Content::model()->AddContentFromURL($profile->photoURL, 'User Image Link', ContentType::ImageURL);
+                    $photoURL = $profile->photoURL;
+                    if(! strstr($photoURL, '?'))
+                    {
+                        $photoURL .= '?width=400&height=400';
+                    }
+                    else
+                    {
+                        $photoURL .= '&width=400&height=400';
+                    }
+
+                    $content = Content::model()->AddContentFromURL($photoURL, 'User Image Link', ContentType::ImageURL);
 
                     $userToContent = new UserToContent();
                     $userToContent->Content_ID = $content->Content_ID;

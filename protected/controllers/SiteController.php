@@ -47,6 +47,7 @@ class SiteController extends Controller
             }
             else
             {
+                $this->layout = '//layouts/mainNoSearch';
                 $this->render('error', $error);
             }
         }
@@ -54,6 +55,8 @@ class SiteController extends Controller
 
     public function actionLogin()
     {
+        $this->layout = '//layouts/mainOuter';
+
         $form = new LoginForm();
 
         if(isset($_POST['LoginForm']))

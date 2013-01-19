@@ -20,7 +20,7 @@
             ?>
         </span>
         <span class="requestLocation">
-            <?php echo "This is a request centered in <span>{$model->location->Zip}</span>"; ?>
+            <?php echo "This is a request centered in <span><?php //todo ?></span>"; ?>
         </span>
 
         <div class="requestMap">

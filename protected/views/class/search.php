@@ -43,9 +43,9 @@
         $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
         $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
         $description = $item->Description;
-        if (strlen($description) > 100)
+        if (strlen($description) > 85)
         {
-            $description = substr($description, 0, 100);
+            $description = substr($description, 0, 85);
             $description .= ' ...';
         }
 
@@ -141,27 +141,25 @@ BLOCK;
             }
 
             echo <<<BLOCK
-<!----- 1 tile/result REQUEST ------->
-<div id="resultContainer{$i}" class="four columns spacebot20 {$end}">
-<span class="ribbon request"></span>
-  <div id="result{$i}" class="requestTile">
-    <div class="row" class="spacebot10"></div>
-  {$name}
-  <span class="resultsCategory food">in {$item->category->Name}</span>
-  <span class="resultsDescription spacebot10"> {$description} </span>
-  <!----- row with the current enrollees thumbnails---->
-  <div class="row">
-    <div class="twelve columns enrollees">
-        {$enrollees}
+
+    <!----------- 1 REQUEST tile ---------->
+    <div id="resultContainer{$i}" class="four columns">
+    <span class="ribbon request"></span>
+      <div id="result{$i}" class="requestTile">
+      <span class="tilenumber">{$itemNumber}</span>
+        {$name}
+        <span class="tileInstructor">by {$teacherLink}</span>
+        <span class="tileDescription">{$description}</span>
+        <div class="tileStudents">
+            {$enrollees}
+        </div>
+      </div>
+        <div class="requestJoin">
+            {$joinLink}
+        </div>
     </div>
-  </div>
-  <!---- end enrollees ----->
-</div>
-    <div class="requestQuickjoin">
-    {$joinLink}
-    </div>
-</div>
-<!----- End 1 tile/result REQUEST---->
+    <!------- end 1 tile -------->
+
 BLOCK;
 
         }

@@ -120,13 +120,13 @@
                 <?php $model = new ClassSearchForm; ?>
 
                 <div class="row">
-                    <div class="seven columns">
+                    <div class="five columns">
                         <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve', 'placeholder' => 'What are you looking for?')); ?>
                     </div>
-                    <div class="three columns">
+                    <div class="four columns">
                         <input type="text" class="homeSearchinput twelve" placeholder="city,state or zip">
                     </div>
-                    <div class="two columns">
+                    <div class="three columns">
                         <a href="#" onclick="document.forms['search-form'].submit(); return false;"
                            class="large button twelve">Search</a>
                     </div>
@@ -141,15 +141,42 @@
     </div>
     <!----- end Home blurb and search box ------------>
     <!----- Featured class info ------------->
-    <div class="row">
-        <div class="four columns offset-by-eight homeFeaturedinfo">
-            <h3>West LA Python class for Noobs</h3>
-            <span>4 Lessons. Next available session starts on Dec. 15th</span>
+    <div class=" homeFeaturedinfo">
+        <div class="row">
+            <?php
+            $randomClass = KClass::model()->findAll(array(
+                'select' => '*, rand() as rand',
+                'limit' => 1,
+                'order' => 'rand',
+            ));
 
-            <div class="tileStudents"><a><img src="http://placehold.it/50x50"></a><a><img
-                    src="http://placehold.it/50x50"></a><a><img src="http://placehold.it/50x50"></a><a><img
-                    src="http://placehold.it/50x50"></a><a><img src="http://placehold.it/50x50"></a></div>
-            <a class="button whiteButton">More Info</a></div>
+            $randomClass = $randomClass[0];
+            $enrollees = '';
+            foreach ($randomClass->students as $student)
+            {
+                $picLink = 'http://placeskull.com/100/100/868686';
+
+                if ($student->profilePic != null)
+                {
+                    $picLink = $student->profilePic;
+                }
+
+                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+            }
+
+            ?>
+
+            <div class="twelve columns">
+                <h2>Featured Class</h2>
+
+                <div class="homeFeaturedstudents">
+                    <?php echo $enrollees; ?>
+                </div>
+                <div class="homeFeaturedtext">
+                    <h3><?php echo $randomClass->Name; ?></h3>
+                    <span>Next available session begins <?php echo $randomClass->sessions[0]->lessons[0]->Start; //  Feb. 15th ?></span></div>
+                <?php echo CHtml::link('More Info', array('class/view', 'id' => $randomClass->Class_ID), array('class' => 'button featuredButton')); ?>
+        </div>
     </div>
     <!----- End Featured class info -------->
 </div>
@@ -160,131 +187,159 @@
     <h3>Staff Picks in Los Angeles</h3>
     <!----------- 1 row of tiles---->
     <div class="row">
+        <?php
+        $classes = KClass::model()->findAll(array(
+                'select' => '*, rand() as rand',
+                'limit' => 4,
+                'order' => 'rand',
+            )
+        );
+        foreach ($classes as $class)
+        {
+            $imageLink = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+
+            $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            if (strlen($teacherName) > 25)
+            {
+                $teacherName = substr($teacherName, 0, 25);
+                $teacherName .= ' ...';
+            }
+
+            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
+            $description = $class->Description;
+            if (strlen($description) > 82)
+            {
+                $description = substr($description, 0, 82);
+                $description .= ' ...';
+            }
+
+            $enrollees = '';
+            foreach ($class->students as $student)
+            {
+                $picLink = 'http://placeskull.com/100/100/868686';
+
+                if ($student->profilePic != null)
+                {
+                    $picLink = $student->profilePic;
+                }
+
+                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+            }
+
+            $className = $class->Name;
+            if (strlen($className) > 60)
+            {
+                $className = substr($className, 0, 60);
+                $className .= ' ...';
+            }
+            $className = CHtml::link('<h5>' . $className . '</h5>', array('class/view', 'id' => $class->Class_ID));
+
+            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0))
+            {
+                $sessionHTML = 'This class is free!';
+            }
+            else
+            {
+                $sessionCount = count($class->sessions);
+                $tuition = $class->Tuition * $sessionCount;
+
+                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+            }
+
+            echo <<<BLOCK
         <!----------- 1 tile ---------->
         <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel...</span>
+            <div class="classTile">{$imageLink}
+                {$className}
+                <span class="tileInstructor">by {$teacherLink}</span> <span
+                        class="tileDescription">{$description}</span>
 
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
+                <div class="tileStudents">
+                    {$enrollees}
+                </div>
+            </div>
+            <div class="classCost">
+                {$sessionHTML}
             </div>
         </div>
         <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
+BLOCK;
 
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
-
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
-
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
+        }
+        ?>
     </div>
     <!------ end 1 row of tiles ----->
     <h3>Popular Classes in Los Angeles</h3>
     <!----------- 1 row of tiles---->
     <div class="row">
+        <?php
+        $classes = KClass::model()->findAll(array(
+                'select' => '*, rand() as rand',
+                'limit' => 4,
+                'order' => 'rand',
+            )
+        );
+        foreach ($classes as $class)
+        {
+            $imageLink = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+
+            $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
+            $description = $class->Description;
+            if (strlen($description) > 82)
+            {
+                $description = substr($description, 0, 82);
+                $description .= ' ...';
+            }
+
+            $enrollees = '';
+            foreach ($class->students as $student)
+            {
+                $picLink = 'http://placeskull.com/100/100/868686';
+
+                if ($student->profilePic != null)
+                {
+                    $picLink = $student->profilePic;
+                }
+
+                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+            }
+
+            $className = CHtml::link('<h5>' . $class->Name . '</h5>', array('class/view', 'id' => $class->Class_ID));
+
+            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0))
+            {
+                $sessionHTML = 'This class is free!';
+            }
+            else
+            {
+                $sessionCount = count($class->sessions);
+                $tuition = $class->Tuition * $sessionCount;
+
+                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+            }
+
+            echo <<<BLOCK
         <!----------- 1 tile ---------->
         <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
+            <div class="classTile">{$imageLink}
+                {$className}
+                <span class="tileInstructor">by {$teacherLink}</span> <span
+                        class="tileDescription">{$description}</span>
 
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
+                <div class="tileStudents">
+                    {$enrollees}
+                </div>
+            </div>
+            <div class="classCost">
+                {$sessionHTML}
             </div>
         </div>
         <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
+BLOCK;
 
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
-
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
-        <!----------- 1 tile ---------->
-        <div class="three columns">
-            <div class="classTile"><img src="http://placehold.it/400x300">
-                <a href="class_detail.html"><h5>This is a title of a class, maybe 2 lines</h5></a>
-                <span class="tileInstructor">by <a href="#">Chef Yanni Pastrami</a></span> <span
-                        class="tileDescription">Mauris sit amet lacus est. Morbi augue felis, tempus lobortis aliquet vel..</span>
-
-                <div class="tileStudents"><a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a>
-                    <a href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a> <a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a><a
-                            href="user_profile_public.html"><img src="http://placehold.it/50x50"></a></div>
-            </div>
-        </div>
-        <!------- end 1 tile -------->
+        }
+        ?>
     </div>
     <!------ end 1 row of tiles ----->
 </div>
@@ -342,4 +397,33 @@
         <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
     </div>
 </div>
+
+<!---------------------MODAL -------------------------->
+
+<div id="welcome" class="reveal-modal medium">
+    <h2>Welcome to the development instance of Kowop.com</h2>
+
+    <p class="lead">You are a brave, brave soul.</p>
+
+    <p>Thanks for checking out/testing/using our development instance of Kowop.com.</p>
+
+    <p>As with any dev instance, things aren't always going to be pretty or tick perfectly. We make A LOT of changes on
+        here daily, always improving, tweaking, and refining.</p>
+
+    <p>Since you're aware of our existence, you've probably been invited here by a member of the Kowop team, so feel
+        free to look around. Just keep in mind, that this is our "ground zero", and some things that work may break, and
+        some things that don't work will inexplicabily work the next minute.</p>
+
+    <p>If you run into something that REALLY grinds your gears, feel free to contact noah at kowop.com</p>
+
+    <p><3 Noah &amp; Ilija</p>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#welcome').reveal();
+    });
+</script>
+
 </body>
