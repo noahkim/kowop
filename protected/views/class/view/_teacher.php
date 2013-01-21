@@ -78,7 +78,7 @@
 
                         $end = date('g:i a', ($time + $offset));
 
-                        echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-{$end}</span></li>\n";
+                        echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
                     }
 
                     ?>

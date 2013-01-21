@@ -68,7 +68,7 @@
                         <ul>
                             <?php
 
-                            $nextSession = $model->sessions[0];
+                            $nextSession = $model->nextAvailableSession;
 
                             foreach ($nextSession->lessons as $lesson)
                             {
@@ -83,7 +83,7 @@
 
                                 $end = date('g:i a', ($time + $offset));
 
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-{$end}</span></li>\n";
+                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
                             }
 
                             ?>
@@ -92,8 +92,6 @@
                         <div class="enrollees">
                             <span>Classmates in the next session</span>
                             <?php
-
-                            $nextSession = $model->sessions[0];
 
                             foreach ($nextSession->students as $student)
                             {
@@ -119,7 +117,7 @@
                     <div class="spacebot10">
                         <?php
                         echo CHtml::link('Enroll for this session',
-                            array('/class/join', 'id' => $model->Class_ID),
+                            array('/class/join', 'id' => $model->Class_ID, array('session' => $nextSession->Session_ID)),
                             array('class' => 'button large twelve enrollButton')
                         );
                         ?>

@@ -38,6 +38,12 @@
 
     $remaining = 0;
 
+    $user = null;
+    if (!Yii::app()->user->isGuest)
+    {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+    }
+
     foreach ($results as $i => $item)
     {
         $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
@@ -58,10 +64,10 @@
             }
             else
             {
-                $sessionCount = count($item->sessions);
-                $tuition = $item->Tuition * $sessionCount;
+                $lessonCount = count($item->sessions[0]->lessons);
+                $tuition = $item->Tuition * $lessonCount;
 
-                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+                $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
             }
         }
 
@@ -88,6 +94,8 @@
                 $imageHTML = "<img src='{$link}' />";
             }
 
+            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $item->Class_ID));
+
             $enrollees = '';
             foreach ($item->students as $student)
             {
@@ -98,7 +106,8 @@
                     $picLink = $student->profilePic;
                 }
 
-                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             echo <<<BLOCK
@@ -107,7 +116,7 @@
     <div id="resultContainer{$i}" class="four columns">
         <div id="result{$i}" class="classTile">
             <span class="tilenumber">{$itemNumber}</span>
-            {$imageHTML}
+            {$imageLink}
             {$name}
             <span class="tileInstructor">by {$teacherLink}</span>
             <span class="tileDescription">{$description}</span>
@@ -127,6 +136,11 @@ BLOCK;
         {
             $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
 
+            if ($user != null && (count($user->requestsJoined(array('condition' => 'requestsJoined.Request_ID = ' . $item->Request_ID))) > 0))
+            {
+                $joinLink = CHtml::link("You've joined this request", array('/request/view', 'id' => $item->Request_ID));
+            }
+
             $enrollees = '';
             foreach ($item->requestors as $student)
             {
@@ -137,7 +151,8 @@ BLOCK;
                     $picLink = $student->profilePic;
                 }
 
-                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             echo <<<BLOCK

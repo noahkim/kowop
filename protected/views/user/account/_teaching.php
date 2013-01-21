@@ -72,7 +72,8 @@
     <!----- end Stats----->
     <!----- currently teaching --------->
     <?php
-    $condition = 'Start <= now() AND End >= now()';
+    //Start <= now() AND
+    $condition = 'End >= now()';
     ?>
     <span class="profileCount"><?php echo count($model->kClasses(array('condition' => $condition))); ?></span>
 

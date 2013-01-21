@@ -169,7 +169,7 @@ class KClass extends CActiveRecord
     {
         $tags = array();
 
-        foreach($this->tags as $tag)
+        foreach ($this->tags as $tag)
         {
             array_push($tags, $tag->Name);
         }
@@ -185,12 +185,33 @@ class KClass extends CActiveRecord
     public function getPicture()
     {
         $numContents = count($this->contents);
-        if($numContents > 0)
+        if ($numContents > 0)
         {
-            return $this->contents[$numContents-1]->Link;
+            return $this->contents[$numContents - 1]->Link;
         }
 
         return null;
+    }
+
+    public function getNextAvailableSession()
+    {
+        $nextSessions = $this->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start > now()', 'order' => 'lessons.Start asc'));
+
+        foreach ($nextSessions as $i => $session)
+        {
+            if (count($session->students) >= $this->Max_occupancy)
+            {
+                unset($nextSessions[$i]);
+            }
+        }
+
+        $nextSession = null;
+        if (count($nextSessions > 0))
+        {
+            $nextSession = $nextSessions[0];
+        }
+
+        return $nextSession;
     }
 
     public function beforeSave()

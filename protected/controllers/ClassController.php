@@ -353,7 +353,7 @@ class ClassController extends Controller
             }
             else
             {
-                $session = $model->sessions[0];
+                $session = $model->nextAvailableSession;
             }
         }
 
@@ -373,7 +373,10 @@ class ClassController extends Controller
                 $userToSession->save();
             }
 
-            Message::SendNotification($model->Create_User_ID, "{$user->fullName} has joined your class \"{$model->Name}\".");
+            $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+            $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+
+            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your class \"{$className}\".");
         }
 
         // Notify the students
@@ -381,7 +384,10 @@ class ClassController extends Controller
         {
             if ($student->User_ID != $user_ID)
             {
-                Message::SendNotification($student->User_ID, "{$user->fullName} has also joined the class \"{$model->Name}\".");
+                $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+                $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+
+                Message::SendNotification($student->User_ID, "{$userName} has also joined the class \"{$className}\".");
             }
         }
 

@@ -65,22 +65,28 @@
                         <ul>
                             <?php
 
-                            $nextSession = $model->sessions[0];
+                            $user = User::model()->findByPk(Yii::app()->user->id);
+                            $nextSession = $user->sessions(array('with' => array('lessons', 'class'), 'condition' => '(class.Class_ID = ' . $model->Class_ID . ') AND (lessons.Start > now())', 'order' => 'lessons.Start asc'));
 
-                            foreach ($nextSession->lessons as $lesson)
+                            if ($nextSession != null)
                             {
-                                $time = strtotime($lesson->Start);
+                                $nextSession = $nextSession[0];
 
-                                $dayOfWeek = date('l', $time);
-                                $date = date('F j', $time);
-                                $start = date('g:i a', $time);
+                                foreach ($nextSession->lessons as $lesson)
+                                {
+                                    $time = strtotime($lesson->Start);
 
-                                // Get lesson duration in seconds
-                                $offset = $model->LessonDuration * 60 * 60;
+                                    $dayOfWeek = date('l', $time);
+                                    $date = date('F j', $time);
+                                    $start = date('g:i a', $time);
 
-                                $end = date('g:i a', ($time + $offset));
+                                    // Get lesson duration in seconds
+                                    $offset = $model->LessonDuration * 60 * 60;
 
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-{$end}</span></li>\n";
+                                    $end = date('g:i a', ($time + $offset));
+
+                                    echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                                }
                             }
 
                             ?>
@@ -90,23 +96,24 @@
                             <span>Your classmates for this session</span>
                             <?php
 
-                            $nextSession = $model->sessions[0];
-
-                            foreach ($nextSession->students as $student)
+                            if ($nextSession != null)
                             {
-                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
-
-                                if ($student->profilePic != null)
+                                foreach ($nextSession->students as $student)
                                 {
-                                    $imgLink = $student->profilePic;
-                                }
+                                    $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
-                                $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
-                                echo CHtml::link(
-                                    $imgHTML,
-                                    array('/user/view', 'id' => $student->User_ID),
-                                    array('title' => $student->fullname)
-                                );
+                                    if ($student->profilePic != null)
+                                    {
+                                        $imgLink = $student->profilePic;
+                                    }
+
+                                    $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
+                                    echo CHtml::link(
+                                        $imgHTML,
+                                        array('/user/view', 'id' => $student->User_ID),
+                                        array('title' => $student->fullname)
+                                    );
+                                }
                             }
 
                             ?>

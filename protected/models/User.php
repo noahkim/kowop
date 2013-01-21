@@ -85,6 +85,7 @@ class User extends CActiveRecord
             'rated' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
             'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'User_ID'),
+            'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
             'userToContents' => array(self::HAS_MANY, 'UserToContent', 'User_ID'),
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
             'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
@@ -253,13 +254,13 @@ class User extends CActiveRecord
         return $results;
     }
 
-/*    public function beforeSave()
-    {
-        if (isset($this->Password))
+    /*    public function beforeSave()
         {
-            $this->Password = md5($this->Password);
-        }
+            if (isset($this->Password))
+            {
+                $this->Password = md5($this->Password);
+            }
 
-        return parent::beforeSave();
-    }*/
+            return parent::beforeSave();
+        }*/
 }

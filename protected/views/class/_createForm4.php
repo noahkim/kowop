@@ -14,22 +14,23 @@
             'stateful' => true,
             'htmlOptions' => array('style' => 'margin: 0;')
         )); ?>
+
             <?php echo CHtml::submitButton('Make Changes', array('name' => 'change', 'class' => 'button large radius')); ?>
             <?php echo CHtml::submitButton('Post my class', array('name' => 'submit', 'id' => 'submit', 'class' => 'button large primary radius')); ?>
+
             <?php $this->endWidget(); ?>
         </div>
     </div>
 </div>
-
 <!--------- main content container------>
 <div class="row" id="wrapper">
     <div class="twelve columns classdetails">
         <!---------------------------------------
-                         Main class details
-        ---------------------------------------->
-        <div class="detailsMain">
-            <h1><?php echo $model->name; ?></h1>
+                     Main class details
+    ---------------------------------------->
+        <h1><?php echo $model->name; ?></h1>
 
+        <div class="detailsMain">
             <div class="row">
                 <div class="six columns">
                     <div class="slider-wrapper theme-default">
@@ -40,18 +41,17 @@
                 </div>
                 <!---------- Middle column ------------------->
                 <div class="two columns">
+
+                    <?php
+                    $total = $model->tuition * $model->numLessons;
+                    ?>
+
                     <div class=" infoTuition">
-                        <span class="tuitionValue">
-                            <sup class="dollarsign">$</sup> <?php echo $model->tuition; ?>
-                            <span class="persession">per lesson</span>
+                        <span class="classTuition">
+                            <sup class="dollarsign">$</sup><?php echo $total; ?><span
+                                class="persession"><?php echo $model->numLessons; ?> lesson class</span>
                         </span>
-                        <?php
-
-                        $numLessons = count(json_decode($model->sessions)[0]);
-                        $total = $model->tuition * $numLessons;
-
-                        ?>
-                        <span class="tuitionTotal">$<?php echo $total; ?> Total</span>
+                        <span class="breakdown">$<?php echo $model->tuition; ?> per lesson</span>
                     </div>
 
                     <?php
@@ -62,25 +62,25 @@
                         $instructorPic = $model->user->profilePic;
                     }
 
-                    echo "<img src='{$instructorPic}' class='detailsInstructorpic'>\n";
+                    echo "<img src='{$instructorPic}' class='detailsInstructorpic' />\n";
                     ?>
 
                     <div class="detailsInstructor">
-                        <div class="detailsReccomendations">31</div>
+                        Instructor
                         <span class="detailsName">
                             <?php
                             $name = ($model->user->Teacher_alias == null) ? $model->user->fullname : $model->user->Teacher_alias;
                             echo CHtml::link($name, array('/user/view', 'id' => $model->user->User_ID));
                             ?>
                         </span>
+
+                        <div class="detailsReccomendations"><a href="#">31</a></div>
                     </div>
                 </div>
                 <!------------ Right column ------------------>
                 <div class="four columns">
-                    <a href="#" class="button twelve primary radius enrollButton">Enroll for next available session</a>
-
                     <div class="detailsNextSession">
-                        <span>Next session scheduled for</span>
+                        <span>Next available session scheduled for</span>
                         <ul>
                             <?php
 
@@ -88,7 +88,18 @@
 
                             foreach ($nextSession->lessons as $lesson)
                             {
-                                echo "<li>{$lesson->start}</li>\n";
+                                $time = strtotime($lesson->start);
+
+                                $dayOfWeek = date('l', $time);
+                                $date = date('F j', $time);
+                                $start = date('g:i a', $time);
+
+                                // Get lesson duration in seconds
+                                $offset = $model->lessonDuration * 60 * 60;
+
+                                $end = date('g:i a', ($time + $offset));
+
+                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
                             }
 
                             ?>
@@ -103,30 +114,14 @@
                             <a href="#"><img src="http://placehold.it/100x100"></a>
                             <a href="#"><img src="http://placehold.it/100x100"></a>
                         </div>
-                        <div class="detailsShareclass">
-                            <span>Think this class is perfect for somebody?</span>
-                    <span class="shareIcons">
-                    <a href="#" class="detailsShare twitter"></a>
-                    <a href="#" class="detailsShare facebook"></a>
-                    <a href="#" class="detailsShare googleplus"></a>
-                    <a href="#" class="detailsShare linkedin"></a>
-                    <a href="#" class="detailsShare pinterest"></a>
-                    <a href="#" class="detailsShare email"></a>
-                    </span>
-                        </div>
-                    </div>
-                    <div class="detailsCategory">
-                        <span>Category</span> <a href="#"><?php echo Category::GetCategories()[$model->category]; ?></a></div>
-                    <div class="detailsTags">
-                        <span>Tags</span>
-                        <?php
-                        $tagsArray = Tag::model()->string2array($model->tags);
 
-                        foreach ($tagsArray as $tag)
-                        {
-                            echo "<a href='#'>{$tag}</a>\n";
-                        }
-                        ?>
+                    </div>
+                    <div class="spacebot10">
+                        <a href="#" class="button large twelve enrollButton">Enroll for this session</a>
+                    </div>
+                    <div>
+                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later
+                            session</a>
                     </div>
                 </div>
             </div>
@@ -143,39 +138,56 @@
                              right column
             ---------------------------------------->
             <div class="six columns">
+                <!------- Stats------->
+                <div class="row">
+                    <div class="twelve columns">
+                        <div class="detailStats">
+                            <div class="statBox">
+                                Graduates<span>32</span>
+                            </div>
+                            <div class="statBox">
+                                Enrollees<span>23</span>
+                            </div>
+                            <div class="statBox">
+                                Views<span>536</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-------- end stats---------->
                 <div class="detailSidebar">
                     <div class="row">
-                        <div class="six columns spacebot10">
+                        <div class="twelve columns">
                             <ul>
-                                <li>
-                                    <span>Location</span><?php echo $model->locationZip ? $model->locationZip : 'Online'; ?>
-                                </li>
-                                <li><span>Total Seats</span><?php echo $model->maxOccupancy; ?></li>
-                                <li><span>Needed to Start</span><?php echo $model->minOccupancy; ?></li>
-                                <li><span># of Lessons</span><?php echo count(json_decode($model->sessions)[0]); ?></li>
-                                <li><span>1 Lesson time</span><?php echo $model->lessonDuration * 60; ?> min</li>
-                                <li><span>Availability</span>
-                                    <?php echo $model->start; ?>
-                                    -
-                                    <?php echo $model->end; ?>
-                                </li>
-
+                                <li><span>Location</span><?php echo $model->locationZip; ?></li>
+                                <?php
+                                $availability = date('n.j', strtotime($model->start)) . '-' . date('n.j', strtotime($model->end));
+                                echo "<li><span>Availability</span>{$availability}</li>\n";
+                                ?>
+                                <li><span>Max. seats</span><?php echo $model->maxOccupancy; ?></li>
+                                <li><span>Min. seats</span><?php echo $model->minOccupancy; ?></li>
+                                <li><span># of Lessons</span><?php echo $model->numLessons; ?></li>
+                                <li><span>1 lesson time</span><?php echo $model->lessonDuration * 60; ?> min</li>
                             </ul>
                         </div>
-                        <div class="six columns spacebot10">
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns spacebot10 detailsMap">
                             <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
                                     marginwidth="0"
                                     src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
                         </div>
                     </div>
-                    <h4 class="spacebot10">Enroll for a later session</h4>
+                    <div class="detailEnrolllater" id="enrolllater">
+                        <h4 class="spacebot10">Enroll for a later session</h4>
 
-                    <div id='calendar'></div>
+                        <div id='calendar'></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!------- end main content container----->
     </div>
+<!------- end main content container----->
 </div>
 
 <script type="text/javascript">

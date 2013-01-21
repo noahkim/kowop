@@ -161,7 +161,8 @@
                     $picLink = $student->profilePic;
                 }
 
-                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             ?>
@@ -174,11 +175,12 @@
                 </div>
                 <div class="homeFeaturedtext">
                     <h3><?php echo $randomClass->Name; ?></h3>
-                    <span>Next available session begins <?php echo $randomClass->sessions[0]->lessons[0]->Start; //  Feb. 15th ?></span></div>
+                    <span>Next available session begins <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span></div>
                 <?php echo CHtml::link('More Info', array('class/view', 'id' => $randomClass->Class_ID), array('class' => 'button featuredButton')); ?>
         </div>
     </div>
     <!----- End Featured class info -------->
+    </div>
 </div>
 <!--------------------------------------
  Staff picks and Popular Classes
@@ -196,7 +198,8 @@
         );
         foreach ($classes as $class)
         {
-            $imageLink = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+            $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $class->Class_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
             if (strlen($teacherName) > 25)
@@ -223,7 +226,8 @@
                     $picLink = $student->profilePic;
                 }
 
-                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             $className = $class->Name;
@@ -240,10 +244,10 @@
             }
             else
             {
-                $sessionCount = count($class->sessions);
-                $tuition = $class->Tuition * $sessionCount;
+                $lessonCount = count($class->sessions[0]->lessons);
+                $tuition = $class->Tuition * $lessonCount;
 
-                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+                $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
             }
 
             echo <<<BLOCK
@@ -281,7 +285,8 @@ BLOCK;
         );
         foreach ($classes as $class)
         {
-            $imageLink = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+            $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $class->Class_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
             $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
@@ -302,7 +307,8 @@ BLOCK;
                     $picLink = $student->profilePic;
                 }
 
-                $enrollees .= "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             $className = CHtml::link('<h5>' . $class->Name . '</h5>', array('class/view', 'id' => $class->Class_ID));
@@ -313,10 +319,10 @@ BLOCK;
             }
             else
             {
-                $sessionCount = count($class->sessions);
-                $tuition = $class->Tuition * $sessionCount;
+                $lessonCount = count($class->sessions[0]->lessons);
+                $tuition = $class->Tuition * $lessonCount;
 
-                $sessionHTML = "\${$tuition} ( {$sessionCount} lessons )";
+                $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
             }
 
             echo <<<BLOCK
