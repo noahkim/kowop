@@ -15,10 +15,8 @@
             }
             ?>
         </span>
-    <?php if ($model->location != null) : ?>
-        <span class="requestLocation">This request is centered in <span><?php $model->location->Zip; ?></span>
+        <span class="requestLocation">This request is centered in <span><?php echo $model->Zip; ?></span>
         </span>
-    <?php endif; ?>
 
     <div class="detailsMap">
         <iframe class="infoMap" width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"

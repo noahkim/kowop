@@ -12,10 +12,10 @@
 
     <div class="row">
         <div class="seven columns">
-            <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve', 'placeholder' => 'What are you looking for?')); ?>
+            <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve searchInput', 'placeholder' => 'What are you looking for?')); ?>
         </div>
         <div class="three columns">
-            <input type="text" class="homeSearchinput twelve" placeholder="city,state or zip">
+            <input type="text" class="homeSearchinput twelve searchInput" placeholder="city,state or zip">
         </div>
         <div class="two columns">
             <a href="#" onclick="document.forms['search-form'].submit(); return false;"
@@ -30,265 +30,86 @@
 <!--------- main content container------>
 <div class="row" id="wrapper">
 
-<!----- Left Column for search results---->
-<div class="nine columns">
-    <?php
+    <div id="results">
+        <?php echo $this->renderPartial('_searchResults', array('model' => $model, 'results' => $results)); ?>
+    </div>
 
-    echo "<div class='row'>\n";
-
-    $remaining = 0;
-
-    $user = null;
-    if (!Yii::app()->user->isGuest)
-    {
-        $user = User::model()->findByPk(Yii::app()->user->id);
-    }
-
-    foreach ($results as $i => $item)
-    {
-        $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
-        $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
-        $description = $item->Description;
-        if (strlen($description) > 85)
-        {
-            $description = substr($description, 0, 85);
-            $description .= ' ...';
-        }
-
-        $sessionHTML = 'Request';
-        if ($item instanceof KClass)
-        {
-            if (($item->Tuition == null) || ($item->Tuition == 0) || (count($item->sessions) == 0))
-            {
-                $sessionHTML = 'This class is free!';
-            }
-            else
-            {
-                $lessonCount = count($item->sessions[0]->lessons);
-                $tuition = $item->Tuition * $lessonCount;
-
-                $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
-            }
-        }
-
-        $itemNumber = $i + 1;
-
-        $name = "<h5> {$item->Name} </h5>";
-        if ($item instanceof KClass)
-        {
-            $name = CHtml::link($name, array('/class/view', 'id' => $item->Class_ID));
-        }
-        elseif ($item instanceof Request)
-        {
-            $name = CHtml::link($name, array('/request/view', 'id' => $item->Request_ID));
-        }
-
-        if ($item instanceof KClass)
-        {
-            //<span class="ribbon staffpick"></span>
-
-            $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
-            if (count($item->contents) > 0)
-            {
-                $link = $item->contents[0]->Link;
-                $imageHTML = "<img src='{$link}' />";
-            }
-
-            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $item->Class_ID));
-
-            $enrollees = '';
-            foreach ($item->students as $student)
-            {
-                $picLink = 'http://placeskull.com/100/100/868686';
-
-                if ($student->profilePic != null)
-                {
-                    $picLink = $student->profilePic;
-                }
-
-                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
-            }
-
-            echo <<<BLOCK
-
-    <!----------- 1 tile ---------->
-    <div id="resultContainer{$i}" class="four columns">
-        <div id="result{$i}" class="classTile">
-            <span class="tilenumber">{$itemNumber}</span>
-            {$imageLink}
-            {$name}
-            <span class="tileInstructor">by {$teacherLink}</span>
-            <span class="tileDescription">{$description}</span>
-            <div class="tileStudents">
-                {$enrollees}
+    <!------ right column for map, etc.------->
+    <div class="three columns">
+        <div class="searchSidebar">
+            <div class="spacebot10">
+                <?php echo CHtml::link("teach a class", $this->createUrl("class/create"), array('class' => 'large button twelve')); ?>
             </div>
-        </div>
-        <div class="classCost">
-            {$sessionHTML}
-        </div>
-    </div>
-    <!------- end 1 tile -------->
+            <div class="spacebot10">
+                <?php echo CHtml::link("request a class", $this->createUrl("request/create"), array('class' => 'large button twelve')); ?>
+            </div>
+            <div class="searchMap">
 
-BLOCK;
-        }
-        elseif ($item instanceof Request)
-        {
-            $joinLink = CHtml::link('Quick Join', array('/request/join', 'id' => $item->Request_ID));
+                <label for="redoSearch">
+                    <input type="checkbox" id="redoSearch">
+                    <span class="custom checkbox"></span>
+                    Redo search when map moves?
+                </label>
 
-            if ($user != null && (count($user->requestsJoined(array('condition' => 'requestsJoined.Request_ID = ' . $item->Request_ID))) > 0))
-            {
-                $joinLink = CHtml::link("You've joined this request", array('/request/view', 'id' => $item->Request_ID));
-            }
+                <div id="map" style="width: 100%; height: 200px;"></div>
+            </div>
+            <!---- Sidebar box for filters----->
+            <div class="sidebarBox">
+                <h5>Organize Results</h5>
 
-            $enrollees = '';
-            foreach ($item->requestors as $student)
-            {
-                $picLink = 'http://placeskull.com/100/100/868686';
+                <?php $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'search-form-filters',
+                'action' => Yii::app()->createUrl('/class/search'),
+                'enableAjaxValidation' => false,
+                'method' => 'get'
+            )); ?>
 
-                if ($student->profilePic != null)
-                {
-                    $picLink = $student->profilePic;
-                }
+                <label>Open seats in next session</label>
+                <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup, array('class' => 'stretch')); ?>
 
-                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
-            }
+                <label>Category</label>
+                <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'stretch')); ?>
 
-            echo <<<BLOCK
+                <label>Tution</label>
 
-    <!----------- 1 REQUEST tile ---------->
-    <div id="resultContainer{$i}" class="four columns">
-    <span class="ribbon request"></span>
-      <div id="result{$i}" class="requestTile">
-      <span class="tilenumber">{$itemNumber}</span>
-        {$name}
-        <span class="tileInstructor">by {$teacherLink}</span>
-        <span class="tileDescription">{$description}</span>
-        <div class="tileStudents">
-            {$enrollees}
-        </div>
-      </div>
-        <div class="requestJoin">
-            {$joinLink}
-        </div>
-    </div>
-    <!------- end 1 tile -------->
-
-BLOCK;
-
-        }
-
-        if (($itemNumber % 3) == 0)
-        {
-            echo "</div>\n";
-            echo "<div class='row'>\n";
-        }
-
-        $remaining = 3 - ($itemNumber % 3);
-    }
-
-    for ($i = 0; $i < $remaining; $i++)
-    {
-        echo "<div class='four columns'>\n";
-        echo "</div>\n";
-    }
-
-    echo "</div>\n";
-    ?>
-
-    <!--- pagination --->
-    <ul class="pagination">
-        <li class="arrow unavailable"><a href="">&laquo;</a></li>
-        <li class="current"><a href="">1</a></li>
-        <li><a href="">2</a></li>
-        <li><a href="">3</a></li>
-        <li><a href="">4</a></li>
-        <li class="unavailable"><a href="">&hellip;</a></li>
-        <li><a href="">12</a></li>
-        <li><a href="">13</a></li>
-        <li class="arrow"><a href="">&raquo;</a></li>
-    </ul>
-    <!----- end pagination--->
-</div>
-<!------ end left column------------------>
-
-<!------ right column for map, etc.------->
-<div class="three columns">
-    <div class="searchSidebar">
-        <div class="spacebot10">
-            <?php echo CHtml::link("teach a class", $this->createUrl("class/create"), array('class' => 'large button twelve')); ?>
-        </div>
-        <div class="spacebot10">
-            <?php echo CHtml::link("request a class", $this->createUrl("request/create"), array('class' => 'large button twelve')); ?>
-        </div>
-        <div class="searchMap">
-
-            <label for="redoSearch">
-                <input type="checkbox" id="redoSearch">
-                <span class="custom checkbox"></span>
-                Redo search when map moves?
-            </label>
-
-            <div id="map" style="width: 100%; height: 200px;"></div>
-        </div>
-        <!---- Sidebar box for filters----->
-        <div class="sidebarBox">
-            <h5>Organize Results</h5>
-
-            <?php $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'search-form-filters',
-            'action' => Yii::app()->createUrl('/class/search'),
-            'enableAjaxValidation' => false,
-            'method' => 'get'
-        )); ?>
-
-            <label>Open seats in next session</label>
-            <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup, array('class' => 'stretch')); ?>
-
-            <label>Category</label>
-            <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'stretch')); ?>
-
-            <label>Tution</label>
-
-            <div class="row">
-                <div class="six columns">
-                    <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
+                <div class="row">
+                    <div class="six columns">
+                        <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
+                    </div>
+                    <div class="six columns">
+                        <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
+                    </div>
                 </div>
-                <div class="six columns">
-                    <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
+                <label>Next class starts by:</label>
+                <?php echo $form->textField($model, 'nextClassStartsBy'); ?>
+
+                <?php $this->endWidget('CActiveForm'); ?>
+
+                <div class="row">
+                    <div class="six columns">
+                        <a href="#" onclick="document.forms['search-form-filters'].submit(); return false;"
+                           class="button twelve">Apply</a>
+                    </div>
+                    <div class="six columns">
+                        <?php $form = $this->beginWidget('CActiveForm', array(
+                        'id' => 'search-form-filters-blank',
+                        'action' => Yii::app()->createUrl('/class/search'),
+                        'enableAjaxValidation' => false,
+                        'method' => 'get',
+                        'htmlOptions' => array('style' => 'margin: 0;')
+                    )); ?>
+                        <?php $this->endWidget('CActiveForm'); ?>
+                        <a href="#" onclick="document.forms['search-form-filters-blank'].submit(); return false;"
+                           class="button twelve">Reset</a>
+                    </div>
                 </div>
             </div>
-            <label>Next class starts by:</label>
-            <?php echo $form->textField($model, 'nextClassStartsBy'); ?>
-
-            <?php $this->endWidget('CActiveForm'); ?>
-
-            <div class="row">
-                <div class="six columns">
-                    <a href="#" onclick="document.forms['search-form-filters'].submit(); return false;"
-                       class="button twelve">Apply</a>
-                </div>
-                <div class="six columns">
-                    <?php $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'search-form-filters-blank',
-                    'action' => Yii::app()->createUrl('/class/search'),
-                    'enableAjaxValidation' => false,
-                    'method' => 'get',
-                    'htmlOptions' => array('style' => 'margin: 0;')
-                )); ?>
-                    <?php $this->endWidget('CActiveForm'); ?>
-                    <a href="#" onclick="document.forms['search-form-filters-blank'].submit(); return false;"
-                       class="button twelve">Reset</a>
-                </div>
-            </div>
+            <!----- End Sidebar Box----->
         </div>
-        <!----- End Sidebar Box----->
+        <!------- end right column --------------->
     </div>
-</div>
-<!------- end right column --------------->
 
-<!------- end main content container----->
+    <!------- end main content container----->
 </div>
 
 
@@ -298,7 +119,16 @@ BLOCK;
 <script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
 
 <script>
+    var timeoutHandle;
+
     $(document).ready(function () {
+
+        $('.searchInput').keypress(function (e) {
+            if(e.which == 13) {
+                document.forms['search-form'].submit();
+            }
+        });
+
         $("#map").gmap3({
             map:{
                 options:{
@@ -312,50 +142,16 @@ BLOCK;
                             return;
                         }
 
-                        var map = $("#map").gmap3("get");
-
-                        $("#map").gmap3({
-                            get:{
-                                name:"marker",
-                                all:true,
-                                full:true,
-                                callback:function (objs) {
-                                    $.each(objs, function (i, obj) {
-                                        if (!map.getBounds().contains(obj.object.getPosition())) {
-                                            $('#resultContainer' + obj.data.index).hide();
-                                        }
-                                        else {
-                                            $('#resultContainer' + obj.data.index).show();
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                        clearTimeout(timeoutHandle);
+                        timeoutHandle = setTimeout(redoSearchWithMap, 500);
                     },
                     center_changed:function () {
                         if (!$('#redoSearch').is(':checked')) {
                             return;
                         }
 
-                        var map = $("#map").gmap3("get");
-
-                        $("#map").gmap3({
-                            get:{
-                                name:"marker",
-                                all:true,
-                                full:true,
-                                callback:function (objs) {
-                                    $.each(objs, function (i, obj) {
-                                        if (!map.getBounds().contains(obj.object.getPosition())) {
-                                            $('#resultContainer' + obj.data.index).hide();
-                                        }
-                                        else {
-                                            $('#resultContainer' + obj.data.index).show();
-                                        }
-                                    });
-                                }
-                            }
-                        });
+                        clearTimeout(timeoutHandle);
+                        timeoutHandle = setTimeout(redoSearchWithMap, 500);
                     }
                 }
             },
@@ -366,21 +162,25 @@ BLOCK;
 
                 foreach ($results as $i => $item)
                 {
-                    if ($item->location != null)
+                    $type = 'class';
+                    $id = 0;
+                    if ($item instanceof KClass)
                     {
                         $address = str_replace("'", "\\'", $item->location->fullAddress);
 
-                        if ($item instanceof KClass)
-                        {
-                            $link = $this->createUrl('/class/view', array('id' => $item->Class_ID));
-                        }
-                        elseif ($item instanceof Request)
-                        {
-                            $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
-                        }
-
-                        $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}' } },\n";
+                        $link = $this->createUrl('/class/view', array('id' => $item->Class_ID));
+                        $id = $item->Class_ID;
                     }
+                    elseif ($item instanceof Request)
+                    {
+                        $address = $item->Zip;
+
+                        $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
+                        $id = $item->Request_ID;
+                        $type = 'request';
+                    }
+
+                    $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}', 'type': '{$type}', 'id': {$id} } },\n";
                 }
 
                 $markerValues = Utils::str_lreplace(',', '', $markerValues);
@@ -409,4 +209,47 @@ BLOCK;
             autofit:{}
         });
     });
+
+    function redoSearchWithMap() {
+        var map = $("#map").gmap3("get");
+
+        var included = [];
+
+        $("#map").gmap3({
+            get:{
+                name:"marker",
+                all:true,
+                full:true,
+                callback:function (objs) {
+                    $.each(objs, function (i, obj) {
+                        if (!map.getBounds().contains(obj.object.getPosition())) {
+                            //$('#resultContainer' + obj.data.index).hide();
+                        }
+                        else {
+                            //$('#resultContainer' + obj.data.index).show();
+                            included.push({
+                                type: obj.data.type,
+                                id: obj.data.id
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
+        var query = '<?php echo http_build_query($_GET); ?>';
+        var includedString = '&ClassSearchForm[includedResults]=' + JSON.stringify(included);
+        query += includedString;
+
+        $.ajax({
+            type:'POST',
+            url:'<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
+            data: query,
+            success:function (data) {
+                $('#results').html(data);
+            }
+        });
+
+
+    }
 </script>

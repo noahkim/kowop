@@ -19,6 +19,7 @@
  * @property string $LessonDuration
  * @property string $Prerequisites
  * @property string $Materials
+ * @property int Status
  * @property string $Created
  * @property string $Updated
  *
@@ -69,7 +70,7 @@ class KClass extends CActiveRecord
             array('Prerequisites, Materials', 'length', 'max' => 1000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Class_ID, Course_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, LessonDuration, Prerequisites, Materials, Created, Updated', 'safe'),
+            array('Class_ID, Course_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Tuition, LessonDuration, Prerequisites, Materials, Status, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -126,6 +127,7 @@ class KClass extends CActiveRecord
             'Tuition' => 'Tuition',
             'Prerequisites' => 'Prerequisites',
             'Materials' => 'Materials',
+            'Status' => 'Status',
             'Created' => 'Created',
             'Updated' => 'Updated',
         );
@@ -157,6 +159,7 @@ class KClass extends CActiveRecord
         $criteria->compare('Materials', $this->Materials, true);
         $criteria->compare('LessonDuration', $this->LessonDuration);
         $criteria->compare('Tuition', $this->Tuition);
+        $criteria->compare('Status', $this->Status);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);
 

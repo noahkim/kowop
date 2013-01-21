@@ -28,59 +28,69 @@
       <file leaf-file-name="search.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/class/search.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="13" selection-start="2101" selection-end="2101" vertical-scroll-proportion="143.1923">
-              <folding />
+            <state line="22" column="14" selection-start="961" selection-end="961" vertical-scroll-proportion="95.42308">
+              <folding>
+                <marker date="1358795250301" expanded="true" signature="1327:1497" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="1363:1497" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="1400:1497" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="1591:1692" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="1785:2111" placeholder="..." />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+                <marker date="1358795250301" expanded="true" signature="2197:2290" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="2979:3086" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="3025:3086" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="3207:3268" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="3590:3697" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="3636:3697" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="3876:3934" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="5013:5241" placeholder="..." />
+                <marker date="1358795250301" expanded="true" signature="5073:5241" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="viewDialog.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/class/viewDialog.php">
+      <file leaf-file-name="ClassSearchForm.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/models/ClassSearchForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="223" column="0" selection-start="7419" selection-end="7419" vertical-scroll-proportion="0.53898305">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="view.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/class/view.php">
+        <entry file="file://$PROJECT_DIR$/protected/views/user/view.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="80" column="4" selection-start="2513" selection-end="2572" vertical-scroll-proportion="-22.923077">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_default.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/class/view/_default.php">
+      <file leaf-file-name="_searchResults.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/class/_searchResults.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="26" selection-start="7071" selection-end="7071" vertical-scroll-proportion="-95.46154">
-              <folding>
-                <marker date="1358739319425" expanded="true" signature="5624:5657" placeholder="..." />
-              </folding>
+            <state line="192" column="5" selection-start="5483" selection-end="5483" vertical-scroll-proportion="-92.84615">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
+      <file leaf-file-name="_createForm1.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm1.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="322" column="58" selection-start="13421" selection-end="13421" vertical-scroll-proportion="-1.2666667">
-              <folding>
-                <marker date="1358747026560" expanded="true" signature="10825:11268" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="10861:11167" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="10979:11048" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="11092:11148" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="11490:11885" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="14307:15158" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="14329:15158" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="14998:15158" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="15044:15158" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="15065:15158" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="15225:15322" placeholder="..." />
-                <marker date="1358747026560" expanded="true" signature="15481:15568" placeholder="..." />
-              </folding>
+            <state line="112" column="61" selection-start="3926" selection-end="3926" vertical-scroll-proportion="-13.769231">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/ClassController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="322" column="9" selection-start="10184" selection-end="10184" vertical-scroll-proportion="-20.923077">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -98,22 +108,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/controllers/SiteController.php" />
-        <option value="$PROJECT_DIR$/protected/views/site/login.php" />
-        <option value="$PROJECT_DIR$/protected/modules/hybridauth/controllers/DefaultController.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/mainOuter.php" />
-        <option value="$PROJECT_DIR$/protected/models/KClass.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/ClassController.php" />
-        <option value="$PROJECT_DIR$/protected/views/request/view.php" />
-        <option value="$PROJECT_DIR$/protected/models/User.php" />
-        <option value="$PROJECT_DIR$/protected/views/class/view/_enrolled.php" />
         <option value="$PROJECT_DIR$/protected/views/class/view/_default.php" />
         <option value="$PROJECT_DIR$/protected/views/class/view/_teacher.php" />
-        <option value="$PROJECT_DIR$/protected/views/request/create.php" />
         <option value="$PROJECT_DIR$/protected/views/class/_createForm4.php" />
         <option value="$PROJECT_DIR$/protected/views/user/account/_teaching.php" />
-        <option value="$PROJECT_DIR$/protected/views/class/search.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
+        <option value="$PROJECT_DIR$/protected/models/Request.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/RequestController.php" />
+        <option value="$PROJECT_DIR$/protected/views/request/create.php" />
+        <option value="$PROJECT_DIR$/protected/views/request/view.php" />
+        <option value="$PROJECT_DIR$/protected/models/ClassStatus.php" />
+        <option value="$PROJECT_DIR$/protected/models/KClass.php" />
+        <option value="$PROJECT_DIR$/protected/views/class/_createForm1.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/ClassController.php" />
+        <option value="$PROJECT_DIR$/protected/views/class/search.php" />
+        <option value="$PROJECT_DIR$/protected/models/ClassSearchForm.php" />
+        <option value="$PROJECT_DIR$/protected/views/class/_searchResults.php" />
       </list>
     </option>
   </component>
@@ -504,8 +514,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -529,14 +539,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -578,7 +588,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -591,6 +600,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -649,130 +659,131 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/protected/models/UserToSession.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/RequestJoinForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="34" selection-start="400" selection-end="400" vertical-scroll-proportion="0.03841808">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Request.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="31" selection-start="636" selection-end="636" vertical-scroll-proportion="0.40338984">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/RequestController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="44" selection-start="478" selection-end="478" vertical-scroll-proportion="-3.4768362">
+        <state line="33" column="44" selection-start="687" selection-end="687" vertical-scroll-proportion="0.6338983">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/request/create.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="13" selection-start="611" selection-end="611" vertical-scroll-proportion="-0.40338984">
+        <state line="68" column="22" selection-start="3008" selection-end="3008" vertical-scroll-proportion="1.3062147">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm2.php">
+    <entry file="file://$PROJECT_DIR$/protected/controllers/RequestController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="32" selection-start="847" selection-end="847" vertical-scroll-proportion="-0.23050848">
+        <state line="57" column="44" selection-start="1784" selection-end="1784" vertical-scroll-proportion="0.42372882">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ClassCreateForm.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/request/view.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="22" selection-start="220" selection-end="220" vertical-scroll-proportion="0.23394495">
+        <state line="19" column="0" selection-start="712" selection-end="712" vertical-scroll-proportion="0.37041286">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm4.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/ClassStatus.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="6" selection-start="9109" selection-end="9109" vertical-scroll-proportion="0.2396789">
+        <state line="9" column="23" selection-start="126" selection-end="126" vertical-scroll-proportion="0.17288135">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_classes.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/DayOfWeek.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="564" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/KClass.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="49" selection-start="684" selection-end="684" vertical-scroll-proportion="-2.4203389">
+        <state line="162" column="52" selection-start="6847" selection-end="6847" vertical-scroll-proportion="3.1582568">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_teaching.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/Request.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="196" column="11" selection-start="5844" selection-end="5844" vertical-scroll-proportion="-3.9230769">
+        <state line="97" column="27" selection-start="3251" selection-end="3251" vertical-scroll-proportion="0.5186441">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm3.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="31" selection-start="3363" selection-end="3363" vertical-scroll-proportion="0.11525424">
+        <state line="112" column="61" selection-start="3926" selection-end="3926" vertical-scroll-proportion="-13.769231">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/user/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="4" selection-start="2513" selection-end="2572" vertical-scroll-proportion="-22.923077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/ClassController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="322" column="9" selection-start="10184" selection-end="10184" vertical-scroll-proportion="-20.923077">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/search.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="13" selection-start="2101" selection-end="2101" vertical-scroll-proportion="143.1923">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/viewDialog.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/class/view/_default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="26" selection-start="7071" selection-end="7071" vertical-scroll-proportion="-95.46154">
+        <state line="22" column="14" selection-start="961" selection-end="961" vertical-scroll-proportion="95.42308">
           <folding>
-            <marker date="1358739319425" expanded="true" signature="5624:5657" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="1327:1497" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="1363:1497" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="1400:1497" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="1591:1692" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="1785:2111" placeholder="..." />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+            <marker date="1358795250301" expanded="true" signature="2197:2290" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="2979:3086" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="3025:3086" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="3207:3268" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="3590:3697" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="3636:3697" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="3876:3934" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="5013:5241" placeholder="..." />
+            <marker date="1358795250301" expanded="true" signature="5073:5241" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/class/_searchResults.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="322" column="58" selection-start="13421" selection-end="13421" vertical-scroll-proportion="-1.2666667">
-          <folding>
-            <marker date="1358747026560" expanded="true" signature="10825:11268" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="10861:11167" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="10979:11048" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="11092:11148" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="11490:11885" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="14307:15158" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="14329:15158" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="14998:15158" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="15044:15158" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="15065:15158" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="15225:15322" placeholder="..." />
-            <marker date="1358747026560" expanded="true" signature="15481:15568" placeholder="..." />
-          </folding>
+        <state line="192" column="5" selection-start="5483" selection-end="5483" vertical-scroll-proportion="-92.84615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/ClassSearchForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="223" column="0" selection-start="7419" selection-end="7419" vertical-scroll-proportion="0.53898305">
+          <folding />
         </state>
       </provider>
     </entry>

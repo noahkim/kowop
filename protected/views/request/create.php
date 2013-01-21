@@ -10,19 +10,6 @@
             'enableAjaxValidation' => false,
         )); ?>
 
-            <?php
-            $models = array($model);
-            if (isset($location))
-            {
-                array_push($models, $location);
-            }
-            if (isset($requestToUser))
-            {
-                array_push($models, $requestToUser);
-            }
-            echo $form->errorSummary($models);
-            ?>
-
             <div class="row">
                 <div class="three columns">
                     <label class="right inline">Requested class name?</label>
@@ -78,7 +65,7 @@
                     <label class="right inline">Zip Code</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->textField($modelLocation, 'Zip', array('size' => 45, 'maxlength' => 5, 'class' => 'five')); ?>
+                    <?php echo $form->textField($model, 'Zip', array('size' => 45, 'maxlength' => 5, 'class' => 'five')); ?>
                 </div>
             </div>
             <div class="row">

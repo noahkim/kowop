@@ -22,7 +22,7 @@ class ClassController extends Controller
     {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog'),
+                'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -307,13 +307,30 @@ class ClassController extends Controller
 
         $results = $model->search();
 
+        $this->render('search', array('model' => $model, 'results' => $results));
+    }
+
+    public function actionSearchResults()
+    {
+        $this->layout = false;
+
+        $model = new ClassSearchForm;
+
+        if (isset($_REQUEST['ClassSearchForm']))
+        {
+            $model->attributes = $_REQUEST['ClassSearchForm'];
+            Yii::app()->session['lastSearch'] = $model->keywords;
+        }
+
+        $results = $model->search();
+
         if (isset($_REQUEST['json']))
         {
             echo CJSON::encode($results);
         }
         else
         {
-            $this->render('search', array('model' => $model, 'results' => $results));
+            $this->render('_searchResults', array('model' => $model, 'results' => $results));
         }
     }
 

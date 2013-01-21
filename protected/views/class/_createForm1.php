@@ -106,18 +106,18 @@
 
     function getResults(keywords, category)
     {
-        var data = "SearchForm[keywords]=" + keywords;
+        var data = "ClassSearchForm[keywords]=" + keywords;
 
         if(arguments.length == 2)
         {
-            data += '&SearchForm[category]=' + category;
+            data += '&ClassSearchForm[category]=' + category;
         }
 
         data +=  "&json";
 
         $.ajax({
             type: 'GET',
-            url: '<?php echo Yii::app()->createAbsoluteUrl("class/search"); ?>',
+            url: '<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
             data: data,
             dataType: 'json',
             success: function(data)

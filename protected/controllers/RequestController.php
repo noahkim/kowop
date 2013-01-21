@@ -67,7 +67,6 @@ class RequestController extends Controller
     {
         $model = new Request;
         $modelJoin = new RequestJoinForm;
-        $modelLocation = new Location;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
@@ -76,26 +75,10 @@ class RequestController extends Controller
         {
             $model->attributes = $_POST['Request'];
             $modelJoin->attributes = $_POST['RequestJoinForm'];
-            $modelLocation->attributes = $_POST['Location'];
 
             $transaction = Yii::app()->db->beginTransaction();
             try
             {
-                // TODO: add location crap
-                /* $result = Location::model()->findExisting($modelLocation);
-
-                if ($result !== null)
-                {
-                    $model->Location_ID = $result->Location_ID;
-                }
-                else
-                {
-                    if ($modelLocation->save())
-                    {
-                        $model->Location_ID = $modelLocation->Location_ID;
-                    }
-                }*/
-
                 $model->save();
 
                 if (isset($_POST['tags']))
@@ -130,7 +113,6 @@ class RequestController extends Controller
         $this->render('create', array(
             'model' => $model,
             'modelJoin' => $modelJoin,
-            'modelLocation' => $modelLocation
         ));
     }
 

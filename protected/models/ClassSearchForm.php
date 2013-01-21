@@ -7,6 +7,8 @@ class ClassSearchForm extends CFormModel
     const CategoryValue = 2;
     const LocationMultiplier = 10;
 
+    const PageSize = 9;
+
     public $keywords;
     public $category;
 
@@ -17,11 +19,16 @@ class ClassSearchForm extends CFormModel
     public $nextClassStartsBy;
     public $daysOfWeek;
     public $categories;
+    public $includedResults;
+
+    public $page;
+    public $totalResults;
+    public $totalPages;
 
     public function rules()
     {
         return array(
-            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories', 'safe'),
+            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories, includedResults, page', 'safe'),
         );
     }
 
@@ -37,36 +44,67 @@ class ClassSearchForm extends CFormModel
         $requestCriteria = new CDbCriteria;
         $classCriteria = new CDbCriteria;
 
-        $requestCriteria->with = array('location', 'category', 'tags');
-        $classCriteria->with = array('location', 'category', 'tags');
+        $requestCriteria->with = array('category', 'tags', 'createUser');
+        $classCriteria->with = array('location', 'category', 'tags', 'createUser');
 
         $keywords = explode(' ', $this->keywords);
-        foreach ($keywords as $keyword)
-        {
-            $requestCriteria->compare('t.Name', $keyword, true, 'OR');
-            $requestCriteria->compare('t.Description', $keyword, true, 'OR');
-            $requestCriteria->compare('location.Name', $keyword, true, 'OR');
-            $requestCriteria->compare('location.Address', $keyword, true, 'OR');
-            $requestCriteria->compare('location.City', $keyword, true, 'OR');
-            $requestCriteria->compare('location.State', $keyword, true, 'OR');
-            $requestCriteria->compare('location.Zip', $keyword, true, 'OR');
-            $requestCriteria->compare('category.Name', $keyword, true, 'OR');
-            $requestCriteria->compare('tags.Name', $keyword, true, 'OR');
 
-            $classCriteria->compare('t.Name', $keyword, true, 'OR');
-            $classCriteria->compare('t.Description', $keyword, true, 'OR');
-            $classCriteria->compare('location.Name', $keyword, true, 'OR');
-            $classCriteria->compare('location.Address', $keyword, true, 'OR');
-            $classCriteria->compare('location.City', $keyword, true, 'OR');
-            $classCriteria->compare('location.State', $keyword, true, 'OR');
-            $classCriteria->compare('location.Zip', $keyword, true, 'OR');
-            $classCriteria->compare('category.Name', $keyword, true, 'OR');
-            $classCriteria->compare('tags.Name', $keyword, true, 'OR');
+        if (isset($this->includedResults))
+        {
+            $included = json_decode($this->includedResults);
+
+            $classes = array();
+            $requests = array();
+
+            foreach ($included as $item)
+            {
+                if ($item->type == 'class')
+                {
+                    $classes[] = $item->id;
+                }
+                else
+                {
+                    $requests[] = $item->id;
+                }
+            }
+
+            $classCriteria->addInCondition('t.Class_ID', $classes);
+            $requestCriteria->addInCondition('t.Request_ID', $requests);
+        }
+        else
+        {
+            foreach ($keywords as $keyword)
+            {
+                $requestCriteria->compare('t.Name', $keyword, true, 'OR');
+                $requestCriteria->compare('t.Description', $keyword, true, 'OR');
+                $requestCriteria->compare('t.Zip', $keyword, true, 'OR');
+                $requestCriteria->compare('category.Name', $keyword, true, 'OR');
+                $requestCriteria->compare('tags.Name', $keyword, true, 'OR');
+                $requestCriteria->compare('createUser.First_name', $keyword, true, 'OR');
+                $requestCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
+                $requestCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
+
+                $classCriteria->compare('t.Name', $keyword, true, 'OR');
+                $classCriteria->compare('t.Description', $keyword, true, 'OR');
+                $classCriteria->compare('location.Name', $keyword, true, 'OR');
+                $classCriteria->compare('location.Address', $keyword, true, 'OR');
+                $classCriteria->compare('location.City', $keyword, true, 'OR');
+                $classCriteria->compare('location.State', $keyword, true, 'OR');
+                $classCriteria->compare('location.Zip', $keyword, true, 'OR');
+                $classCriteria->compare('category.Name', $keyword, true, 'OR');
+                $classCriteria->compare('tags.Name', $keyword, true, 'OR');
+                $classCriteria->compare('createUser.First_name', $keyword, true, 'OR');
+                $classCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
+                $classCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
+            }
         }
 
         $requestCriteria->addCondition('t.Created_Class_ID is NULL');
 
-        if(isset($this->category) && is_numeric($this->category))
+        //$requestCriteria->compare('t.Status', '');
+        $classCriteria->compare('t.Status', ClassStatus::Active);
+
+        if (isset($this->category) && is_numeric($this->category))
         {
             $requestCriteria->compare('t.Category_ID', $this->category);
             $classCriteria->compare('t.Category_ID', $this->category);
@@ -122,7 +160,7 @@ class ClassSearchForm extends CFormModel
         $requests = Request::model()->findAll($requestCriteria);
         foreach ($requests as $i => $request)
         {
-            if(count($request->requestors) == 0)
+            if (count($request->requestors) == 0)
             {
                 unset($requests[$i]);
             }
@@ -163,7 +201,7 @@ class ClassSearchForm extends CFormModel
                     $score += ClassSearchForm::TagValue;
                 }
 
-                if (($item->location != null) && (!$locationFound))
+                if (($item instanceof KClass) && ($item->location != null) && (!$locationFound))
                 {
                     if (stristr($item->location->fulladdress, $keyword))
                     {
@@ -183,6 +221,17 @@ class ClassSearchForm extends CFormModel
         {
             $sortedItems[] = $items[$i];
         }
+
+        $this->totalResults = count($sortedItems);
+        $this->totalPages = ceil($this->totalResults / ClassSearchForm::PageSize);
+
+        if(! isset($this->page))
+        {
+            $this->page = 1;
+        }
+
+        $offset = (($this->page - 1) * ClassSearchForm::PageSize);
+        $sortedItems = array_slice($sortedItems, $offset, ClassSearchForm::PageSize);
 
         return $sortedItems;
     }
