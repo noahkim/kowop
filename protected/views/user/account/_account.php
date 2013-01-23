@@ -2,7 +2,7 @@
 <div class="nine columns accountInformation">
     <h1><?php echo $model->fullname; ?></h1>
 
-    <p>Member since <?php echo $model->Created; ?></p>
+    <p>Member since <?php echo date('F Y', strtotime($model->Created)); ?></p>
 
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Profile image</div>
@@ -39,28 +39,27 @@
     </div>
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Networks</div>
-        <div class="eight columns">Google+ <a href="#">(connected)</a>, Twitter <a href="#">(hookup)</a>, Facebook <a
-                href="#">(hookup)</a></div>
+        <div class="eight columns"></div>
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Location</div>
-        <div class="eight columns">4075 Charles Ave, Culver City, CA 90232</div>
+        <div class="eight columns"></div>
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Timezone</div>
-        <div class="eight columns">Pacific Standard Time - 2:04pm</div>
+        <div class="eight columns"></div>
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Payment Information</div>
-        <div class="eight columns">Account ending in ************4354</div>
+        <div class="eight columns"></div>
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Bank account information</div>
-        <div class="eight columns">Account ending in ************2432</div>
+        <div class="eight columns"></div>
         <div class="one column"><a href="#" class="button tiny secondary radius">Edit</a></div>
     </div>
 </div>

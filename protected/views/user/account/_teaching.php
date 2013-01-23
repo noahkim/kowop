@@ -73,7 +73,7 @@
     <!----- currently teaching --------->
     <?php
     //Start <= now() AND
-    $condition = 'End >= now()';
+    $condition = 'End >= now() AND Status = ' . ClassStatus::Active;
     ?>
     <span class="profileCount"><?php echo count($model->kClasses(array('condition' => $condition))); ?></span>
 
@@ -121,7 +121,7 @@ BLOCK;
     <!------ end currently teaching -------->
     <!------ Past taught classes ------------->
     <?php
-    $condition = 'End < now()';
+    $condition = 'End < now() AND Status = ' . ClassStatus::Active;
     ?>
 
     <span class="profileCount"><?php echo count($model->kClasses(array('condition' => $condition))); ?></span>

@@ -26,11 +26,11 @@ class ClassController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'join', 'leave'),
+                'actions' => array('create', 'update', 'join', 'leave', 'delete'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
+                'actions' => array('admin'),
                 'users' => array('admin'),
             ),
             array('deny', // deny all users
@@ -112,11 +112,11 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            $imageFileName = 'temp' . uniqid();
             $imageFile = CUploadedFile::getInstance($model, 'imageFile');
 
             if ($imageFile)
             {
+                $imageFileName = 'temp' . uniqid();
                 $pathParts = pathinfo($imageFile->getName());
                 $imageFileName .= '.' . $pathParts['extension'];
 
@@ -244,6 +244,20 @@ class ClassController extends Controller
             {
                 $model->attributes = $_POST['KClass'];
 
+                $imageFile = CUploadedFile::getInstanceByName('imageFile');
+
+                if($imageFile)
+                {
+                    $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
+
+                    ClassToContent::model()->deleteAll('Class_ID = :Class_ID', array(':Class_ID' => $model->Class_ID));
+
+                    $classToContent = new ClassToContent;
+                    $classToContent->Class_ID = $model->Class_ID;
+                    $classToContent->Content_ID = $content->Content_ID;
+                    $classToContent->save();
+                }
+
                 if ($model->save())
                 {
                     // Notify the students
@@ -251,7 +265,10 @@ class ClassController extends Controller
                     {
                         if ($student->User_ID != $model->Create_User_ID)
                         {
-                            Message::SendNotification($student->User_ID, "{$model->createUser->fullName} has updated the class details for \"{$model->Name}\".");
+                            $userName = CHtml::link($model->createUser->fullName, array('user/view', 'id' => $model->createUser->User_ID));
+                            $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+
+                            Message::SendNotification($student->User_ID, "{$userName} has updated the class details for \"{$className}\".");
                         }
                     }
 
@@ -273,13 +290,11 @@ class ClassController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->loadModel($id)->delete();
+        $model = $this->loadModel($id);
+        $model->Status = ClassStatus::Inactive;
+        $model->save();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-        {
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        }
+        $this->redirect(array('//site/index'));
     }
 
     /**

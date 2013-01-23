@@ -3,15 +3,6 @@
 class RequestController extends Controller
 {
     /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    //public $layout='//layouts/column2';
-
-    public $breadcrumbs;
-    public $menu;
-
-    /**
      * @return array action filters
      */
     public function filters()
@@ -71,7 +62,7 @@ class RequestController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Request'], $_POST['RequestJoinForm'], $_POST['Location']))
+        if (isset($_POST['Request'], $_POST['RequestJoinForm']))
         {
             $model->attributes = $_POST['Request'];
             $modelJoin->attributes = $_POST['RequestJoinForm'];
@@ -107,6 +98,9 @@ class RequestController extends Controller
             catch (Exception $e)
             {
                 $transaction->rollback();
+                echo '<pre>';
+                var_dump($e);
+                die();
             }
         }
 

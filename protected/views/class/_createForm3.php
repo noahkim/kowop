@@ -5,6 +5,13 @@
         <div class="createContainer">
             <h1>Class Schedule</h1>
 
+            <!---- alert box--->
+            <div id="noSessionsAlert" class="alert-box alert" style="display: none;">
+                You haven't added any sessions to this class. Please add at least 1 session before<br/> moving on.
+                <a href="" class="close">&times;</a>
+            </div>
+            <!--- end alert box--->
+
             <p>Add as many sessions as you'd like to make available to potential students.</p>
 
             <div class="createLesson">
@@ -48,7 +55,7 @@ BLOCK;
                 ?>
             </div>
             <div class="row borderTop">
-                <div class="twelve columns alignRight">
+                <div class="twelve columns">
                     <?php $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'class-create-form',
                     'enableAjaxValidation' => false,
@@ -58,8 +65,16 @@ BLOCK;
                     <?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
 
                     <div class="twelve columns alignRight">
-                        <a href="#" onclick='addSession(); return false;' class="button radius">Add a session</a>
-                        <?php echo CHtml::submitButton('Finalize & Submit', array('id' => 'submit', 'name' => 'step4', 'class' => 'button radius')); ?>
+                        <?php echo CHtml::link('Cancel', array('site/index'), array('class' => 'button large')); ?>
+                        <a href="#" onclick='addSession(); return false;' class="button large">Add a session</a>
+                        <?php
+                        echo CHtml::submitButton('Finalize & Submit', array(
+                            'id' => 'submit',
+                            'name' => 'step4',
+                            'class' => 'button large',
+                            'onclick' => 'return validateSessions();'
+                        ));
+                        ?>
                     </div>
 
                     <?php $this->endWidget(); ?>
@@ -107,9 +122,9 @@ BLOCK;
             }
 
             settings.currentSession = sessions.length + 1;
-
-            displaySessions();
         }
+
+        displaySessions();
 
         $('.datepicker').Zebra_DatePicker({
             direction:[settings.availabilityStart.toString('yyyy-MM-dd'), settings.availabilityEnd.toString('yyyy-MM-dd')]
@@ -181,10 +196,20 @@ BLOCK;
         $('#sessionNum').text(settings.currentSession);
     }
 
-    function removeSession(session)
-    {
+    function removeSession(session) {
         sessions.splice(session - 1, 1);
         settings.currentSession--;
         displaySessions();
+    }
+
+    function validateSessions()
+    {
+        if(settings.currentSession == 1)
+        {
+            $('#noSessionsAlert').show();
+            return false;
+        }
+
+        return true;
     }
 </script>

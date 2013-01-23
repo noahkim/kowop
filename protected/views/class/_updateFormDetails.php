@@ -6,7 +6,8 @@
             <h1>Update your class</h1>
             <?php $form = $this->beginWidget('CActiveForm', array(
             'id' => 'class-update-form',
-            'enableAjaxValidation' => false
+            'enableAjaxValidation' => false,
+            'htmlOptions' => array('enctype' => 'multipart/form-data')
         )); ?>
             <div class="row">
                 <div class="three columns">
@@ -54,7 +55,8 @@
                     <?php /*echo $form->textField($model, 'imageURL', array('placeholder' => 'image URL')); */?><!--
                     or upload-->
                     <?php /*echo $form->fileField($model, 'imageFile', array('placeholder' => 'upload')); */?>
-                    <input name="imageFile" type="upload" />
+
+                    <input placeholder="upload" name="imageFile" type="file" />
                 </div>
             </div>
             <div class="row">

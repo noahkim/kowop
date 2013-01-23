@@ -141,7 +141,11 @@ class ClassCreateForm extends CFormModel
                     {
                         if ($student->User_ID != $this->class->Create_User_ID)
                         {
-                            Message::SendNotification($student->User_ID, "{$this->class->createUser->fullName} has picked up the class request \"{$request->Name}\".");
+                            $userName = CHtml::link($this->class->createUser->fullName, array('user/view', 'id' => $this->class->createUser->User_ID));
+                            $requestName = CHtml::link($request->Name, array('request/view', 'id' => $request->Request_ID));
+                            $className = CHtml::link($this->class->Name, array('class/view', 'id' => $this->class->Class_ID));
+
+                            Message::SendNotification($student->User_ID, "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
                         }
                     }
                 }

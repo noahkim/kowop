@@ -63,11 +63,7 @@
             echo $formTeach->hiddenField($modelTeach, 'category', array('value' => $model->Category_ID));
             echo $formTeach->hiddenField($modelTeach, 'tags', array('value' => $model->tagstring));
             echo $formTeach->hiddenField($modelTeach, 'fromRequest_ID', array('value' => $model->Request_ID));
-
-            if ($model->location != null)
-            {
-                echo $formTeach->hiddenField($modelTeach, 'locationZip', array('value' => $model->location->Zip));
-            }
+            echo $formTeach->hiddenField($modelTeach, 'locationZip', array('value' => $model->Zip));
 
             echo CHtml::submitButton('Teach this class', array('name' => 'teachClassSubmit', 'class' => 'button large radius twelve'));
             $this->endWidget();

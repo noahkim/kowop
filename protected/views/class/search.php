@@ -124,7 +124,13 @@
     $(document).ready(function () {
 
         $('.searchInput').keypress(function (e) {
-            if(e.which == 13) {
+            if (e.which == 13) {
+                document.forms['search-form'].submit();
+            }
+        });
+
+        $('#redoSearch').change(function () {
+            if (!$('#redoSearch').is(':checked')) {
                 document.forms['search-form'].submit();
             }
         });
@@ -222,14 +228,10 @@
                 full:true,
                 callback:function (objs) {
                     $.each(objs, function (i, obj) {
-                        if (!map.getBounds().contains(obj.object.getPosition())) {
-                            //$('#resultContainer' + obj.data.index).hide();
-                        }
-                        else {
-                            //$('#resultContainer' + obj.data.index).show();
+                        if (map.getBounds().contains(obj.object.getPosition())) {
                             included.push({
-                                type: obj.data.type,
-                                id: obj.data.id
+                                type:obj.data.type,
+                                id:obj.data.id
                             });
                         }
                     });
@@ -244,7 +246,7 @@
         $.ajax({
             type:'POST',
             url:'<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
-            data: query,
+            data:query,
             success:function (data) {
                 $('#results').html(data);
             }

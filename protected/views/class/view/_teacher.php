@@ -121,7 +121,7 @@
             </div>
 
             <div>
-                <a href="#" class="button twelve large">Cancel Class</a>
+                <a href="#" class="button twelve large" data-reveal-id="confirmCancel">Cancel Class</a>
             </div>
         </div>
     </div>
@@ -281,6 +281,32 @@
     </div>
 </div>
 </div>
+
+<!----------------- Modal--------------------->
+<div id="confirmCancel" class="reveal-modal small">
+    <h2>Confirm class cancellation</h2>
+
+    <p>
+        Do you really want to cancel the class "<?php echo $model->Name; ?>"?
+    </p>
+
+    <div>
+        <?php
+        $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'class-delete-form',
+            'enableAjaxValidation' => false,
+            'action' => Yii::app()->createUrl('//class/delete', array('id' => $model->Class_ID))
+        ));
+        ?>
+
+        <input type="submit" value="Confirm Cancellation" class="button secondary radius" />
+
+        <?php $this->endWidget(); ?>
+    </div>
+
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+
 <!------- end main content container----->
 </div>
 

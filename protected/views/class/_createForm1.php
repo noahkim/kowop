@@ -31,7 +31,7 @@
                     <label class="right inline">Tags</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->textField($model, 'tags', array('placeholder' => 'ex. music, guitar, acoustic')); ?>
+                    <?php echo $form->textField($model, 'tags', array('placeholder' => 'ex. music, guitar, acoustic', 'class' => 'ten')); ?>
                 </div>
             </div>
             <div class="row">
@@ -44,26 +44,35 @@
             </div>
 
             <?php echo $form->hiddenField($model, 'fromRequest_ID'); ?>
+            <input type='hidden' name='step2' />
+
+            <?php $this->endWidget(); ?>
 
             <div class="row borderTop">
-                <div id="searchExisting">
-                    Similar classes and requests: <br />
-                    <div id="results"></div>
-                </div>
-
-                <div class="twelve columns alignRight">
-                    <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step2', 'class' => 'button radius')); ?>
-
+                <div class="four columns offset-by-eight">
+                    <input class="button large twelve" onclick="document.forms['class-create-form'].submit(); return false;" type="submit" value="Save &amp; Continue" />
                 </div>
             </div>
 
-            <?php $this->endWidget(); ?>
+            <div id="searchExisting">
+                <h4>
+                    Similar classes and requests:
+                </h4>
+
+                <div id="results"></div>
+            </div>
         </div>
     </div>
     <!-------------- end left column ----------->
     <!-------------- right column -------------->
     <div class="three columns">
-        <h3>FAQ</h3>
+        <h3>Tips</h3>
+        <ul>
+            <li>You can only pick 1 category, but put in as many tags as you like</li>
+            <li>We'll do a quick search for you to see if there's any existing requests that you can pick up, instead of
+                creating a class from scratch
+            </li>
+        </ul>
     </div>
     <!---------------end right column---------->
     <!------- end main content container----->
@@ -77,61 +86,50 @@
         var timeoutHandle1;
         var timeoutHandle2;
 
-        var timeout = 1000;
+        var timeout = 750;
 
-        $('form :input[type=text]').keyup (function() {
+        $('form :input[type=text]').keyup(function () {
             clearTimeout(timeoutHandle1);
             timeoutHandle1 = setTimeout(updateSearch, timeout);
         });
 
-        $('form select').change(function() {
+        $('form select').change(function () {
             clearTimeout(timeoutHandle2);
             timeoutHandle2 = setTimeout(updateSearch, timeout);
         });
     });
 
-    function updateSearch()
-    {
+    function updateSearch() {
         var keywords = '';
-        $('form :input[type=text]').each(function() {
+        $('form :input[type=text]').each(function () {
             keywords += $(this).val() + ' ';
         });
 
-        var category = $('form select').val();
+        if(($.trim(keywords)).length == 0)
+        {
+            $('#searchExisting').hide();
+            return;
+        }
+
+        //var category = $('form select').val();
 
         $('#searchExisting').show();
-
-        getResults(keywords, category);
+        getResults(keywords);
     }
 
-    function getResults(keywords, category)
-    {
+    function getResults(keywords, category) {
         var data = "ClassSearchForm[keywords]=" + keywords;
 
-        if(arguments.length == 2)
-        {
+        if (arguments.length == 2) {
             data += '&ClassSearchForm[category]=' + category;
         }
 
-        data +=  "&json";
-
         $.ajax({
-            type: 'GET',
-            url: '<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
-            data: data,
-            dataType: 'json',
-            success: function(data)
-            {
-                var output = '';
-
-                for(i in data)
-                {
-                    var item = data[i];
-                    output += item.Name + '<br />';
-                    output += item.Description + '<br /><br />';
-                }
-
-                $('#results').html(output);
+            type:'GET',
+            url:'<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
+            data:data,
+            success:function (result) {
+                $('#results').html(result);
             }
         });
     }

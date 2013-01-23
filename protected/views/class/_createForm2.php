@@ -15,8 +15,6 @@
                     <label class="right inline">Image</label>
                 </div>
                 <div class="nine columns">
-                    <?php /*echo $form->textField($model, 'imageURL', array('placeholder' => 'image URL')); */?><!--
-                    or upload-->
                     <?php echo $form->fileField($model, 'imageFile', array('placeholder' => 'upload')); ?>
                 </div>
             </div>
@@ -135,8 +133,8 @@
             </div>
 
             <div class="row borderTop">
-                <div class="twelve columns alignRight">
-                    <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step3', 'class' => 'button radius')); ?>
+                <div class="four columns offset-by-eight">
+                    <?php echo CHtml::submitButton('Save & Continue', array('name' => 'step3', 'class' => 'button large twelve')); ?>
                 </div>
             </div>
             <?php echo $form->hiddenField($model, 'lessonDuration', array('id' => 'lessonDuration')); ?>
@@ -146,10 +144,16 @@
     <!-------------- end left column ----------->
     <!-------------- right column -------------->
     <div class="three columns">
-        <h3>FAQ</h3>
+        <h3>Tips</h3>
+        <ul>
+            <li>All classes need at least 2 people to start, but you can set this limit higher</li>
+            <li>If you enter in your address and choose "Private", it will only be provided to enrollees 2 days before
+                the class after they've been "locked" in
+            </li>
+        </ul>
     </div>
     <!---------------end right column---------->
-    <!------- end main content container----->
+<!------- end main content container----->
 </div>
 
 <script>
@@ -168,18 +172,16 @@
             direction:1
         });
 
-        $('#hourPicker, #minutePicker').change(function() {
+        $('#hourPicker, #minutePicker').change(function () {
             var duration = Number($('#hourPicker').val());
-            if(Number($('#minutePicker').val()) != 0)
-            {
+            if (Number($('#minutePicker').val()) != 0) {
                 duration += 0.5;
             }
 
             $('#lessonDuration').val(duration);
         });
 
-        if(existingDuration > 0)
-        {
+        if (existingDuration > 0) {
             var hours = Math.floor(existingDuration);
             var minutes = existingDuration - hours;
 
