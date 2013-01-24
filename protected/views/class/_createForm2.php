@@ -12,10 +12,25 @@
         )); ?>
             <div class="row">
                 <div class="three columns">
-                    <label class="right inline">Image</label>
+                    <label class="right inline">Image(s)</label>
                 </div>
                 <div class="nine columns">
-                    <?php echo $form->fileField($model, 'imageFile', array('placeholder' => 'upload')); ?>
+                    <?php
+                    $this->widget('xupload.XUpload', array(
+                            'url' => Yii::app()->createUrl("//class/uploadImages"),
+                            'model' => $images,
+                            //We set this for the widget to be able to target our own form
+                            'htmlOptions' => array('id' => 'class-create-form'),
+                            'attribute' => 'file',
+                            'multiple' => true,
+                            /*'formView' => 'application.views.somemodel._form',*/
+                            'showForm' => false,
+                            'options' => array(
+                                'acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'
+                            ),
+                        )
+                    );
+                    ?>
                 </div>
             </div>
             <div class="row">

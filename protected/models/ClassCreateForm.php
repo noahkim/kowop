@@ -10,7 +10,7 @@ class ClassCreateForm extends CFormModel
     public $category;
     public $tags;
     public $imageURL;
-    public $imageFile;
+    public $imageFiles;
     public $videoURL;
     public $videoFile;
     public $start;
@@ -116,14 +116,17 @@ class ClassCreateForm extends CFormModel
                 $classToContent->Content_ID = $content->Content_ID;
                 $classToContent->save();
             }
-            elseif ($this->imageFile != null)
+            elseif ($this->imageFiles != null)
             {
-                $content = Content::AddContent($this->imageFile, 'Class Image', ContentType::ImageID);
+                foreach($this->imageFiles as $imageFile)
+                {
+                    $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
-                $classToContent = new ClassToContent;
-                $classToContent->Class_ID = $this->class->Class_ID;
-                $classToContent->Content_ID = $content->Content_ID;
-                $classToContent->save();
+                    $classToContent = new ClassToContent;
+                    $classToContent->Class_ID = $this->class->Class_ID;
+                    $classToContent->Content_ID = $content->Content_ID;
+                    $classToContent->save();
+                }
             }
 
             if (isset($this->fromRequest_ID) && is_numeric($this->fromRequest_ID))

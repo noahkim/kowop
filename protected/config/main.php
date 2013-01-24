@@ -56,6 +56,10 @@ return array(
         ),
     ),
 
+    'aliases' => array(
+        'xupload' => 'application.extensions.xupload'
+    ),
+
     // application components
     'components' => array(
         'user' => array(
@@ -105,6 +109,16 @@ return array(
 				),
                 */
             ),
+        ),
+        'clientScript' => array(
+            'scriptMap' => array(
+                'jquery.js' => false, //disable default implementation of jquery
+                'jquery.min.js' => false, //disable any others default implementation
+                'core.css' => false, //disable
+                'styles.css' => false, //disable
+                'pager.css' => false, //disable
+                'default.css' => false, //disable
+            )
         ),
     ),
 

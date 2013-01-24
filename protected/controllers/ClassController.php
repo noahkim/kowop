@@ -26,7 +26,7 @@ class ClassController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'join', 'leave', 'delete'),
+                'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete', 'uploadImages'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -81,12 +81,14 @@ class ClassController extends Controller
         $model = new ClassCreateForm("step1");
         $step = 1;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        Yii::import("xupload.models.XUploadForm");
+        $images = new XUploadForm;
 
         if (isset($_POST['step2']))
         {
             $step = 2;
+
+            Yii::app()->user->setState('imageFileNames', array());
 
             $this->setPageState('step1', $_POST['ClassCreateForm']);
 
@@ -112,19 +114,6 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            $imageFile = CUploadedFile::getInstance($model, 'imageFile');
-
-            if ($imageFile)
-            {
-                $imageFileName = 'temp' . uniqid();
-                $pathParts = pathinfo($imageFile->getName());
-                $imageFileName .= '.' . $pathParts['extension'];
-
-                $imageFile->saveAs(Yii::app()->params['temp'] . '/' . $imageFileName);
-
-                $this->setPageState('imageFileName', $imageFileName);
-            }
-
             if (!$model->validate())
             {
                 $step = 2;
@@ -139,8 +128,7 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step3', array());
             $model->attributes = $_POST['ClassCreateForm'];
 
-            $model->imageFile = $this->getPageState('imageFileName');
-
+            $model->imageFiles = Yii::app()->user->getState('imageFileNames');
             $model->user = User::model()->findByPk(Yii::app()->user->id);
 
             $step = 4;
@@ -152,10 +140,12 @@ class ClassController extends Controller
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
 
-            $model->imageFile = $this->getPageState('imageFileName');
+            $model->imageFiles = Yii::app()->user->getState('imageFileNames');
 
             if ($model->save())
             {
+                Yii::app()->user->setState('imageFileNames', array());
+
                 $this->redirect(array('view', 'id' => $model->class->Class_ID));
             }
             else
@@ -181,76 +171,76 @@ class ClassController extends Controller
         }
 
         $this->render('_createForm' . $step, array(
-            'model' => $model
+            'model' => $model,
+            'images' => $images,
         ));
     }
 
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdate($id)
+    public function actionUpdateSessions($id)
     {
         $this->layout = '//layouts/main';
 
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        $section = '_updateFormDetails';
-
-        if (isset($_REQUEST['sessions']))
+        if (isset($_POST['sessionsData']))
         {
-            $section = '_updateFormSessions';
+            $sessionData = json_decode($_POST['sessionsData']);
 
-            if (isset($_POST['sessionsData']))
+            $keptSessions = array();
+
+            foreach ($sessionData as $sessionItem)
             {
-                $sessionData = json_decode($_POST['sessionsData']);
-
-                $keptSessions = array();
-
-                foreach ($sessionData as $sessionItem)
+                if ($sessionItem->existingSessionID > 0)
                 {
-                    if ($sessionItem->existingSessionID > 0)
+                    $keptSessions[] = $sessionItem->existingSessionID;
+                }
+                else
+                {
+                    $session = new Session;
+                    $session->Class_ID = $model->Class_ID;
+                    $session->save();
+
+                    foreach ($sessionItem->lessons as $lessonItem)
                     {
-                        $keptSessions[] = $sessionItem->existingSessionID;
+                        $lesson = new Lesson;
+                        $lesson->Session_ID = $session->Session_ID;
+                        $lesson->Start = $lessonItem->start;
+                        $lesson->End = $lessonItem->end;
+
+                        $lesson->save();
                     }
-                    else
-                    {
-                        $session = new Session;
-                        $session->Class_ID = $model->Class_ID;
-                        $session->save();
 
-                        foreach ($sessionItem->lessons as $lessonItem)
-                        {
-                            $lesson = new Lesson;
-                            $lesson->Session_ID = $session->Session_ID;
-                            $lesson->Start = $lessonItem->start;
-                            $lesson->End = $lessonItem->end;
-
-                            $lesson->save();
-                        }
-
-                        $keptSessions[] = $session->Session_ID;
-                    }
+                    $keptSessions[] = $session->Session_ID;
                 }
             }
         }
-        else
+
+        $this->render('updateSessions', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionUpdate($id)
+    {
+        $this->layout = '//layouts/main';
+
+        $model = $this->loadModel($id);
+        Yii::import("xupload.models.XUploadForm");
+        $images = new XUploadForm;
+
+        if (isset($_POST['KClass']))
         {
-            if (isset($_POST['KClass']))
+            $model->attributes = $_POST['KClass'];
+
+            $imageFiles = Yii::app()->user->getState('imageFileNames');
+
+            if (isset($imageFiles) && count($imageFiles) > 0)
             {
-                $model->attributes = $_POST['KClass'];
+                ClassToContent::model()->deleteAll('Class_ID = :Class_ID', array(':Class_ID' => $model->Class_ID));
 
-                $imageFile = CUploadedFile::getInstanceByName('imageFile');
-
-                if($imageFile)
+                foreach ($imageFiles as $imageFile)
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
-
-                    ClassToContent::model()->deleteAll('Class_ID = :Class_ID', array(':Class_ID' => $model->Class_ID));
 
                     $classToContent = new ClassToContent;
                     $classToContent->Class_ID = $model->Class_ID;
@@ -258,29 +248,139 @@ class ClassController extends Controller
                     $classToContent->save();
                 }
 
-                if ($model->save())
-                {
-                    // Notify the students
-                    foreach ($model->students as $student)
-                    {
-                        if ($student->User_ID != $model->Create_User_ID)
-                        {
-                            $userName = CHtml::link($model->createUser->fullName, array('user/view', 'id' => $model->createUser->User_ID));
-                            $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
-
-                            Message::SendNotification($student->User_ID, "{$userName} has updated the class details for \"{$className}\".");
-                        }
-                    }
-
-                    $this->redirect(array('view', 'id' => $model->Class_ID));
-                }
+                Yii::app()->user->setState('imageFileNames', array());
             }
+
+            if ($model->save())
+            {
+                // Notify the students
+                foreach ($model->students as $student)
+                {
+                    if ($student->User_ID != $model->Create_User_ID)
+                    {
+                        $userName = CHtml::link($model->createUser->fullName, array('user/view', 'id' => $model->createUser->User_ID));
+                        $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+
+                        Message::SendNotification($student->User_ID, "{$userName} has updated the class details for \"{$className}\".");
+                    }
+                }
+
+                $this->redirect(array('view', 'id' => $model->Class_ID));
+            }
+        }
+        else
+        {
+            Yii::app()->user->setState('imageFileNames', array());
         }
 
         $this->render('update', array(
             'model' => $model,
-            'section' => $section
+            'images' => $images,
         ));
+    }
+
+    public function actionUploadImages()
+    {
+        $this->layout = false;
+
+        Yii::import("xupload.models.XUploadForm");
+        //Here we define the paths where the files will be stored temporarily
+        $path = Yii::app()->params['temp'];
+
+        //This is for IE which doens't handle 'Content-type: application/json' correctly
+        header('Vary: Accept');
+        if (isset($_SERVER['HTTP_ACCEPT'])
+            && (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)
+        )
+        {
+            header('Content-type: application/json');
+        }
+        else
+        {
+            header('Content-type: text/plain');
+        }
+
+        //Here we check if we are deleting and uploaded file
+        if (isset($_GET["_method"]))
+        {
+            if ($_GET["_method"] == "delete")
+            {
+                if ($_GET["file"][0] !== '.')
+                {
+                    $file = $path . $_GET["file"];
+                    if (is_file($file))
+                    {
+                        unlink($file);
+                    }
+                }
+                echo json_encode(true);
+            }
+        }
+        else
+        {
+            $model = new XUploadForm;
+            $model->file = CUploadedFile::getInstance($model, 'file');
+
+            if ($model->file !== null)
+            {
+                //Grab some data
+                $model->mime_type = $model->file->getType();
+                $model->size = $model->file->getSize();
+                $model->name = $model->file->getName();
+
+                $imageFileName = 'temp' . uniqid();
+                $pathParts = pathinfo($model->name);
+                $imageFileName .= '.' . $pathParts['extension'];
+
+                if ($model->validate())
+                {
+                    $model->file->saveAs(Yii::app()->params['temp'] . '/' . $imageFileName);
+
+                    if (Yii::app()->user->hasState('imageFileNames'))
+                    {
+                        $imageFileNames = Yii::app()->user->getState('imageFileNames');
+                    }
+                    else
+                    {
+                        $imageFileNames = array();
+                    }
+
+                    $imageFileNames[] = $imageFileName;
+
+                    Yii::app()->user->setState('imageFileNames', $imageFileNames);
+
+                    //Now we need to tell our widget that the upload was succesfull
+                    //We do so, using the json structure defined in
+                    // https://github.com/blueimp/jQuery-File-Upload/wiki/Setup
+                    echo json_encode(array(array(
+                        "name" => $model->name,
+                        "type" => $model->mime_type,
+                        "size" => $model->size,
+                        "url" => '/yii/kowop/temp/' . $imageFileName,
+                        "thumbnail_url" => '/yii/kowop/temp/' . $imageFileName,
+                        "delete_url" => $this->createUrl("//class/uploadImages", array(
+                            "_method" => "delete",
+                            "file" => $imageFileName
+                        )),
+                        "delete_type" => "POST"
+                    )));
+                }
+                else
+                {
+                    //If the upload failed for some reason we log some data and let the widget know
+                    echo json_encode(array(
+                        array("error" => $model->getErrors('file'),
+                        )));
+                    Yii::log("XUploadAction: " . CVarDumper::dumpAsString($model->getErrors()),
+                        CLogger::LEVEL_ERROR, "xupload.actions.XUploadAction"
+                    );
+                }
+            }
+            else
+            {
+                throw new CHttpException(500, "Could not upload file");
+            }
+        }
     }
 
     /**

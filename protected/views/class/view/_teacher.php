@@ -117,7 +117,7 @@
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Manage sessions", array('/class/update', 'id' => $model->Class_ID, 'sessions' => 1), array('class' => 'button large twelve')); ?>
+                <?php echo CHtml::link("Manage sessions", array('/class/updateSessions', 'id' => $model->Class_ID), array('class' => 'button large twelve')); ?>
             </div>
 
             <div>

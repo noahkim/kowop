@@ -35,7 +35,12 @@
                 <div class="six columns">
                     <div class="slider-wrapper theme-default">
                         <div id="slider" class="nivoSlider">
-                            <?php echo "<img src='/yii/kowop/temp/{$model->imageFile}' data-thumb='/yii/kowop/temp/{$model->imageFile}' alt=''/>\n"; ?>
+                            <?php
+                                foreach($model->imageFiles as $imageFile)
+                                {
+                                    echo "<img src='/yii/kowop/temp/{$imageFile}' data-thumb='/yii/kowop/temp/{$imageFile}' alt=''/>\n";
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>

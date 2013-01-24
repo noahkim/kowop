@@ -146,6 +146,7 @@
             <?php
             $randomClass = KClass::model()->findAll(array(
                 'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ClassStatus::Active,
                 'limit' => 1,
                 'order' => 'rand',
             ));
@@ -192,6 +193,7 @@
         <?php
         $classes = KClass::model()->findAll(array(
                 'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ClassStatus::Active,
                 'limit' => 4,
                 'order' => 'rand',
             )
@@ -279,6 +281,7 @@ BLOCK;
         <?php
         $classes = KClass::model()->findAll(array(
                 'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ClassStatus::Active,
                 'limit' => 4,
                 'order' => 'rand',
             )
