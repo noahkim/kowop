@@ -28,7 +28,7 @@
       <file leaf-file-name="ClassController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/controllers/ClassController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="271" column="9" selection-start="8908" selection-end="8908" vertical-scroll-proportion="-30.73077">
+            <state line="271" column="9" selection-start="8908" selection-end="8908" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -37,7 +37,7 @@
       <file leaf-file-name="ClassSearchForm.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/models/ClassSearchForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="104" column="63" selection-start="3734" selection-end="3753" vertical-scroll-proportion="-10.461538">
+            <state line="104" column="63" selection-start="3734" selection-end="3753" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -46,7 +46,7 @@
       <file leaf-file-name="update.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/class/update.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="18" selection-start="2477" selection-end="2477" vertical-scroll-proportion="-5.3846154">
+            <state line="47" column="18" selection-start="2477" selection-end="2477" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -55,16 +55,25 @@
       <file leaf-file-name="_classes.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/user/account/_classes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="97" selection-start="1197" selection-end="1254" vertical-scroll-proportion="-15.038462">
+            <state line="23" column="97" selection-start="1197" selection-end="1254" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="144" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="0.2700565">
+            <state line="144" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="-0.65384614">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/RequestController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="44" selection-start="1010" selection-end="1010" vertical-scroll-proportion="0.5954802">
               <folding />
             </state>
           </provider>
@@ -85,7 +94,6 @@
       <list>
         <option value="$PROJECT_DIR$/protected/views/user/account/_teaching.php" />
         <option value="$PROJECT_DIR$/protected/views/user/account/_classes.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/RequestController.php" />
         <option value="$PROJECT_DIR$/protected/models/User.php" />
         <option value="$PROJECT_DIR$/protected/views/user/account/_account.php" />
         <option value="$PROJECT_DIR$/protected/models/RequestJoinForm.php" />
@@ -99,6 +107,7 @@
         <option value="$PROJECT_DIR$/protected/views/class/_createForm2.php" />
         <option value="$PROJECT_DIR$/protected/controllers/ClassController.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/RequestController.php" />
       </list>
     </option>
   </component>
@@ -151,7 +160,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -376,6 +384,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,8 +392,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -408,14 +417,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -457,7 +466,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -470,6 +478,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -528,118 +537,94 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/views/class/view/_teacher.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="690" selection-end="690" vertical-scroll-proportion="0.37041286">
-          <folding>
-            <marker date="1358976911855" expanded="true" signature="12022:12066" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/updateSessions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="52" selection-start="519" selection-end="519" vertical-scroll-proportion="0.01920904">
-          <folding />
-        </state>
+        <state line="13" column="52" selection-start="519" selection-end="519" vertical-scroll-proportion="0.01920904" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/config/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="13" selection-start="4310" selection-end="4310" vertical-scroll-proportion="-19.653847">
-          <folding />
-        </state>
+        <state line="118" column="13" selection-start="4310" selection-end="4310" vertical-scroll-proportion="-19.653847" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/extensions/xupload/views/form.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="10" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.5954802">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
+        <state line="31" column="10" selection-start="1322" selection-end="1322" vertical-scroll-proportion="0.5954802" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/extensions/xupload/views/upload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="48" selection-start="856" selection-end="856" vertical-scroll-proportion="0.24971752">
-          <folding />
-        </state>
+        <state line="13" column="48" selection-start="856" selection-end="856" vertical-scroll-proportion="0.24971752" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/extensions/xupload/XUpload.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="0" selection-start="1801" selection-end="1801" vertical-scroll-proportion="0.32655367">
-          <folding />
-        </state>
+        <state line="77" column="0" selection-start="1801" selection-end="1801" vertical-scroll-proportion="0.32655367" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="55" selection-start="1556" selection-end="1556" vertical-scroll-proportion="-1.043578">
-          <folding />
-        </state>
+        <state line="36" column="55" selection-start="1556" selection-end="1556" vertical-scroll-proportion="-1.043578" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/Content.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="139" column="40" selection-start="4511" selection-end="4511" vertical-scroll-proportion="0.23163842">
-          <folding />
-        </state>
+        <state line="139" column="40" selection-start="4511" selection-end="4511" vertical-scroll-proportion="0.23163842" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/search.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="14" selection-start="612" selection-end="612" vertical-scroll-proportion="-1.0564972">
-          <folding />
-        </state>
+        <state line="15" column="14" selection-start="612" selection-end="612" vertical-scroll-proportion="-1.0564972" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/_createForm2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="47" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.46101695">
-          <folding />
-        </state>
+        <state line="24" column="47" selection-start="1189" selection-end="1189" vertical-scroll-proportion="0.46101695" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/user/account/_classes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="97" selection-start="1197" selection-end="1254" vertical-scroll-proportion="-15.038462">
+        <state line="23" column="97" selection-start="1197" selection-end="1254" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/ClassCreateForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="44" selection-start="2074" selection-end="2074" vertical-scroll-proportion="-0.8715596">
-          <folding />
-        </state>
+        <state line="66" column="44" selection-start="2074" selection-end="2074" vertical-scroll-proportion="-0.8715596" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/update.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="18" selection-start="2477" selection-end="2477" vertical-scroll-proportion="-5.3846154">
+        <state line="47" column="18" selection-start="2477" selection-end="2477" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/ClassSearchForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="63" selection-start="3734" selection-end="3753" vertical-scroll-proportion="-10.461538">
+        <state line="104" column="63" selection-start="3734" selection-end="3753" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/ClassController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="9" selection-start="8908" selection-end="8908" vertical-scroll-proportion="-30.73077">
+        <state line="271" column="9" selection-start="8908" selection-end="8908" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="144" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="0.2700565">
+        <state line="144" column="25" selection-start="6563" selection-end="6563" vertical-scroll-proportion="-0.65384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/RequestController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="44" selection-start="1010" selection-end="1010" vertical-scroll-proportion="0.5954802">
           <folding />
         </state>
       </provider>
