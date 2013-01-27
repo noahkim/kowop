@@ -19,21 +19,6 @@
         <h1 class="spacebot20">Meet the team</h1>
 
         <div class="row">
-            <div class="six columns spacebot20"><img src="/ui/site/images/sample_amit.jpg"></div>
-            <div class="six columns">
-                <h2 class="green">Amit Bhatia</h2>
-                <span class="meetTitle">Founder of ACBR (Amit Coffee Bean Run)</span>
-
-                <p>As the head of operations, Amit ensures that we only hire people who aren't convicted murderers and
-                    that things run smoothly within the Kowop team. As a former business analyst, Amit has a leg up on
-                    the technical side and is an invaluable contributor to the application side of Kowop. He's probably
-                    one of the few COO's who can identify issues in a data model faster then a data modeler. He also
-                    knows how to hack a standard cup of coffee at Coffee Bean into a Vanilla Latte without having to pay
-                    more. His book "How to Hack CBTL" is a number 1 best seller on the NY Times list (in his head).
-                </p>
-            </div>
-        </div>
-        <div class="row">
             <div class="six columns spacebot20">
                 <h2 class="teal">Ilija Stevcev</h2>
                 <span class="meetTitle">Aspring Physicist/Musician/Star Fleet Captian</span>
