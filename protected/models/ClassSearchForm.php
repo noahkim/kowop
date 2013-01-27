@@ -20,6 +20,7 @@ class ClassSearchForm extends CFormModel
     public $daysOfWeek;
     public $categories;
     public $includedResults;
+    public $location;
 
     public $page;
     public $totalResults;
@@ -28,7 +29,7 @@ class ClassSearchForm extends CFormModel
     public function rules()
     {
         return array(
-            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories, includedResults, page', 'safe'),
+            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories, includedResults, location, page', 'safe'),
         );
     }
 
@@ -77,7 +78,6 @@ class ClassSearchForm extends CFormModel
             {
                 $requestCriteria->compare('t.Name', $keyword, true, 'OR');
                 $requestCriteria->compare('t.Description', $keyword, true, 'OR');
-                $requestCriteria->compare('t.Zip', $keyword, true, 'OR');
                 $requestCriteria->compare('category.Name', $keyword, true, 'OR');
                 $requestCriteria->compare('tags.Name', $keyword, true, 'OR');
                 $requestCriteria->compare('createUser.First_name', $keyword, true, 'OR');
@@ -86,11 +86,6 @@ class ClassSearchForm extends CFormModel
 
                 $classCriteria->compare('t.Name', $keyword, true, 'OR');
                 $classCriteria->compare('t.Description', $keyword, true, 'OR');
-                $classCriteria->compare('location.Name', $keyword, true, 'OR');
-                $classCriteria->compare('location.Address', $keyword, true, 'OR');
-                $classCriteria->compare('location.City', $keyword, true, 'OR');
-                $classCriteria->compare('location.State', $keyword, true, 'OR');
-                $classCriteria->compare('location.Zip', $keyword, true, 'OR');
                 $classCriteria->compare('category.Name', $keyword, true, 'OR');
                 $classCriteria->compare('tags.Name', $keyword, true, 'OR');
                 $classCriteria->compare('createUser.First_name', $keyword, true, 'OR');
@@ -104,7 +99,7 @@ class ClassSearchForm extends CFormModel
         //$requestCriteria->compare('t.Status', '');
         $classCriteria->compare('t.Status', ClassStatus::Active);
 
-        if (isset($this->category) && is_numeric($this->category))
+        if (isset($this->category) && is_numeric($this->category) && ($this->category > 0))
         {
             $requestCriteria->compare('t.Category_ID', $this->category);
             $classCriteria->compare('t.Category_ID', $this->category);
@@ -120,10 +115,11 @@ class ClassSearchForm extends CFormModel
         }
         if (($this->nextClassStartsBy != null) && (strlen($this->nextClassStartsBy) > 0))
         {
-            $classCriteria->compare('t.Start', '<=' . $this->nextClassStartsBy);
+            $classCriteria->compare('t.Start', '<=' . date('Y-m-d', strtotime($this->nextClassStartsBy)));
         }
 
         $classes = KClass::model()->findAll($classCriteria);
+
         if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
         {
             foreach ($classes as $i => $class)
@@ -155,9 +151,8 @@ class ClassSearchForm extends CFormModel
             }
         }
 
-        $classes = array_values($classes);
-
         $requests = Request::model()->findAll($requestCriteria);
+
         foreach ($requests as $i => $request)
         {
             if (count($request->requestors) == 0)
@@ -166,6 +161,26 @@ class ClassSearchForm extends CFormModel
             }
         }
 
+        if (isset($this->location) && strlen($this->location) > 0)
+        {
+            foreach ($classes as $i => $class)
+            {
+                if (!stristr($class->location->fullAddress, $this->location))
+                {
+                    unset($classes[$i]);
+                }
+            }
+
+            foreach ($requests as $i => $request)
+            {
+                if ($request->Zip != $this->location)
+                {
+                    unset($requests[$i]);
+                }
+            }
+        }
+
+        $classes = array_values($classes);
         $items = array_merge($classes, $requests);
 
         $scores = array();
@@ -225,7 +240,7 @@ class ClassSearchForm extends CFormModel
         $this->totalResults = count($sortedItems);
         $this->totalPages = ceil($this->totalResults / ClassSearchForm::PageSize);
 
-        if(! isset($this->page))
+        if (!isset($this->page))
         {
             $this->page = 1;
         }

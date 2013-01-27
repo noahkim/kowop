@@ -124,7 +124,7 @@
                         <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve', 'placeholder' => 'What are you looking for?')); ?>
                     </div>
                     <div class="four columns">
-                        <input type="text" class="homeSearchinput twelve" placeholder="city,state or zip">
+                        <?php echo $form->textField($model, 'location', array('value' => $model->location, 'class' => 'homeSearchinput twelve', 'placeholder' => 'city,state or zip')); ?>
                     </div>
                     <div class="three columns">
                         <a href="#" onclick="document.forms['search-form'].submit(); return false;"

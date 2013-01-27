@@ -68,9 +68,14 @@
                 <?php echo $form->dropDownList($model, 'seatsInNextClass', ClassSearchForm::$seatsInNextClassLookup, array('class' => 'stretch')); ?>
 
                 <label>Category</label>
-                <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'stretch')); ?>
+                <?php
+                    $categories = Category::GetCategories();
+                    array_unshift($categories, array(0 => 'Any'));
 
-                <label>Tution</label>
+                    echo $form->dropDownList($model, 'category', $categories, array('class' => 'stretch'));
+                ?>
+
+                <label>Tuition</label>
 
                 <div class="row">
                     <div class="six columns">
@@ -81,7 +86,7 @@
                     </div>
                 </div>
                 <label>Next class starts by:</label>
-                <?php echo $form->textField($model, 'nextClassStartsBy'); ?>
+                <?php echo $form->textField($model, 'nextClassStartsBy', array('id' => 'nextClassStartsBy')); ?>
 
                 <?php $this->endWidget('CActiveForm'); ?>
 
@@ -127,6 +132,11 @@
             if (e.which == 13) {
                 document.forms['search-form'].submit();
             }
+        });
+
+        $('#nextClassStartsBy').Zebra_DatePicker({
+            direction:1,
+            format:'m/d/Y'
         });
 
         $('#redoSearch').change(function () {
