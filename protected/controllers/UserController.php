@@ -26,7 +26,7 @@ class UserController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'classReport', 'submitProfileChange', 'sendMessage', 'getReplyDialog'),
+                'actions' => array('create', 'update', 'classReport', 'submitProfileChange', 'sendMessage', 'getReplyDialog', 'friendRequest', 'acceptFriend'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -201,7 +201,7 @@ class UserController extends Controller
 
         Message::SendMessage($id, $sender, $text);
 
-        if(isset($isReply) && $isReply != null)
+        if (isset($isReply) && $isReply != null)
         {
             $to = User::model()->findByPk($id);
             $toLink = CHtml::link($to->fullName, array('/user/view', 'id' => $to->User_ID));
@@ -221,6 +221,48 @@ class UserController extends Controller
         $this->render('_replyDialog', array(
             'model' => $model
         ));
+    }
+
+    public function actionFriendRequest($id)
+    {
+/*        if($id == Yii::app()->user->id)
+        {
+            return;
+        }*/
+
+        $message = $_POST['message'];
+
+        Friend::CreateRequest(Yii::app()->user->id, $id, $message);
+
+        $this->redirect(array('/user/view', 'id' => $id));
+    }
+
+    public function actionAcceptFriend($id)
+    {
+        $friendship = Friend::model()->find('User_ID = :User_ID AND Friend_User_ID = :Friend_User_ID AND Status = :Status',
+            array(':User_ID' => Yii::app()->user->id, ':Friend_User_ID' => $id, ':Status' => FriendStatus::AwaitingApproval));
+
+        if($friendship != null)
+        {
+            $friendship->Status = FriendStatus::Friend;
+            $friendship->save();
+
+            $notification = Message::model()->find('`From` = :From AND `To` = :To AND Type = :Type',
+                array(':From' => $id, ':To' => Yii::app()->user->id, ':Type' => MessageType::FriendRequest));
+
+            if($notification != null)
+            {
+                $notification->Read = 1;
+                $notification->save();
+            }
+
+            $friend = User::model()->findByPk($id);
+            $friendLink = CHtml::link($friend->fullName, array('/user/view', 'id' => $id));
+
+            Message::SendNotification($id, "{$friendLink} has accepted your homie request!");
+        }
+
+        $this->redirect(array('/user/view', 'id' => Yii::app()->user->id, 's' => '1'));
     }
 
     /**

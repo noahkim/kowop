@@ -9,11 +9,14 @@
  * @property integer $From
  * @property string $Subject
  * @property string $Content
+ * @property integer $Parent_ID
  * @property integer $Type
  * @property integer $Read
  * @property string $Created
  *
  * The followings are the available model relations:
+ * @property Message $parent
+ * @property Message[] $messages
  * @property User $to
  * @property User $from
  */
@@ -49,7 +52,7 @@ class Message extends CActiveRecord
             array('Content', 'length', 'max' => 8000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Message_ID, To, From, Subject, Content, Type, Read, Created', 'safe'),
+            array('Message_ID, Parent_ID, To, From, Subject, Content, Type, Read, Created', 'safe'),
             array('Created', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'insert')
@@ -66,6 +69,8 @@ class Message extends CActiveRecord
         return array(
             'to' => array(self::BELONGS_TO, 'User', 'To'),
             'from' => array(self::BELONGS_TO, 'User', 'From'),
+            'parent' => array(self::BELONGS_TO, 'Message', 'Parent_ID'),
+            'messages' => array(self::HAS_MANY, 'Message', 'Parent_ID'),
         );
     }
 
@@ -80,6 +85,7 @@ class Message extends CActiveRecord
             'From' => 'From',
             'Subject' => 'Subject',
             'Content' => 'Content',
+            'Parent_ID' => 'Parent',
             'Type' => 'Type',
             'Read' => 'Read',
             'Created' => 'Created',
@@ -102,6 +108,7 @@ class Message extends CActiveRecord
         $criteria->compare('From', $this->From);
         $criteria->compare('Subject', $this->Subject, true);
         $criteria->compare('Content', $this->Content, true);
+        $criteria->compare('Parent_ID',$this->Parent_ID);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Read', $this->Read);
         $criteria->compare('Created', $this->Created, true);
@@ -111,10 +118,10 @@ class Message extends CActiveRecord
         ));
     }
 
-    public static function SendNotification($to, $subject, $text = null, $from = null)
+    public static function SendNotification($to, $subject, $text = null, $from = null, $type = MessageType::Notification)
     {
         $notification = new Message();
-        $notification->Type = MessageType::Notification;
+        $notification->Type = $type;
         $notification->To = $to;
         if ($from != null)
         {

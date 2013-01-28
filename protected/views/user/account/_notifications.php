@@ -90,6 +90,28 @@ BLOCK;
                     $message->save();
                 }
                 break;
+            case MessageType::FriendRequest:
+
+                $acceptLink = CHtml::link('Accept', array('/user/acceptFriend', 'id' => $fromUser->User_ID), array('class' => 'small button'));
+
+                echo <<<BLOCK
+    <!----- 1 notification -------->
+    <div class="row notification {$newNotification}">
+        <div class="one column"><img src="{$imageLink}"></div>
+        <div class="eleven columns">
+            <span class="notificationtime">{$time}</span>
+          <span class="notificationType">Homie request from {$fromUserLink}</span>
+          <span class="notificationText">"{$message->Content}"</span>
+          <span class="notificationAction">
+            {$acceptLink}
+            <a href="#" class="small button">Reject</a>
+          </span>
+      </div>
+    </div>
+    <!------ end 1 notification ----->
+BLOCK;
+
+                break;
             default:
                 break;
         }
@@ -103,9 +125,8 @@ BLOCK;
 </div>
 
 <script>
-    function showReplyDialog(url)
-    {
-        $.get(url, function(data) {
+    function showReplyDialog(url) {
+        $.get(url, function (data) {
             $('#replyDialog').html(data);
             $('#replyDialog').reveal();
         });

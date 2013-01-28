@@ -47,6 +47,12 @@ class Friend extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('Friend_ID, User_ID, Friend_User_ID, Status, Modified, Created', 'safe'),
+            array('Modified', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'update'),
+            array('Created,Modified', 'default',
+                'value' => new CDbExpression('NOW()'),
+                'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 
@@ -100,4 +106,22 @@ class Friend extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public static function CreateRequest($from, $to, $message)
+    {
+        $request = new Friend;
+        $request->User_ID = $from;
+        $request->Friend_User_ID = $to;
+        $request->Status = FriendStatus::AwaitingApproval;
+
+        if($request->save())
+        {
+            $fromUser = User::model()->findByPk($from);
+            $fromLink = CHtml::link($fromUser->fullName, array('/user/view', 'id' => $from));
+
+            Message::SendNotification($to, "Friend request from {$fromLink}", $message, $from, MessageType::FriendRequest);
+        }
+
+        return $request;
+    }
 }

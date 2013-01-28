@@ -24,7 +24,17 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="UserController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="230" column="11" selection-start="6183" selection-end="6183" vertical-scroll-proportion="0.38235295">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -37,21 +47,21 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/controllers/ClassController.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/RequestController.php" />
         <option value="$PROJECT_DIR$/protected/views/site/pages/meet.php" />
         <option value="$PROJECT_DIR$/protected/views/class/search.php" />
         <option value="$PROJECT_DIR$/protected/views/class/_createForm2.php" />
         <option value="$PROJECT_DIR$/protected/views/class/update.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
         <option value="$PROJECT_DIR$/protected/models/ClassSearchForm.php" />
-        <option value="$PROJECT_DIR$/protected/models/Message.php" />
-        <option value="$PROJECT_DIR$/protected/views/user/account/_profile.php" />
-        <option value="$PROJECT_DIR$/protected/views/user/account/_notifications.php" />
         <option value="$PROJECT_DIR$/protected/views/user/view.php" />
         <option value="$PROJECT_DIR$/protected/views/user/_replyDialog.php" />
         <option value="$PROJECT_DIR$/protected/views/layouts/mainOuter.php" />
         <option value="$PROJECT_DIR$/protected/views/user/account/_account.php" />
+        <option value="$PROJECT_DIR$/protected/models/MessageType.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_profile.php" />
+        <option value="$PROJECT_DIR$/protected/models/Friend.php" />
+        <option value="$PROJECT_DIR$/protected/models/Message.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_notifications.php" />
         <option value="$PROJECT_DIR$/protected/controllers/UserController.php" />
       </list>
     </option>
@@ -105,6 +115,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -261,54 +272,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="class" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protected" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="class" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protected" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -333,7 +296,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -341,8 +303,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -377,14 +339,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -422,14 +384,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2245651" sideWeight="0.6741453" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2245651" sideWeight="0.6741453" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -497,29 +459,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/models/ClassSearchForm.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="31" selection-start="6104" selection-end="6104" vertical-scroll-proportion="0.88235295" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/KClass.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="0" selection-start="3132" selection-end="3132" vertical-scroll-proportion="0.017221585" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/ClassController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="7" selection-start="101" selection-end="101" vertical-scroll-proportion="0.101809956" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/FriendStatus.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="164" selection-end="164" vertical-scroll-proportion="0.16968326" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/MessageType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="31" selection-start="268" selection-end="268" vertical-scroll-proportion="0.22058824" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/class/view.php">
@@ -537,24 +479,9 @@
         <state line="33" column="39" selection-start="811" selection-end="811" vertical-scroll-proportion="-0.1199095" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Message.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="9" selection-start="3836" selection-end="3836" vertical-scroll-proportion="0.63687783" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/user/_replyDialog.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="48" selection-start="469" selection-end="469" vertical-scroll-proportion="0.18665159" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_notifications.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="40" selection-start="2665" selection-end="2665" vertical-scroll-proportion="0.270362" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_profile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1207" selection-end="1207" vertical-scroll-proportion="0.5166475" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
@@ -569,14 +496,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/user/account/_account.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="27" selection-start="916" selection-end="916" vertical-scroll-proportion="0.25832376">
+        <state line="27" column="27" selection-start="916" selection-end="916" vertical-scroll-proportion="0.25832376" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/MessageType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="44" selection-start="408" selection-end="408" vertical-scroll-proportion="0.27149323">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/KClass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="0" selection-start="2541" selection-end="2853" vertical-scroll-proportion="-20.625" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Message.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="0" selection-start="3524" selection-end="3524" vertical-scroll-proportion="1.8834841" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_notifications.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="17" selection-start="4059" selection-end="4059" vertical-scroll-proportion="-28.75" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="193" column="6" selection-start="7055" selection-end="7055" vertical-scroll-proportion="-16.291666" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Friend.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="31" selection-start="1719" selection-end="1719" vertical-scroll-proportion="-0.20475113" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/FriendStatus.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="164" selection-end="164" vertical-scroll-proportion="0.16968326">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="9" selection-start="5200" selection-end="5200" vertical-scroll-proportion="0.6097285">
+        <state line="230" column="11" selection-start="6183" selection-end="6183" vertical-scroll-proportion="0.38235295">
           <folding />
         </state>
       </provider>

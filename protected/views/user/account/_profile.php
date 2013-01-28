@@ -205,9 +205,16 @@ BLOCK;
 <div id="homieRequest" class="reveal-modal small">
     <h2>Homie Request</h2>
 
-    <form>
-        <textarea rows="10"></textarea>
-        <input type="submit" value="Request" class="button secondary radius">
-    </form>
+    <?php $form = $this->beginWidget('CActiveForm', array(
+    'id' => 'add-homie-form',
+    'action' => Yii::app()->createUrl('/user/friendRequest', array('id' => $model->User_ID)),
+    'enableAjaxValidation' => false
+)); ?>
+
+    <textarea name="message" rows="10"></textarea>
+    <input type="submit" value="Request" class="button secondary radius">
+
+    <?php $this->endWidget('CActiveForm'); ?>
+
     <a class="close-reveal-modal">&#215;</a>
 </div>

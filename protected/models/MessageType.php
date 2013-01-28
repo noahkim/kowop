@@ -8,10 +8,12 @@ final class MessageType
 
     const Notification = 1;
     const Message = 2;
-    const Broadcast = 3;
+    const FriendRequest = 3;
+    const Broadcast = 4;
 
     public static $Lookup = array(MessageType::Notification => 'Notification',
         MessageType::Message => 'Message',
-        MessageType::Broadcast => 'Broadcast'
+        MessageType::FriendRequest => 'Homie Request',
+        MessageType::Broadcast => 'Broadcast',
     );
 }
