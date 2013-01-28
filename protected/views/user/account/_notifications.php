@@ -67,7 +67,7 @@ BLOCK;
                 break;
             case MessageType::Message:
 
-                $replyDialogURL = $this->createAbsoluteUrl('/user/getReplyDialog', array('id' => $fromUser->User_ID));
+                $replyDialogURL = $this->createAbsoluteUrl('/user/getReplyDialog', array('id' => $fromUser->User_ID, 'replyTo' => $message->Message_ID));
 
                 echo <<<BLOCK
     <!----- 1 notification -------->

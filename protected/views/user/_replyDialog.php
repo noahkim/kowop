@@ -8,7 +8,7 @@
 )); ?>
 
 <textarea name="message" rows="10"></textarea>
-<input type='hidden' name='isReply' value='1' />
+<input type='hidden' name='replyTo' value='<?php echo $replyTo; ?>' />
 <input type="submit" value="send" class="button secondary radius">
 
 <?php $this->endWidget('CActiveForm'); ?>

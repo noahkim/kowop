@@ -197,11 +197,11 @@ class UserController extends Controller
         $sender = Yii::app()->user->id;
 
         $text = $_POST['message'];
-        $isReply = $_POST['isReply'];
+        $replyTo = $_POST['replyTo'];
 
-        Message::SendMessage($id, $sender, $text);
+        Message::SendMessage($id, $sender, $text, $replyTo);
 
-        if (isset($isReply) && $isReply != null)
+        if (isset($replyTo) && $replyTo != null)
         {
             $to = User::model()->findByPk($id);
             $toLink = CHtml::link($to->fullName, array('/user/view', 'id' => $to->User_ID));
@@ -217,9 +217,11 @@ class UserController extends Controller
         $this->layout = false;
 
         $model = $this->loadModel($id);
+        $replyTo = $_REQUEST['replyTo'];
 
         $this->render('_replyDialog', array(
-            'model' => $model
+            'model' => $model,
+            'replyTo' => $replyTo
         ));
     }
 

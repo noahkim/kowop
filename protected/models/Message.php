@@ -136,13 +136,18 @@ class Message extends CActiveRecord
         $notification->save();
     }
 
-    public static function SendMessage($to, $from, $text)
+    public static function SendMessage($to, $from, $text, $replyTo = null)
     {
         $message = new Message();
         $message->Type = MessageType::Message;
         $message->To = $to;
         $message->From = $from;
         $message->Content = $text;
+
+        if($replyTo != null && is_numeric($replyTo))
+        {
+            $message->Parent_ID = $replyTo;
+        }
 
         $message->save();
     }
