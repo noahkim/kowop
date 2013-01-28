@@ -43,6 +43,7 @@
     <script src="/ui/sitev2/javascripts/jquery.timepicker.js"></script>
     <script src="/ui/sitev2/javascripts/wysiwyg.js"></script>
     <script src="/ui/sitev2/javascripts/wysiwyg_advanced.js"></script>
+    <script src="/ui/sitev2/javascripts/jeditable.js"></script>
 
     <title>Kowop | Hand-crafted experiences to share, learn and teach in the comfort of your neighborhood. Meet new
         people, experience new things.</title>

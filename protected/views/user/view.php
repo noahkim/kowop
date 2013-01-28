@@ -44,7 +44,9 @@
                 <?php echo CHtml::link('Account Information', array('/user/view', 'id' => $model->User_ID, 's' => 5)); ?>
             </li>
 
-            <?php echo CHtml::link("View public profile", array("user/view", 'id' => $model->User_ID)); ?>
+            <li>
+                <?php echo CHtml::link("View public profile", array("user/view", 'id' => $model->User_ID)); ?>
+            </li>
 
             <li><a href="user_profile_reviews.html">Feedback</a></li>
         </ul>
@@ -82,7 +84,7 @@
 
     ?>
 
-<!------- end main content container----->
+    <!------- end main content container----->
 </div>
 
 <?php else : ?>

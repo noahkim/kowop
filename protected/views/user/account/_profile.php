@@ -6,7 +6,7 @@
             <?php
             $imageLink = 'http://placehold.it/300x300';
 
-            if($model->profilePic != null)
+            if ($model->profilePic != null)
             {
                 $imageLink = $model->profilePic;
             }
@@ -22,9 +22,11 @@
         </div>
         <div class="profileBadges">
             <div class="helptip">
-                <span class="has-tip tip-top noradius" data-width="300" title="Merit badges are awarded by the instructor once you've completed a class. Each one represents a meaningful experience and new powers acquired. Wear them with honor!">?</span>
+                <span class="has-tip tip-top noradius" data-width="300"
+                      title="Merit badges are awarded by the instructor once you've completed a class. Each one represents a meaningful experience and new powers acquired. Wear them with honor!">?</span>
             </div>
             <span class="profileCount">16</span>
+
             <h2>Merit Badges</h2>
 
             <div class="meritBadges">
@@ -55,7 +57,9 @@
         <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span>
         <span class="profileDescription"><?php echo $model->Description; ?></span>
         <span class="profileCount"><?php echo count($model->kClasses); ?></span>
+
         <h2>Classes I'm teaching</h2>
+
         <div class="row">
             <?php
 
@@ -73,7 +77,7 @@
                 $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
 
                 $end = '';
-                if($index == count($model->kClasses))
+                if ($index == count($model->kClasses))
                 {
                     $end = 'end';
                 }
@@ -94,7 +98,9 @@ BLOCK;
             ?>
         </div>
         <span class="profileCount"><?php echo count($model->enrolledIn); ?></span>
+
         <h2>Classes I'm enrolled in</h2>
+
         <div class="row">
             <?php
 
@@ -111,7 +117,7 @@ BLOCK;
                 $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
 
                 $end = '';
-                if($index == count($model->enrolledIn))
+                if ($index == count($model->enrolledIn))
                 {
                     $end = 'end';
                 }
@@ -133,7 +139,9 @@ BLOCK;
             ?>
         </div>
         <span class="profileCount"><?php echo count($model->requests); ?></span>
+
         <h2>My class requests</h2>
+
         <div class="row">
             <?php
 
@@ -144,7 +152,7 @@ BLOCK;
                 $requestLink = CHtml::link($request->Name, array('/request/view', 'id' => $request->Request_ID));
 
                 $end = '';
-                if($index == count($model->requests))
+                if ($index == count($model->requests))
                 {
                     $end = 'end';
                 }
@@ -166,7 +174,9 @@ BLOCK;
             ?>
         </div>
         <span class="profileCount">0</span>
+
         <h2>Classes I've taught</h2>
+
         <div class="row">
         </div>
     </div>
@@ -176,16 +186,25 @@ BLOCK;
 <!----------------- Modal--------------------->
 <div id="myModal" class="reveal-modal small">
     <h2>Send <?php echo $model->First_name; ?> a message</h2>
-    <form>
-        <textarea rows="10"></textarea>
-        <input type="submit" value="send" class="button secondary radius">
-    </form>
+
+    <?php $form = $this->beginWidget('CActiveForm', array(
+    'id' => 'send-message-form',
+    'action' => Yii::app()->createUrl('/user/sendMessage', array('id' => $model->User_ID)),
+    'enableAjaxValidation' => false
+)); ?>
+
+    <textarea name="message" rows="10"></textarea>
+    <input type="submit" value="send" class="button secondary radius">
+
+    <?php $this->endWidget('CActiveForm'); ?>
+
     <a class="close-reveal-modal">&#215;</a>
 </div>
 
 <!----------------- Modal--------------------->
 <div id="homieRequest" class="reveal-modal small">
     <h2>Homie Request</h2>
+
     <form>
         <textarea rows="10"></textarea>
         <input type="submit" value="Request" class="button secondary radius">

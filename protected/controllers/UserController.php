@@ -8,7 +8,7 @@ class UserController extends Controller
     public function filters()
     {
         return array(
-            //'accessControl', // perform access control for CRUD operations
+            'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
@@ -26,7 +26,7 @@ class UserController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'classReport', 'submitProfileChange', 'sendMessage', 'getReplyDialog'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -47,12 +47,12 @@ class UserController extends Controller
     {
         $section = 0;
 
-        if(isset($_REQUEST['s']))
+        if (isset($_REQUEST['s']))
         {
             $section = $_REQUEST['s'];
         }
 
-        if($id != Yii::app()->user->id)
+        if ($id != Yii::app()->user->id)
         {
             //$section = 0;
         }
@@ -171,6 +171,56 @@ class UserController extends Controller
         $results = $model->getClassReport($filter);
 
         echo json_encode($results);
+    }
+
+    public function actionSubmitProfileChange()
+    {
+        $model = $this->loadModel(Yii::app()->user->id);
+
+        if (isset($_POST['id']))
+        {
+            $attribute = $_POST['id'];
+            $value = $_POST['value'];
+
+            $attributes = array($attribute => $value);
+            $model->attributes = $attributes;
+
+            $model->save();
+
+            $this->layout = false;
+            echo $value;
+        }
+    }
+
+    public function actionSendMessage($id)
+    {
+        $sender = Yii::app()->user->id;
+
+        $text = $_POST['message'];
+        $isReply = $_POST['isReply'];
+
+        Message::SendMessage($id, $sender, $text);
+
+        if(isset($isReply) && $isReply != null)
+        {
+            $to = User::model()->findByPk($id);
+            $toLink = CHtml::link($to->fullName, array('/user/view', 'id' => $to->User_ID));
+
+            Message::SendNotification($sender, "Replied to {$toLink}", $text);
+        }
+
+        $this->redirect(array('/user/view', 'id' => $sender, 's' => '1'));
+    }
+
+    public function actionGetReplyDialog($id)
+    {
+        $this->layout = false;
+
+        $model = $this->loadModel($id);
+
+        $this->render('_replyDialog', array(
+            'model' => $model
+        ));
     }
 
     /**

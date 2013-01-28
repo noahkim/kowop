@@ -3,7 +3,8 @@
     <h1>Notifications</h1>
     <!---- Notifications ---------->
     <div class="row">
-        <div class="six columns"><span class="profileCount"><?php echo count($model->messages(array('condition' => '`Read` = 0'))); ?></span>
+        <div class="six columns"><span
+                class="profileCount"><?php echo count($model->messages(array('condition' => '`Read` = 0'))); ?></span>
 
             <h2>updates since your last visit</h2>
         </div>
@@ -22,28 +23,30 @@
     </div>
 
     <?php
-        foreach($model->messages(array('order' => 'Created DESC')) as $message)
+    foreach ($model->messages(array('order' => 'Created DESC')) as $message)
+    {
+        $newNotification = $message->Read ? '' : 'newnotification';
+
+        $fromUser = null;
+        if ($message->From != null)
         {
-            $newNotification = $message->Read ? '' : 'newnotification';
+            $fromUser = User::model()->findByPk($message->From);
+        }
 
-            $fromUser = null;
-            if($message->From != null)
-            {
-                $fromUser = User::model()->findByPk($message->From);
-            }
+        $imageLink = 'http://placehold.it/100x100';
+        $fromUserLink = '';
+        if ($fromUser != null)
+        {
+            $imageLink = $fromUser->profilePic;
+            $fromUserLink = CHtml::link($fromUser->fullName, array('/user/view', 'id' => $fromUser->User_ID));
+        }
 
-            $imageLink = 'http://placehold.it/100x100';
-            if($fromUser != null)
-            {
-                $imageLink = $fromUser->profilePic;
-            }
+        $time = date('g:i a \o\n l, F jS', strtotime($message->Created));
 
-            $time = date('g:i a \o\n l, F jS', strtotime($message->Created));
-
-            switch($message->Type)
-            {
-                case MessageType::Notification:
-                    echo <<<BLOCK
+        switch ($message->Type)
+        {
+            case MessageType::Notification:
+                echo <<<BLOCK
     <!----- 1 notification -------->
     <div class="row notification {$newNotification}">
         <div class="one column"><img src="{$imageLink}"></div>
@@ -56,17 +59,55 @@
     <!------ end 1 notification ----->
 BLOCK;
 
-                    if(! $message->Read)
-                    {
-                        $message->Read = true;
-                        $message->save();
-                    }
-                    break;
-                default:
-                    break;
-            }
+                if (!$message->Read)
+                {
+                    $message->Read = true;
+                    $message->save();
+                }
+                break;
+            case MessageType::Message:
+
+                $replyDialogURL = $this->createAbsoluteUrl('/user/getReplyDialog', array('id' => $fromUser->User_ID));
+
+                echo <<<BLOCK
+    <!----- 1 notification -------->
+    <div class="row notification {$newNotification}">
+        <div class="one column"><img src="{$imageLink}"></div>
+        <div class="eleven columns">
+            <span class="notificationtime">{$time}</span>
+            <span class="notificationType">Message from {$fromUserLink}</a></span>
+            <span class="notificationText">{$message->Content}</span>
+        <span class="notificationAction">
+            <a href="#" onclick="showReplyDialog('{$replyDialogURL}');" class="small button">Reply</a>
+            <a href="#" class="small button">Ignore</a></span>
+        </div>
+    </div>
+    <!------ end 1 notification ----->
+BLOCK;
+                if (!$message->Read)
+                {
+                    $message->Read = true;
+                    $message->save();
+                }
+                break;
+            default:
+                break;
         }
+    }
     ?>
 </div>
 <!-------- end right column --------->
 </div>
+
+<div id='replyDialog' class="reveal-modal small">
+</div>
+
+<script>
+    function showReplyDialog(url)
+    {
+        $.get(url, function(data) {
+            $('#replyDialog').html(data);
+            $('#replyDialog').reveal();
+        });
+    }
+</script>
