@@ -86,13 +86,13 @@
                                 <?php echo CHtml::link('notifications', array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 2)); ?>
+                                <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 4)); ?>
+                                <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
+                                <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
                             </li>
                             <li>
                                 <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
@@ -165,8 +165,7 @@
                 'order' => 'rand',
             ));
 
-            if (count($randomClass) > 0)
-            {
+            if (count($randomClass) > 0) :
                 $enrollees = '';
                 $randomClass = $randomClass[0];
 
@@ -182,7 +181,6 @@
                     $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
                     $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
                 }
-            }
 
             ?>
 
@@ -199,6 +197,8 @@
                 </div>
                 <?php echo CHtml::link('More Info', array('experience/view', 'id' => $randomClass->Experience_ID), array('class' => 'button featuredButton')); ?>
             </div>
+
+            <?php endif; ?>
         </div>
         <!----- End Featured class info -------->
     </div>
@@ -371,28 +371,6 @@ BLOCK;
     <div class="row">
         <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
     </div>
-</div>
-
-<!---------------------MODAL -------------------------->
-
-<div id="welcome" class="reveal-modal medium">
-    <h2>Welcome to the development instance of Kowop.com</h2>
-
-    <p class="lead">You are a brave, brave soul.</p>
-
-    <p>Thanks for checking out/testing/using our development instance of Kowop.com.</p>
-
-    <p>As with any dev instance, things aren't always going to be pretty or tick perfectly. We make A LOT of changes on
-        here daily, always improving, tweaking, and refining.</p>
-
-    <p>Since you're aware of our existence, you've probably been invited here by a member of the Kowop team, so feel
-        free to look around. Just keep in mind, that this is our "ground zero", and some things that work may break, and
-        some things that don't work will inexplicabily work the next minute.</p>
-
-    <p>If you run into something that REALLY grinds your gears, feel free to contact noah at kowop.com</p>
-
-    <p><3 Noah &amp; Ilija</p>
-    <a class="close-reveal-modal">&#215;</a>
 </div>
 
 </body>

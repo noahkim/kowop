@@ -12,6 +12,7 @@
  * @property integer $Parent_ID
  * @property integer $Type
  * @property integer $Read
+ * @property integer $Deleted
  * @property string $Created
  *
  * The followings are the available model relations:
@@ -52,7 +53,7 @@ class Message extends CActiveRecord
             array('Content', 'length', 'max' => 8000),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Message_ID, Parent_ID, To, From, Subject, Content, Type, Read, Created', 'safe'),
+            array('Message_ID, Parent_ID, To, From, Subject, Content, Type, Read, Deleted, Created', 'safe'),
             array('Created', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'insert')
@@ -88,6 +89,7 @@ class Message extends CActiveRecord
             'Parent_ID' => 'Parent',
             'Type' => 'Type',
             'Read' => 'Read',
+            'Deleted' => 'Deleted',
             'Created' => 'Created',
         );
     }
@@ -111,6 +113,7 @@ class Message extends CActiveRecord
         $criteria->compare('Parent_ID',$this->Parent_ID);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Read', $this->Read);
+        $criteria->compare('Deleted', $this->Deleted);
         $criteria->compare('Created', $this->Created, true);
 
         return new CActiveDataProvider($this, array(

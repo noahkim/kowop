@@ -4,7 +4,7 @@
     <!---- Notifications ---------->
     <div class="row">
         <div class="six columns"><span
-                class="profileCount"><?php echo count($model->messages(array('condition' => '`Read` = 0'))); ?></span>
+                class="profileCount"><?php echo count($model->messages(array('condition' => '`Read` = 0 AND Deleted = 0'))); ?></span>
 
             <h2>updates since your last visit</h2>
         </div>
@@ -23,7 +23,7 @@
     </div>
 
     <?php
-    foreach ($model->messages(array('order' => 'Created DESC')) as $message)
+    foreach ($model->messages(array('condition' => 'Deleted = 0', 'order' => 'Created DESC')) as $message)
     {
         $newNotification = $message->Read ? '' : 'newnotification';
 
@@ -111,6 +111,11 @@ BLOCK;
     <!------ end 1 notification ----->
 BLOCK;
 
+                if (!$message->Read)
+                {
+                    $message->Read = true;
+                    $message->save();
+                }
                 break;
             default:
                 break;

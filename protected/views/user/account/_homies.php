@@ -3,98 +3,86 @@
     <h1>Homies</h1>
     <span class="profileCount">
         <?php
-        echo count($model->friends(array('condition' => 'Status = ' . FriendStatus::AwaitingApproval)));
+
+        $friendRequests = $model->friendOf(array('condition' => 'Status = ' . FriendStatus::AwaitingApproval));
+
+        echo count($friendRequests);
         ?>
     </span>
 
-    <h2>New homie request</h2>
+    <h2>New homie requests</h2>
+
+    <?php
+
+    foreach ($friendRequests as $request)
+    {
+        $profilePic = $request->user->profilePic;
+        $userLink = CHtml::link("<img src='{$profilePic}' />", array('/user/view', 'id' => $request->user->User_ID));
+
+        echo <<<BLOCK
     <!------- 1 Homie --------->
     <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_amit.jpg"></a></div>
+        <div class="two columns">
+            {$userLink}
+        </div>
         <div class="ten columns">
-            <h2>Amit Bhatia</h2>
+            <h2>{$request->user->fullName}</h2>
 
-            <p>Hey man, really enjoyed taking the Python class with you. Thanks for helping me out on the 2nd day. Mind
-                if we homie-up? Wouldn't mind taking more programming classes with you!</p>
+            <p>
+                {$request->RequestMessage}
+            </p>
+
             <a href="#" class="button">Aw Yeah!</a>
             <a href="#" class="button">Um, No</a>
         </div>
     </div>
     <!-----------end 1 Homie----->
-    <!------- 1 Homie --------->
-    <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_ilija.jpg"></a></div>
-        <div class="ten columns">
-            <h2>Ilija Stevcev</h2>
 
-            <p>It was great to meet you during our wood-working class!</p>
-            <a href="#" class="button">Aw Yeah!</a>
-            <a href="#" class="button">Um, No</a>
-        </div>
-    </div>
-    <!-----------end 1 Homie----->
+BLOCK;
+
+    }
+
+    ?>
+
     <span class="profileCount">
-        <?php
-        echo count($model->friends(array('condition' => 'Status = ' . FriendStatus::Friend)));
-        ?>
+        <?php echo count($model->friends); ?>
     </span>
 
-    <h2>My Homies</h2>
+    <h2>My homies</h2>
+
+    <?php
+
+    foreach ($model->friends as $friend)
+    {
+        $profilePic = $friend->profilePic;
+        $userLink = CHtml::link("<img src='{$profilePic}' />", array('/user/view', 'id' => $friend->User_ID));
+
+        $recentActivity = '';
+
+        echo <<<BLOCK
     <!------- 1 Homie --------->
     <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_noah.jpg"></a></div>
+        <div class="two columns">
+            {$userLink}
+        </div>
         <div class="ten columns">
-            <h2>Jay Park</h2>
-            <span class="homieUpdate">Followed class<a href="class_detail.html">"How to teach a pigeon to do
+            <h2>{$friend->fullName}</h2>
+            {$recentActivity}
+        </div>
+    </div>
+    <!-----------end 1 Homie----->
+
+BLOCK;
+
+        /*<span class="homieUpdate">Followed class<a href="class_detail.html">"How to teach a pigeon to do
                 cartwheels"</a></span>
             <span class="homieUpdate">Enrolled in <a href="class_detail.html">"How to teach a pigeon to do
                 cartwheels"</a></span>
             <span class="homieUpdate">Request a class: <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-        </div>
-    </div>
-    <!-----------end 1 Homie----->
-    <!------- 1 Homie --------->
-    <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_ilija.jpg"></a></div>
-        <div class="ten columns">
-            <h2>Robert Redford</h2>
-            <span class="homieUpdate">Followed class<a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Enrolled in <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Request a class: <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-        </div>
-    </div>
-    <!-----------end 1 Homie----->
-    <!------- 1 Homie --------->
-    <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_annie.jpg"></a></div>
-        <div class="ten columns">
-            <h2>Annie Na</h2>
-            <span class="homieUpdate">Followed class<a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Enrolled in <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Request a class: <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-        </div>
-    </div>
-    <!-----------end 1 Homie----->
-    <!------- 1 Homie --------->
-    <div class="row accountHomies">
-        <div class="two columns"><a href="user_profile_public.html"><img src="images/sample_ilija.jpg"></a></div>
-        <div class="ten columns">
-            <h2>Scott Summers</h2>
-            <span class="homieUpdate">Followed class<a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Enrolled in <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-            <span class="homieUpdate">Request a class: <a href="class_detail.html">"How to teach a pigeon to do
-                cartwheels"</a></span>
-        </div>
-    </div>
-    <!-----------end 1 Homie----->
+                cartwheels"</a></span>*/
+
+    }
+
+    ?>
 </div>
 <!---------- end right column ----------->

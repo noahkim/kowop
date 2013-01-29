@@ -18,7 +18,23 @@
             <a href="#" class="twelve button" data-reveal-id="myModal">Send a message</a>
         </div>
         <div>
-            <a href="#" class="twelve button" data-reveal-id="homieRequest">Homie request</a>
+            <?php
+            $showFriendRequest = true;
+
+            if (!Yii::app()->user->isGuest)
+            {
+                $user = User::model()->findByPk(Yii::app()->user->id);
+                if ($user->isFriendsWith($model->User_ID))
+                {
+                    $showFriendRequest = false;
+                }
+            }
+            ?>
+            <?php if ($showFriendRequest) : ?>
+                <a href="#" class="twelve button" data-reveal-id="homieRequest">Homie request</a>
+            <?php else: ?>
+                <a href="#" class="twelve button">You are homies</a>
+            <?php endif; ?>
         </div>
         <div class="profileBadges">
             <div class="helptip">

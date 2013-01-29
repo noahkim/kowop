@@ -16,17 +16,14 @@
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property Friend[] $friends
+ * @property Friend[] $friended
  * @property Friend[] $friendOf
  * @property Experience[] $experiences
  * @property Message[] $messages
  * @property Message[] $sentMessages
- * @property Rating[] $ratings
- * @property Rating[] $ratings1
  * @property Request[] $requests
  * @property RequestToUser[] $requestToUsers
  * @property UserToContent[] $userToContents
- * @property UserToSession[] $userToSessions
  */
 class User extends CActiveRecord
 {
@@ -79,21 +76,16 @@ class User extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'experiences' => array(self::HAS_MANY, 'Experience', 'Create_user_ID'),
-            'ratings' => array(self::HAS_MANY, 'Rating', 'User_ID'),
-            'rated' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
             'requestToUsers' => array(self::HAS_MANY, 'RequestToUser', 'User_ID'),
-            'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
             'userToContents' => array(self::HAS_MANY, 'UserToContent', 'User_ID'),
-            'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
-            'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
-            'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToSessions'),
-            'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'sessions'),
-            'teachingSessions' => array(self::HAS_MANY, 'Session', array('Experience_ID' => 'Experience_ID'), 'through' => 'experiences'),
             'messages' => array(self::HAS_MANY, 'Message', 'To'),
             'sentMessages' => array(self::HAS_MANY, 'Message', 'From'),
-            'friends' => array(self::HAS_MANY, 'Friend', 'User_ID'),
+            'friended' => array(self::HAS_MANY, 'Friend', 'User_ID'),
             'friendOf' => array(self::HAS_MANY, 'Friend', 'Friend_User_ID'),
+            // Added
+            'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
+            'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
         );
     }
 
@@ -158,6 +150,42 @@ class User extends CActiveRecord
         }
 
         return null;
+    }
+
+    public function getFriends()
+    {
+        $friended = $this->friended(array('condition' => 'Status = ' . FriendStatus::Friend));
+        $friendOf = $this->friendOf(array('condition' => 'Status = ' . FriendStatus::Friend));
+
+        $friends = array();
+
+        foreach ($friended as $friendship)
+        {
+            $friends[] = $friendship->friendUser;
+        }
+
+        foreach ($friendOf as $friendship)
+        {
+            $friends[] = $friendship->user;
+        }
+
+        return $friends;
+    }
+
+    public function isFriendsWith($id)
+    {
+        $isFriends = false;
+
+        foreach ($this->friends as $friend)
+        {
+            if ($friend->User_ID == $id)
+            {
+                $isFriends = true;
+                break;
+            }
+        }
+
+        return $isFriends;
     }
 
     public function getClassReport($filter)

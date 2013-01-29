@@ -60,13 +60,13 @@
                             <?php echo CHtml::link('notifications', array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
                         </li>
                         <li>
-                            <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 2)); ?>
+                            <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
                         </li>
                         <li>
-                            <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 4)); ?>
+                            <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
                         </li>
                         <li>
-                            <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
+                            <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
                         </li>
                         <li>
                             <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>

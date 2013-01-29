@@ -15,7 +15,6 @@
  * @property integer $Location_ID
  * @property integer $Category_ID
  * @property string $Price
- * @property string $LessonDuration
  * @property integer $Audience
  * @property integer $Type
  * @property integer $Status
@@ -30,7 +29,6 @@
  * @property ExperienceToTag[] $experienceToTags
  * @property Rating[] $ratings
  * @property Request[] $requests
- * @property Session[] $sessions
  */
 class Experience extends CActiveRecord
 {
@@ -64,10 +62,10 @@ class Experience extends CActiveRecord
 			array('Create_User_ID, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Audience, Type, Status', 'numerical', 'integerOnly'=>true),
 			array('Name', 'length', 'max'=>255),
 			array('Description', 'length', 'max'=>2000),
-			array('Price, LessonDuration', 'length', 'max'=>10),
+			array('Price', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, LessonDuration, Audience, Type, Status, Created, Updated', 'safe'),
+			array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, Type, Status, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -92,13 +90,9 @@ class Experience extends CActiveRecord
 			'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
 			'ratings' => array(self::HAS_MANY, 'Rating', 'Experience_ID'),
 			'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
-			'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
             // Added
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'experienceToContents'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'experienceToTags'),
-            'lessons' => array(self::HAS_MANY, 'Lesson', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
-            'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
-            'students' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions')
 		);
 	}
 
@@ -119,7 +113,6 @@ class Experience extends CActiveRecord
 			'Location_ID' => 'Location',
 			'Category_ID' => 'Category',
 			'Price' => 'Price',
-			'LessonDuration' => 'Lesson Duration',
 			'Audience' => 'Audience',
 			'Type' => 'Type',
 			'Status' => 'Status',
@@ -150,7 +143,6 @@ class Experience extends CActiveRecord
 		$criteria->compare('Location_ID',$this->Location_ID);
 		$criteria->compare('Category_ID',$this->Category_ID);
 		$criteria->compare('Price',$this->Price,true);
-		$criteria->compare('LessonDuration',$this->LessonDuration,true);
 		$criteria->compare('Audience',$this->Audience);
 		$criteria->compare('Type',$this->Type);
 		$criteria->compare('Status',$this->Status);
@@ -188,27 +180,6 @@ class Experience extends CActiveRecord
         }
 
         return null;
-    }
-
-    public function getNextAvailableSession()
-    {
-        $nextSessions = $this->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start > now()', 'order' => 'lessons.Start asc'));
-
-        foreach ($nextSessions as $i => $session)
-        {
-            if (count($session->students) >= $this->Max_occupancy)
-            {
-                unset($nextSessions[$i]);
-            }
-        }
-
-        $nextSession = null;
-        if (count($nextSessions > 0))
-        {
-            $nextSession = $nextSessions[0];
-        }
-
-        return $nextSession;
     }
 
     public function beforeSave()

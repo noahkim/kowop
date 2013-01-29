@@ -10,8 +10,6 @@ class ContentController extends Controller
     public $breadcrumbs;
     public $menu;
 
-    const FileSavePath = "";
-
     /**
      * @return array action filters
      */
@@ -84,28 +82,6 @@ class ContentController extends Controller
             'model' => $model,
         ));
     }
-
-    public function actionUpload($id)
-    {
-        $model = $this->loadModel($id);
-        $modelFileUpload = new FileUpload;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if (isset($_POST['FileUpload']))
-        {
-            $modelFileUpload->attributes = $_POST['FileUpload'];
-            $modelFileUpload->file = CUploadedFile::getInstance($modelFileUpload, 'file');
-            $modelFileUpload->save($model);
-        }
-
-        $this->render('upload', array(
-            'model' => $model,
-            'modelFileUpload' => $modelFileUpload
-        ));
-    }
-
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.

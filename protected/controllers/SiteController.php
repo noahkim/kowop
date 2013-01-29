@@ -57,18 +57,7 @@ class SiteController extends Controller
     {
         $this->layout = '//layouts/mainOuter';
 
-        $form = new LoginForm();
-
-        if(isset($_POST['LoginForm']))
-        {
-            $form->attributes = $_POST['LoginForm'];
-            if ($form->validate() && $form->login())
-            {
-                $this->redirect(Yii::app()->user->returnUrl);
-            }
-        }
-
-        $this->render('login', array('form' => $form));
+        $this->render('login');
     }
 
     /**

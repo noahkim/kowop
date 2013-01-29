@@ -87,13 +87,13 @@
                                 <?php echo CHtml::link('notifications', array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 2)); ?>
+                                <?php echo CHtml::link('my classes', array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 4)); ?>
+                                <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
                             </li>
                             <li>
-                                <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
+                                <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
                             </li>
                             <li>
                                 <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
@@ -151,40 +151,46 @@
         <div class="row">
             <?php
             $randomClass = Experience::model()->findAll(array(
-                                                        'select' => '*, rand() as rand',
-                                                        'condition' => 'Status = ' . ExperienceStatus::Active,
-                                                        'limit' => 1,
-                                                        'order' => 'rand',
-                                                    ));
+                'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ExperienceStatus::Active,
+                'limit' => 1,
+                'order' => 'rand',
+            ));
 
-            $randomClass = $randomClass[0];
-            $enrollees = '';
-            foreach ($randomClass->students as $student) {
-                $picLink = 'http://placeskull.com/100/100/868686';
+            if (count($randomClass) > 0) :
 
-                if ($student->profilePic != null) {
-                    $picLink = $student->profilePic;
+                $randomClass = $randomClass[0];
+                $enrollees = '';
+                foreach ($randomClass->students as $student)
+                {
+                    $picLink = 'http://placeskull.com/100/100/868686';
+
+                    if ($student->profilePic != null)
+                    {
+                        $picLink = $student->profilePic;
+                    }
+
+                    $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                    $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
                 }
 
-                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
-            }
+                ?>
 
-            ?>
+                <div class="homeArrow"></div>
+                <div class="twelve columns">
+                    <h2>Do this today</h2>
 
-            <div class="homeArrow"></div>
-            <div class="twelve columns">
-                <h2>Do this today</h2>
-
-                <div class="homeFeaturedstudents">
-                    <?php echo $enrollees; ?>
+                    <div class="homeFeaturedstudents">
+                        <?php echo $enrollees; ?>
+                    </div>
+                    <div class="homeFeaturedtext">
+                        <h3><?php echo $randomClass->Name; ?></h3>
+                        <span>Next available time is <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span>
+                    </div>
+                    <?php echo CHtml::link('More Info', array('experience/view', 'id' => $randomClass->Experience_ID), array('class' => 'button featuredButton')); ?>
                 </div>
-                <div class="homeFeaturedtext">
-                    <h3><?php echo $randomClass->Name; ?></h3>
-                    <span>Next available time is <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span>
-                </div>
-                <?php echo CHtml::link('More Info', array('experience/view', 'id' => $randomClass->Experience_ID), array('class' => 'button featuredButton')); ?>
-            </div>
+
+                <?php endif; ?>
         </div>
         <!----- End Featured class info -------->
     </div>
@@ -199,34 +205,39 @@
     <div class="row">
         <?php
         $classes = Experience::model()->findAll(array(
-                                                'select' => '*, rand() as rand',
-                                                'condition' => 'Status = ' . ExperienceStatus::Active,
-                                                'limit' => 4,
-                                                'order' => 'rand',
-                                            )
+                'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ExperienceStatus::Active,
+                'limit' => 4,
+                'order' => 'rand',
+            )
         );
-        foreach ($classes as $class) {
+        foreach ($classes as $class)
+        {
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
-            if (strlen($teacherName) > 25) {
+            if (strlen($teacherName) > 25)
+            {
                 $teacherName = substr($teacherName, 0, 25);
                 $teacherName .= ' ...';
             }
 
             $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
-            if (strlen($description) > 82) {
+            if (strlen($description) > 82)
+            {
                 $description = substr($description, 0, 82);
                 $description .= ' ...';
             }
 
             $enrollees = '';
-            foreach ($class->students as $student) {
+            foreach ($class->students as $student)
+            {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null) {
+                if ($student->profilePic != null)
+                {
                     $picLink = $student->profilePic;
                 }
 
@@ -235,16 +246,19 @@
             }
 
             $className = $class->Name;
-            if (strlen($className) > 60) {
+            if (strlen($className) > 60)
+            {
                 $className = substr($className, 0, 60);
                 $className .= ' ...';
             }
             $className = CHtml::link('<h5>' . $className . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
 
-            if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0)) {
+            if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0))
+            {
                 $sessionHTML = 'This class is free!';
             }
-            else {
+            else
+            {
                 $lessonCount = count($class->sessions[0]->lessons);
                 $tuition = $class->Price * $lessonCount;
 
@@ -286,29 +300,33 @@ BLOCK;
     <div class="row">
         <?php
         $classes = Experience::model()->findAll(array(
-                                                'select' => '*, rand() as rand',
-                                                'condition' => 'Status = ' . ExperienceStatus::Active,
-                                                'limit' => 4,
-                                                'order' => 'rand',
-                                            )
+                'select' => '*, rand() as rand',
+                'condition' => 'Status = ' . ExperienceStatus::Active,
+                'limit' => 4,
+                'order' => 'rand',
+            )
         );
-        foreach ($classes as $class) {
+        foreach ($classes as $class)
+        {
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
             $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
-            if (strlen($description) > 82) {
+            if (strlen($description) > 82)
+            {
                 $description = substr($description, 0, 82);
                 $description .= ' ...';
             }
 
             $enrollees = '';
-            foreach ($class->students as $student) {
+            foreach ($class->students as $student)
+            {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null) {
+                if ($student->profilePic != null)
+                {
                     $picLink = $student->profilePic;
                 }
 
@@ -318,10 +336,12 @@ BLOCK;
 
             $className = CHtml::link('<h5>' . $class->Name . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
 
-            if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0)) {
+            if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0))
+            {
                 $sessionHTML = 'This class is free!';
             }
-            else {
+            else
+            {
                 $lessonCount = count($class->sessions[0]->lessons);
                 $tuition = $class->Price * $lessonCount;
 

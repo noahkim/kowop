@@ -54,10 +54,10 @@
             <li><a href="user_profile_reviews.html">Feedback</a></li>
         </ul>
         <div class="spacebot10">
-            <?php echo CHtml::link("Teach a class", $this->createUrl("experience/create"), array('class' => 'button twelve')); ?>
+            <?php echo CHtml::link("I'd like to post", $this->createUrl("experience/create"), array('class' => 'button twelve')); ?>
         </div>
         <div>
-            <?php echo CHtml::link("Request a class", $this->createUrl("request/create"), array('class' => 'button twelve')); ?>
+            <?php echo CHtml::link("make a request", $this->createUrl("request/create"), array('class' => 'button twelve')); ?>
         </div>
     </div>
     <!------- end left column -------->

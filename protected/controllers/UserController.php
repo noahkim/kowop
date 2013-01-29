@@ -242,7 +242,7 @@ class UserController extends Controller
     public function actionAcceptFriend($id)
     {
         $friendship = Friend::model()->find('User_ID = :User_ID AND Friend_User_ID = :Friend_User_ID AND Status = :Status',
-            array(':User_ID' => Yii::app()->user->id, ':Friend_User_ID' => $id, ':Status' => FriendStatus::AwaitingApproval));
+            array(':User_ID' => $id, ':Friend_User_ID' => Yii::app()->user->id, ':Status' => FriendStatus::AwaitingApproval));
 
         if($friendship != null)
         {
@@ -254,12 +254,12 @@ class UserController extends Controller
 
             if($notification != null)
             {
-                $notification->Read = 1;
+                $notification->Deleted = 1;
                 $notification->save();
             }
 
-            $friend = User::model()->findByPk($id);
-            $friendLink = CHtml::link($friend->fullName, array('/user/view', 'id' => $id));
+            $friend = User::model()->findByPk(Yii::app()->user->id);
+            $friendLink = CHtml::link($friend->fullName, array('/user/view', 'id' => Yii::app()->user->id));
 
             Message::SendNotification($id, "{$friendLink} has accepted your homie request!");
         }

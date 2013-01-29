@@ -125,8 +125,6 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
-        // this is used in contact page
-        'adminEmail' => 'webmaster@example.com',
         'siteBase' => '/yii/kowopdev',
         'uploads' => '/home4/rebuttme/public_html/yii/kowopdev/uploads',
         'temp' => '/home4/rebuttme/public_html/yii/kowopdev/temp'
