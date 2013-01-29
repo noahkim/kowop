@@ -5,7 +5,7 @@
 
     <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    'action' => Yii::app()->createUrl('/class/search'),
+    'action' => Yii::app()->createUrl('/experience/search'),
     'enableAjaxValidation' => false,
     'method' => 'get'
 )); ?>
@@ -47,7 +47,7 @@
             </div>
             <!----- end search summary ------>
 
-            <?php echo $this->renderPartial('/class/_searchResults', array('model' => $model, 'results' => $results)); ?>
+            <?php echo $this->renderPartial('/experience/_searchResults', array('model' => $model, 'results' => $results)); ?>
 
         </div>
         <!------ end left column------------------>
@@ -57,7 +57,7 @@
     <div class="three columns">
         <div class="searchSidebar">
             <div class="spacebot10">
-                <?php echo CHtml::link("I'd like to post", $this->createUrl("class/create"), array('class' => 'large button twelve')); ?>
+                <?php echo CHtml::link("I'd like to post", $this->createUrl("experience/create"), array('class' => 'large button twelve')); ?>
             </div>
             <div class="spacebot10">
                 <?php echo CHtml::link("make a request", $this->createUrl("request/create"), array('class' => 'large button twelve')); ?>
@@ -212,11 +212,11 @@
                 foreach ($results as $i => $item) {
                     $type = 'class';
                     $id = 0;
-                    if ($item instanceof KClass) {
+                    if ($item instanceof Experience) {
                         $address = str_replace("'", "\\'", $item->location->fullAddress);
 
-                        $link = $this->createUrl('/class/view', array('id' => $item->Class_ID));
-                        $id = $item->Class_ID;
+                        $link = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
+                        $id = $item->Experience_ID;
                     }
                     elseif ($item instanceof Request) {
                         $address = $item->Zip;
@@ -280,12 +280,12 @@
         });
 
         var query = '<?php echo http_build_query($_GET); ?>';
-        var includedString = '&ClassSearchForm[includedResults]=' + JSON.stringify(included);
+        var includedString = '&ExperienceSearchForm[includedResults]=' + JSON.stringify(included);
         query += includedString;
 
         $.ajax({
             type:'POST',
-            url:'<?php echo Yii::app()->createAbsoluteUrl("/class/searchResults"); ?>',
+            url:'<?php echo Yii::app()->createAbsoluteUrl("/experience/searchResults"); ?>',
             data:query,
             success:function (data) {
                 $('#results').html(data);

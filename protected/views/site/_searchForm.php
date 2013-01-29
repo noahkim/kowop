@@ -1,6 +1,6 @@
 <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    'action'=>Yii::app()->createUrl('/class/search'),
+    'action'=>Yii::app()->createUrl('/experience/search'),
     'enableAjaxValidation' => false,
     'method' => 'get'
 )); ?>

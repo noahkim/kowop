@@ -2,7 +2,7 @@
 
 Yii::import('ext.iwi.Iwi');
 
-class ClassCreateForm extends CFormModel
+class ExperienceCreateForm extends CFormModel
 {
     // Step 1
     public $name;
@@ -29,9 +29,7 @@ class ClassCreateForm extends CFormModel
     public $locationType;
 
     // Step 2
-    public $prerequisites;
-    public $materials;
-    public $tuition;
+    public $price;
     public $lessonDuration;
 
     // Step 3
@@ -39,7 +37,7 @@ class ClassCreateForm extends CFormModel
 
     // Models used
     private $location;
-    public $class;
+    public $experience;
     public $user;
 
     // Other
@@ -49,11 +47,11 @@ class ClassCreateForm extends CFormModel
     {
         return array(
             array('name, category', 'required', 'on' => 'step1'),
-            array('start, end, minOccupancy, maxOccupancy, numLessons, tuition, lessonDuration, description, locationType, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step2'),
+            array('start, end, minOccupancy, maxOccupancy, numLessons, price, lessonDuration, description, locationType, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step2'),
             array('category, numLessons, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             array('prerequisites, materials', 'length', 'max' => 1000),
-            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,tuition,lessonDuration,sessions,fromRequest_ID', 'safe'),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,price,lessonDuration,sessions,fromRequest_ID', 'safe'),
         );
     }
 
@@ -81,27 +79,25 @@ class ClassCreateForm extends CFormModel
     {
         $isSaved = false;
 
-        $this->class = new KClass;
-        $transaction = $this->class->dbConnection->beginTransaction();
+        $this->experience = new Experience;
+        $transaction = $this->experience->dbConnection->beginTransaction();
 
         try
         {
-            $this->class->Name = $this->name;
-            $this->class->Description = $this->description;
-            $this->class->Category_ID = $this->category;
-            $this->class->Start = $this->start;
-            $this->class->End = $this->end;
-            $this->class->Min_occupancy = $this->minOccupancy;
-            $this->class->Max_occupancy = $this->maxOccupancy;
-            $this->class->Prerequisites = $this->prerequisites;
-            $this->class->Materials = $this->materials;
-            $this->class->Tuition = $this->tuition;
-            $this->class->LessonDuration = $this->lessonDuration;
+            $this->experience->Name = $this->name;
+            $this->experience->Description = $this->description;
+            $this->experience->Category_ID = $this->category;
+            $this->experience->Start = $this->start;
+            $this->experience->End = $this->end;
+            $this->experience->Min_occupancy = $this->minOccupancy;
+            $this->experience->Max_occupancy = $this->maxOccupancy;
+            $this->experience->Price = $this->price;
+            $this->experience->LessonDuration = $this->lessonDuration;
 
             $this->location = $this->getLocation();
-            $this->class->Location_ID = $this->location->Location_ID;
+            $this->experience->Location_ID = $this->location->Location_ID;
 
-            $this->class->save();
+            $this->experience->save();
 
             if (strlen($this->imageURL) > 0)
             {
@@ -112,7 +108,7 @@ class ClassCreateForm extends CFormModel
                 $content->save();
 
                 $classToContent = new ClassToContent;
-                $classToContent->Class_ID = $this->class->Class_ID;
+                $classToContent->Experience_ID = $this->experience->Experience_ID;
                 $classToContent->Content_ID = $content->Content_ID;
                 $classToContent->save();
             }
@@ -123,7 +119,7 @@ class ClassCreateForm extends CFormModel
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
                     $classToContent = new ClassToContent;
-                    $classToContent->Class_ID = $this->class->Class_ID;
+                    $classToContent->Experience_ID = $this->experience->Experience_ID;
                     $classToContent->Content_ID = $content->Content_ID;
                     $classToContent->save();
                 }
@@ -135,18 +131,18 @@ class ClassCreateForm extends CFormModel
 
                 if ($request != null)
                 {
-                    $request->Created_Class_ID = $this->class->Class_ID;
+                    $request->Created_Experience_ID = $this->experience->Experience_ID;
 
                     $request->save();
 
                     // Notify the students
                     foreach ($request->requestors as $student)
                     {
-                        if ($student->User_ID != $this->class->Create_User_ID)
+                        if ($student->User_ID != $this->experience->Create_User_ID)
                         {
-                            $userName = CHtml::link($this->class->createUser->fullName, array('user/view', 'id' => $this->class->createUser->User_ID));
+                            $userName = CHtml::link($this->experience->createUser->fullName, array('user/view', 'id' => $this->experience->createUser->User_ID));
                             $requestName = CHtml::link($request->Name, array('request/view', 'id' => $request->Request_ID));
-                            $className = CHtml::link($this->class->Name, array('class/view', 'id' => $this->class->Class_ID));
+                            $className = CHtml::link($this->experience->Name, array('experience/view', 'id' => $this->experience->Experience_ID));
 
                             Message::SendNotification($student->User_ID, "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
                         }
@@ -160,7 +156,7 @@ class ClassCreateForm extends CFormModel
                 $tag = Tag::model()->findOrCreate($tagName);
 
                 $classToTag = new ClassToTag;
-                $classToTag->Class_ID = $this->class->Class_ID;
+                $classToTag->Experience_ID = $this->experience->Experience_ID;
                 $classToTag->Tag_ID = $tag->Tag_ID;
                 $classToTag->save();
             }
@@ -170,7 +166,7 @@ class ClassCreateForm extends CFormModel
             foreach ($sessionData as $sessionItem)
             {
                 $session = new Session;
-                $session->Class_ID = $this->class->Class_ID;
+                $session->Experience_ID = $this->experience->Experience_ID;
                 $session->save();
 
                 foreach ($sessionItem->lessons as $lessonItem)

@@ -1,6 +1,6 @@
 <?php
 
-class ClassController extends Controller
+class ExperienceController extends Controller
 {
     /**
      * @return array action filters
@@ -78,7 +78,7 @@ class ClassController extends Controller
     public function actionCreate()
     {
         $this->layout = '//layouts/main';
-        $model = new ClassCreateForm("step1");
+        $model = new ExperienceCreateForm("step1");
         $step = 1;
 
         Yii::import("xupload.models.XUploadForm");
@@ -90,12 +90,12 @@ class ClassController extends Controller
 
             Yii::app()->user->setState('imageFileNames', array());
 
-            $this->setPageState('step1', $_POST['ClassCreateForm']);
+            $this->setPageState('step1', $_POST['ExperienceCreateForm']);
 
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $_POST['ClassCreateForm'];
+            $model->attributes = $_POST['ExperienceCreateForm'];
 
             if (!$model->validate())
             {
@@ -106,13 +106,13 @@ class ClassController extends Controller
         {
             $step = 3;
 
-            $this->setPageState('step2', $_POST['ClassCreateForm']);
+            $this->setPageState('step2', $_POST['ExperienceCreateForm']);
 
-            $model = new ClassCreateForm("step2");
+            $model = new ExperienceCreateForm("step2");
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $_POST['ClassCreateForm'];
+            $model->attributes = $_POST['ExperienceCreateForm'];
 
             if (!$model->validate())
             {
@@ -121,12 +121,12 @@ class ClassController extends Controller
         }
         elseif (isset($_POST['step4']))
         {
-            $model = new ClassCreateForm("step3");
-            $this->setPageState('step3', $_POST['ClassCreateForm']);
+            $model = new ExperienceCreateForm("step3");
+            $this->setPageState('step3', $_POST['ExperienceCreateForm']);
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $_POST['ClassCreateForm'];
+            $model->attributes = $_POST['ExperienceCreateForm'];
 
             $model->imageFiles = Yii::app()->user->getState('imageFileNames');
             $model->user = User::model()->findByPk(Yii::app()->user->id);
@@ -135,7 +135,7 @@ class ClassController extends Controller
         }
         elseif (isset($_POST['submit']))
         {
-            $model = new ClassCreateForm('submit');
+            $model = new ExperienceCreateForm('submit');
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
@@ -146,7 +146,7 @@ class ClassController extends Controller
             {
                 Yii::app()->user->setState('imageFileNames', array());
 
-                $this->redirect(array('view', 'id' => $model->class->Class_ID));
+                $this->redirect(array('view', 'id' => $model->experience->Experience_ID));
             }
             else
             {
@@ -157,16 +157,16 @@ class ClassController extends Controller
         {
             $step = 1;
 
-            $model = new ClassCreateForm('submit');
+            $model = new ExperienceCreateForm('submit');
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
         }
         else
         {
-            if (isset($_POST['ClassCreateForm']))
+            if (isset($_POST['ExperienceCreateForm']))
             {
-                $model->attributes = $_POST['ClassCreateForm'];
+                $model->attributes = $_POST['ExperienceCreateForm'];
             }
         }
 
@@ -197,7 +197,7 @@ class ClassController extends Controller
                 else
                 {
                     $session = new Session;
-                    $session->Class_ID = $model->Class_ID;
+                    $session->Experience_ID = $model->Experience_ID;
                     $session->save();
 
                     foreach ($sessionItem->lessons as $lessonItem)
@@ -228,22 +228,22 @@ class ClassController extends Controller
         Yii::import("xupload.models.XUploadForm");
         $images = new XUploadForm;
 
-        if (isset($_POST['KClass']))
+        if (isset($_POST['Experience']))
         {
-            $model->attributes = $_POST['KClass'];
+            $model->attributes = $_POST['Experience'];
 
             $imageFiles = Yii::app()->user->getState('imageFileNames');
 
             if (isset($imageFiles) && count($imageFiles) > 0)
             {
-                ClassToContent::model()->deleteAll('Class_ID = :Class_ID', array(':Class_ID' => $model->Class_ID));
+                ClassToContent::model()->deleteAll('Experience_ID = :Experience_ID', array(':Experience_ID' => $model->Experience_ID));
 
                 foreach ($imageFiles as $imageFile)
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
                     $classToContent = new ClassToContent;
-                    $classToContent->Class_ID = $model->Class_ID;
+                    $classToContent->Experience_ID = $model->Experience_ID;
                     $classToContent->Content_ID = $content->Content_ID;
                     $classToContent->save();
                 }
@@ -259,13 +259,13 @@ class ClassController extends Controller
                     if ($student->User_ID != $model->Create_User_ID)
                     {
                         $userName = CHtml::link($model->createUser->fullName, array('user/view', 'id' => $model->createUser->User_ID));
-                        $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+                        $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
                         Message::SendNotification($student->User_ID, "{$userName} has updated the class details for \"{$className}\".");
                     }
                 }
 
-                $this->redirect(array('view', 'id' => $model->Class_ID));
+                $this->redirect(array('view', 'id' => $model->Experience_ID));
             }
         }
         else
@@ -356,9 +356,9 @@ class ClassController extends Controller
                         "name" => $model->name,
                         "type" => $model->mime_type,
                         "size" => $model->size,
-                        "url" => '/yii/kowop/temp/' . $imageFileName,
-                        "thumbnail_url" => '/yii/kowop/temp/' . $imageFileName,
-                        "delete_url" => $this->createUrl("//class/uploadImages", array(
+                        "url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
+                        "thumbnail_url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
+                        "delete_url" => $this->createUrl("//experience/uploadImages", array(
                             "_method" => "delete",
                             "file" => $imageFileName
                         )),
@@ -391,7 +391,7 @@ class ClassController extends Controller
     public function actionDelete($id)
     {
         $model = $this->loadModel($id);
-        $model->Status = ClassStatus::Inactive;
+        $model->Status = ExperienceStatus::Inactive;
         $model->save();
 
         $this->redirect(array('//site/index'));
@@ -402,7 +402,7 @@ class ClassController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('KClass');
+        $dataProvider = new CActiveDataProvider('Experience');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));
@@ -412,11 +412,11 @@ class ClassController extends Controller
     {
         $this->layout = '//layouts/mainNoSearch';
 
-        $model = new ClassSearchForm;
+        $model = new ExperienceSearchForm;
 
-        if (isset($_REQUEST['ClassSearchForm']))
+        if (isset($_REQUEST['ExperienceSearchForm']))
         {
-            $model->attributes = $_REQUEST['ClassSearchForm'];
+            $model->attributes = $_REQUEST['ExperienceSearchForm'];
             Yii::app()->session['lastSearch'] = $model->keywords;
         }
 
@@ -429,11 +429,11 @@ class ClassController extends Controller
     {
         $this->layout = false;
 
-        $model = new ClassSearchForm;
+        $model = new ExperienceSearchForm;
 
-        if (isset($_REQUEST['ClassSearchForm']))
+        if (isset($_REQUEST['ExperienceSearchForm']))
         {
-            $model->attributes = $_REQUEST['ClassSearchForm'];
+            $model->attributes = $_REQUEST['ExperienceSearchForm'];
             Yii::app()->session['lastSearch'] = $model->keywords;
         }
 
@@ -454,11 +454,11 @@ class ClassController extends Controller
      */
     public function actionAdmin()
     {
-        $model = new KClass('search');
+        $model = new Experience('search');
         $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['KClass']))
+        if (isset($_GET['Experience']))
         {
-            $model->attributes = $_GET['KClass'];
+            $model->attributes = $_GET['Experience'];
         }
 
         $this->render('admin', array(
@@ -506,7 +506,7 @@ class ClassController extends Controller
             }
 
             $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-            $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+            $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
             Message::SendNotification($model->Create_User_ID, "{$userName} has joined your class \"{$className}\".");
         }
@@ -517,13 +517,13 @@ class ClassController extends Controller
             if ($student->User_ID != $user_ID)
             {
                 $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-                $className = CHtml::link($model->Name, array('class/view', 'id' => $model->Class_ID));
+                $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
                 Message::SendNotification($student->User_ID, "{$userName} has also joined the class \"{$className}\".");
             }
         }
 
-        $this->redirect(array('view', 'id' => $model->Class_ID));
+        $this->redirect(array('view', 'id' => $model->Experience_ID));
     }
 
     public function actionLeave($id)
@@ -533,7 +533,7 @@ class ClassController extends Controller
 
         UserToSession::model()->deleteAll('User_ID=:User_ID', array(':User_ID' => $user_ID));
 
-        $this->redirect(array('view', 'id' => $model->Class_ID));
+        $this->redirect(array('view', 'id' => $model->Experience_ID));
     }
 
     public function actionEnrollDialog($id)
@@ -564,7 +564,7 @@ class ClassController extends Controller
      */
     public function loadModel($id)
     {
-        $model = KClass::model()->findByPk($id);
+        $model = Experience::model()->findByPk($id);
         if ($model === null)
         {
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -579,7 +579,7 @@ class ClassController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'kclass-form')
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'Experience-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();

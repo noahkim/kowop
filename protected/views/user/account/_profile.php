@@ -56,7 +56,7 @@
         <span class="profileLocation">Los Angeles, California</span>
         <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span>
         <span class="profileDescription"><?php echo $model->Description; ?></span>
-        <span class="profileCount"><?php echo count($model->kClasses); ?></span>
+        <span class="profileCount"><?php echo count($model->experiences); ?></span>
 
         <h2>Classes I'm teaching</h2>
 
@@ -65,7 +65,7 @@
 
             $index = 1;
 
-            foreach ($model->kClasses as $class)
+            foreach ($model->experiences as $class)
             {
                 $imgLink = 'http://placehold.it/400x300';
 
@@ -74,10 +74,10 @@
                     $imgLink = $class->contents[0]->Link;
                 }
 
-                $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
+                $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
                 $end = '';
-                if ($index == count($model->kClasses))
+                if ($index == count($model->experiences))
                 {
                     $end = 'end';
                 }
@@ -114,7 +114,7 @@ BLOCK;
                     $imgLink = $class->contents[0]->Link;
                 }
 
-                $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
+                $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
                 $end = '';
                 if ($index == count($model->enrolledIn))

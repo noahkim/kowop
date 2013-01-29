@@ -24,7 +24,7 @@ $this->menu=array(
 		'Rating_ID',
 		'User_ID',
 		'Rate_User_ID',
-		'Class_ID',
+		'Experience_ID',
 		'Comment',
 		'Flagged',
 		'Active',

@@ -107,6 +107,6 @@ class Lesson extends CActiveRecord
 
     public function getClass()
     {
-        return $this->session->class;
+        return $this->session->experience;
     }
 }

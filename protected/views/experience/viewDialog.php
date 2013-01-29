@@ -1,8 +1,8 @@
-<h4><?php echo $model->class->Name; ?></h4>
+<h4><?php echo $model->experience->Name; ?></h4>
 <ul>
     <li>Start Time: <?php echo $model->Start; ?></li>
     <li>End Time: <?php echo $model->End; ?></li>
-    <li>Duration: <?php echo $model->class->LessonDuration; ?> hour(s)</li>
+    <li>Duration: <?php echo $model->experience->LessonDuration; ?> hour(s)</li>
 </ul>
 <div class="enrollees spacebot10">
     <?php
@@ -22,4 +22,4 @@
     ?>
 </div>
 
-<?php echo CHtml::link('View Class Details', array('/class/view', 'id' => $model->class->Class_ID), array('class' => 'button radius stretch')); ?>
+<?php echo CHtml::link('View Class Details', array('/experience/view', 'id' => $model->experience->Experience_ID), array('class' => 'button radius stretch')); ?>

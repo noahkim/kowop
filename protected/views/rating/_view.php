@@ -17,8 +17,8 @@
 	<?php echo CHtml::encode($data->Rate_User_ID); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Class_ID')); ?>:</b>
-	<?php echo CHtml::encode($data->Class_ID); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('Experience_ID')); ?>:</b>
+	<?php echo CHtml::encode($data->Experience_ID); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Comment')); ?>:</b>

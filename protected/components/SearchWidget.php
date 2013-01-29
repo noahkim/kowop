@@ -13,11 +13,11 @@ class SearchWidget extends CWidget
 
     protected function renderContent()
     {
-        $model = new ClassSearchForm();
+        $model = new ExperienceSearchForm();
 
-        if(isset($_REQUEST['ClassSearchForm']))
+        if(isset($_REQUEST['ExperienceSearchForm']))
         {
-            $model->attributes = $_REQUEST['ClassSearchForm'];
+            $model->attributes = $_REQUEST['ExperienceSearchForm'];
         }
 
         $this->render('searchWidget', array('model' => $model));

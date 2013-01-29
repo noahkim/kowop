@@ -64,7 +64,7 @@ class SearchForm extends CFormModel
             $classCriteria->compare('tags.Name', $keyword, true, 'OR');
         }
 
-        $requestCriteria->addCondition('t.Created_Class_ID is NULL');
+        $requestCriteria->addCondition('t.Created_Experience_ID is NULL');
 
         if(isset($this->category) && is_numeric($this->category))
         {
@@ -85,7 +85,7 @@ class SearchForm extends CFormModel
             $classCriteria->compare('t.Start', '<=' . $this->nextClassStartsBy);
         }
 
-        $classes = KClass::model()->findAll($classCriteria);
+        $classes = Experience::model()->findAll($classCriteria);
         if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
         {
             foreach ($classes as $i => $class)

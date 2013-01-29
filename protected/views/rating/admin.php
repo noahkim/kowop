@@ -48,7 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'Rating_ID',
 		'User_ID',
 		'Rate_User_ID',
-		'Class_ID',
+		'Experience_ID',
 		'Comment',
 		'Flagged',
 		/*

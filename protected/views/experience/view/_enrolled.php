@@ -4,14 +4,8 @@
         <!---------------------------------------
                      Main class details
         ---------------------------------------->
-        <!----- Class title------->
-        <div class="row">
-            <div class="twelve columns">
-                <div class="followClass"><a href="#" class="button ">Follow Class</a></div>
-                <h1><?php echo $model->Name; ?></h1>
-            </div>
-        </div>
-        <!-------- main class details ---->
+        <h1><?php echo $model->Name; ?></h1>
+
         <div class="detailsMain">
             <div class="row">
                 <div class="six columns">
@@ -32,10 +26,11 @@
                 <div class="two columns">
                     <div class=" infoTuition">
                         <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Tuition; ?>
-                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?> lesson class</span>
+                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Price; ?>
+                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?>
+                                lesson class</span>
                         </span>
-                        <span class="breakdown">$<?php echo $model->Tuition; ?> per lesson</span>
+                        <span class="breakdown">$<?php echo $model->Price; ?> per lesson</span>
                     </div>
 
                     <?php
@@ -52,62 +47,73 @@
                     <div class="detailsInstructor">
                         Instructor
                         <span class="detailsName">
-                            <?php
+                        <?php
                             $name = ($model->createUser->Teacher_alias == null) ? $model->createUser->fullname : $model->createUser->Teacher_alias;
                             echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
 
-                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
+                        <div class="detailsReccomendations"><a href="#">31</a></div>
                     </div>
                 </div>
                 <!------------ Right column ------------------>
                 <div class="four columns">
+                    <span class="detailsEnrolled">You're Enrolled!</span>
+
                     <div class="detailsNextSession">
-                        <span>Next available session scheduled for</span>
+                        <span>Your session is scheduled for</span>
                         <ul>
                             <?php
 
-                            $nextSession = $model->nextAvailableSession;
+                            $user = User::model()->findByPk(Yii::app()->user->id);
+                            $nextSession = $user->sessions(array('with' => array('lessons', 'class'), 'condition' => '(class.Experience_ID = ' . $model->Experience_ID . ') AND (lessons.Start > now())', 'order' => 'lessons.Start asc'));
 
-                            foreach ($nextSession->lessons as $lesson)
+                            if ($nextSession != null)
                             {
-                                $time = strtotime($lesson->Start);
+                                $nextSession = $nextSession[0];
 
-                                $dayOfWeek = date('l', $time);
-                                $date = date('F j', $time);
-                                $start = date('g:i a', $time);
+                                foreach ($nextSession->lessons as $lesson)
+                                {
+                                    $time = strtotime($lesson->Start);
 
-                                // Get lesson duration in seconds
-                                $offset = $model->LessonDuration * 60 * 60;
+                                    $dayOfWeek = date('l', $time);
+                                    $date = date('F j', $time);
+                                    $start = date('g:i a', $time);
 
-                                $end = date('g:i a', ($time + $offset));
+                                    // Get lesson duration in seconds
+                                    $offset = $model->LessonDuration * 60 * 60;
 
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                                    $end = date('g:i a', ($time + $offset));
+
+                                    echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                                }
                             }
 
                             ?>
                         </ul>
                         </span>
                         <div class="enrollees">
-                            <span>Classmates in the next session</span>
+                            <span>Your classmates for this session</span>
                             <?php
 
-                            foreach ($nextSession->students as $student)
+                            if ($nextSession != null)
                             {
-                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
-
-                                if ($student->profilePic != null)
+                                foreach ($nextSession->students as $student)
                                 {
-                                    $imgLink = $student->profilePic;
-                                }
+                                    $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
-                                $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
-                                echo CHtml::link(
-                                    $imgHTML,
-                                    array('/user/view', 'id' => $student->User_ID),
-                                    array('title' => $student->fullname)
-                                );
+                                    if ($student->profilePic != null)
+                                    {
+                                        $imgLink = $student->profilePic;
+                                    }
+
+                                    $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
+                                    echo CHtml::link(
+                                        $imgHTML,
+                                        array('/user/view', 'id' => $student->User_ID),
+                                        array('title' => $student->fullname)
+                                    );
+                                }
                             }
 
                             ?>
@@ -115,15 +121,11 @@
 
                     </div>
                     <div class="spacebot10">
-                        <?php
-                        echo CHtml::link('Enroll for this session',
-                            array('/class/join', 'id' => $model->Class_ID, array('session' => $nextSession->Session_ID)),
-                            array('class' => 'button large twelve enrollButton')
-                        );
-                        ?>
+                        <a href="#enrolllater" class="button large twelve enrollButton">Change session</a>
                     </div>
                     <div>
-                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
+                        <a href="#" data-reveal-id="leaveClass" class="button large twelve enrollButton">Cancel this
+                            class</a>
                     </div>
                 </div>
             </div>
@@ -170,7 +172,6 @@
                                 <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
                                 <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
                                 <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
-
                             </ul>
                         </div>
                     </div>
@@ -191,6 +192,18 @@
         </div>
     </div>
     <!------- end main content container----->
+</div>
+
+<!----- Leave Class Modal ------------->
+<div id="leaveClass" class="reveal-modal">
+    <h2>Are you sure?</h2>
+
+    <p>You can always join later if you'd like</p>
+    <?php echo CHtml::link("Yes I'd like to leave", array('/experience/leave', 'id' => $model->Experience_ID), array('class' => 'button twelve secondary radius')); ?>
+    <!--    <a href="#" class="secondary button radius twelve">Yes I'd like to leave</a>-->
+    <a href="#" onclick="$('#leaveClass').trigger('reveal:close'); return false;"
+       class="secondary button radius twelve">No way, knowledge is power!</a>
+    <a class="close-reveal-modal">&#215;</a>
 </div>
 
 <script type="text/javascript">
@@ -247,7 +260,7 @@
             foreach ($model->sessions as $i => $session)
             {
                 $title = 'Session ' . ($i + 1);
-                $link = $this->createAbsoluteUrl('/class/join', array('id' => $model->Class_ID, 'session' => $session->Session_ID));
+                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID));
 
                 foreach ($session->lessons as $lesson)
                 {
@@ -273,7 +286,7 @@ BLOCK;
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content:{
-                            url:'<?php echo $this->createAbsoluteUrl("/class/enrollDialog", array("id" => $model->Class_ID)); ?>' + '?session=' + event.session
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog", array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{
@@ -294,3 +307,4 @@ BLOCK;
     });
 
 </script>
+

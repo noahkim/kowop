@@ -118,15 +118,15 @@
     }
 
     function getResults(keywords, category) {
-        var data = "ClassSearchForm[keywords]=" + keywords;
+        var data = "ExperienceSearchForm[keywords]=" + keywords;
 
         if (arguments.length == 2) {
-            data += '&ClassSearchForm[category]=' + category;
+            data += '&ExperienceSearchForm[category]=' + category;
         }
 
         $.ajax({
             type:'GET',
-            url:'<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
+            url:'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults"); ?>',
             data:data,
             success:function (result) {
                 $('#results').html(result);

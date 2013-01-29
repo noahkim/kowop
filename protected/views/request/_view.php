@@ -26,8 +26,8 @@
 	<br />
 
 	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('Created_Class_ID')); ?>:</b>
-	<?php echo CHtml::encode($data->Created_Class_ID); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('Created_Experience_ID')); ?>:</b>
+	<?php echo CHtml::encode($data->Created_Experience_ID); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('Location_ID')); ?>:</b>

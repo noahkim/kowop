@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "Class_to_content".
+ * This is the model class for table "Experience_to_content".
  *
- * The followings are the available columns in table 'Class_to_content':
- * @property integer $Class_to_content_ID
- * @property integer $Class_ID
+ * The followings are the available columns in table 'Experience_to_content':
+ * @property integer $Experience_to_content_ID
+ * @property integer $Experience_ID
  * @property integer $Content_ID
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property KClass $class
+ * @property Experience $experience
  * @property Content $content
  */
-class ClassToContent extends CActiveRecord
+class ExperienceToContent extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return ClassToContent the static model class
+	 * @return ExperienceToContent the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -30,7 +30,7 @@ class ClassToContent extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Class_to_content';
+		return 'Experience_to_content';
 	}
 
 	/**
@@ -41,15 +41,11 @@ class ClassToContent extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('Experience_ID, Content_ID, Updated', 'required'),
+			array('Experience_ID, Content_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Class_to_content_ID, Class_ID, Content_ID, Updated', 'safe'),
-            array('Updated', 'default',
-                'value' => new CDbExpression('NOW()'),
-                'setOnEmpty' => false, 'on' => 'update'),
-            array('Updated', 'default',
-                'value' => new CDbExpression('NOW()'),
-                'setOnEmpty' => false, 'on' => 'insert')
+			array('Experience_to_content_ID, Experience_ID, Content_ID, Updated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +57,7 @@ class ClassToContent extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
+			'experience' => array(self::BELONGS_TO, 'Experience', 'Experience_ID'),
 			'content' => array(self::BELONGS_TO, 'Content', 'Content_ID'),
 		);
 	}
@@ -72,8 +68,8 @@ class ClassToContent extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Class_to_content_ID' => 'Class To Content',
-			'Class_ID' => 'Class',
+			'Experience_to_content_ID' => 'Experience To Content',
+			'Experience_ID' => 'Experience',
 			'Content_ID' => 'Content',
 			'Updated' => 'Updated',
 		);
@@ -90,8 +86,8 @@ class ClassToContent extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Class_to_content_ID',$this->Class_to_content_ID);
-		$criteria->compare('Class_ID',$this->Class_ID);
+		$criteria->compare('Experience_to_content_ID',$this->Experience_to_content_ID);
+		$criteria->compare('Experience_ID',$this->Experience_ID);
 		$criteria->compare('Content_ID',$this->Content_ID);
 		$criteria->compare('Updated',$this->Updated,true);
 

@@ -4,12 +4,12 @@
 <div class="bigsearchbar">
     <?php $form = $this->beginWidget('CActiveForm', array(
     'id' => 'search-form',
-    'action' => Yii::app()->createUrl('/class/search'),
+    'action' => Yii::app()->createUrl('/experience/search'),
     'enableAjaxValidation' => false,
     'method' => 'get'
 )); ?>
 
-    <?php $model = new ClassSearchForm; ?>
+    <?php $model = new ExperienceSearchForm; ?>
 
     <div class="row">
         <div class="seven columns">
@@ -22,7 +22,7 @@
             <div href="#" class="large button dropdown twelve" style="float:right;"> Go...
                 <ul>
                     <li><a onclick="document.forms['search-form'].submit(); return false;" href="#">Learn</a></li>
-                    <li><?php echo CHtml::link('Teach', array('class/create')); ?></li>
+                    <li><?php echo CHtml::link('Teach', array('experience/create')); ?></li>
                 </ul>
             </div>
         </div>

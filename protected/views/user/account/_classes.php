@@ -21,7 +21,7 @@
 
     <!---- enrolled classes ---------->
     <?php
-        $enrolledIn = $model->enrolledIn(array('condition' => 'Status = ' . ClassStatus::Active));
+        $enrolledIn = $model->enrolledIn(array('condition' => 'Status = ' . ExperienceStatus::Active));
     ?>
     <span class="profileCount"><?php echo count($enrolledIn); ?></span>
 
@@ -41,7 +41,7 @@
                 $imgLink = $class->contents[0]->Link;
             }
 
-            $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
             $end = '';
             if ($index == count($enrolledIn))

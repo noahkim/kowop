@@ -8,7 +8,7 @@
  * @property integer $Create_User_ID
  * @property string $Name
  * @property string $Description
- * @property integer $Created_Class_ID
+ * @property integer $Created_Experience_ID
  * @property string $Zip
  * @property integer $Category_ID
  * @property integer $HasTuition
@@ -17,7 +17,7 @@
  *
  * The followings are the available model relations:
  * @property User $createUser
- * @property KClass $createdClass
+ * @property Experience $createdExperience
  * @property Category $category
  * @property RequestToTag[] $requestToTags
  * @property RequestToUser[] $requestToUsers
@@ -56,7 +56,7 @@ class Request extends CActiveRecord
 			array('Description', 'length', 'max'=>2000),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Request_ID, Create_User_ID, Name, Description, Created_Class_ID, Category_ID, HasTuition, Zip, Created, Updated', 'safe'),
+			array('Request_ID, Create_User_ID, Name, Description, Created_Experience_ID, Category_ID, HasTuition, Zip, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -75,7 +75,7 @@ class Request extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
-			'createdClass' => array(self::BELONGS_TO, 'KClass', 'Created_Class_ID'),
+			'createdExperience' => array(self::BELONGS_TO, 'Experience', 'Created_Experience_ID'),
             'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
 			'requestToTags' => array(self::HAS_MANY, 'RequestToTag', 'Request_ID'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'requestToTags'),
@@ -94,7 +94,7 @@ class Request extends CActiveRecord
 			'Create_User_ID' => 'Create User',
 			'Name' => 'Name',
 			'Description' => 'Description',
-			'Created_Class_ID' => 'Created Class',
+			'Created_Experience_ID' => 'Created Class',
 			'Zip' => 'Zip',
             'Category_ID' => 'Category',
             'HasTuition' => 'Has Tuition',
@@ -118,7 +118,7 @@ class Request extends CActiveRecord
 		$criteria->compare('Create_User_ID',$this->Create_User_ID);
 		$criteria->compare('Name',$this->Name,true);
 		$criteria->compare('Description',$this->Description,true);
-		$criteria->compare('Created_Class_ID',$this->Created_Class_ID);
+		$criteria->compare('Created_Experience_ID',$this->Created_Experience_ID);
 		$criteria->compare('Zip',$this->Zip);
         $criteria->compare('Category_ID',$this->Category_ID);
         $criteria->compare('HasTuition',$this->HasTuition);

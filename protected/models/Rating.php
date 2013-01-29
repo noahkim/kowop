@@ -7,7 +7,7 @@
  * @property integer $Rating_ID
  * @property integer $User_ID
  * @property integer $Rate_User_ID
- * @property integer $Class_ID
+ * @property integer $Experience_ID
  * @property string $Comment
  * @property integer $Flagged
  * @property integer $Active
@@ -15,7 +15,7 @@
  * @property string $Created
  *
  * The followings are the available model relations:
- * @property KClass $class
+ * @property Experience $class
  * @property User $user
  * @property User $rateUser
  */
@@ -50,7 +50,7 @@ class Rating extends CActiveRecord
 			array('Comment', 'length', 'max'=>2000),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Rating_ID, User_ID, Rate_User_ID, Class_ID, Comment, Flagged, Active, Reaction, Created', 'safe'),
+			array('Rating_ID, User_ID, Rate_User_ID, Experience_ID, Comment, Flagged, Active, Reaction, Created', 'safe'),
             array('Created', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'insert')
@@ -65,7 +65,7 @@ class Rating extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'class' => array(self::BELONGS_TO, 'KClass', 'Class_ID'),
+			'class' => array(self::BELONGS_TO, 'Experience', 'Experience_ID'),
 			'user' => array(self::BELONGS_TO, 'User', 'User_ID'),
 			'rateUser' => array(self::BELONGS_TO, 'User', 'Rate_User_ID'),
 		);
@@ -80,7 +80,7 @@ class Rating extends CActiveRecord
 			'Rating_ID' => 'Rating',
 			'User_ID' => 'User',
 			'Rate_User_ID' => 'Rate User',
-			'Class_ID' => 'Class',
+			'Experience_ID' => 'Class',
 			'Comment' => 'Comment',
 			'Flagged' => 'Flagged',
 			'Active' => 'Active',
@@ -103,7 +103,7 @@ class Rating extends CActiveRecord
 		$criteria->compare('Rating_ID',$this->Rating_ID);
 		$criteria->compare('User_ID',$this->User_ID);
 		$criteria->compare('Rate_User_ID',$this->Rate_User_ID);
-		$criteria->compare('Class_ID',$this->Class_ID);
+		$criteria->compare('Experience_ID',$this->Experience_ID);
 		$criteria->compare('Comment',$this->Comment,true);
 		$criteria->compare('Flagged',$this->Flagged);
 		$criteria->compare('Active',$this->Active);

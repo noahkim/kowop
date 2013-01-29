@@ -16,7 +16,7 @@
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property KClass[] $kClasses
+ * @property Experience[] $experiences
  * @property Request[] $requests
  */
 class Location extends CActiveRecord
@@ -73,7 +73,7 @@ class Location extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'kClasses' => array(self::HAS_MANY, 'KClass', 'Location_ID'),
+			'experiences' => array(self::HAS_MANY, 'Experience', 'Location_ID'),
 			'requests' => array(self::HAS_MANY, 'Request', 'Location_ID'),
 		);
 	}

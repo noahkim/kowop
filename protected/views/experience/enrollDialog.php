@@ -29,10 +29,10 @@
 
 <?php
 echo CHtml::link('Enroll',
-    array('/class/join', 'id' => $model->Class_ID, 'session' => $session->Session_ID),
+    array('/experience/join', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
     array('class' => 'button radius stretch')
 );
 ?>
 
-<!--<a href="<?php /*echo $this->createAbsoluteUrl('//class/join', array('id' => $model->Class_ID, 'session' => $session->Session_ID)); */?>"
+<!--<a href="<?php /*echo $this->createAbsoluteUrl('//experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID)); */?>"
    class="button radius stretch">Enroll</a>-->

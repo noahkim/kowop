@@ -1,27 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "Course".
+ * This is the model class for table "Experience_to_tag".
  *
- * The followings are the available columns in table 'Course':
- * @property integer $Course_ID
- * @property string $Name
- * @property string $Description
- * @property string $Start
- * @property string $End
+ * The followings are the available columns in table 'Experience_to_tag':
+ * @property integer $Experience_to_tag_ID
+ * @property integer $Experience_ID
+ * @property integer $Tag_ID
  * @property string $Created
- * @property string $Updated
  *
  * The followings are the available model relations:
- * @property CourseToContent[] $courseToContents
- * @property Experience[] $experiences
+ * @property Experience $experience
+ * @property Tag $tag
  */
-class Course extends CActiveRecord
+class ExperienceToTag extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Course the static model class
+	 * @return ExperienceToTag the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -33,7 +30,7 @@ class Course extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Course';
+		return 'Experience_to_tag';
 	}
 
 	/**
@@ -44,12 +41,11 @@ class Course extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Name, Description, Start, End, Created, Updated', 'required'),
-			array('Name', 'length', 'max'=>255),
-			array('Description', 'length', 'max'=>2000),
+			array('Experience_ID, Tag_ID, Created', 'required'),
+			array('Experience_ID, Tag_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Course_ID, Name, Description, Start, End, Created, Updated', 'safe', 'on'=>'search'),
+			array('Experience_to_tag_ID, Experience_ID, Tag_ID, Created', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,8 +57,8 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'courseToContents' => array(self::HAS_MANY, 'CourseToContent', 'Course_ID'),
-			'experiences' => array(self::HAS_MANY, 'Experience', 'Course_ID'),
+			'experience' => array(self::BELONGS_TO, 'Experience', 'Experience_ID'),
+			'tag' => array(self::BELONGS_TO, 'Tag', 'Tag_ID'),
 		);
 	}
 
@@ -72,13 +68,10 @@ class Course extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'Course_ID' => 'Course',
-			'Name' => 'Name',
-			'Description' => 'Description',
-			'Start' => 'Start',
-			'End' => 'End',
+			'Experience_to_tag_ID' => 'Experience To Tag',
+			'Experience_ID' => 'Experience',
+			'Tag_ID' => 'Tag',
 			'Created' => 'Created',
-			'Updated' => 'Updated',
 		);
 	}
 
@@ -93,13 +86,10 @@ class Course extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('Course_ID',$this->Course_ID);
-		$criteria->compare('Name',$this->Name,true);
-		$criteria->compare('Description',$this->Description,true);
-		$criteria->compare('Start',$this->Start,true);
-		$criteria->compare('End',$this->End,true);
+		$criteria->compare('Experience_to_tag_ID',$this->Experience_to_tag_ID);
+		$criteria->compare('Experience_ID',$this->Experience_ID);
+		$criteria->compare('Tag_ID',$this->Tag_ID);
 		$criteria->compare('Created',$this->Created,true);
-		$criteria->compare('Updated',$this->Updated,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -47,7 +47,7 @@
                 <?php echo CHtml::link("how's it work?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
             </span>
             <span class="navPost">
-                <?php echo CHtml::link("post on Kowop", $this->createUrl("/class/create")); ?>
+                <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
             </span>
             <span class="navSignup">
                 <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
@@ -125,13 +125,13 @@
                 </span>
 
                 <?php $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'search-form',
-                    'action' => Yii::app()->createUrl('/class/search'),
-                    'enableAjaxValidation' => false,
-                    'method' => 'get'
-                )); ?>
+                'id' => 'search-form',
+                'action' => Yii::app()->createUrl('/experience/search'),
+                'enableAjaxValidation' => false,
+                'method' => 'get'
+            )); ?>
 
-                <?php $model = new ClassSearchForm; ?>
+                <?php $model = new ExperienceSearchForm; ?>
 
                 <div class="row">
                     <div class="five columns">
@@ -148,7 +148,7 @@
 
                 <?php $this->endWidget('CActiveForm'); ?>
 
-                <?php echo CHtml::link("or browse all", $this->createUrl("/class/search"), array('class' => 'homeBrowseall')); ?>
+                <?php echo CHtml::link("or browse all", $this->createUrl("/experience/search"), array('class' => 'homeBrowseall')); ?>
 
             </div>
         </div>
@@ -158,26 +158,30 @@
     <div class=" homeFeaturedinfo">
         <div class="row">
             <?php
-            $randomClass = KClass::model()->findAll(array(
+            $randomClass = Experience::model()->findAll(array(
                 'select' => '*, rand() as rand',
-                'condition' => 'Status = ' . ClassStatus::Active,
+                'condition' => 'Status = ' . ExperienceStatus::Active,
                 'limit' => 1,
                 'order' => 'rand',
             ));
 
-            $randomClass = $randomClass[0];
-            $enrollees = '';
-            foreach ($randomClass->students as $student)
+            if (count($randomClass) > 0)
             {
-                $picLink = 'http://placeskull.com/100/100/868686';
+                $enrollees = '';
+                $randomClass = $randomClass[0];
 
-                if ($student->profilePic != null)
+                foreach ($randomClass->students as $student)
                 {
-                    $picLink = $student->profilePic;
-                }
+                    $picLink = 'http://placeskull.com/100/100/868686';
 
-                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+                    if ($student->profilePic != null)
+                    {
+                        $picLink = $student->profilePic;
+                    }
+
+                    $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                    $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+                }
             }
 
             ?>
@@ -191,11 +195,12 @@
                 </div>
                 <div class="homeFeaturedtext">
                     <h3><?php echo $randomClass->Name; ?></h3>
-                    <span>Next available session begins <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span></div>
-                <?php echo CHtml::link('More Info', array('class/view', 'id' => $randomClass->Class_ID), array('class' => 'button featuredButton')); ?>
+                    <span>Next available session begins <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span>
+                </div>
+                <?php echo CHtml::link('More Info', array('experience/view', 'id' => $randomClass->Experience_ID), array('class' => 'button featuredButton')); ?>
+            </div>
         </div>
-    </div>
-    <!----- End Featured class info -------->
+        <!----- End Featured class info -------->
     </div>
 </div>
 <!--------------------------------------
@@ -204,15 +209,16 @@
 <div class="homeClasses">
 
     <h3>What would you like to do?</h3>
+
     <div class="row">
         <div class="four columns">
             <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>learn</i> something new or <i>try</i> something fun.</h5>", array('/class/search')); ?>
+                <?php echo CHtml::link("<h5>I want to <i>learn</i> something new or <i>try</i> something fun.</h5>", array('/experience/search')); ?>
             </div>
         </div>
         <div class="four columns">
             <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>post</i> an interesting activity or class</h5>", array('/class/create')); ?>
+                <?php echo CHtml::link("<h5>I want to <i>post</i> an interesting activity or class</h5>", array('/experience/create')); ?>
             </div>
         </div>
         <div class="four columns">
@@ -226,9 +232,9 @@
     <!----------- 1 row of tiles---->
     <div class="row">
         <?php
-        $classes = KClass::model()->findAll(array(
+        $classes = Experience::model()->findAll(array(
                 'select' => '*, rand() as rand',
-                'condition' => 'Status = ' . ClassStatus::Active,
+                'condition' => 'Status = ' . ExperienceStatus::Active,
                 'limit' => 4,
                 'order' => 'rand',
             )
@@ -236,7 +242,7 @@
         foreach ($classes as $class)
         {
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
-            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $class->Class_ID));
+            $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
             if (strlen($teacherName) > 25)
@@ -263,7 +269,7 @@
                     $picLink = $student->profilePic;
                 }
 
-                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
                 $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
@@ -273,16 +279,16 @@
                 $className = substr($className, 0, 60);
                 $className .= ' ...';
             }
-            $className = CHtml::link('<h5>' . $className . '</h5>', array('class/view', 'id' => $class->Class_ID));
+            $className = CHtml::link('<h5>' . $className . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
 
-            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0))
+            if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0))
             {
                 $sessionHTML = 'This class is free!';
             }
             else
             {
                 $lessonCount = count($class->sessions[0]->lessons);
-                $tuition = $class->Tuition * $lessonCount;
+                $tuition = $class->Price * $lessonCount;
 
                 $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
             }
@@ -323,10 +329,10 @@ BLOCK;
                     <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("teach a class", $this->createUrl("class/create")); ?>
+                    <?php echo CHtml::link("teach a class", $this->createUrl("experience/create")); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("take a class", $this->createUrl("class/search")); ?>
+                    <?php echo CHtml::link("take a class", $this->createUrl("experience/search")); ?>
                 </li>
                 <li>
                     <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>

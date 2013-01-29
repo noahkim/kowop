@@ -1,6 +1,6 @@
 <?php
 
-class ClassSearchForm extends CFormModel
+class ExperienceSearchForm extends CFormModel
 {
     const NameValue = 4;
     const TagValue = 3;
@@ -69,7 +69,7 @@ class ClassSearchForm extends CFormModel
                 }
             }
 
-            $classCriteria->addInCondition('t.Class_ID', $classes);
+            $classCriteria->addInCondition('t.Experience_ID', $classes);
             $requestCriteria->addInCondition('t.Request_ID', $requests);
         }
         else
@@ -94,10 +94,10 @@ class ClassSearchForm extends CFormModel
             }
         }
 
-        $requestCriteria->addCondition('t.Created_Class_ID is NULL');
+        $requestCriteria->addCondition('t.Created_Experience_ID is NULL');
 
         //$requestCriteria->compare('t.Status', '');
-        $classCriteria->compare('t.Status', ClassStatus::Active);
+        $classCriteria->compare('t.Status', ExperienceStatus::Active);
 
         if (isset($this->category) && is_numeric($this->category) && ($this->category > 0))
         {
@@ -118,7 +118,7 @@ class ClassSearchForm extends CFormModel
             $classCriteria->compare('t.Start', '<=' . date('Y-m-d', strtotime($this->nextClassStartsBy)));
         }
 
-        $classes = KClass::model()->findAll($classCriteria);
+        $classes = Experience::model()->findAll($classCriteria);
 
         if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
         {
@@ -198,29 +198,29 @@ class ClassSearchForm extends CFormModel
 
                 if (stristr($item->Name, $keyword))
                 {
-                    $score += ClassSearchForm::NameValue;
+                    $score += ExperienceSearchForm::NameValue;
                 }
 
                 if (stristr($item->Description, $keyword))
                 {
-                    $score += ClassSearchForm::NameValue;
+                    $score += ExperienceSearchForm::NameValue;
                 }
 
                 if (stristr($item->category->Name, $keyword))
                 {
-                    $score += ClassSearchForm::CategoryValue;
+                    $score += ExperienceSearchForm::CategoryValue;
                 }
 
                 if (stristr($item->tagstring, $keyword))
                 {
-                    $score += ClassSearchForm::TagValue;
+                    $score += ExperienceSearchForm::TagValue;
                 }
 
-                if (($item instanceof KClass) && ($item->location != null) && (!$locationFound))
+                if (($item instanceof Experience) && ($item->location != null) && (!$locationFound))
                 {
                     if (stristr($item->location->fulladdress, $keyword))
                     {
-                        $score *= ClassSearchForm::LocationMultiplier;
+                        $score *= ExperienceSearchForm::LocationMultiplier;
                         $locationFound = true;
                     }
                 }
@@ -238,15 +238,15 @@ class ClassSearchForm extends CFormModel
         }
 
         $this->totalResults = count($sortedItems);
-        $this->totalPages = ceil($this->totalResults / ClassSearchForm::PageSize);
+        $this->totalPages = ceil($this->totalResults / ExperienceSearchForm::PageSize);
 
         if (!isset($this->page))
         {
             $this->page = 1;
         }
 
-        $offset = (($this->page - 1) * ClassSearchForm::PageSize);
-        $sortedItems = array_slice($sortedItems, $offset, ClassSearchForm::PageSize);
+        $offset = (($this->page - 1) * ExperienceSearchForm::PageSize);
+        $sortedItems = array_slice($sortedItems, $offset, ExperienceSearchForm::PageSize);
 
         return $sortedItems;
     }

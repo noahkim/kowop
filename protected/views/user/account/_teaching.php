@@ -23,9 +23,9 @@
                         <option value="all">All classes ever</option>
                         <option value="past">Past classes</option>
                         <?php
-                            foreach($model->kClasses as $class)
+                            foreach($model->experiences as $class)
                             {
-                                echo "<option value='{$class->Class_ID}'>{$class->Name}</option>\n";
+                                echo "<option value='{$class->Experience_ID}'>{$class->Name}</option>\n";
                             }
                         ?>
                     </select>
@@ -73,9 +73,9 @@
     <!----- currently teaching --------->
     <?php
     //Start <= now() AND
-    $condition = 'End >= now() AND Status = ' . ClassStatus::Active;
+    $condition = 'End >= now() AND Status = ' . ExperienceStatus::Active;
     ?>
-    <span class="profileCount"><?php echo count($model->kClasses(array('condition' => $condition))); ?></span>
+    <span class="profileCount"><?php echo count($model->experiences(array('condition' => $condition))); ?></span>
 
     <h2>Currently teaching</h2>
 
@@ -84,7 +84,7 @@
 
         $index = 1;
 
-        $classes = $model->kClasses(array('condition' => $condition));
+        $classes = $model->experiences(array('condition' => $condition));
 
         foreach ($classes as $class)
         {
@@ -95,7 +95,7 @@
                 $imgLink = $class->contents[0]->Link;
             }
 
-            $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
             $end = '';
             if ($index == count($classes))
@@ -121,10 +121,10 @@ BLOCK;
     <!------ end currently teaching -------->
     <!------ Past taught classes ------------->
     <?php
-    $condition = 'End < now() AND Status = ' . ClassStatus::Active;
+    $condition = 'End < now() AND Status = ' . ExperienceStatus::Active;
     ?>
 
-    <span class="profileCount"><?php echo count($model->kClasses(array('condition' => $condition))); ?></span>
+    <span class="profileCount"><?php echo count($model->experiences(array('condition' => $condition))); ?></span>
 
     <h2>Past taught classes</h2>
 
@@ -133,7 +133,7 @@ BLOCK;
 
         $index = 1;
 
-        $classes = $model->kClasses(array('condition' => $condition));
+        $classes = $model->experiences(array('condition' => $condition));
 
         foreach ($classes as $class)
         {
@@ -144,7 +144,7 @@ BLOCK;
                 $imgLink = $class->contents[0]->Link;
             }
 
-            $classLink = CHtml::link($class->Name, array('/class/view', 'id' => $class->Class_ID));
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
             $end = '';
             if ($index == count($classes))

@@ -1,6 +1,6 @@
 <?php
-/* @var $this RequestController */
-/* @var $model Request */
+/* @var $this ClassController */
+/* @var $model Experience */
 /* @var $form CActiveForm */
 ?>
 
@@ -12,18 +12,13 @@
 )); ?>
 
 	<div class="row">
-		<?php echo $form->label($model,'Request_ID'); ?>
-		<?php echo $form->textField($model,'Request_ID'); ?>
+		<?php echo $form->label($model,'Experience_ID'); ?>
+		<?php echo $form->textField($model,'Experience_ID'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'Create_User_ID'); ?>
-		<?php echo $form->textField($model,'Create_User_ID'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'Type'); ?>
-		<?php echo $form->textField($model,'Type'); ?>
+		<?php echo $form->label($model,'Course_ID'); ?>
+		<?php echo $form->textField($model,'Course_ID'); ?>
 	</div>
 
 	<div class="row">
@@ -32,13 +27,28 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'Description'); ?>
-		<?php echo $form->textField($model,'Description',array('size'=>60,'maxlength'=>2000)); ?>
+		<?php echo $form->label($model,'Type'); ?>
+		<?php echo $form->textField($model,'Type'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'Created_Experience_ID'); ?>
-		<?php echo $form->textField($model,'Created_Experience_ID'); ?>
+		<?php echo $form->label($model,'Start'); ?>
+		<?php echo $form->textField($model,'Start'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'End'); ?>
+		<?php echo $form->textField($model,'End'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'Min_occupancy'); ?>
+		<?php echo $form->textField($model,'Min_occupancy'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'Max_occupancy'); ?>
+		<?php echo $form->textField($model,'Max_occupancy'); ?>
 	</div>
 
 	<div class="row">

@@ -26,7 +26,7 @@
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content: {
-                            url:'<?php echo $this->createAbsoluteUrl("/class/viewDialog"); ?>' + '?lesson=' + event.lesson
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/viewDialog"); ?>' + '?lesson=' + event.lesson
                         },
                         position:{
                             corner:{
@@ -47,7 +47,7 @@
             <?php
             foreach ($model->enrolledIn as $class)
             {
-                $classLink = Yii::app()->createUrl('/class/view', array('id' => $class->Class_ID));
+                $classLink = Yii::app()->createUrl('/experience/view', array('id' => $class->Experience_ID));
 
                 foreach ($class->lessons as $lesson)
                 {
@@ -62,9 +62,9 @@ BLOCK;
                 }
             }
 
-            foreach ($model->kClasses as $class)
+            foreach ($model->experiences as $class)
             {
-                $classLink = Yii::app()->createUrl('/class/view', array('id' => $class->Class_ID));
+                $classLink = Yii::app()->createUrl('/experience/view', array('id' => $class->Experience_ID));
 
                 foreach ($class->lessons as $lesson)
                 {

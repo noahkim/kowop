@@ -34,24 +34,24 @@ return array(
             //'params'=>array('directory'=>'C:/ImageMagick'),
         ),
         'hybridauth' => array(
-            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yii/kowop/hybridauth',
+            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yii/kowopdev/hybridauth',
             'withYiiUser' => false, // Set to true if using yii-user
             "providers" => array(
-                "Google" => array(
+                /*"Google" => array(
                     "enabled" => true,
                     "keys" => array("id" => "346522202623.apps.googleusercontent.com", "secret" => "n1mpAUFpf4oOos1dFqsfEuJc"),
                     "scope" => ""
-                ),
+                ),*/
                 "Facebook" => array(
                     "enabled" => true,
-                    "keys" => array("id" => "555427844485684", "secret" => "c55b742bb2cfba2943f5180850c90269"),
+                    "keys" => array("id" => "126428637531867", "secret" => "732e1160e96faa0cd5bf4c6e43607dd1"),
                     "scope" => "email,user_about_me,publish_stream",
                     "display" => ""
                 ),
-                "Twitter" => array(
+/*                "Twitter" => array(
                     "enabled" => true,
                     "keys" => array("key" => "VHPB3OgTBtZCvvMGBB8iQ", "secret" => "MRXO9L9Yj4LCCR9cJFZjAXgulPq40O1OFXn3akagbM")
-                )
+                )*/
             )
         ),
     ),
@@ -85,7 +85,7 @@ return array(
         */
         // uncomment the following to use a MySQL database
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=rebuttme_kowop',
+            'connectionString' => 'mysql:host=localhost;dbname=rebuttme_kowopdev',
             'emulatePrepare' => true,
             'username' => 'rebuttme_kowop',
             'password' => 'kowop123',
@@ -127,8 +127,8 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
-        'siteBase' => '/yii/kowop',
-        'uploads' => '/home4/rebuttme/public_html/yii/kowop/uploads',
-        'temp' => '/home4/rebuttme/public_html/yii/kowop/temp'
+        'siteBase' => '/yii/kowopdev',
+        'uploads' => '/home4/rebuttme/public_html/yii/kowopdev/uploads',
+        'temp' => '/home4/rebuttme/public_html/yii/kowopdev/temp'
     ),
 );

@@ -53,11 +53,11 @@
             $formTeach = $this->beginWidget('CActiveForm', array(
                 'id' => 'request-teach-form',
                 'enableAjaxValidation' => false,
-                'action' => array('/class/create'),
+                'action' => array('/experience/create'),
                 'htmlOptions' => array('style' => 'margin: 0;')
             ));
 
-            $modelTeach = new ClassCreateForm;
+            $modelTeach = new ExperienceCreateForm;
 
             echo $formTeach->hiddenField($modelTeach, 'name', array('value' => $model->Name));
             echo $formTeach->hiddenField($modelTeach, 'category', array('value' => $model->Category_ID));

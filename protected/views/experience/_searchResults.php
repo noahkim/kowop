@@ -22,16 +22,16 @@ foreach ($results as $i => $item)
     }
 
     $sessionHTML = 'Request';
-    if ($item instanceof KClass)
+    if ($item instanceof Experience)
     {
-        if (($item->Tuition == null) || ($item->Tuition == 0) || (count($item->sessions) == 0))
+        if (($item->Price == null) || ($item->Price == 0) || (count($item->sessions) == 0))
         {
             $sessionHTML = 'This class is free!';
         }
         else
         {
             $lessonCount = count($item->sessions[0]->lessons);
-            $tuition = $item->Tuition * $lessonCount;
+            $tuition = $item->Price * $lessonCount;
 
             $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
         }
@@ -40,16 +40,16 @@ foreach ($results as $i => $item)
     $itemNumber = $i + 1;
 
     $name = "<h5> {$item->Name} </h5>";
-    if ($item instanceof KClass)
+    if ($item instanceof Experience)
     {
-        $name = CHtml::link($name, array('/class/view', 'id' => $item->Class_ID));
+        $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));
     }
     elseif ($item instanceof Request)
     {
         $name = CHtml::link($name, array('/request/view', 'id' => $item->Request_ID));
     }
 
-    if ($item instanceof KClass)
+    if ($item instanceof Experience)
     {
         //<span class="ribbon staffpick"></span>
 
@@ -60,7 +60,7 @@ foreach ($results as $i => $item)
             $imageHTML = "<img src='{$link}' />";
         }
 
-        $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $item->Class_ID));
+        $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $item->Experience_ID));
 
         $enrollees = '';
         foreach ($item->students as $student)
@@ -172,7 +172,7 @@ echo "</div>\n";
     }
     else
     {
-        $link = CHtml::link('&laquo;', array('class/search', 'ClassSearchForm[page]' => $model->page - 1));
+        $link = CHtml::link('&laquo;', array('experience/search', 'ExperienceSearchForm[page]' => $model->page - 1));
         echo "<li class='arrow'>{$link}</li>\n";
     }
 
@@ -184,7 +184,7 @@ echo "</div>\n";
             $current = "class='current'";
         }
 
-        $link = CHtml::link($i, array('class/search', 'ClassSearchForm[page]' => $i));
+        $link = CHtml::link($i, array('experience/search', 'ExperienceSearchForm[page]' => $i));
 
         echo "<li {$current}>{$link}</li>\n";
     }
@@ -201,7 +201,7 @@ echo "</div>\n";
                 $current = "class='current'";
             }
 
-            $link = CHtml::link($i, array('class/search', 'ClassSearchForm[page]' => $i));
+            $link = CHtml::link($i, array('experience/search', 'ExperienceSearchForm[page]' => $i));
 
             echo "<li {$current}>{$link}</li>\n";
         }
@@ -213,7 +213,7 @@ echo "</div>\n";
     }
     else
     {
-        $link = CHtml::link('&raquo;', array('class/search', 'ClassSearchForm[page]' => $model->page + 1));
+        $link = CHtml::link('&raquo;', array('experience/search', 'ExperienceSearchForm[page]' => $model->page + 1));
         echo "<li class='arrow'>{$link}</li>\n";
     }
 

@@ -17,7 +17,7 @@
             <div class="nine columns">
                 <?php
                 $this->widget('xupload.XUpload', array(
-                        'url' => Yii::app()->createUrl("//class/uploadImages"),
+                        'url' => Yii::app()->createUrl("//experience/uploadImages"),
                         'model' => $images,
                         //We set this for the widget to be able to target our own form
                         'htmlOptions' => array('id' => 'class-create-form'),

@@ -16,10 +16,9 @@
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property ClassUpdates[] $classUpdates
  * @property Friend[] $friends
  * @property Friend[] $friendOf
- * @property KClass[] $kClasses
+ * @property Experience[] $experiences
  * @property Message[] $messages
  * @property Message[] $sentMessages
  * @property Rating[] $ratings
@@ -79,8 +78,7 @@ class User extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'classUpdates' => array(self::HAS_MANY, 'ClassUpdates', 'User_ID'),
-            'kClasses' => array(self::HAS_MANY, 'KClass', 'Create_user_ID'),
+            'experiences' => array(self::HAS_MANY, 'Experience', 'Create_user_ID'),
             'ratings' => array(self::HAS_MANY, 'Rating', 'User_ID'),
             'rated' => array(self::HAS_MANY, 'Rating', 'Rate_User_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Create_User_ID'),
@@ -90,8 +88,8 @@ class User extends CActiveRecord
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
             'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToSessions'),
-            'enrolledIn' => array(self::HAS_MANY, 'KClass', array('Class_ID' => 'Class_ID'), 'through' => 'sessions'),
-            'teachingSessions' => array(self::HAS_MANY, 'Session', array('Class_ID' => 'Class_ID'), 'through' => 'kClasses'),
+            'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'sessions'),
+            'teachingSessions' => array(self::HAS_MANY, 'Session', array('Experience_ID' => 'Experience_ID'), 'through' => 'experiences'),
             'messages' => array(self::HAS_MANY, 'Message', 'To'),
             'sentMessages' => array(self::HAS_MANY, 'Message', 'From'),
             'friends' => array(self::HAS_MANY, 'Friend', 'User_ID'),
@@ -166,7 +164,7 @@ class User extends CActiveRecord
     {
         $startDate = $filter->start;
         $endDate = $filter->end;
-        $classFilter = $filter->classFilter;
+        $classFilter = $filter->experienceFilter;
 
         $conditions = [];
 
@@ -192,7 +190,7 @@ class User extends CActiveRecord
         }
         elseif (is_numeric($classFilter))
         {
-            $conditions[] = "teachingSessions.Class_ID = {$classFilter}";
+            $conditions[] = "teachingSessions.Experience_ID = {$classFilter}";
         }
 
         $condition = '';
@@ -223,16 +221,16 @@ class User extends CActiveRecord
         foreach ($sessions as $session)
         {
             $results['studentsToDate'] += count($session->students);
-            $results['netIncomeToDate'] += $session->class->Tuition * count($session->students) * count($session->lessons(array('condition' => 'End <= now()')));
-            $results['hoursTaught'] += $session->class->LessonDuration * count($session->lessons(array('condition' => 'End <= now()')));
+            $results['netIncomeToDate'] += $session->experience->Price * count($session->students) * count($session->lessons(array('condition' => 'End <= now()')));
+            $results['hoursTaught'] += $session->experience->LessonDuration * count($session->lessons(array('condition' => 'End <= now()')));
 
             $results['studentsEnrolled'] += count($session->userToSessions(array('with' => 'lessons', 'condition' => 'lessons.Start > now()')));
-            $results['projectedIncome'] += $session->class->Tuition * $session->class->Max_occupancy * count($session->lessons(array('condition' => 'Start > now()')));
-            $results['hoursToTeach'] += $session->class->LessonDuration * count($session->lessons(array('condition' => 'Start > now()')));
+            $results['projectedIncome'] += $session->experience->Price * $session->experience->Max_occupancy * count($session->lessons(array('condition' => 'Start > now()')));
+            $results['hoursToTeach'] += $session->experience->LessonDuration * count($session->lessons(array('condition' => 'Start > now()')));
 
-            $netIncome += $session->class->Tuition * count($session->students) * count($session->lessons);
-            $totalHours += $session->class->LessonDuration * count($session->lessons);
-            $classes[$session->Class_ID] = 1;
+            $netIncome += $session->experience->Price * count($session->students) * count($session->lessons);
+            $totalHours += $session->experience->LessonDuration * count($session->lessons);
+            $classes[$session->Experience_ID] = 1;
         }
 
         $numClasses = array_sum($classes);

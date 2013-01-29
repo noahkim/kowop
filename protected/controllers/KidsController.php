@@ -13,11 +13,11 @@ class KidsController extends Controller
     {
         $this->layout = '//layouts/mainNoSearch';
 
-        $model = new ClassSearchForm;
+        $model = new ExperienceSearchForm;
 
-        if (isset($_REQUEST['ClassSearchForm']))
+        if (isset($_REQUEST['ExperienceSearchForm']))
         {
-            $model->attributes = $_REQUEST['ClassSearchForm'];
+            $model->attributes = $_REQUEST['ExperienceSearchForm'];
             Yii::app()->session['lastSearch'] = $model->keywords;
         }
 

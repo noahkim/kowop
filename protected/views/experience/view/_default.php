@@ -1,85 +1,64 @@
-<!-----------title---------->
-<div class="createLastLook">
-    <div class="row">
-        <div class="twelve columns">
-            <h1>One Last Look</h1>
-
-            <p>This is how your class will appear. Just make sure everything looks right, then post. Don't worry if you
-                missed a detail or need to change something in the future. You can always come back to it and edit it
-                later.</p>
-
-            <?php $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-create-form',
-            'enableAjaxValidation' => false,
-            'stateful' => true,
-            'htmlOptions' => array('style' => 'margin: 0;')
-        )); ?>
-
-            <?php echo CHtml::submitButton('Make Changes', array('name' => 'change', 'class' => 'button large radius')); ?>
-            <?php echo CHtml::submitButton('Post my class', array('name' => 'submit', 'id' => 'submit', 'class' => 'button large primary radius')); ?>
-
-            <?php $this->endWidget(); ?>
-        </div>
-    </div>
-</div>
 <!--------- main content container------>
 <div class="row" id="wrapper">
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-    ---------------------------------------->
-        <h1><?php echo $model->name; ?></h1>
-
+        ---------------------------------------->
+        <!----- Class title------->
+        <div class="row">
+            <div class="twelve columns">
+                <div class="followClass"><a href="#" class="button ">Follow Class</a></div>
+                <h1><?php echo $model->Name; ?></h1>
+            </div>
+        </div>
+        <!-------- main class details ---->
         <div class="detailsMain">
             <div class="row">
                 <div class="six columns">
                     <div class="slider-wrapper theme-default">
                         <div id="slider" class="nivoSlider">
                             <?php
-                                foreach($model->imageFiles as $imageFile)
-                                {
-                                    echo "<img src='/yii/kowop/temp/{$imageFile}' data-thumb='/yii/kowop/temp/{$imageFile}' alt=''/>\n";
-                                }
+
+                            foreach ($model->contents as $content)
+                            {
+                                echo "<img src='{$content->Link}' data-thumb='{$content->Link}' alt=''/>\n";
+                            }
+
                             ?>
                         </div>
                     </div>
                 </div>
                 <!---------- Middle column ------------------->
                 <div class="two columns">
-
-                    <?php
-                    $total = $model->tuition * $model->numLessons;
-                    ?>
-
                     <div class=" infoTuition">
                         <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo $total; ?><span
-                                class="persession"><?php echo $model->numLessons; ?> lesson class</span>
+                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Price; ?>
+                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?> lesson class</span>
                         </span>
-                        <span class="breakdown">$<?php echo $model->tuition; ?> per lesson</span>
+                        <span class="breakdown">$<?php echo $model->Price; ?> per lesson</span>
                     </div>
 
                     <?php
                     $instructorPic = 'http://placehold.it/300x300';
 
-                    if ($model->user->profilePic != null)
+                    if ($model->createUser->profilePic != null)
                     {
-                        $instructorPic = $model->user->profilePic;
+                        $instructorPic = $model->createUser->profilePic;
                     }
 
-                    echo "<img src='{$instructorPic}' class='detailsInstructorpic' />\n";
+                    echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />", array('/user/view', 'id' => $model->Create_User_ID));
                     ?>
 
                     <div class="detailsInstructor">
                         Instructor
                         <span class="detailsName">
                             <?php
-                            $name = ($model->user->Teacher_alias == null) ? $model->user->fullname : $model->user->Teacher_alias;
-                            echo CHtml::link($name, array('/user/view', 'id' => $model->user->User_ID));
+                            $name = ($model->createUser->Teacher_alias == null) ? $model->createUser->fullname : $model->createUser->Teacher_alias;
+                            echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
 
-                        <div class="detailsReccomendations"><a href="#">31</a></div>
+                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
                     </div>
                 </div>
                 <!------------ Right column ------------------>
@@ -89,18 +68,18 @@
                         <ul>
                             <?php
 
-                            $nextSession = json_decode($model->sessions)[0];
+                            $nextSession = $model->nextAvailableSession;
 
                             foreach ($nextSession->lessons as $lesson)
                             {
-                                $time = strtotime($lesson->start);
+                                $time = strtotime($lesson->Start);
 
                                 $dayOfWeek = date('l', $time);
                                 $date = date('F j', $time);
                                 $start = date('g:i a', $time);
 
                                 // Get lesson duration in seconds
-                                $offset = $model->lessonDuration * 60 * 60;
+                                $offset = $model->LessonDuration * 60 * 60;
 
                                 $end = date('g:i a', ($time + $offset));
 
@@ -112,21 +91,39 @@
                         </span>
                         <div class="enrollees">
                             <span>Classmates in the next session</span>
-                            <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                            <a href="#"><img src="http://placeskull.com/100/100/d70060"></a>
-                            <a href="#"><img src="http://placeskull.com/100/100/113f8c"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
+                            <?php
+
+                            foreach ($nextSession->students as $student)
+                            {
+                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
+
+                                if ($student->profilePic != null)
+                                {
+                                    $imgLink = $student->profilePic;
+                                }
+
+                                $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
+                                echo CHtml::link(
+                                    $imgHTML,
+                                    array('/user/view', 'id' => $student->User_ID),
+                                    array('title' => $student->fullname)
+                                );
+                            }
+
+                            ?>
                         </div>
 
                     </div>
                     <div class="spacebot10">
-                        <a href="#" class="button large twelve enrollButton">Enroll for this session</a>
+                        <?php
+                        echo CHtml::link('Enroll for this session',
+                            array('/experience/join', 'id' => $model->Experience_ID, array('session' => $nextSession->Session_ID)),
+                            array('class' => 'button large twelve enrollButton')
+                        );
+                        ?>
                     </div>
                     <div>
-                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later
-                            session</a>
+                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +133,7 @@
         ---------------------------------------->
         <div class="row">
             <div class="six columns detailsDescription">
-                <?php echo $model->description; ?>
+                <?php echo $model->Description; ?>
             </div>
             <!--- end left column---->
             <!---------------------------------------
@@ -148,10 +145,10 @@
                     <div class="twelve columns">
                         <div class="detailStats">
                             <div class="statBox">
-                                Graduates<span>32</span>
+                                Graduates<span><?php echo count($model->students); ?></span>
                             </div>
                             <div class="statBox">
-                                Enrollees<span>23</span>
+                                Enrollees<span><?php echo count($model->students); ?></span>
                             </div>
                             <div class="statBox">
                                 Views<span>536</span>
@@ -164,15 +161,16 @@
                     <div class="row">
                         <div class="twelve columns">
                             <ul>
-                                <li><span>Location</span><?php echo $model->locationZip; ?></li>
+                                <li><span>Location</span><?php echo $model->location->Zip; ?></li>
                                 <?php
-                                $availability = date('n.j', strtotime($model->start)) . '-' . date('n.j', strtotime($model->end));
+                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j', strtotime($model->End));
                                 echo "<li><span>Availability</span>{$availability}</li>\n";
                                 ?>
-                                <li><span>Max. seats</span><?php echo $model->maxOccupancy; ?></li>
-                                <li><span>Min. seats</span><?php echo $model->minOccupancy; ?></li>
-                                <li><span># of Lessons</span><?php echo $model->numLessons; ?></li>
-                                <li><span>1 lesson time</span><?php echo $model->lessonDuration * 60; ?> min</li>
+                                <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
+                                <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
+                                <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
+                                <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
+
                             </ul>
                         </div>
                     </div>
@@ -192,7 +190,7 @@
             </div>
         </div>
     </div>
-<!------- end main content container----->
+    <!------- end main content container----->
 </div>
 
 <script type="text/javascript">
@@ -225,4 +223,74 @@
             } // Triggers when slider has loaded
         });
     });
+</script>
+
+<script type='text/javascript'>
+
+    $(document).ready(function () {
+
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        $('#calendar').fullCalendar({
+            header:{
+                left:'',
+                center:'title',
+                right:'prev,next'
+            },
+            editable:false,
+            events:[
+            <?php
+            $calendarJS = '';
+            foreach ($model->sessions as $i => $session)
+            {
+                $title = 'Session ' . ($i + 1);
+                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID));
+
+                foreach ($session->lessons as $lesson)
+                {
+                    $calendarJS .= <<<BLOCK
+                {
+                    id: {$lesson->Lesson_ID},
+                    title: '{$title}',
+                    start: new Date('{$lesson->Start}'),
+                    end: new Date('{$lesson->End}'),
+                    allDay: false,
+                    url: '{$link}',
+                    session: {$session->Session_ID}
+                },
+BLOCK;
+                }
+            }
+
+            $calendarJS = rtrim($calendarJS, ",");
+            echo $calendarJS;
+            ?>
+            ],
+            eventMouseover:function (event, jsEvent, view) {
+                if (typeof $(this).data("qtip") !== "object") {
+                    $(this).qtip({
+                        content:{
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog", array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
+                        },
+                        position:{
+                            corner:{
+                                target:'topLeft',
+                                tooltip:'bottomMiddle'
+                            }
+                        },
+                        hide:{
+                            fixed:true // Make it fixed so it can be hovered over
+                        },
+                        style:{
+                            padding:'10px' // Give it some extra padding
+                        }});
+                }
+            }
+        });
+
+    });
+
 </script>

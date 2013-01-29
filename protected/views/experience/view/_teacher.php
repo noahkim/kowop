@@ -26,11 +26,11 @@
         <div class="two columns">
             <div class=" infoTuition">
                         <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Tuition; ?>
+                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Price; ?>
                             <span class="persession"><?php echo count($model->sessions[0]->lessons); ?>
                                 lesson class</span>
                         </span>
-                <span class="breakdown">$<?php echo $model->Tuition; ?> per lesson</span>
+                <span class="breakdown">$<?php echo $model->Price; ?> per lesson</span>
             </div>
 
             <?php
@@ -113,11 +113,11 @@
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Edit class details", array('/class/update', 'id' => $model->Class_ID), array('class' => 'button large twelve')); ?>
+                <?php echo CHtml::link("Edit class details", array('/experience/update', 'id' => $model->Experience_ID), array('class' => 'button large twelve')); ?>
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Manage sessions", array('/class/updateSessions', 'id' => $model->Class_ID), array('class' => 'button large twelve')); ?>
+                <?php echo CHtml::link("Manage sessions", array('/experience/updateSessions', 'id' => $model->Experience_ID), array('class' => 'button large twelve')); ?>
             </div>
 
             <div>
@@ -151,7 +151,7 @@
                 $pastStudents += count($session->students);
             }
 
-            $netIncome = $lessonsToDate * $model->Tuition * $pastStudents;
+            $netIncome = $lessonsToDate * $model->Price * $pastStudents;
             $hoursTaught = $lessonsToDate * $model->LessonDuration;
             ?>
             <div class="statBox">
@@ -167,7 +167,7 @@
 
             <?php
             $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
-            $projectedIncome = $lessonsToTeach * $model->Tuition * $model->Max_occupancy;
+            $projectedIncome = $lessonsToTeach * $model->Price * $model->Max_occupancy;
             $hoursToTeach = $lessonsToTeach * $model->LessonDuration;
             ?>
             <div class="statBox">
@@ -185,13 +185,13 @@
             $totalTuition = 0;
             $totalHours = 0;
 
-            foreach ($model->createUser->kClasses as $class)
+            foreach ($model->createUser->experiences as $class)
             {
-                $totalTuition += $class->Tuition;
+                $totalTuition += $class->Price;
                 $totalHours += $class->LessonDuration;
             }
 
-            $avgPerClass = $totalTuition / count($model->createUser->kClasses);
+            $avgPerClass = $totalTuition / count($model->createUser->experiences);
             $avgPerHour = $totalTuition / $totalHours;
 
             ?>
@@ -295,7 +295,7 @@
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'class-delete-form',
             'enableAjaxValidation' => false,
-            'action' => Yii::app()->createUrl('//class/delete', array('id' => $model->Class_ID))
+            'action' => Yii::app()->createUrl('//experience/delete', array('id' => $model->Experience_ID))
         ));
         ?>
 
@@ -364,7 +364,7 @@
             foreach ($model->sessions as $i => $session)
             {
                 $title = 'Session ' . ($i + 1);
-                $link = $this->createAbsoluteUrl('/class/join', array('id' => $model->Class_ID, 'session' => $session->Session_ID));
+                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID));
 
                 foreach ($session->lessons as $lesson)
                 {
@@ -390,7 +390,7 @@ BLOCK;
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content:{
-                            url:'<?php echo $this->createAbsoluteUrl("/class/enrollDialog", array("id" => $model->Class_ID)); ?>' + '?session=' + event.session
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog", array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{

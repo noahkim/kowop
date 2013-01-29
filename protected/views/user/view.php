@@ -10,7 +10,7 @@
     }
 
     $sections = array();
-    for ($i = 1; $i <= 5; $i++)
+    for ($i = 1; $i <= 6; $i++)
     {
         $sections[$i] = '';
     }
@@ -32,16 +32,19 @@
                 <?php echo CHtml::link('Notifications', array('/user/view', 'id' => $model->User_ID, 's' => 1)); ?>
             </li>
             <li <?php echo $sections[2]; ?> >
-                <?php echo CHtml::link('My Classes', array('/user/view', 'id' => $model->User_ID, 's' => 2)); ?>
+                <?php echo CHtml::link('Homies', array('/user/view', 'id' => $model->User_ID, 's' => 2)); ?>
             </li>
             <li <?php echo $sections[3]; ?> >
-                <?php echo CHtml::link("Classes I'm teaching", array('/user/view', 'id' => $model->User_ID, 's' => 3)); ?>
+                <?php echo CHtml::link('My Classes', array('/user/view', 'id' => $model->User_ID, 's' => 3)); ?>
             </li>
             <li <?php echo $sections[4]; ?> >
-                <?php echo CHtml::link('Class Calendar', array('/user/view', 'id' => $model->User_ID, 's' => 4)); ?>
+                <?php echo CHtml::link("Classes I'm teaching", array('/user/view', 'id' => $model->User_ID, 's' => 4)); ?>
             </li>
             <li <?php echo $sections[5]; ?> >
-                <?php echo CHtml::link('Account Information', array('/user/view', 'id' => $model->User_ID, 's' => 5)); ?>
+                <?php echo CHtml::link('Class Calendar', array('/user/view', 'id' => $model->User_ID, 's' => 5)); ?>
+            </li>
+            <li <?php echo $sections[6]; ?> >
+                <?php echo CHtml::link('Account Information', array('/user/view', 'id' => $model->User_ID, 's' => 6)); ?>
             </li>
 
             <li>
@@ -51,7 +54,7 @@
             <li><a href="user_profile_reviews.html">Feedback</a></li>
         </ul>
         <div class="spacebot10">
-            <?php echo CHtml::link("Teach a class", $this->createUrl("class/create"), array('class' => 'button twelve')); ?>
+            <?php echo CHtml::link("Teach a class", $this->createUrl("experience/create"), array('class' => 'button twelve')); ?>
         </div>
         <div>
             <?php echo CHtml::link("Request a class", $this->createUrl("request/create"), array('class' => 'button twelve')); ?>
@@ -64,15 +67,18 @@
     switch ($section)
     {
         case 2:
-            $page = 'account/_classes';
+            $page = 'account/_homies';
             break;
         case 3:
-            $page = 'account/_teaching';
+            $page = 'account/_classes';
             break;
         case 4:
-            $page = 'account/_calendar';
+            $page = 'account/_teaching';
             break;
         case 5:
+            $page = 'account/_calendar';
+            break;
+        case 6:
             $page = 'account/_account';
             break;
         default:
