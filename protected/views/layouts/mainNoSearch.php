@@ -10,12 +10,17 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                Teach. Learn. Meet.
+                neighborhood classes &amp; activities
             </div>
         </div>
 
-        <div class="three columns notlogged">
-            <span class="navWhatskowop"><a href="how_it_works.html">what's Kowop?</a></span>
+        <div class="four columns notlogged">
+            <span class="navWhatskowop">
+                <?php echo CHtml::link("how's it work?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
+            </span>
+            <span class="navPost">
+                <?php echo CHtml::link("post on Kowop", $this->createUrl("/class/create")); ?>
+            </span>
             <span class="navSignup">
                 <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
             </span>
@@ -35,7 +40,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                Teach. Learn. Meet.
+                neighborhood classes &amp; activities
             </div>
         </div>
 

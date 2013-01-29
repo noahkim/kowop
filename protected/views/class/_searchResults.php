@@ -1,6 +1,3 @@
-<!----- Left Column for search results---->
-<div class="nine columns">
-
 <?php
 
 echo "<div class='row'>\n";
@@ -223,6 +220,3 @@ echo "</div>\n";
     ?>
 </ul>
 <!----- end pagination--->
-
-</div>
-<!------ end left column------------------>

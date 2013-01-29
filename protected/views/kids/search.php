@@ -37,14 +37,17 @@
             <!---- Search summary ----->
             <div class="searchSummary">
                 <div class="row">
-                    <div class="twelve columns breadCrumbs">
+                    <div class="three columns">
+                        <img src="/ui/sitev2/images/logo_kids.png">
+                    </div>
+                    <div class="nine columns breadCrumbs">
                         results for "<?php echo $model->keywords; ?>" in "<?php echo $model->location; ?>"
                     </div>
                 </div>
             </div>
             <!----- end search summary ------>
 
-            <?php echo $this->renderPartial('_searchResults', array('model' => $model, 'results' => $results)); ?>
+            <?php echo $this->renderPartial('/class/_searchResults', array('model' => $model, 'results' => $results)); ?>
 
         </div>
         <!------ end left column------------------>
@@ -75,7 +78,7 @@
 
                 <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'search-form-filters',
-                'action' => Yii::app()->createUrl('/class/search'),
+                'action' => Yii::app()->createUrl('/kids/search'),
                 'enableAjaxValidation' => false,
                 'method' => 'get'
             )); ?>
@@ -88,26 +91,24 @@
                 echo $form->dropDownList($model, 'category', $categories, array('class' => 'stretch'));
                 ?>
 
+                <label>Appropriate for</label>
+                <input type="checkbox" name="age" value="0-3">0-3 years
+                <input type="checkbox" name="age" value="3-5">3-5 years<br/>
+                <input type="checkbox" name="age" value="5-10">5-10 years
+                <input type="checkbox" name="age" value="10+">10+ years
+
                 <label>Price</label>
-
                 <div class="row">
-                    <div class="six columns">
-                        <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
-                    </div>
-                    <div class="six columns">
-                        <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
-                    </div>
+                    <div class="six columns"><input type="text" placeholder="min"></div>
+                    <div class="six columns"><input type="text" placeholder="max"></div>
                 </div>
-
                 <label>Available from:</label>
-
-                <div class="six columns">
-                    <?php echo $form->textField($model, 'nextClassStartsBy', array('id' => 'nextClassStartsBy', 'placeholder' => 'date', 'class' => 'twelve')); ?>
+                <div class="row">
+                    <div class="six columns"><input type="text" placeholder="date"></div>
+                    <div class="six columns"><input type="text" placeholder="date"></div>
                 </div>
-
-                <div class="six columns">
-                    <input type="text" placeholder="date" id="nextClassEndsBy" class='twelve' />
-                </div>
+                <label>Show Requests Only?</label>
+                <input type="checkbox" name="requestonly" value="yes">Yes
 
                 <?php $this->endWidget('CActiveForm'); ?>
 
@@ -119,7 +120,7 @@
                     <div class="six columns">
                         <?php $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'search-form-filters-blank',
-                        'action' => Yii::app()->createUrl('/class/search'),
+                        'action' => Yii::app()->createUrl('/kids/search'),
                         'enableAjaxValidation' => false,
                         'method' => 'get',
                         'htmlOptions' => array('style' => 'margin: 0;')
@@ -136,13 +137,12 @@
             <div class="sidebarBox">
                 <div class="row">
                     <div class="twelve columns text-center">
-                        Looking for a class or activity for kids? Try<br/><br/>
-                        <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_kids.png">', array('/kids')); ?>
+                        Take me back to regular Kowop<br/><br/>
+                        <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', array('/site/index')); ?>
                     </div>
                 </div>
             </div>
             <!---- end sidebar box---->
-
         </div>
         <!------- end right column --------------->
     </div>
@@ -168,11 +168,6 @@
         });
 
         $('#nextClassStartsBy').Zebra_DatePicker({
-            direction:1,
-            format:'m/d/Y'
-        });
-
-        $('#nextClassEndsBy').Zebra_DatePicker({
             direction:1,
             format:'m/d/Y'
         });
@@ -290,13 +285,11 @@
 
         $.ajax({
             type:'POST',
-            url:'<?php echo Yii::app()->createAbsoluteUrl("class/searchResults"); ?>',
+            url:'<?php echo Yii::app()->createAbsoluteUrl("/class/searchResults"); ?>',
             data:query,
             success:function (data) {
                 $('#results').html(data);
             }
         });
-
-
     }
 </script>

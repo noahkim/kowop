@@ -29,7 +29,7 @@
 <!---------------------------------------
      Main Homepage Banner / Logo / header nav
 ---------------------------------------->
-<div class="mainpic">
+<div class="mainpicKids">
 
     <?php if (Yii::app()->user->isGuest) : ?>
 
@@ -43,21 +43,22 @@
         </div>
 
         <div class="four columns notlogged">
-            <span class="navWhatskowop">
-                <?php echo CHtml::link("how's it work?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-            </span>
-            <span class="navPost">
-                <?php echo CHtml::link("post on Kowop", $this->createUrl("/class/create")); ?>
-            </span>
-            <span class="navSignup">
-                <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
-            </span>
-            <span class="navLogin">
-                <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
-            </span>
+        <span class="navWhatskowop">
+            <a href="how_it_works.html">how's it work?</a>
+        </span>
+        <span class="navPost">
+            <?php echo CHtml::link("post on Kowop", $this->createUrl("/class/create")); ?>
+        </span>
+        <span class="navSignup">
+            <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
+        </span>
+        <span class="navLogin">
+            <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
+        </span>
         </div>
     </div>
     <!----- End Homepage logo and header nav ---------->
+
     <?php else: ?>
     <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
 
@@ -107,29 +108,21 @@
 
     <?php endif; ?>
 
-    <div class="row">
-        <div class="twelve columns">
-            <div class="alert-box secondary">
-                This is Kowop dev instance. Please excuse any bugs, we make lots of changes daily
-                <a href="" class="close">&times;</a>
-            </div>
-        </div>
-    </div>
 
     <!----- Home blurb and search box --------->
     <div class="row">
         <div class="eight columns offset-by-two">
+            <div class="kowopkidslogo">
+            </div>
             <div class="homeBlurb">
-                <span class="homeBlurbcopy">
-                    The neighborhood board for classes &amp; activities.<br/>Try something new, learn something awesome.
-                </span>
+                <span class="homeBlurbcopy">Local playground getting old?<br/>Find something more stimulating for your little rascal.</span>
 
                 <?php $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'search-form',
-                    'action' => Yii::app()->createUrl('/class/search'),
-                    'enableAjaxValidation' => false,
-                    'method' => 'get'
-                )); ?>
+                'id' => 'search-form',
+                'action' => Yii::app()->createUrl('/kids/search'),
+                'enableAjaxValidation' => false,
+                'method' => 'get'
+            )); ?>
 
                 <?php $model = new ClassSearchForm; ?>
 
@@ -148,35 +141,32 @@
 
                 <?php $this->endWidget('CActiveForm'); ?>
 
-                <?php echo CHtml::link("or browse all", $this->createUrl("/class/search"), array('class' => 'homeBrowseall')); ?>
-
+                <?php echo CHtml::link("or browse all", $this->createUrl("/kids/search"), array('class' => 'homeBrowseall')); ?>
             </div>
         </div>
     </div>
     <!----- end Home blurb and search box ------------>
     <!----- Featured class info ------------->
-    <div class=" homeFeaturedinfo">
+    <div class="homeFeaturedinfo">
         <div class="row">
             <?php
             $randomClass = KClass::model()->findAll(array(
-                'select' => '*, rand() as rand',
-                'condition' => 'Status = ' . ClassStatus::Active,
-                'limit' => 1,
-                'order' => 'rand',
-            ));
+                                                        'select' => '*, rand() as rand',
+                                                        'condition' => 'Status = ' . ClassStatus::Active,
+                                                        'limit' => 1,
+                                                        'order' => 'rand',
+                                                    ));
 
             $randomClass = $randomClass[0];
             $enrollees = '';
-            foreach ($randomClass->students as $student)
-            {
+            foreach ($randomClass->students as $student) {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null)
-                {
+                if ($student->profilePic != null) {
                     $picLink = $student->profilePic;
                 }
 
-                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
                 $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
@@ -184,103 +174,154 @@
 
             <div class="homeArrow"></div>
             <div class="twelve columns">
-                <h2>Featured</h2>
+                <h2>Do this today</h2>
 
                 <div class="homeFeaturedstudents">
                     <?php echo $enrollees; ?>
                 </div>
                 <div class="homeFeaturedtext">
                     <h3><?php echo $randomClass->Name; ?></h3>
-                    <span>Next available session begins <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span></div>
+                    <span>Next available time is <?php echo date('F jS', strtotime($randomClass->sessions[0]->lessons[0]->Start)); ?></span>
+                </div>
                 <?php echo CHtml::link('More Info', array('class/view', 'id' => $randomClass->Class_ID), array('class' => 'button featuredButton')); ?>
+            </div>
         </div>
-    </div>
-    <!----- End Featured class info -------->
+        <!----- End Featured class info -------->
     </div>
 </div>
+
 <!--------------------------------------
  Staff picks and Popular Classes
  --------------------------------------->
 <div class="homeClasses">
-
-    <h3>What would you like to do?</h3>
-    <div class="row">
-        <div class="four columns">
-            <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>learn</i> something new or <i>try</i> something fun.</h5>", array('/class/search')); ?>
-            </div>
-        </div>
-        <div class="four columns">
-            <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>post</i> an interesting activity or class</h5>", array('/class/create')); ?>
-            </div>
-        </div>
-        <div class="four columns">
-            <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I'm a <i>parent</i> looking for classes &amp; activities for <i>kids</i>.</h5>", array('/kids')); ?>
-            </div>
-        </div>
-    </div>
-
-    <h3>Staff Picks in Los Angeles</h3>
+    <h3>Kids classes &amp; activities happening today</h3>
     <!----------- 1 row of tiles---->
     <div class="row">
         <?php
         $classes = KClass::model()->findAll(array(
-                'select' => '*, rand() as rand',
-                'condition' => 'Status = ' . ClassStatus::Active,
-                'limit' => 4,
-                'order' => 'rand',
-            )
+                                                'select' => '*, rand() as rand',
+                                                'condition' => 'Status = ' . ClassStatus::Active,
+                                                'limit' => 4,
+                                                'order' => 'rand',
+                                            )
         );
-        foreach ($classes as $class)
-        {
+        foreach ($classes as $class) {
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $class->Class_ID));
 
             $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
-            if (strlen($teacherName) > 25)
-            {
+            if (strlen($teacherName) > 25) {
                 $teacherName = substr($teacherName, 0, 25);
                 $teacherName .= ' ...';
             }
 
             $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
-            if (strlen($description) > 82)
-            {
+            if (strlen($description) > 82) {
                 $description = substr($description, 0, 82);
                 $description .= ' ...';
             }
 
             $enrollees = '';
-            foreach ($class->students as $student)
-            {
+            foreach ($class->students as $student) {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null)
-                {
+                if ($student->profilePic != null) {
                     $picLink = $student->profilePic;
                 }
 
-                $enrolleeText ="<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
                 $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
             $className = $class->Name;
-            if (strlen($className) > 60)
-            {
+            if (strlen($className) > 60) {
                 $className = substr($className, 0, 60);
                 $className .= ' ...';
             }
             $className = CHtml::link('<h5>' . $className . '</h5>', array('class/view', 'id' => $class->Class_ID));
 
-            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0))
-            {
+            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0)) {
                 $sessionHTML = 'This class is free!';
             }
-            else
-            {
+            else {
+                $lessonCount = count($class->sessions[0]->lessons);
+                $tuition = $class->Tuition * $lessonCount;
+
+                $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
+            }
+
+            echo <<<BLOCK
+        <!----------- 1 tile ---------->
+        <div class="three columns">
+            <div class="classTile">{$imageLink}
+                {$className}
+                <span class="tileInstructor">by {$teacherLink}</span> <span
+                        class="tileDescription">{$description}</span>
+
+                <div class="tileStudents">
+                    {$enrollees}
+                </div>
+            </div>
+            <div class="classCost">
+                {$sessionHTML}
+            </div>
+        </div>
+        <!------- end 1 tile -------->
+BLOCK;
+
+        }
+        ?>
+    </div>
+    <!------ end 1 row of tiles ----->
+    <!---- view more classes & activities today ----->
+    <div class="row">
+        <div class="three columns offset-by-nine">
+            <?php echo CHtml::link("See more stuff you can do today", $this->createUrl("/kids/search"), array('class' => 'button')); ?>
+        </div>
+    </div>
+    <!---- end view more---->
+    <h3>Staff picks</h3>
+    <!----------- 1 row of tiles---->
+    <div class="row">
+        <?php
+        $classes = KClass::model()->findAll(array(
+                                                'select' => '*, rand() as rand',
+                                                'condition' => 'Status = ' . ClassStatus::Active,
+                                                'limit' => 4,
+                                                'order' => 'rand',
+                                            )
+        );
+        foreach ($classes as $class) {
+            $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
+            $imageLink = CHtml::link($imageHTML, array('/class/view', 'id' => $class->Class_ID));
+
+            $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
+            $description = $class->Description;
+            if (strlen($description) > 82) {
+                $description = substr($description, 0, 82);
+                $description .= ' ...';
+            }
+
+            $enrollees = '';
+            foreach ($class->students as $student) {
+                $picLink = 'http://placeskull.com/100/100/868686';
+
+                if ($student->profilePic != null) {
+                    $picLink = $student->profilePic;
+                }
+
+                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+            }
+
+            $className = CHtml::link('<h5>' . $class->Name . '</h5>', array('class/view', 'id' => $class->Class_ID));
+
+            if (($class->Tuition == null) || ($class->Tuition == 0) || (count($class->sessions) == 0)) {
+                $sessionHTML = 'This class is free!';
+            }
+            else {
                 $lessonCount = count($class->sessions[0]->lessons);
                 $tuition = $class->Tuition * $lessonCount;
 
@@ -320,9 +361,6 @@ BLOCK;
             <h5>Discover</h5>
             <ul>
                 <li>
-                    <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-                </li>
-                <li>
                     <?php echo CHtml::link("teach a class", $this->createUrl("class/create")); ?>
                 </li>
                 <li>
@@ -331,20 +369,22 @@ BLOCK;
                 <li>
                     <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>
                 </li>
-
+                <li><a href="#">how it works</a></li>
             </ul>
         </div>
         <div class="two columns footerlinks company">
             <h5>Company</h5>
             <ul>
                 <li>
-                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
+                    <?php echo CHtml::link("our story", $this->createUrl("site/page", array('view' => 'about'))); ?>
                 </li>
                 <li>
                     <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
                 </li>
+                <li><a href="#">press</a></li>
+                <li><a href="#">blog</a></li>
                 <li>
-                    <?php echo CHtml::link("FAQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
+                    <?php echo CHtml::link("FaQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
                 </li>
                 <li><a href="#">policies</a></li>
                 <li><a href="#">contact</a></li>
@@ -365,28 +405,6 @@ BLOCK;
     <div class="row">
         <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
     </div>
-</div>
-
-<!---------------------MODAL -------------------------->
-
-<div id="welcome" class="reveal-modal medium">
-    <h2>Welcome to the development instance of Kowop.com</h2>
-
-    <p class="lead">You are a brave, brave soul.</p>
-
-    <p>Thanks for checking out/testing/using our development instance of Kowop.com.</p>
-
-    <p>As with any dev instance, things aren't always going to be pretty or tick perfectly. We make A LOT of changes on
-        here daily, always improving, tweaking, and refining.</p>
-
-    <p>Since you're aware of our existence, you've probably been invited here by a member of the Kowop team, so feel
-        free to look around. Just keep in mind, that this is our "ground zero", and some things that work may break, and
-        some things that don't work will inexplicabily work the next minute.</p>
-
-    <p>If you run into something that REALLY grinds your gears, feel free to contact noah at kowop.com</p>
-
-    <p><3 Noah &amp; Ilija</p>
-    <a class="close-reveal-modal">&#215;</a>
 </div>
 
 </body>

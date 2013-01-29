@@ -45,8 +45,7 @@
     <script src="/ui/sitev2/javascripts/wysiwyg_advanced.js"></script>
     <script src="/ui/sitev2/javascripts/jeditable.js"></script>
 
-    <title>Kowop | Hand-crafted experiences to share, learn and teach in the comfort of your neighborhood. Meet new
-        people, experience new things.</title>
+    <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
 </head>
 <body>
 
@@ -61,6 +60,9 @@
             <h5>Discover</h5>
             <ul>
                 <li>
+                    <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
+                </li>
+                <li>
                     <?php echo CHtml::link("teach a class", $this->createUrl("class/create")); ?>
                 </li>
                 <li>
@@ -69,22 +71,20 @@
                 <li>
                     <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>
                 </li>
-                <li><a href="#">how it works</a></li>
+
             </ul>
         </div>
         <div class="two columns footerlinks company">
             <h5>Company</h5>
             <ul>
                 <li>
-                    <?php echo CHtml::link("our story", $this->createUrl("site/page", array('view' => 'about'))); ?>
+                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
                 </li>
                 <li>
                     <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
                 </li>
-                <li><a href="#">press</a></li>
-                <li><a href="#">blog</a></li>
                 <li>
-                    <?php echo CHtml::link("FaQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
+                    <?php echo CHtml::link("FAQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
                 </li>
                 <li><a href="#">policies</a></li>
                 <li><a href="#">contact</a></li>
