@@ -29,6 +29,7 @@
  * @property ExperienceToTag[] $experienceToTags
  * @property Rating[] $ratings
  * @property Request[] $requests
+ * @property Session[] $sessions
  */
 class Experience extends CActiveRecord
 {
@@ -90,9 +91,12 @@ class Experience extends CActiveRecord
 			'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
 			'ratings' => array(self::HAS_MANY, 'Rating', 'Experience_ID'),
 			'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
+            'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
             // Added
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'experienceToContents'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'experienceToTags'),
+            'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('User_to_session_ID' => 'User_to_session_ID'), 'through' => 'sessions'),
+            'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions'),
 		);
 	}
 
