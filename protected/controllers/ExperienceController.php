@@ -71,19 +71,62 @@ class ExperienceController extends Controller
         $this->render('view', array('model' => $model, 'view' => $view));
     }
 
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
     public function actionCreate()
     {
         $this->layout = '//layouts/main';
         $model = new ExperienceCreateForm("step1");
-        $step = 1;
 
         Yii::import("xupload.models.XUploadForm");
         $images = new XUploadForm;
 
+        $step = 1;
+        if(isset($_REQUEST['step']))
+        {
+            $step = $_REQUEST['step'];
+        }
+
+        if($step > 1)
+        {
+            $existingForm = isset($_POST['ExperienceCreateForm']) ? $_POST['ExperienceCreateForm'] : null;
+            $this->setPageState('step' . ($step - 1), $existingForm);
+
+            $model = new ExperienceCreateForm("step" . ($step - 1));
+
+            $model->attributes = $this->getPageState('step1', array());
+            $model->attributes = $this->getPageState('step2', array());
+            $model->attributes = $this->getPageState('step3', array());
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
+
+            if($existingForm != null)
+            {
+                $model->attributes = $existingForm;
+
+                if (! $model->validate())
+                {
+                    $step--;
+                }
+            }
+        }
+        else
+        {
+            Yii::app()->user->setState('imageFileNames', array());
+        }
+
+
+        $this->render('_createForm' . $step, array(
+            'model' => $model,
+            'images' => $images,
+        ));
+    }
+
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+/*    public function actionCreateOld()
+    {
         if (isset($_POST['step2']))
         {
             $step = 2;
@@ -95,9 +138,13 @@ class ExperienceController extends Controller
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
+
             $model->attributes = $_POST['ExperienceCreateForm'];
 
-            if (!$model->validate())
+            if (! $model->validate())
             {
                 $step = 1;
             }
@@ -109,9 +156,14 @@ class ExperienceController extends Controller
             $this->setPageState('step2', $_POST['ExperienceCreateForm']);
 
             $model = new ExperienceCreateForm("step2");
+
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
+
             $model->attributes = $_POST['ExperienceCreateForm'];
 
             if (!$model->validate())
@@ -121,24 +173,36 @@ class ExperienceController extends Controller
         }
         elseif (isset($_POST['step4']))
         {
-            $model = new ExperienceCreateForm("step3");
             $this->setPageState('step3', $_POST['ExperienceCreateForm']);
+
+            $model = new ExperienceCreateForm("step3");
+
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $_POST['ExperienceCreateForm'];
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
 
-            $model->imageFiles = Yii::app()->user->getState('imageFileNames');
-            $model->user = User::model()->findByPk(Yii::app()->user->id);
+            $model->attributes = $_POST['ExperienceCreateForm'];
 
             $step = 4;
         }
+
+        $model->imageFiles = Yii::app()->user->getState('imageFileNames');
+        $model->user = User::model()->findByPk(Yii::app()->user->id);
+
+
         elseif (isset($_POST['submit']))
         {
             $model = new ExperienceCreateForm('submit');
+
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
 
             $model->imageFiles = Yii::app()->user->getState('imageFileNames');
 
@@ -150,7 +214,7 @@ class ExperienceController extends Controller
             }
             else
             {
-                $step = 4;
+                $step = 6;
             }
         }
         elseif (isset($_POST['change']))
@@ -158,9 +222,13 @@ class ExperienceController extends Controller
             $step = 1;
 
             $model = new ExperienceCreateForm('submit');
+
             $model->attributes = $this->getPageState('step1', array());
             $model->attributes = $this->getPageState('step2', array());
             $model->attributes = $this->getPageState('step3', array());
+            $model->attributes = $this->getPageState('step4', array());
+            $model->attributes = $this->getPageState('step5', array());
+            $model->attributes = $this->getPageState('step6', array());
         }
         else
         {
@@ -170,11 +238,7 @@ class ExperienceController extends Controller
             }
         }
 
-        $this->render('_createForm' . $step, array(
-            'model' => $model,
-            'images' => $images,
-        ));
-    }
+    }*/
 
     public function actionUpdateSessions($id)
     {

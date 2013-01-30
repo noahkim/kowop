@@ -48,7 +48,7 @@ class ExperienceCreateForm extends CFormModel
     // Resulting saved experience
     public $experience;
 
-    // Request this was created from
+    // Request this was created from, if any
     public $fromRequest_ID;
 
     public function rules()
@@ -122,15 +122,15 @@ class ExperienceCreateForm extends CFormModel
                     $request->save();
 
                     // Notify the students
-                    foreach ($request->requestors as $student)
+                    foreach ($request->requestors as $user)
                     {
-                        if ($student->User_ID != $this->experience->Create_User_ID)
+                        if ($user->User_ID != $this->experience->Create_User_ID)
                         {
                             $userName = CHtml::link($this->experience->createUser->fullName, array('user/view', 'id' => $this->experience->createUser->User_ID));
                             $requestName = CHtml::link($request->Name, array('request/view', 'id' => $request->Request_ID));
                             $className = CHtml::link($this->experience->Name, array('experience/view', 'id' => $this->experience->Experience_ID));
 
-                            Message::SendNotification($student->User_ID, "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
+                            Message::SendNotification($user->User_ID, "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
                         }
                     }
                 }

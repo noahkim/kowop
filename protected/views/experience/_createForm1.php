@@ -1,136 +1,64 @@
 <!--------- main content container------>
 <div class="row" id="wrapper">
-    <!--------- end left column ------------->
-    <div class="nine columns">
-        <div class=" createContainer">
-            <h1>Create a class</h1>
-            <?php $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-create-form',
-            'enableAjaxValidation' => false,
-            'stateful' => true
-        )); ?>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Name your class</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->textField($model, 'name',
-                    array('size' => 60, 'maxlength' => 255, 'class' => 'ten', 'placeholder' => 'ex. Real Life Guitar Hero for the absolute beginner')); ?>
-                </div>
+    <div class="twelve columns">
+        <!---- progress bar ------>
+        <div class="row">
+            <div class="twelve columns">
+                <ul class="progress">
+                    <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                </ul>
             </div>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Category</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->dropDownList($model, 'category', Category::GetCategories(), array('class' => 'five')); ?>
-                </div>
+        </div>
+        <!---- end progress bar---->
+        <h1>Are you a business or individual?</h1>
+
+        <div class="row">
+            <div class="six columns">
+                <a href="#" onclick='submitForm(<?php echo ExperiencePosterType::Business; ?>); return false;'>
+                    <div class="createOption">
+                        <span>Business</span>
+
+                        <p>I do this full time, and have my own space.</p>
+                    </div>
+                </a>
             </div>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Tags</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->textField($model, 'tags', array('placeholder' => 'ex. music, guitar, acoustic', 'class' => 'ten')); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Zip Code</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->textField($model, 'locationZip', array('size' => 45, 'maxlength' => 5, 'class' => 'five')); ?>
-                </div>
-            </div>
+            <div class="six columns">
+                <a href="#" onclick='submitForm(<?php echo ExperiencePosterType::Individual; ?>); return false;'>
+                    <div class="createOption">
+                        <span>Individual</span>
 
-            <?php echo $form->hiddenField($model, 'fromRequest_ID'); ?>
-            <input type='hidden' name='step2' />
-
-            <?php $this->endWidget(); ?>
-
-            <div class="row borderTop">
-                <div class="four columns offset-by-eight">
-                    <input class="button large twelve" onclick="document.forms['class-create-form'].submit(); return false;" type="submit" value="Save &amp; Continue" />
-                </div>
-            </div>
-
-            <div id="searchExisting">
-                <h4>
-                    Similar classes and requests:
-                </h4>
-
-                <div id="results"></div>
+                        <p>I don't have an "official" location.</p>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-    <!-------------- end left column ----------->
-    <!-------------- right column -------------->
-    <div class="three columns">
-        <h3>Tips</h3>
-        <ul>
-            <li>You can only pick 1 category, but put in as many tags as you like</li>
-            <li>We'll do a quick search for you to see if there's any existing requests that you can pick up, instead of
-                creating a class from scratch
-            </li>
-        </ul>
-    </div>
-    <!---------------end right column---------->
+
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'class-create-form',
+        'enableAjaxValidation' => false,
+        'stateful' => true
+    ));
+    ?>
+
+    <input name="step" type="hidden" value="2"/>
+    <?php echo $form->hiddenField($model, 'PosterType', array('id' => 'posterType')); ?>
+
+    <?php $this->endWidget(); ?>
+
     <!------- end main content container----->
 </div>
 
-<script type='text/javascript'>
-    $(document).ready(function () {
-
-        $('#searchExisting').hide();
-
-        var timeoutHandle1;
-        var timeoutHandle2;
-
-        var timeout = 750;
-
-        $('form :input[type=text]').keyup(function () {
-            clearTimeout(timeoutHandle1);
-            timeoutHandle1 = setTimeout(updateSearch, timeout);
-        });
-
-        $('form select').change(function () {
-            clearTimeout(timeoutHandle2);
-            timeoutHandle2 = setTimeout(updateSearch, timeout);
-        });
-    });
-
-    function updateSearch() {
-        var keywords = '';
-        $('form :input[type=text]').each(function () {
-            keywords += $(this).val() + ' ';
-        });
-
-        if(($.trim(keywords)).length == 0)
-        {
-            $('#searchExisting').hide();
-            return;
-        }
-
-        //var category = $('form select').val();
-
-        $('#searchExisting').show();
-        getResults(keywords);
-    }
-
-    function getResults(keywords, category) {
-        var data = "ExperienceSearchForm[keywords]=" + keywords;
-
-        if (arguments.length == 2) {
-            data += '&ExperienceSearchForm[category]=' + category;
-        }
-
-        $.ajax({
-            type:'GET',
-            url:'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults"); ?>',
-            data:data,
-            success:function (result) {
-                $('#results').html(result);
-            }
-        });
+<script>
+    function submitForm(posterType)
+    {
+        $("#posterType").val(posterType);
+        document.forms['class-create-form'].submit();
     }
 </script>
