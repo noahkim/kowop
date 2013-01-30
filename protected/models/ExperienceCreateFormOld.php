@@ -2,74 +2,68 @@
 
 Yii::import('ext.iwi.Iwi');
 
-class ExperienceCreateForm extends CFormModel
+class ExperienceCreateFormOld extends CFormModel
 {
     // Step 1
-
-    public $PosterType;
-
-    // Step 2
-
-    public $Type;
-
-    // Step 3
-
-    public $Audience;
-
-    // Step 4
-
-    public $Name;
-    public $Category_ID;
-    public $Start;
-    public $End;
-    public $AppropriateAges;
-
-    // Additional elements
+    public $name;
+    public $description;
+    public $category;
     public $tags;
+    public $imageURL;
     public $imageFiles;
-    public $locationAddress;
+    public $videoURL;
+    public $videoFile;
+    public $start;
+    public $end;
+    public $numLessons;
+    public $minOccupancy;
+    public $maxOccupancy;
+
+    // Location
+    public $locationName;
+    public $locationStreet;
     public $locationCity;
     public $locationState;
     public $locationZip;
+    public $locationDescription;
+    public $locationType;
 
-    // Step 5
+    // Step 2
+    public $price;
+    public $lessonDuration;
 
-    public $Price;
-    public $Offering;
-    public $Description;
-    public $FinePrint;
-
-    // Step 6
-
+    // Step 3
     public $sessions;
 
-    // Other
-
-    // Resulting saved experience
+    // Models used
+    private $location;
     public $experience;
+    public $user;
 
-    // Request this was created from
+    // Other
     public $fromRequest_ID;
 
     public function rules()
     {
         return array(
-            array('PosterType', 'required', 'on' => 'step1'),
-            array('Type', 'required', 'on' => 'step2'),
-            array('Audience', 'required', 'on' => 'step3'),
-            array('Name, Category_ID, Start, End, locationAddress, locationCity, locationState, locationZip', 'required', 'on' => 'step4'),
-            array('Price, Offering, Description', 'required', 'on' => 'step5'),
+            array('name, category', 'required', 'on' => 'step1'),
+            array('start, end, minOccupancy, maxOccupancy, numLessons, price, lessonDuration, description, locationType, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step2'),
+            array('category, numLessons, minOccupancy, maxOccupancy', 'numerical', 'integerOnly' => true),
+            array('name', 'length', 'max' => 255),
+            array('prerequisites, materials', 'length', 'max' => 1000),
+            array('name,description,category,tags,imageURL,imageFile,videoURL,videoFile,start,end,numLessons,minOccupancy,maxOccupancy,locationName,locationStreet,locationCity,locationState,locationZip,locationDescription,locationType,prerequisites,materials,price,lessonDuration,sessions,fromRequest_ID', 'safe'),
         );
     }
 
     private function getLocation()
     {
         $location = new Location;
-
+        $location->Name = $this->locationName;
         $location->Address = $this->locationStreet;
         $location->City = $this->locationCity;
         $location->State = $this->locationState;
         $location->Zip = $this->locationZip;
+        $location->Type = $this->locationType;
 
         $result = Location::model()->findExisting($location);
         if ($result == null)
@@ -86,19 +80,39 @@ class ExperienceCreateForm extends CFormModel
         $isSaved = false;
 
         $this->experience = new Experience;
-
         $transaction = $this->experience->dbConnection->beginTransaction();
 
         try
         {
-            $this->experience->attributes = get_object_vars($this);
+            $this->experience->Name = $this->name;
+            $this->experience->Description = $this->description;
+            $this->experience->Category_ID = $this->category;
+            $this->experience->Start = $this->start;
+            $this->experience->End = $this->end;
+            $this->experience->Min_occupancy = $this->minOccupancy;
+            $this->experience->Max_occupancy = $this->maxOccupancy;
+            $this->experience->Price = $this->price;
+            $this->experience->LessonDuration = $this->lessonDuration;
 
-            $location = $this->getLocation();
-            $this->experience->Location_ID = $location->Location_ID;
+            $this->location = $this->getLocation();
+            $this->experience->Location_ID = $this->location->Location_ID;
 
             $this->experience->save();
 
-            if ($this->imageFiles != null)
+            if (strlen($this->imageURL) > 0)
+            {
+                $content = new Content;
+                $content->Content_name = 'Class Image URL';
+                $content->Content_type = ContentType::ImageURL;
+                $content->Link = $this->imageURL;
+                $content->save();
+
+                $classToContent = new ExperienceToContent;
+                $classToContent->Experience_ID = $this->experience->Experience_ID;
+                $classToContent->Content_ID = $content->Content_ID;
+                $classToContent->save();
+            }
+            elseif ($this->imageFiles != null)
             {
                 foreach($this->imageFiles as $imageFile)
                 {
@@ -153,9 +167,17 @@ class ExperienceCreateForm extends CFormModel
             {
                 $session = new Session;
                 $session->Experience_ID = $this->experience->Experience_ID;
-                $session->Start = $sessionItem->Start;
-                $session->End = $sessionItem->End;
                 $session->save();
+
+                foreach ($sessionItem->lessons as $lessonItem)
+                {
+                    $lesson = new Lesson;
+                    $lesson->Session_ID = $session->Session_ID;
+                    $lesson->Start = $lessonItem->start;
+                    $lesson->End = $lessonItem->end;
+
+                    $lesson->save();
+                }
             }
 
             $transaction->commit();

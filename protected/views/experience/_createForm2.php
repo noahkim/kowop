@@ -35,14 +35,6 @@
         </div>
         <div class="row">
             <div class="three columns">
-                <label class="right inline">Merit Badge</label>
-            </div>
-            <div class="nine columns">
-                <input name='badge' type="text" placeholder="upload"/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="three columns">
                 <label class="right inline">Availability</label>
             </div>
             <div class="two columns">

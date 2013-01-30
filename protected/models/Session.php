@@ -100,4 +100,19 @@ class Session extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+    public function beforeSave()
+    {
+        if (isset($this->Start))
+        {
+            $this->Start = date('Y-m-d', strtotime($this->Start));
+        }
+
+        if (isset($this->End))
+        {
+            $this->End = date('Y-m-d', strtotime($this->End));
+        }
+
+        return parent::beforeSave();
+    }
 }

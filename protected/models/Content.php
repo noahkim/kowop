@@ -14,8 +14,7 @@ Yii::import('ext.iwi.Iwi');
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property ClassToContent[] $classToContents
- * @property CourseToContent[] $courseToContents
+ * @property ExperienceToContent[] $experienceToContents
  * @property UserToContent[] $userToContents
  */
 class Content extends CActiveRecord
@@ -69,8 +68,7 @@ class Content extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'classToContents' => array(self::HAS_MANY, 'ClassToContent', 'Content_ID'),
-            'courseToContents' => array(self::HAS_MANY, 'CourseToContent', 'Content_ID'),
+            'experienceToContents' => array(self::HAS_MANY, 'ExperienceToContent', 'Content_ID'),
             'userToContents' => array(self::HAS_MANY, 'UserToContent', 'Content_ID'),
         );
     }

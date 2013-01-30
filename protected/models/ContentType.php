@@ -7,13 +7,9 @@ final class ContentType
     }
 
     const ImageURL = 1;
-    const VideoURL = 2;
-    const ImageID = 3;
-    const VideoID = 4;
+    const ImageID = 2;
 
     public static $Lookup = array(ContentType::ImageURL => 'ImageURL',
-        ContentType::VideoURL => 'VideoURL',
         ContentType::ImageID => 'ImageID',
-        ContentType::VideoID => 'VideoID'
     );
 }

@@ -236,13 +236,13 @@ class ExperienceController extends Controller
 
             if (isset($imageFiles) && count($imageFiles) > 0)
             {
-                ClassToContent::model()->deleteAll('Experience_ID = :Experience_ID', array(':Experience_ID' => $model->Experience_ID));
+                ExperienceToContent::model()->deleteAll('Experience_ID = :Experience_ID', array(':Experience_ID' => $model->Experience_ID));
 
                 foreach ($imageFiles as $imageFile)
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
-                    $classToContent = new ClassToContent;
+                    $classToContent = new ExperienceToContent;
                     $classToContent->Experience_ID = $model->Experience_ID;
                     $classToContent->Content_ID = $content->Content_ID;
                     $classToContent->save();

@@ -5,13 +5,10 @@
  *
  * The followings are the available columns in table 'Location':
  * @property integer $Location_ID
- * @property string $Name
  * @property string $Address
  * @property string $City
  * @property string $State
  * @property string $Zip
- * @property string $Country
- * @property integer $Type
  * @property string $Created
  * @property string $Updated
  *
@@ -48,14 +45,13 @@ class Location extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('Address, City, State, Zip, Type', 'required'),
-			array('Type', 'numerical', 'integerOnly'=>true),
 			array('Address', 'length', 'max'=>2000),
 			array('Name, City, Country', 'length', 'max'=>255),
 			array('State', 'length', 'max'=>2),
 			array('Zip', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Location_ID, Name, Address, City, State, Zip, Country, Type, Created, Updated', 'safe', 'on'=>'search'),
+			array('Location_ID, Address, City, State, Zip, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -85,13 +81,10 @@ class Location extends CActiveRecord
 	{
 		return array(
 			'Location_ID' => 'Location',
-            'Name' => 'Location Name',
 			'Address' => 'Address',
 			'City' => 'City',
 			'State' => 'State',
 			'Zip' => 'Zip',
-			'Country' => 'Country',
-			'Type' => 'Location Type',
 			'Created' => 'Created',
 			'Updated' => 'Updated',
 		);
@@ -109,13 +102,10 @@ class Location extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('Location_ID',$this->Location_ID);
-        $criteria->compare('Name',$this->Name,true);
 		$criteria->compare('Address',$this->Address,true);
 		$criteria->compare('City',$this->City,true);
 		$criteria->compare('State',$this->State,true);
 		$criteria->compare('Zip',$this->Zip,true);
-		$criteria->compare('Country',$this->Country,true);
-		$criteria->compare('Type',$this->Type);
 		$criteria->compare('Created',$this->Created,true);
 		$criteria->compare('Updated',$this->Updated,true);
 
