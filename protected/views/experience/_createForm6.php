@@ -4,12 +4,9 @@
     <div class="eight columns">
 
         <?php
-        $navForm = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-create-form-nav',
-            'enableAjaxValidation' => false,
-            'stateful' => true,
-            'htmlOptions' => array('style' => 'margin: 0;'),
-        ));
+        $navForm = $this->beginWidget('CActiveForm',
+                                      array('id' => 'class-create-form-nav', 'enableAjaxValidation' => false,
+                                            'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
         <input id="step" name="step" type="hidden"/>
         <?php $this->endWidget(); ?>
@@ -83,9 +80,9 @@
 </div>
 
 <?php
-$form = $this->beginWidget('CActiveForm', array('id' => 'class-create-form', 'enableAjaxValidation' => false,
-                                                'stateful' => true,
-                                                'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+$form = $this->beginWidget('CActiveForm',
+                           array('id' => 'class-create-form', 'enableAjaxValidation' => false, 'stateful' => true,
+                                 'htmlOptions' => array('enctype' => 'multipart/form-data'),));
 ?>
 
 <?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
@@ -94,7 +91,7 @@ $form = $this->beginWidget('CActiveForm', array('id' => 'class-create-form', 'en
 
 <script>
     $(document).ready(function () {
-        $('#calendar').fullCalendar({
+        var calendar = $('#calendar').fullCalendar({
             header:{
                 left:'prev,next today',
                 center:'title',

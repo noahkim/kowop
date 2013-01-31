@@ -50,7 +50,7 @@
       <file leaf-file-name="_createForm6.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="51" selection-start="2071" selection-end="2071" vertical-scroll-proportion="0.5978022">
+            <state line="97" column="31" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.6512821">
               <folding />
             </state>
           </provider>
@@ -109,9 +109,9 @@
         <option value="$PROJECT_DIR$/protected/models/Location.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm4.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm7.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/_createForm6.php" />
         <option value="$PROJECT_DIR$/protected/models/ExperienceCreateForm.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm5.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_createForm6.php" />
       </list>
     </option>
   </component>
@@ -654,7 +654,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="51" selection-start="2071" selection-end="2071" vertical-scroll-proportion="0.5978022">
+        <state line="97" column="31" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.6512821">
           <folding />
         </state>
       </provider>
