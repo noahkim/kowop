@@ -41,7 +41,7 @@
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'class-create-form',
+        'id' => 'experience-create-form',
         'enableAjaxValidation' => false,
         'stateful' => true
     ));
@@ -59,6 +59,6 @@
     function submitForm(posterType)
     {
         $("#posterType").val(posterType);
-        document.forms['class-create-form'].submit();
+        document.forms['experience-create-form'].submit();
     }
 </script>

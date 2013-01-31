@@ -4,7 +4,7 @@
 
         <?php
         $navForm = $this->beginWidget('CActiveForm',
-                                      array('id' => 'class-create-form-nav', 'enableAjaxValidation' => false,
+                                      array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
                                             'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
         <input id="step" name="step" type="hidden"/>
@@ -13,7 +13,7 @@
         <script>
             function navigateTo(page) {
                 $('#step').val(page);
-                document.forms['class-create-form-nav'].submit();
+                document.forms['experience-create-form-nav'].submit();
             }
         </script>
 
@@ -35,7 +35,7 @@
         <h1>Pricing &amp; Description</h1>
 
         <?php
-        $form = $this->beginWidget('CActiveForm', array('id' => 'class-create-form', 'enableAjaxValidation' => false,
+        $form = $this->beginWidget('CActiveForm', array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
                                                         'stateful' => true,));
         ?>
 
@@ -115,7 +115,7 @@
 
         <div class="row">
             <div class="four columns offset-by-eight">
-                <a href="#" class="button twelve" onclick="document.forms['class-create-form'].submit(); return false;">Scheduling</a>
+                <a href="#" class="button twelve" onclick="document.forms['experience-create-form'].submit(); return false;">Scheduling</a>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ class ExperienceCreateForm extends CFormModel
 
     // Step 2
 
-    public $Type;
+    public $ExperienceType;
 
     // Step 3
 
@@ -46,6 +46,8 @@ class ExperienceCreateForm extends CFormModel
     // Step 6
 
     public $sessions;
+    public $Min_occupancy;
+    public $Max_occupancy;
 
     // Other
 
@@ -57,14 +59,13 @@ class ExperienceCreateForm extends CFormModel
 
     public function rules()
     {
-        return array(
-            array('PosterType', 'required', 'on' => 'step1'),
-            array('Type', 'required', 'on' => 'step2'),
-            array('Audience', 'required', 'on' => 'step3'),
-            array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step4'),
-            array('Price, Offering, Description', 'required', 'on' => 'step5'),
-            array('PosterType,Type,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,experience,fromRequest_ID', 'safe'),
-        );
+        return array(array('PosterType', 'required', 'on' => 'step1'), array('ExperienceType', 'required', 'on' => 'step2'),
+                     array('Audience', 'required', 'on' => 'step3'),
+                     array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip',
+                           'required', 'on' => 'step4'),
+                     array('Price, Offering, Description', 'required', 'on' => 'step5'),
+                     array('PosterType,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID',
+                           'safe'),);
     }
 
     private function getLocation()
@@ -88,29 +89,52 @@ class ExperienceCreateForm extends CFormModel
 
     public function save()
     {
-        $isSaved = false;
-
-        $this->experience = new Experience;
-
-        $transaction = $this->experience->dbConnection->beginTransaction();
+        $isSaved = null;
 
         try
         {
-            if(isset($this->free) && ($this->free === true))
+            $experience = new Experience;
+            $transaction = $experience->dbConnection->beginTransaction();
+
+            if (isset($this->free) && ($this->free === true))
             {
                 unset($this->Price);
             }
 
-            $this->experience->attributes = get_object_vars($this);
+            $experience->Name = $this->Name;
+            $experience->PosterType = $this->PosterType;
+            $experience->ExperienceType = $this->ExperienceType;
+            $experience->Audience = $this->Audience;
+            $experience->Category_ID = $this->Category_ID;
+            $experience->Start = $this->Start;
+            $experience->End = $this->End;
+            $experience->Description = $this->Description;
+            $experience->Offering = $this->Offering;
+            $experience->FinePrint = $this->FinePrint;
+            $experience->Price = $this->Price;
+            $experience->Min_occupancy = $this->Min_occupancy;
+            $experience->Max_occupancy = $this->Max_occupancy;
+
+            $appropriateAges = 0;
+            if (isset($this->AppropriateAges) && is_array($this->AppropriateAges))
+            {
+                foreach ($this->AppropriateAges as $age)
+                {
+                    $appropriateAges += $age;
+                }
+            }
+            $experience->AppropriateAges = $appropriateAges;
 
             $location = $this->getLocation();
-            $this->experience->Location_ID = $location->Location_ID;
+            $experience->Location_ID = $location->Location_ID;
 
-            $this->experience->save();
+            $experience->save();
+
+            $this->experience = $experience;
 
             if ($this->imageFiles != null)
             {
-                foreach($this->imageFiles as $imageFile)
+                foreach ($this->imageFiles as $imageFile)
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
@@ -136,11 +160,15 @@ class ExperienceCreateForm extends CFormModel
                     {
                         if ($user->User_ID != $this->experience->Create_User_ID)
                         {
-                            $userName = CHtml::link($this->experience->createUser->fullName, array('user/view', 'id' => $this->experience->createUser->User_ID));
-                            $requestName = CHtml::link($request->Name, array('request/view', 'id' => $request->Request_ID));
-                            $className = CHtml::link($this->experience->Name, array('experience/view', 'id' => $this->experience->Experience_ID));
+                            $userName = CHtml::link($this->experience->createUser->fullName, array('//user/view',
+                                                                                                   'id' => $this->experience->createUser->User_ID));
+                            $requestName = CHtml::link($request->Name,
+                                                       array('//request/view', 'id' => $request->Request_ID));
+                            $className = CHtml::link($this->experience->Name, array('//experience/view',
+                                                                                    'id' => $this->experience->Experience_ID));
 
-                            Message::SendNotification($user->User_ID, "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
+                            Message::SendNotification($user->User_ID,
+                                                      "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
                         }
                     }
                 }
@@ -151,21 +179,24 @@ class ExperienceCreateForm extends CFormModel
             {
                 $tag = Tag::model()->findOrCreate($tagName);
 
-                $classToTag = new ClassToTag;
-                $classToTag->Experience_ID = $this->experience->Experience_ID;
-                $classToTag->Tag_ID = $tag->Tag_ID;
-                $classToTag->save();
+                $experienceToTag = new ExperienceToTag;
+                $experienceToTag->Experience_ID = $this->experience->Experience_ID;
+                $experienceToTag->Tag_ID = $tag->Tag_ID;
+                $experienceToTag->save();
             }
 
-            $sessionData = json_decode($this->sessions);
-
-            foreach ($sessionData as $sessionItem)
+            if (isset($this->sessions) && strlen($this->sessions) > 0)
             {
-                $session = new Session;
-                $session->Experience_ID = $this->experience->Experience_ID;
-                $session->Start = $sessionItem->Start;
-                $session->End = $sessionItem->End;
-                $session->save();
+                $sessionData = json_decode($this->sessions);
+
+                foreach ($sessionData as $sessionItem)
+                {
+                    $session = new Session;
+                    $session->Experience_ID = $this->experience->Experience_ID;
+                    $session->Start = $sessionItem->Start;
+                    $session->End = $sessionItem->End;
+                    $session->save();
+                }
             }
 
             $transaction->commit();
@@ -173,6 +204,8 @@ class ExperienceCreateForm extends CFormModel
         }
         catch (Exception $e)
         {
+            $isSaved = false;
+
             $transaction->rollback();
         }
 

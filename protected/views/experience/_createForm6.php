@@ -5,7 +5,7 @@
 
         <?php
         $navForm = $this->beginWidget('CActiveForm',
-                                      array('id' => 'class-create-form-nav', 'enableAjaxValidation' => false,
+                                      array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
                                             'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
         <input id="step" name="step" type="hidden"/>
@@ -14,7 +14,7 @@
         <script>
             function navigateTo(page) {
                 $('#step').val(page);
-                document.forms['class-create-form-nav'].submit();
+                document.forms['experience-create-form-nav'].submit();
             }
         </script>
 
@@ -43,8 +43,8 @@
 
         <div class="row borderTop">
             <div class="six columns offset-by-six">
-                <a href="create_last_look.html" class="button">Skip this step</a>
-                <a href="create_last_look.html" class="button">Finalize and post!</a>
+                <a href="#" class="button" onclick="submitForm(false); return false;">Skip this step</a>
+                <a href="#" class="button" onclick="submitForm(true); return false;">Finalize and post!</a>
             </div>
         </div>
     </div>
@@ -81,10 +81,11 @@
 
 <?php
 $form = $this->beginWidget('CActiveForm',
-                           array('id' => 'class-create-form', 'enableAjaxValidation' => false, 'stateful' => true,
+                           array('id' => 'experience-create-form', 'enableAjaxValidation' => false, 'stateful' => true,
                                  'htmlOptions' => array('enctype' => 'multipart/form-data'),));
 ?>
 
+<input type='hidden' name='step' value='7'/>
 <?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
 
 <?php $this->endWidget(); ?>
@@ -116,4 +117,18 @@ $form = $this->beginWidget('CActiveForm',
             editable:true,
         });
     });
+
+    function submitForm(addSessions)
+    {
+        if(addSessions)
+        {
+            $('#sessions').val('');
+            document.forms['experience-create-form'].submit();
+        }
+        else
+        {
+            $('#sessions').val('');
+            document.forms['experience-create-form'].submit();
+        }
+    }
 </script>

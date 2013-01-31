@@ -9,7 +9,7 @@
  * @property string $Created
  *
  * The followings are the available model relations:
- * @property ClassToTag[] $classToTags
+ * @property ExperienceToTag[] $experienceToTags
  * @property RequestToTag[] $requestToTags
  */
 class Tag extends CActiveRecord
@@ -59,7 +59,7 @@ class Tag extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'classToTags' => array(self::HAS_MANY, 'ClassToTag', 'Tag_ID'),
+            'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Tag_ID'),
             'requestToTags' => array(self::HAS_MANY, 'RequestToTag', 'Tag_ID'),
         );
     }

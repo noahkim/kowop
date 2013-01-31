@@ -4,7 +4,7 @@
 
         <?php
         $navForm = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-create-form-nav',
+            'id' => 'experience-create-form-nav',
             'enableAjaxValidation' => false,
             'stateful' => true,
             'htmlOptions' => array('style' => 'margin: 0;'),
@@ -17,7 +17,7 @@
             function navigateTo(page)
             {
                 $('#step').val(page);
-                document.forms['class-create-form-nav'].submit();
+                document.forms['experience-create-form-nav'].submit();
             }
         </script>
 
@@ -64,14 +64,14 @@
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'class-create-form',
+        'id' => 'experience-create-form',
         'enableAjaxValidation' => false,
         'stateful' => true
     ));
     ?>
 
     <input name="step" type="hidden" value="3"/>
-    <?php echo $form->hiddenField($model, 'Type', array('id' => 'experienceType')); ?>
+    <?php echo $form->hiddenField($model, 'ExperienceType', array('id' => 'experienceType')); ?>
 
     <?php $this->endWidget(); ?>
 
@@ -82,6 +82,6 @@
     function submitForm(experienceType)
     {
         $("#experienceType").val(experienceType);
-        document.forms['class-create-form'].submit();
+        document.forms['experience-create-form'].submit();
     }
 </script>

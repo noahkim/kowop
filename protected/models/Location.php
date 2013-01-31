@@ -43,8 +43,8 @@ class Location extends CActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(array('Address, City, State, Zip, Type', 'required'), array('Address', 'length', 'max' => 2000),
-                     array('Name, City, Country', 'length', 'max' => 255), array('State', 'length', 'max' => 2),
+        return array(array('Address, City, State, Zip', 'required'), array('Address', 'length', 'max' => 2000),
+                     array('City', 'length', 'max' => 255), array('State', 'length', 'max' => 2),
                      array('Zip', 'length', 'max' => 45), // The following rule is used by search().
             // Please remove those attributes that should not be searched.
                      array('Location_ID, Address, City, State, Zip, Created, Updated', 'safe'),
@@ -109,7 +109,7 @@ class Location extends CActiveRecord
     public static function findExisting($location)
     {
         $criteria = array('Address' => $location->Address, 'City' => $location->City, 'State' => $location->State,
-                          'Zip' => $location->Zip, 'Country' => $location->Country);
+                          'Zip' => $location->Zip);
 
         $result = Location::model()->findByAttributes($criteria);
         return $result;

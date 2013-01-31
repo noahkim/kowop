@@ -7,6 +7,7 @@
  * @property integer $Experience_to_content_ID
  * @property integer $Experience_ID
  * @property integer $Content_ID
+ * @property integer $Created
  * @property string $Updated
  *
  * The followings are the available model relations:
@@ -41,11 +42,16 @@ class ExperienceToContent extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('Experience_ID, Content_ID, Updated', 'required'),
 			array('Experience_ID, Content_ID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('Experience_to_content_ID, Experience_ID, Content_ID, Updated', 'safe', 'on'=>'search'),
+			array('Experience_to_content_ID, Experience_ID, Content_ID, Created, Updated', 'safe'),
+            array('Updated', 'default',
+                  'value' => new CDbExpression('NOW()'),
+                  'setOnEmpty' => false, 'on' => 'update'),
+            array('Created,Updated', 'default',
+                  'value' => new CDbExpression('NOW()'),
+                  'setOnEmpty' => false, 'on' => 'insert')
 		);
 	}
 
@@ -71,6 +77,7 @@ class ExperienceToContent extends CActiveRecord
 			'Experience_to_content_ID' => 'Experience To Content',
 			'Experience_ID' => 'Experience',
 			'Content_ID' => 'Content',
+            'Created' => 'Created',
 			'Updated' => 'Updated',
 		);
 	}
@@ -89,6 +96,7 @@ class ExperienceToContent extends CActiveRecord
 		$criteria->compare('Experience_to_content_ID',$this->Experience_to_content_ID);
 		$criteria->compare('Experience_ID',$this->Experience_ID);
 		$criteria->compare('Content_ID',$this->Content_ID);
+        $criteria->compare('Created',$this->Created,true);
 		$criteria->compare('Updated',$this->Updated,true);
 
 		return new CActiveDataProvider($this, array(

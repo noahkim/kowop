@@ -4,7 +4,7 @@
 
         <?php
         $navForm = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-create-form-nav',
+            'id' => 'experience-create-form-nav',
             'enableAjaxValidation' => false,
             'stateful' => true,
             'htmlOptions' => array('style' => 'margin: 0;'),
@@ -16,7 +16,7 @@
         <script>
             function navigateTo(page) {
                 $('#step').val(page);
-                document.forms['class-create-form-nav'].submit();
+                document.forms['experience-create-form-nav'].submit();
             }
         </script>
 
@@ -70,7 +70,7 @@
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
-        'id' => 'class-create-form',
+        'id' => 'experience-create-form',
         'enableAjaxValidation' => false,
         'stateful' => true
     ));
@@ -87,6 +87,6 @@
 <script>
     function submitForm(audience) {
         $("#audience").val(audience);
-        document.forms['class-create-form'].submit();
+        document.forms['experience-create-form'].submit();
     }
 </script>
