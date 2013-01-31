@@ -27,7 +27,7 @@ class ExperienceCreateForm extends CFormModel
     // Additional elements
     public $tags;
     public $imageFiles;
-    public $locationAddress;
+    public $locationStreet;
     public $locationCity;
     public $locationState;
     public $locationZip;
@@ -38,6 +38,10 @@ class ExperienceCreateForm extends CFormModel
     public $Offering;
     public $Description;
     public $FinePrint;
+
+    // Additional elements
+
+    public $free;
 
     // Step 6
 
@@ -57,8 +61,9 @@ class ExperienceCreateForm extends CFormModel
             array('PosterType', 'required', 'on' => 'step1'),
             array('Type', 'required', 'on' => 'step2'),
             array('Audience', 'required', 'on' => 'step3'),
-            array('Name, Category_ID, Start, End, locationAddress, locationCity, locationState, locationZip', 'required', 'on' => 'step4'),
+            array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip', 'required', 'on' => 'step4'),
             array('Price, Offering, Description', 'required', 'on' => 'step5'),
+            array('PosterType,Type,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,experience,fromRequest_ID', 'safe'),
         );
     }
 
@@ -91,6 +96,11 @@ class ExperienceCreateForm extends CFormModel
 
         try
         {
+            if(isset($this->free) && ($this->free === true))
+            {
+                unset($this->Price);
+            }
+
             $this->experience->attributes = get_object_vars($this);
 
             $location = $this->getLocation();

@@ -7,8 +7,7 @@ class ExperienceController extends Controller
      */
     public function filters()
     {
-        return array(
-            'accessControl', // perform access control for CRUD operations
+        return array('accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
@@ -20,23 +19,11 @@ class ExperienceController extends Controller
      */
     public function accessRules()
     {
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete', 'uploadImages'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin'),
-                'users' => array('admin'),
-            ),
-            array('deny', // deny all users
-                'users' => array('*'),
-            ),
-        );
+        return array(array('allow', // allow all users to perform 'index' and 'view' actions
+            'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'), 'users' => array('*'),), array('allow', // allow authenticated user to perform 'create' and 'update' actions
+            'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete', 'uploadImages'), 'users' => array('@'),), array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
+            'users' => array('*'),),);
     }
 
     /**
@@ -80,12 +67,12 @@ class ExperienceController extends Controller
         $images = new XUploadForm;
 
         $step = 1;
-        if(isset($_REQUEST['step']))
+        if (isset($_REQUEST['step']))
         {
             $step = $_REQUEST['step'];
         }
 
-        if($step > 1)
+        if ($step > 1)
         {
             $existingForm = isset($_POST['ExperienceCreateForm']) ? $_POST['ExperienceCreateForm'] : null;
             $this->setPageState('step' . ($step - 1), $existingForm);
@@ -99,11 +86,11 @@ class ExperienceController extends Controller
             $model->attributes = $this->getPageState('step5', array());
             $model->attributes = $this->getPageState('step6', array());
 
-            if($existingForm != null)
+            if ($existingForm != null)
             {
                 $model->attributes = $existingForm;
 
-                if (! $model->validate())
+                if (!$model->validate())
                 {
                     $step--;
                 }
@@ -114,131 +101,9 @@ class ExperienceController extends Controller
             Yii::app()->user->setState('imageFileNames', array());
         }
 
+        $this->render('_createForm' . $step, array('model' => $model, 'images' => $images));
 
-        $this->render('_createForm' . $step, array(
-            'model' => $model,
-            'images' => $images,
-        ));
     }
-
-    /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-/*    public function actionCreateOld()
-    {
-        if (isset($_POST['step2']))
-        {
-            $step = 2;
-
-            Yii::app()->user->setState('imageFileNames', array());
-
-            $this->setPageState('step1', $_POST['ExperienceCreateForm']);
-
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $this->getPageState('step4', array());
-            $model->attributes = $this->getPageState('step5', array());
-            $model->attributes = $this->getPageState('step6', array());
-
-            $model->attributes = $_POST['ExperienceCreateForm'];
-
-            if (! $model->validate())
-            {
-                $step = 1;
-            }
-        }
-        elseif (isset($_POST['step3']))
-        {
-            $step = 3;
-
-            $this->setPageState('step2', $_POST['ExperienceCreateForm']);
-
-            $model = new ExperienceCreateForm("step2");
-
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $this->getPageState('step4', array());
-            $model->attributes = $this->getPageState('step5', array());
-            $model->attributes = $this->getPageState('step6', array());
-
-            $model->attributes = $_POST['ExperienceCreateForm'];
-
-            if (!$model->validate())
-            {
-                $step = 2;
-            }
-        }
-        elseif (isset($_POST['step4']))
-        {
-            $this->setPageState('step3', $_POST['ExperienceCreateForm']);
-
-            $model = new ExperienceCreateForm("step3");
-
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $this->getPageState('step4', array());
-            $model->attributes = $this->getPageState('step5', array());
-            $model->attributes = $this->getPageState('step6', array());
-
-            $model->attributes = $_POST['ExperienceCreateForm'];
-
-            $step = 4;
-        }
-
-        $model->imageFiles = Yii::app()->user->getState('imageFileNames');
-        $model->user = User::model()->findByPk(Yii::app()->user->id);
-
-
-        elseif (isset($_POST['submit']))
-        {
-            $model = new ExperienceCreateForm('submit');
-
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $this->getPageState('step4', array());
-            $model->attributes = $this->getPageState('step5', array());
-            $model->attributes = $this->getPageState('step6', array());
-
-            $model->imageFiles = Yii::app()->user->getState('imageFileNames');
-
-            if ($model->save())
-            {
-                Yii::app()->user->setState('imageFileNames', array());
-
-                $this->redirect(array('view', 'id' => $model->experience->Experience_ID));
-            }
-            else
-            {
-                $step = 6;
-            }
-        }
-        elseif (isset($_POST['change']))
-        {
-            $step = 1;
-
-            $model = new ExperienceCreateForm('submit');
-
-            $model->attributes = $this->getPageState('step1', array());
-            $model->attributes = $this->getPageState('step2', array());
-            $model->attributes = $this->getPageState('step3', array());
-            $model->attributes = $this->getPageState('step4', array());
-            $model->attributes = $this->getPageState('step5', array());
-            $model->attributes = $this->getPageState('step6', array());
-        }
-        else
-        {
-            if (isset($_POST['ExperienceCreateForm']))
-            {
-                $model->attributes = $_POST['ExperienceCreateForm'];
-            }
-        }
-
-    }*/
 
     public function actionUpdateSessions($id)
     {
@@ -279,9 +144,7 @@ class ExperienceController extends Controller
             }
         }
 
-        $this->render('updateSessions', array(
-            'model' => $model,
-        ));
+        $this->render('updateSessions', array('model' => $model,));
     }
 
     public function actionUpdate($id)
@@ -337,10 +200,7 @@ class ExperienceController extends Controller
             Yii::app()->user->setState('imageFileNames', array());
         }
 
-        $this->render('update', array(
-            'model' => $model,
-            'images' => $images,
-        ));
+        $this->render('update', array('model' => $model, 'images' => $images,));
     }
 
     public function actionUploadImages()
@@ -353,8 +213,7 @@ class ExperienceController extends Controller
 
         //This is for IE which doens't handle 'Content-type: application/json' correctly
         header('Vary: Accept');
-        if (isset($_SERVER['HTTP_ACCEPT'])
-            && (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)
+        if (isset($_SERVER['HTTP_ACCEPT']) && (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)
         )
         {
             header('Content-type: application/json');
@@ -416,28 +275,13 @@ class ExperienceController extends Controller
                     //Now we need to tell our widget that the upload was succesfull
                     //We do so, using the json structure defined in
                     // https://github.com/blueimp/jQuery-File-Upload/wiki/Setup
-                    echo json_encode(array(array(
-                        "name" => $model->name,
-                        "type" => $model->mime_type,
-                        "size" => $model->size,
-                        "url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
-                        "thumbnail_url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
-                        "delete_url" => $this->createUrl("//experience/uploadImages", array(
-                            "_method" => "delete",
-                            "file" => $imageFileName
-                        )),
-                        "delete_type" => "POST"
-                    )));
+                    echo json_encode(array(array("name" => $model->name, "type" => $model->mime_type, "size" => $model->size, "url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName, "thumbnail_url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName, "delete_url" => $this->createUrl("//experience/uploadImages", array("_method" => "delete", "file" => $imageFileName)), "delete_type" => "POST")));
                 }
                 else
                 {
                     //If the upload failed for some reason we log some data and let the widget know
-                    echo json_encode(array(
-                        array("error" => $model->getErrors('file'),
-                        )));
-                    Yii::log("XUploadAction: " . CVarDumper::dumpAsString($model->getErrors()),
-                        CLogger::LEVEL_ERROR, "xupload.actions.XUploadAction"
-                    );
+                    echo json_encode(array(array("error" => $model->getErrors('file'),)));
+                    Yii::log("XUploadAction: " . CVarDumper::dumpAsString($model->getErrors()), CLogger::LEVEL_ERROR, "xupload.actions.XUploadAction");
                 }
             }
             else
@@ -467,9 +311,7 @@ class ExperienceController extends Controller
     public function actionIndex()
     {
         $dataProvider = new CActiveDataProvider('Experience');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
+        $this->render('index', array('dataProvider' => $dataProvider,));
     }
 
     public function actionSearch()
@@ -525,9 +367,7 @@ class ExperienceController extends Controller
             $model->attributes = $_GET['Experience'];
         }
 
-        $this->render('admin', array(
-            'model' => $model,
-        ));
+        $this->render('admin', array('model' => $model,));
     }
 
     public function actionJoin($id)
@@ -557,8 +397,7 @@ class ExperienceController extends Controller
 
         if ($model->Create_User_ID != $user_ID)
         {
-            $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
-                array(':User_ID' => $user_ID, ':Session_ID' => $session->Session_ID));
+            $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID', array(':User_ID' => $user_ID, ':Session_ID' => $session->Session_ID));
 
             if ($existing == null)
             {

@@ -3,7 +3,7 @@
     <div class="twelve columns">
 
         <?php
-        $form = $this->beginWidget('CActiveForm', array(
+        $navForm = $this->beginWidget('CActiveForm', array(
             'id' => 'class-create-form-nav',
             'enableAjaxValidation' => false,
             'stateful' => true,

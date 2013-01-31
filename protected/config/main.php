@@ -34,7 +34,7 @@ return array(
             //'params'=>array('directory'=>'C:/ImageMagick'),
         ),
         'hybridauth' => array(
-            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yii/kowopdev/hybridauth',
+            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yiidev/kowop/hybridauth',
             'withYiiUser' => false, // Set to true if using yii-user
             "providers" => array(
                 /*"Google" => array(
@@ -125,8 +125,8 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
-        'siteBase' => '/yii/kowopdev',
-        'uploads' => '/home4/rebuttme/public_html/yii/kowopdev/uploads',
-        'temp' => '/home4/rebuttme/public_html/yii/kowopdev/temp'
+        'siteBase' => '/yiidev/kowop',
+        'uploads' => '/home4/rebuttme/public_html/yiidev/kowop/uploads',
+        'temp' => '/home4/rebuttme/public_html/yiidev/kowop/temp'
     ),
 );

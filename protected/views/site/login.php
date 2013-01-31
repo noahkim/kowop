@@ -33,7 +33,7 @@
         <div class="six columns offset-by-three">
             <div class="login">
                 <span class="homeBlurbcopy">Log in or create an account with Facebook</span>
-                <a href="/yii/kowopdev/hybridauth/default/login/?provider=facebook">
+                <a href="/yiidev/kowop/hybridauth/default/login/?provider=facebook">
                     <img src="/ui/sitev2/images/facebook.jpg">
                 </a>
             </div>
