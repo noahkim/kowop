@@ -39,6 +39,8 @@
                                                         'stateful' => true,));
         ?>
 
+        <input type="hidden" name="step" value="6" />
+
         <div class="row">
             <div class="four columns">
                 <label class="right inline">Price - $</label>
