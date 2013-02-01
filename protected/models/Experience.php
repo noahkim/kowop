@@ -94,13 +94,12 @@ class Experience extends CActiveRecord
             'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
             'experienceToContents' => array(self::HAS_MANY, 'ExperienceToContent', 'Experience_ID'),
             'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
-            'ratings' => array(self::HAS_MANY, 'Rating', 'Experience_ID'),
             'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
             // Added
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'experienceToContents'),
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'), 'through' => 'experienceToTags'),
-            'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('User_to_session_ID' => 'User_to_session_ID'), 'through' => 'sessions'),
+            'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('Session_ID' => 'Session_ID'), 'through' => 'sessions'),
             'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'userToSessions'),
         );
     }
@@ -197,6 +196,25 @@ class Experience extends CActiveRecord
         }
 
         return null;
+    }
+
+    public function getNextAvailableSession()
+    {
+        if($this->sessions == null)
+        {
+            return null;
+        }
+
+        $upcoming = $this->sessions(array('condition' => 'Start >= now()', 'order' => 'Start asc'));
+
+        if(count($upcoming) == 0)
+        {
+            return $upcoming[0];
+        }
+
+        $sessions = $this->sessions(array('order' => 'Start asc'));
+        return end($sessions);
+
     }
 
     public function beforeSave()

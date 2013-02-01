@@ -25,12 +25,9 @@
         <!---------- Middle column ------------------->
         <div class="two columns">
             <div class=" infoTuition">
-                        <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Price; ?>
-                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?>
-                                lesson class</span>
-                        </span>
-                <span class="breakdown">$<?php echo $model->Price; ?> per lesson</span>
+                <span class="classTuition">
+                    <sup class="dollarsign">$</sup><?php echo $model->Price; ?>
+                </span>
             </div>
 
             <?php
@@ -41,7 +38,8 @@
                 $instructorPic = $model->createUser->profilePic;
             }
 
-            echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />", array('/user/view', 'id' => $model->Create_User_ID));
+            echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />",
+                             array('/user/view', 'id' => $model->Create_User_ID));
             ?>
 
             <div class="detailsInstructor">
@@ -63,61 +61,53 @@
                 <ul>
                     <?php
 
-                    $nextSession = $model->sessions[0];
+    $nextSession = $model->nextAvailableSession;
 
-                    foreach ($nextSession->lessons as $lesson)
-                    {
-                        $time = strtotime($lesson->Start);
+                    if ($nextSession != null) :
+                        $startTime = strtotime($nextSession->Start);
+                        $endTime = strtotime($nextSession->End);
 
-                        $dayOfWeek = date('l', $time);
-                        $date = date('F j', $time);
-                        $start = date('g:i a', $time);
-
-                        // Get lesson duration in seconds
-                        $offset = $model->LessonDuration * 60 * 60;
-
-                        $end = date('g:i a', ($time + $offset));
+                        $dayOfWeek = date('l', $startTime);
+                        $date = date('F j', $startTime);
+                        $start = date('g:i a', $startTime);
+                        $end = date('g:i a', $endTime);
 
                         echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                    }
+                        ?>
+                        </ul>
+                        </span>
+                        <div class="enrollees">
+                            <span>People in the next session</span>
+                            <?php
 
-                    ?>
-                </ul>
-                </span>
-                <div class="enrollees">
-                    <span>Students in the next session</span>
-                    <?php
+                            foreach ($nextSession->enrolled as $enrollee)
+                            {
+                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
-                    $nextSession = $model->sessions[0];
+                                if ($enrollee->profilePic != null)
+                                {
+                                    $imgLink = $enrollee->profilePic;
+                                }
 
-                    foreach ($nextSession->students as $student)
-                    {
-                        $imgLink = 'http://placeskull.com/100/100/01a4a4';
+                                $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
+                                echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
+                                                 array('title' => $enrollee->fullname));
+                            }
 
-                        if ($student->profilePic != null)
-                        {
-                            $imgLink = $student->profilePic;
-                        }
-
-                        $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
-                        echo CHtml::link(
-                            $imgHTML,
-                            array('/user/view', 'id' => $student->User_ID),
-                            array('title' => $student->fullname)
-                        );
-                    }
-
-                    ?>
-                </div>
+                            ?>
+                        </div>
 
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Edit class details", array('/experience/update', 'id' => $model->Experience_ID), array('class' => 'button large twelve')); ?>
+                <?php echo CHtml::link("Edit experience details", array('/experience/update', 'id' => $model->Experience_ID),
+                                       array('class' => 'button large twelve')); ?>
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Manage sessions", array('/experience/updateSessions', 'id' => $model->Experience_ID), array('class' => 'button large twelve')); ?>
+                <?php echo CHtml::link("Manage sessions",
+                                       array('/experience/updateSessions', 'id' => $model->Experience_ID),
+                                       array('class' => 'button large twelve')); ?>
             </div>
 
             <div>
@@ -133,56 +123,55 @@
     <div class="six columns detailsDescription">
         <?php echo $model->Description; ?>
     </div>
-    <!--- end left column---->
-    <!---------------------------------------
+    <!--- end left column----><!---------------------------------------
                      right column
     ---------------------------------------->
     <div class="six columns">
         <!-------- Class Stats---------------->
-        <div class="detailStats">
+<!--        <div class="detailStats">
             <h4>To Date</h4>
 
             <?php
-            $lessonsToDate = count($model->lessons(array('condition' => 'Start < now()')));
+/*            $lessonsToDate = count($model->sessions(array('condition' => 'Start < now()')));
             $pastStudents = 0;
 
             foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
             {
-                $pastStudents += count($session->students);
+                $pastStudents += count($session->enrolled);
             }
 
             $netIncome = $lessonsToDate * $model->Price * $pastStudents;
             $hoursTaught = $lessonsToDate * $model->LessonDuration;
-            ?>
+            */?>
             <div class="statBox">
-                Students<span><?php echo $pastStudents; ?></span>
+                Students<span><?php /*echo $pastStudents; */?></span>
             </div>
             <div class="statBox">
-                Net Income<span>$<?php echo $netIncome; ?></span>
+                Net Income<span>$<?php /*echo $netIncome; */?></span>
             </div>
             <div class="statBox">
-                Hours Taught<span><?php echo $hoursTaught; ?></span>
+                Hours Taught<span><?php /*echo $hoursTaught; */?></span>
             </div>
             <h4>Enrolled</h4>
 
             <?php
-            $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
+/*            $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
             $projectedIncome = $lessonsToTeach * $model->Price * $model->Max_occupancy;
             $hoursToTeach = $lessonsToTeach * $model->LessonDuration;
-            ?>
+            */?>
             <div class="statBox">
-                Students<span><?php echo count($model->students); ?></span>
+                Students<span><?php /*echo count($model->students); */?></span>
             </div>
             <div class="statBox">
-                Projected Income<span>$<?php echo $projectedIncome; ?></span>
+                Projected Income<span>$<?php /*echo $projectedIncome; */?></span>
             </div>
             <div class="statBox">
-                Hours to Teach<span><?php echo $hoursToTeach; ?></span>
+                Hours to Teach<span><?php /*echo $hoursToTeach; */?></span>
             </div>
             <h4>Instructor Stats</h4>
 
             <?php
-            $totalTuition = 0;
+/*            $totalTuition = 0;
             $totalHours = 0;
 
             foreach ($model->createUser->experiences as $class)
@@ -194,20 +183,20 @@
             $avgPerClass = $totalTuition / count($model->createUser->experiences);
             $avgPerHour = $totalTuition / $totalHours;
 
-            ?>
+            */?>
             <div class="statBox">
-                Avg. per Class<span>$<?php echo number_format($avgPerClass, 2); ?></span>
+                Avg. per Class<span>$<?php /*echo number_format($avgPerClass, 2); */?></span>
             </div>
             <div class="statBox">
-                Avg. per Hour<span>$<?php echo number_format($avgPerHour, 2); ?></span>
+                Avg. per Hour<span>$<?php /*echo number_format($avgPerHour, 2); */?></span>
             </div>
             <div class="statBox">
-                Net Income<span>$<?php echo $totalTuition; ?></span>
+                Net Income<span>$<?php /*echo $totalTuition; */?></span>
             </div>
             <h4>Class stats</h4>
 
             <?php
-            $totalSeats = 0;
+/*            $totalSeats = 0;
             $daysOfWeek = array();
 
             foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
@@ -232,21 +221,22 @@
             reset($daysOfWeek);
             $busiestDay = key($daysOfWeek);
 
-            $pastSessionCount = count($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')));
+            $pastSessionCount = count($model->sessions(array('with' => 'lessons',
+                                                             'condition' => 'lessons.Start < now()')));
             $avgClassSize = $pastSessionCount > 0 ? $totalSeats / $pastSessionCount : 0;
 
-            ?>
+            */?>
 
             <div class="statBox">
-                Avg Class Size<span><?php echo number_format($avgClassSize, 2); ?></span>
+                Avg Class Size<span><?php /*echo number_format($avgClassSize, 2); */?></span>
             </div>
             <div class="statBox">
-                Busiest Day<span><?php echo $busiestDay; ?></span>
+                Busiest Day<span><?php /*echo $busiestDay; */?></span>
             </div>
             <div class="statBox">
                 Views<span>268</span>
             </div>
-        </div>
+        </div>-->
         <!-------- end Class Stats------------>
 
         <div class="detailSidebar">
@@ -255,21 +245,18 @@
                     <ul>
                         <li><span>Location</span><?php echo $model->location->Zip; ?></li>
                         <?php
-                        $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j', strtotime($model->End));
+                        $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j',
+                                                                                           strtotime($model->End));
                         echo "<li><span>Availability</span>{$availability}</li>\n";
                         ?>
                         <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
                         <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
-                        <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
-                        <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
                     </ul>
                 </div>
             </div>
             <div class="row">
                 <div class="twelve columns spacebot10 detailsMap">
-                    <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
-                            marginwidth="0"
-                            src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+                    <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
                 </div>
             </div>
             <div class="detailEnrolllater" id="enrolllater">
@@ -287,19 +274,16 @@
     <h2>Confirm class cancellation</h2>
 
     <p>
-        Do you really want to cancel the class "<?php echo $model->Name; ?>"?
-    </p>
+        Do you really want to cancel the class "<?php echo $model->Name; ?>"? </p>
 
     <div>
         <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'class-delete-form',
-            'enableAjaxValidation' => false,
-            'action' => Yii::app()->createUrl('//experience/delete', array('id' => $model->Experience_ID))
-        ));
+        $form = $this->beginWidget('CActiveForm', array('id' => 'class-delete-form', 'enableAjaxValidation' => false,
+                                                        'action' => Yii::app()->createUrl('//experience/delete',
+                                                                                          array('id' => $model->Experience_ID))));
         ?>
 
-        <input type="submit" value="Confirm Cancellation" class="button secondary radius" />
+        <input type="submit" value="Confirm Cancellation" class="button secondary radius"/>
 
         <?php $this->endWidget(); ?>
     </div>
@@ -364,7 +348,8 @@
             foreach ($model->sessions as $i => $session)
             {
                 $title = 'Session ' . ($i + 1);
-                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID));
+                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
+                                                                           'session' => $session->Session_ID));
 
                 foreach ($session->lessons as $lesson)
                 {
@@ -390,7 +375,8 @@ BLOCK;
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content:{
-                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog", array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
+                                                                     array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{

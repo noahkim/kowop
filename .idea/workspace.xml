@@ -25,59 +25,75 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_createForm4.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm4.php">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="8" selection-start="1391" selection-end="1720" vertical-scroll-proportion="-15.692307">
+            <state line="263" column="31" selection-start="12274" selection-end="12274" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_createForm5.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm5.php">
+      <file leaf-file-name="search.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="0" selection-start="1723" selection-end="1723" vertical-scroll-proportion="-15.692307">
+            <state line="165" column="44" selection-start="6513" selection-end="6513" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_default.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_default.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="3" selection-start="2961" selection-end="4588" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_enrolled.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_enrolled.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="0" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <marker date="1359681356346" expanded="true" signature="1122:1243" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_createForm6.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
+      <file leaf-file-name="_teacher.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_teacher.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="31" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.6512821">
+            <state line="61" column="25" selection-start="2315" selection-end="2315" vertical-scroll-proportion="0.014836796">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_createForm7.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm7.php">
+      <file leaf-file-name="Experience.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+            <state line="211" column="27" selection-start="8046" selection-end="8046" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExperienceController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
+      <file leaf-file-name="UserToSession.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/UserToSession.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="70" selection-start="2933" selection-end="2933" vertical-scroll-proportion="-19.076923">
+            <state line="46" column="37" selection-start="1223" selection-end="1241" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExperienceCreateForm.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/models/ExperienceCreateForm.php">
+      <file leaf-file-name="Session.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/Session.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="0" selection-start="2085" selection-end="2085" vertical-scroll-proportion="-24.192308">
+            <state line="60" column="49" selection-start="1633" selection-end="1633" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -96,12 +112,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/models/Experience.php" />
-        <option value="$PROJECT_DIR$/protected/models/Session.php" />
-        <option value="$PROJECT_DIR$/protected/models/ExperiencePosterType.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/_createForm1.php" />
-        <option value="$PROJECT_DIR$/protected/models/ExperienceAppropriateAges.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/_createForm2.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm3.php" />
         <option value="$PROJECT_DIR$/protected/config/main.php" />
         <option value="$PROJECT_DIR$/protected/controllers/ExperienceController.php" />
@@ -112,6 +122,12 @@
         <option value="$PROJECT_DIR$/protected/models/ExperienceCreateForm.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm5.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm6.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_searchResults.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/view/_enrolled.php" />
+        <option value="$PROJECT_DIR$/protected/models/Experience.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/view/_default.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/view/_teacher.php" />
       </list>
     </option>
   </component>
@@ -119,8 +135,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1576" />
+    <option name="width" value="1936" />
+    <option name="height" value="1186" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -328,6 +344,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="experience" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protected" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="content" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -393,10 +435,10 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode.PHP" />
+    <property name="options.lastSelected" value="preferences.sourceCode.HTML" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -421,14 +463,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -465,16 +507,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1576" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32485875" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20772566" sideWeight="0.6751412" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14654718" sideWeight="0.6758818" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -483,6 +524,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3241182" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -543,118 +585,100 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="33" selection-start="608" selection-end="608" vertical-scroll-proportion="0.1992674">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="6" selection-start="510" selection-end="510" vertical-scroll-proportion="-10.461538">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="16" selection-start="129" selection-end="137" vertical-scroll-proportion="-3.2692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm3.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="14" selection-start="1205" selection-end="1205" vertical-scroll-proportion="0.2029304">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="10" selection-start="2932" selection-end="2932" vertical-scroll-proportion="0.25274727">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Category.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="26" selection-start="764" selection-end="764" vertical-scroll-proportion="-0.021245422">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/extensions/iwi/Iwi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/extensions/iwi/IwiComponent.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/extensions/xupload/XUpload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="177" column="38" selection-start="5556" selection-end="5556" vertical-scroll-proportion="0.47692308">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/Location.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="0" selection-start="2736" selection-end="2736" vertical-scroll-proportion="0.2989011">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm7.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="75" column="0" selection-start="2736" selection-end="2736" vertical-scroll-proportion="0.2989011" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="8" selection-start="1391" selection-end="1720" vertical-scroll-proportion="-15.692307">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="70" selection-start="2933" selection-end="2933" vertical-scroll-proportion="-19.076923">
-          <folding />
-        </state>
+        <state line="36" column="8" selection-start="1391" selection-end="1720" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/ExperienceCreateForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="0" selection-start="2085" selection-end="2085" vertical-scroll-proportion="-24.192308">
-          <folding />
-        </state>
+        <state line="91" column="0" selection-start="2227" selection-end="2227" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm5.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1723" selection-end="1723" vertical-scroll-proportion="-15.692307">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
+        <state line="42" column="0" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="31" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.6512821">
+        <state line="15" column="37" selection-start="647" selection-end="647" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm7.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="7" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/UserToSession.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="37" selection-start="1223" selection-end="1241" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Session.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="49" selection-start="1633" selection-end="1633" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="263" column="31" selection-start="12274" selection-end="12274" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_enrolled.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="1245" selection-end="1245" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1359681356346" expanded="true" signature="1122:1243" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/_searchResults.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="5" selection-start="1269" selection-end="1269" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="44" selection-start="6513" selection-end="6513" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="211" column="27" selection-start="8046" selection-end="8046" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_default.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="3" selection-start="2961" selection-end="4588" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_teacher.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="25" selection-start="2315" selection-end="2315" vertical-scroll-proportion="0.014836796">
           <folding />
         </state>
       </provider>

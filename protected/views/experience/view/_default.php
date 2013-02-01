@@ -3,8 +3,7 @@
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-        ---------------------------------------->
-        <!----- Class title------->
+        ----------------------------------------><!----- Class title------->
         <div class="row">
             <div class="twelve columns">
                 <div class="followClass"><a href="#" class="button ">Follow Class</a></div>
@@ -32,10 +31,8 @@
                 <div class="two columns">
                     <div class=" infoTuition">
                         <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo count($model->sessions[0]->lessons) * $model->Price; ?>
-                            <span class="persession"><?php echo count($model->sessions[0]->lessons); ?> lesson class</span>
+                            <sup class="dollarsign">$</sup><?php echo $model->Price; ?>
                         </span>
-                        <span class="breakdown">$<?php echo $model->Price; ?> per lesson</span>
                     </div>
 
                     <?php
@@ -46,7 +43,8 @@
                         $instructorPic = $model->createUser->profilePic;
                     }
 
-                    echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />", array('/user/view', 'id' => $model->Create_User_ID));
+                    echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />",
+                                     array('/user/view', 'id' => $model->Create_User_ID));
                     ?>
 
                     <div class="detailsInstructor">
@@ -63,51 +61,42 @@
                 </div>
                 <!------------ Right column ------------------>
                 <div class="four columns">
-                    <div class="detailsNextSession">
-                        <span>Next available session scheduled for</span>
-                        <ul>
-                            <?php
+                <div class="detailsNextSession">
+                    <span>Next available session scheduled for</span>
+                <ul>
+                    <?php
 
-                            $nextSession = $model->nextAvailableSession;
+                    $nextSession = $model->nextAvailableSession;
 
-                            foreach ($nextSession->lessons as $lesson)
-                            {
-                                $time = strtotime($lesson->Start);
+                    if ($nextSession != null) :
+                        $startTime = strtotime($nextSession->Start);
+                        $endTime = strtotime($nextSession->End);
 
-                                $dayOfWeek = date('l', $time);
-                                $date = date('F j', $time);
-                                $start = date('g:i a', $time);
+                        $dayOfWeek = date('l', $startTime);
+                        $date = date('F j', $startTime);
+                        $start = date('g:i a', $startTime);
+                        $end = date('g:i a', $endTime);
 
-                                // Get lesson duration in seconds
-                                $offset = $model->LessonDuration * 60 * 60;
-
-                                $end = date('g:i a', ($time + $offset));
-
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                            }
-
-                            ?>
+                        echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                        ?>
                         </ul>
                         </span>
                         <div class="enrollees">
-                            <span>Classmates in the next session</span>
+                            <span>People in the next session</span>
                             <?php
 
-                            foreach ($nextSession->students as $student)
+                            foreach ($nextSession->enrolled as $enrollee)
                             {
                                 $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
-                                if ($student->profilePic != null)
+                                if ($enrollee->profilePic != null)
                                 {
-                                    $imgLink = $student->profilePic;
+                                    $imgLink = $enrollee->profilePic;
                                 }
 
-                                $imgHTML = "<img src='{$imgLink}' alt='{$student->fullname}' />";
-                                echo CHtml::link(
-                                    $imgHTML,
-                                    array('/user/view', 'id' => $student->User_ID),
-                                    array('title' => $student->fullname)
-                                );
+                                $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
+                                echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
+                                                 array('title' => $enrollee->fullname));
                             }
 
                             ?>
@@ -117,14 +106,16 @@
                     <div class="spacebot10">
                         <?php
                         echo CHtml::link('Enroll for this session',
-                            array('/experience/join', 'id' => $model->Experience_ID, array('session' => $nextSession->Session_ID)),
-                            array('class' => 'button large twelve enrollButton')
-                        );
+                                         array('/experience/join', 'id' => $model->Experience_ID,
+                                               array('session' => $nextSession->Session_ID)),
+                                         array('class' => 'button large twelve enrollButton'));
                         ?>
                     </div>
-                    <div>
-                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
-                    </div>
+                        <div>
+                            <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later
+                                session</a>
+                        </div>
+                        <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -135,8 +126,7 @@
             <div class="six columns detailsDescription">
                 <?php echo $model->Description; ?>
             </div>
-            <!--- end left column---->
-            <!---------------------------------------
+            <!--- end left column----><!---------------------------------------
                              right column
             ---------------------------------------->
             <div class="six columns">
@@ -145,10 +135,10 @@
                     <div class="twelve columns">
                         <div class="detailStats">
                             <div class="statBox">
-                                Graduates<span><?php echo count($model->students); ?></span>
+                                Graduates<span><?php echo count($model->enrolled); ?></span>
                             </div>
                             <div class="statBox">
-                                Enrollees<span><?php echo count($model->students); ?></span>
+                                Enrollees<span><?php echo count($model->enrolled); ?></span>
                             </div>
                             <div class="statBox">
                                 Views<span>536</span>
@@ -163,22 +153,19 @@
                             <ul>
                                 <li><span>Location</span><?php echo $model->location->Zip; ?></li>
                                 <?php
-                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j', strtotime($model->End));
+                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j',
+                                                                                                   strtotime($model->End));
                                 echo "<li><span>Availability</span>{$availability}</li>\n";
                                 ?>
                                 <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
                                 <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
-                                <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
-                                <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
 
                             </ul>
                         </div>
                     </div>
                     <div class="row">
                         <div class="twelve columns spacebot10 detailsMap">
-                            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
-                                    marginwidth="0"
-                                    src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+                            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
                         </div>
                     </div>
                     <div class="detailEnrolllater" id="enrolllater">
@@ -247,7 +234,8 @@
             foreach ($model->sessions as $i => $session)
             {
                 $title = 'Session ' . ($i + 1);
-                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID));
+                $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
+                                                                           'session' => $session->Session_ID));
 
                 foreach ($session->lessons as $lesson)
                 {
@@ -273,7 +261,8 @@ BLOCK;
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content:{
-                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog", array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
+                                                                     array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{

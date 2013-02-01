@@ -24,16 +24,13 @@ foreach ($results as $i => $item)
     $sessionHTML = 'Request';
     if ($item instanceof Experience)
     {
-        if (($item->Price == null) || ($item->Price == 0) || (count($item->sessions) == 0))
+        if (($item->Price == null) || ($item->Price == 0))
         {
-            $sessionHTML = 'This class is free!';
+            $sessionHTML = 'This experience is free!';
         }
         else
         {
-            $lessonCount = count($item->sessions[0]->lessons);
-            $tuition = $item->Price * $lessonCount;
-
-            $sessionHTML = "\${$tuition} ( {$lessonCount} lessons )";
+            $sessionHTML = "\${$item->Price}";
         }
     }
 
@@ -63,17 +60,17 @@ foreach ($results as $i => $item)
         $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $item->Experience_ID));
 
         $enrollees = '';
-        foreach ($item->students as $student)
+        foreach ($item->enrolled as $enrollee)
         {
             $picLink = 'http://placeskull.com/100/100/868686';
 
-            if ($student->profilePic != null)
+            if ($enrollee->profilePic != null)
             {
-                $picLink = $student->profilePic;
+                $picLink = $enrollee->profilePic;
             }
 
-            $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-            $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+            $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
+            $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
         }
 
         echo <<<BLOCK
