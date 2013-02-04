@@ -11,7 +11,7 @@
 </ul>
 <div class="enrollees spacebot10">
     <?php
-    foreach ($session->students as $student)
+    foreach ($session->enrolled as $student)
     {
         $imageLink = 'http://placeskull.com/100/100/01a4a4';
 

@@ -6,7 +6,7 @@
 </ul>
 <div class="enrollees spacebot10">
     <?php
-        foreach($model->session->students as $student)
+        foreach($model->session->enrolled as $student)
         {
             $imageLink = 'http://placeskull.com/100/100/01a4a4';
 

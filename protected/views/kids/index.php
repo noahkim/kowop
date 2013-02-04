@@ -161,7 +161,7 @@
 
                 $randomClass = $randomClass[0];
                 $enrollees = '';
-                foreach ($randomClass->students as $student)
+                foreach ($randomClass->enrolled as $student)
                 {
                     $picLink = 'http://placeskull.com/100/100/868686';
 
@@ -232,7 +232,7 @@
             }
 
             $enrollees = '';
-            foreach ($class->students as $student)
+            foreach ($class->enrolled as $student)
             {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
@@ -321,7 +321,7 @@ BLOCK;
             }
 
             $enrollees = '';
-            foreach ($class->students as $student)
+            foreach ($class->enrolled as $student)
             {
                 $picLink = 'http://placeskull.com/100/100/868686';
 

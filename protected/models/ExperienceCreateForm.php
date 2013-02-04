@@ -38,6 +38,8 @@ class ExperienceCreateForm extends CFormModel
     public $Offering;
     public $Description;
     public $FinePrint;
+    public $MaxPerPerson;
+    public $MultipleAllowed;
 
     // Additional elements
 
@@ -59,12 +61,13 @@ class ExperienceCreateForm extends CFormModel
 
     public function rules()
     {
-        return array(array('PosterType', 'required', 'on' => 'step1'), array('ExperienceType', 'required', 'on' => 'step2'),
+        return array(array('PosterType', 'required', 'on' => 'step1'),
+                     array('ExperienceType', 'required', 'on' => 'step2'),
                      array('Audience', 'required', 'on' => 'step3'),
                      array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip',
                            'required', 'on' => 'step4'),
-                     array('Price, Offering, Description', 'required', 'on' => 'step5'),
-                     array('PosterType,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID',
+                     array('Offering, Description', 'required', 'on' => 'step5'),
+                     array('PosterType,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID,MaxPerPerson,MultipleAllowed',
                            'safe'),);
     }
 
@@ -114,6 +117,8 @@ class ExperienceCreateForm extends CFormModel
             $experience->Price = $this->Price;
             $experience->Min_occupancy = $this->Min_occupancy;
             $experience->Max_occupancy = $this->Max_occupancy;
+            $experience->MaxPerPerson = $this->MaxPerPerson;
+            $experience->MultipleAllowed = $this->MultipleAllowed;
 
             $appropriateAges = 0;
             if (isset($this->AppropriateAges) && is_array($this->AppropriateAges))
@@ -138,10 +143,10 @@ class ExperienceCreateForm extends CFormModel
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
-                    $classToContent = new ExperienceToContent;
-                    $classToContent->Experience_ID = $this->experience->Experience_ID;
-                    $classToContent->Content_ID = $content->Content_ID;
-                    $classToContent->save();
+                    $experienceToContent = new ExperienceToContent;
+                    $experienceToContent->Experience_ID = $this->experience->Experience_ID;
+                    $experienceToContent->Content_ID = $content->Content_ID;
+                    $experienceToContent->save();
                 }
             }
 

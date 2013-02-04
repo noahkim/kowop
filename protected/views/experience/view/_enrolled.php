@@ -97,7 +97,7 @@
 
                             if ($nextSession != null)
                             {
-                                foreach ($nextSession->students as $student)
+                                foreach ($nextSession->enrolled as $student)
                                 {
                                     $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
@@ -146,10 +146,10 @@
                     <div class="twelve columns">
                         <div class="detailStats">
                             <div class="statBox">
-                                Graduates<span><?php echo count($model->students); ?></span>
+                                Graduates<span><?php echo count($model->enrolled); ?></span>
                             </div>
                             <div class="statBox">
-                                Enrollees<span><?php echo count($model->students); ?></span>
+                                Enrollees<span><?php echo count($model->enrolled); ?></span>
                             </div>
                             <div class="statBox">
                                 Views<span>536</span>

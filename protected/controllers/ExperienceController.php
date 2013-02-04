@@ -50,7 +50,7 @@ class ExperienceController extends Controller
             }
             else
             {
-                $isEnrolled = count($model->students(array('condition' => 'students.User_ID = ' . Yii::app()->user->id))) > 0;
+                $isEnrolled = count($model->enrolled(array('condition' => 'enrolled.User_ID = ' . Yii::app()->user->id))) > 0;
 
                 if ($isEnrolled)
                 {
@@ -135,9 +135,10 @@ class ExperienceController extends Controller
         {
             $step = 1;
         }
-        else
+
+        if($step == 6)
         {
-            Yii::app()->user->setState('imageFileNames', array());
+            $this->layout = '//layouts/createSessions';
         }
 
         $this->render('_createForm' . $step, array('model' => $model, 'images' => $images));
@@ -209,10 +210,10 @@ class ExperienceController extends Controller
                 {
                     $content = Content::AddContent($imageFile, 'Class Image', ContentType::ImageID);
 
-                    $classToContent = new ExperienceToContent;
-                    $classToContent->Experience_ID = $model->Experience_ID;
-                    $classToContent->Content_ID = $content->Content_ID;
-                    $classToContent->save();
+                    $experienceToContent = new ExperienceToContent;
+                    $experienceToContent->Experience_ID = $model->Experience_ID;
+                    $experienceToContent->Content_ID = $content->Content_ID;
+                    $experienceToContent->save();
                 }
 
                 Yii::app()->user->setState('imageFileNames', array());
@@ -221,7 +222,7 @@ class ExperienceController extends Controller
             if ($model->save())
             {
                 // Notify the students
-                foreach ($model->students as $student)
+                foreach ($model->enrolled as $student)
                 {
                     if ($student->User_ID != $model->Create_User_ID)
                     {
@@ -458,7 +459,7 @@ class ExperienceController extends Controller
         }
 
         // Notify the students
-        foreach ($model->students as $student)
+        foreach ($model->enrolled as $student)
         {
             if ($student->User_ID != $user_ID)
             {

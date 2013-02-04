@@ -30,7 +30,7 @@
         <p>Being busy at work on the weekdays, and a father at nights and weekends, local schooling wasn't an attractive
             option despite the advantage learning in a class environment provides. Tutors (which didn't even exist for
             this particular subject matter in his area), was more convenient for scheduling, but were prohibitively
-            expensive and didn't offer the valuable collaboration of fellow students.</p>
+            expensive and didn't offer the valuable collaboration of fellow enrolled.</p>
 
         <p>So he went online, and started looking for some sort of community that would help facilitate him learning
             programming. To his surprise, none existed. Sure, there were sites where people could "meet up", but the

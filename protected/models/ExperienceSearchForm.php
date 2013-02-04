@@ -124,7 +124,7 @@ class ExperienceSearchForm extends CFormModel
         {
             foreach ($classes as $i => $class)
             {
-                $enrolled = count($class->students);
+                $enrolled = count($class->enrolled);
 
                 switch ($this->seatsInNextClass)
                 {

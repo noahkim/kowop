@@ -12,7 +12,8 @@
         <?php $this->endWidget(); ?>
 
         <script>
-            function navigateTo(page) {
+            function navigateTo(page)
+            {
                 $('#step').val(page);
                 document.forms['experience-create-form-nav'].submit();
             }
@@ -39,6 +40,36 @@
             you'd like to make available. Don't worry about getting them all in now. You can always come back and add
             more. Make it as specific (like 10am-11am) or as general (8am-8pm) as you'd like.</p>
 
+        <?php
+        $form = $this->beginWidget('CActiveForm',
+                                   array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
+                                         'stateful' => true,
+                                         'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+        ?>
+
+        <input type='hidden' name='step' value='7'/>
+        <?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
+
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right">Available seats each session</label>
+            </div>
+            <div class="two columns">
+                <?php echo $form->textField($model, 'Min_occupancy',
+                                            array('placeholder' => 'min', 'maxlength' => '3')); ?>
+            </div>
+            <div class="one column"><label class="text-center inline">-</label></div>
+            <div class="two columns">
+                <?php echo $form->textField($model, 'Max_occupancy',
+                                            array('placeholder' => 'max', 'maxlength' => '3')); ?>
+            </div>
+            <div class="two columns end">
+                <label class="inline">(optional)</label>
+            </div>
+        </div>
+
+        <?php $this->endWidget(); ?>
+
         <div id='calendar' class="scheduleCalendar"></div>
 
         <div class="row borderTop">
@@ -48,8 +79,7 @@
             </div>
         </div>
     </div>
-    <!-------------- end left column ----------->
-    <!-------------- right column -------------->
+    <!-------------- end left column -----------><!-------------- right column -------------->
     <div class="four columns">
         <h3>What are the advantages?</h3>
   	    <span class="circleList">
@@ -75,52 +105,53 @@
         </ul>
 
     </div>
-    <!---------------end right column---------->
-    <!------- end main content container----->
+    <!---------------end right column----------><!------- end main content container----->
 </div>
 
-<?php
-$form = $this->beginWidget('CActiveForm',
-                           array('id' => 'experience-create-form', 'enableAjaxValidation' => false, 'stateful' => true,
-                                 'htmlOptions' => array('enctype' => 'multipart/form-data'),));
-?>
-
-<input type='hidden' name='step' value='7'/>
-<?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
-
-<?php $this->endWidget(); ?>
-
 <script>
-    $(document).ready(function () {
+    var lastID = 0;
+
+    $(document).ready(function ()
+    {
         var calendar = $('#calendar').fullCalendar({
             header:{
-                left:'prev,next today',
+                left  :'prev,next today',
                 center:'title',
-                right:'month,agendaWeek,agendaDay'
+                right :'month,agendaWeek,agendaDay'
             },
 
-            defaultView:'agendaWeek',
-            selectable:true,
+            defaultView :'agendaWeek',
+            selectable  :true,
             selectHelper:true,
-            select:function (start, end, allDay) {
+            editable    :true,
+            select      :function (start, end, allDay)
+            {
                 calendar.fullCalendar('renderEvent',
                         {
-                            title:'',
-                            start:start,
-                            end:end,
-                            allDay:allDay
+                            title :'',
+                            start :start,
+                            end   :end,
+                            allDay:allDay,
+                            id    :lastID++
                         },
                         true // make the event "stick"
                 );
                 calendar.fullCalendar('unselect');
             },
-            editable:true,
+            eventRender :function (event, element)
+            {
+                element.bind("contextmenu", function (e)
+                {
+                    $('#calendar').fullCalendar('removeEvents', event.id);
+                    return false;
+                });
+            }
         });
     });
 
     function submitForm(addSessions)
     {
-        if(addSessions)
+        if (addSessions)
         {
             $('#sessions').val('');
             document.forms['experience-create-form'].submit();

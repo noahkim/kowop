@@ -58,49 +58,52 @@
         <div class="four columns">
             <div class="detailsNextSession">
                 <span>Next session you're teaching is on</span>
-                <ul>
-                    <?php
+            <ul>
+                <?php
 
-    $nextSession = $model->nextAvailableSession;
+                $nextSession = $model->nextAvailableSession;
 
-                    if ($nextSession != null) :
-                        $startTime = strtotime($nextSession->Start);
-                        $endTime = strtotime($nextSession->End);
+                if ($nextSession != null) :
+                    $startTime = strtotime($nextSession->Start);
+                    $endTime = strtotime($nextSession->End);
 
-                        $dayOfWeek = date('l', $startTime);
-                        $date = date('F j', $startTime);
-                        $start = date('g:i a', $startTime);
-                        $end = date('g:i a', $endTime);
+                    $dayOfWeek = date('l', $startTime);
+                    $date = date('F j', $startTime);
+                    $start = date('g:i a', $startTime);
+                    $end = date('g:i a', $endTime);
 
-                        echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                        ?>
+                    echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                    ?>
                         </ul>
                         </span>
-                        <div class="enrollees">
-                            <span>People in the next session</span>
-                            <?php
+                    <div class="enrollees">
+                        <span>People in the next session</span>
+                        <?php
 
-                            foreach ($nextSession->enrolled as $enrollee)
+                        foreach ($nextSession->enrolled as $enrollee)
+                        {
+                            $imgLink = 'http://placeskull.com/100/100/01a4a4';
+
+                            if ($enrollee->profilePic != null)
                             {
-                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
-
-                                if ($enrollee->profilePic != null)
-                                {
-                                    $imgLink = $enrollee->profilePic;
-                                }
-
-                                $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
-                                echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
-                                                 array('title' => $enrollee->fullname));
+                                $imgLink = $enrollee->profilePic;
                             }
 
-                            ?>
-                        </div>
+                            $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
+                            echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
+                                             array('title' => $enrollee->fullname));
+                        }
+
+                        ?>
+                    </div>
+
+                    <?php endif; ?>
 
             </div>
 
             <div class="spacebot10">
-                <?php echo CHtml::link("Edit experience details", array('/experience/update', 'id' => $model->Experience_ID),
+                <?php echo CHtml::link("Edit experience details",
+                                       array('/experience/update', 'id' => $model->Experience_ID),
                                        array('class' => 'button large twelve')); ?>
             </div>
 
@@ -127,22 +130,21 @@
                      right column
     ---------------------------------------->
     <div class="six columns">
-        <!-------- Class Stats---------------->
-<!--        <div class="detailStats">
+        <!-------- Class Stats----------------><!--        <div class="detailStats">
             <h4>To Date</h4>
 
             <?php
-/*            $lessonsToDate = count($model->sessions(array('condition' => 'Start < now()')));
-            $pastStudents = 0;
+    /*            $lessonsToDate = count($model->sessions(array('condition' => 'Start < now()')));
+                $pastStudents = 0;
 
-            foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
-            {
-                $pastStudents += count($session->enrolled);
-            }
+                foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
+                {
+                    $pastStudents += count($session->enrolled);
+                }
 
-            $netIncome = $lessonsToDate * $model->Price * $pastStudents;
-            $hoursTaught = $lessonsToDate * $model->LessonDuration;
-            */?>
+                $netIncome = $lessonsToDate * $model->Price * $pastStudents;
+                $hoursTaught = $lessonsToDate * $model->LessonDuration;
+                */?>
             <div class="statBox">
                 Students<span><?php /*echo $pastStudents; */?></span>
             </div>
@@ -155,12 +157,12 @@
             <h4>Enrolled</h4>
 
             <?php
-/*            $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
-            $projectedIncome = $lessonsToTeach * $model->Price * $model->Max_occupancy;
-            $hoursToTeach = $lessonsToTeach * $model->LessonDuration;
-            */?>
+    /*            $lessonsToTeach = count($model->lessons(array('condition' => 'Start >= now()')));
+                $projectedIncome = $lessonsToTeach * $model->Price * $model->Max_occupancy;
+                $hoursToTeach = $lessonsToTeach * $model->LessonDuration;
+                */?>
             <div class="statBox">
-                Students<span><?php /*echo count($model->students); */?></span>
+                Students<span><?php /*echo count($model->enrolled); */?></span>
             </div>
             <div class="statBox">
                 Projected Income<span>$<?php /*echo $projectedIncome; */?></span>
@@ -171,19 +173,19 @@
             <h4>Instructor Stats</h4>
 
             <?php
-/*            $totalTuition = 0;
-            $totalHours = 0;
+    /*            $totalTuition = 0;
+                $totalHours = 0;
 
-            foreach ($model->createUser->experiences as $class)
-            {
-                $totalTuition += $class->Price;
-                $totalHours += $class->LessonDuration;
-            }
+                foreach ($model->createUser->experiences as $class)
+                {
+                    $totalTuition += $class->Price;
+                    $totalHours += $class->LessonDuration;
+                }
 
-            $avgPerClass = $totalTuition / count($model->createUser->experiences);
-            $avgPerHour = $totalTuition / $totalHours;
+                $avgPerClass = $totalTuition / count($model->createUser->experiences);
+                $avgPerHour = $totalTuition / $totalHours;
 
-            */?>
+                */?>
             <div class="statBox">
                 Avg. per Class<span>$<?php /*echo number_format($avgPerClass, 2); */?></span>
             </div>
@@ -196,36 +198,36 @@
             <h4>Class stats</h4>
 
             <?php
-/*            $totalSeats = 0;
-            $daysOfWeek = array();
+    /*            $totalSeats = 0;
+                $daysOfWeek = array();
 
-            foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
-            {
-                $totalSeats += count($session->students);
-            }
-
-            foreach ($model->sessions as $session)
-            {
-                foreach ($session->lessons as $lesson)
+                foreach ($model->sessions(array('with' => 'lessons', 'condition' => 'lessons.Start < now()')) as $session)
                 {
-                    $dayOfWeek = date('l', strtotime($lesson->Start));
-                    if (!isset($daysOfWeek[$dayOfWeek]))
-                    {
-                        $daysOfWeek[$dayOfWeek] = 0;
-                    }
-                    $daysOfWeek[$dayOfWeek]++;
+                    $totalSeats += count($session->enrolled);
                 }
-            }
 
-            arsort($daysOfWeek);
-            reset($daysOfWeek);
-            $busiestDay = key($daysOfWeek);
+                foreach ($model->sessions as $session)
+                {
+                    foreach ($session->lessons as $lesson)
+                    {
+                        $dayOfWeek = date('l', strtotime($lesson->Start));
+                        if (!isset($daysOfWeek[$dayOfWeek]))
+                        {
+                            $daysOfWeek[$dayOfWeek] = 0;
+                        }
+                        $daysOfWeek[$dayOfWeek]++;
+                    }
+                }
 
-            $pastSessionCount = count($model->sessions(array('with' => 'lessons',
-                                                             'condition' => 'lessons.Start < now()')));
-            $avgClassSize = $pastSessionCount > 0 ? $totalSeats / $pastSessionCount : 0;
+                arsort($daysOfWeek);
+                reset($daysOfWeek);
+                $busiestDay = key($daysOfWeek);
 
-            */?>
+                $pastSessionCount = count($model->sessions(array('with' => 'lessons',
+                                                                 'condition' => 'lessons.Start < now()')));
+                $avgClassSize = $pastSessionCount > 0 ? $totalSeats / $pastSessionCount : 0;
+
+                */?>
 
             <div class="statBox">
                 Avg Class Size<span><?php /*echo number_format($avgClassSize, 2); */?></span>
@@ -236,8 +238,7 @@
             <div class="statBox">
                 Views<span>268</span>
             </div>
-        </div>-->
-        <!-------- end Class Stats------------>
+        </div>--><!-------- end Class Stats------------>
 
         <div class="detailSidebar">
             <div class="row">

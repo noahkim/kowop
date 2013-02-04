@@ -252,15 +252,15 @@ class User extends CActiveRecord
 
         foreach ($sessions as $session)
         {
-            $results['studentsToDate'] += count($session->students);
-            $results['netIncomeToDate'] += $session->experience->Price * count($session->students) * count($session->lessons(array('condition' => 'End <= now()')));
+            $results['studentsToDate'] += count($session->enrolled);
+            $results['netIncomeToDate'] += $session->experience->Price * count($session->enrolled) * count($session->lessons(array('condition' => 'End <= now()')));
             $results['hoursTaught'] += $session->experience->LessonDuration * count($session->lessons(array('condition' => 'End <= now()')));
 
             $results['studentsEnrolled'] += count($session->userToSessions(array('with' => 'lessons', 'condition' => 'lessons.Start > now()')));
             $results['projectedIncome'] += $session->experience->Price * $session->experience->Max_occupancy * count($session->lessons(array('condition' => 'Start > now()')));
             $results['hoursToTeach'] += $session->experience->LessonDuration * count($session->lessons(array('condition' => 'Start > now()')));
 
-            $netIncome += $session->experience->Price * count($session->students) * count($session->lessons);
+            $netIncome += $session->experience->Price * count($session->enrolled) * count($session->lessons);
             $totalHours += $session->experience->LessonDuration * count($session->lessons);
             $classes[$session->Experience_ID] = 1;
         }

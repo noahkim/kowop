@@ -11,7 +11,8 @@
         <?php $this->endWidget(); ?>
 
         <script>
-            function navigateTo(page) {
+            function navigateTo(page)
+            {
                 $('#step').val(page);
                 document.forms['experience-create-form-nav'].submit();
             }
@@ -35,9 +36,10 @@
         <h1>Let's start with the basics...</h1>
 
         <?php
-        $form = $this->beginWidget('CActiveForm', array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
-                                                        'stateful' => true,
-                                                        'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+        $form = $this->beginWidget('CActiveForm',
+                                   array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
+                                         'stateful' => true,
+                                         'htmlOptions' => array('enctype' => 'multipart/form-data'),));
         ?>
 
         <input name="step" type="hidden" value="5"/>
@@ -61,8 +63,7 @@
         </div>
         <div class="row">
             <div class="four columns">
-                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300"
-                                           title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
+                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300" title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
                 </div>
                 <label class="right inline">Tags</label>
             </div>
@@ -88,8 +89,7 @@
         </div>
         <div class="row">
             <div class="four columns">
-                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300"
-                                           title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
+                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300" title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
                 </div>
                 <label class="right inline">Availability</label>
             </div>
@@ -142,8 +142,7 @@
         <div class="row">
             <div class="four columns offset-by-eight">
                 <a href="#" class="button twelve" onclick="document.forms['experience-create-form'].submit(); return false;">
-                    Pricing &amp; Description
-                </a>
+                    Pricing &amp; Description </a>
             </div>
         </div>
     </div>
@@ -151,10 +150,11 @@
 </div>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         $('#experience-start').Zebra_DatePicker({
             direction:true,
-            pair:$('#experience-end')
+            pair     :$('#experience-end')
         });
 
         $('#experience-end').Zebra_DatePicker({

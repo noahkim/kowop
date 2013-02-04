@@ -5,7 +5,7 @@
         <div class="createContainer">
             <h1>Class Schedule</h1>
 
-            <p>Add as many sessions as you'd like to make available to potential students.</p>
+            <p>Add as many sessions as you'd like to make available to potential enrolled.</p>
 
             <div class="createLesson">
                 <h2 class="spacebot20">Session <span id="sessionNum"></span></h2>
@@ -50,7 +50,7 @@ BLOCK;
             <div class="row borderTop">
                 <div class="twelve columns alignRight">
                     <?php $form = $this->beginWidget('CActiveForm', array(
-                    'id' => 'class-update-form',
+                    'id' => 'experience-update-form',
                     'enableAjaxValidation' => false,
                     'stateful' => true,
                     'htmlOptions' => array('style' => 'margin: 0;')
