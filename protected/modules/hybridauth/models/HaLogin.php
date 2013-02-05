@@ -15,12 +15,12 @@ class HaLogin extends CActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
+     * @param string $experienceName active record class name.
      * @return HaLogin the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($experienceName=__CLASS__)
     {
-        return parent::model($className);
+        return parent::model($experienceName);
     }
 
     /**
@@ -93,7 +93,7 @@ class HaLogin extends CActiveRecord
         ));
     }
 
-	
+
 	public static function getUser($loginProvider,$loginProviderIdentity) {
 		$criteria=new CDbCriteria;
 		$criteria->compare('loginProvider',$loginProvider,true);
@@ -102,7 +102,7 @@ class HaLogin extends CActiveRecord
 		$login = new CActiveDataProvider('HaLogin', array(
 			'criteria'=>$criteria,
 		));
-		
+
 		if ($login->itemCount == 0) {
 			return null;
 		} else {
@@ -111,9 +111,9 @@ class HaLogin extends CActiveRecord
 			$user = new User();
 			return $user->findByPk($tmp[0]->userId);
 		}
-		
+
 	}
-	
+
 	public static function getLogins($userId) {
 		$criteria=new CDbCriteria;
 		$criteria->compare('userId',$userId,true);
@@ -122,7 +122,7 @@ class HaLogin extends CActiveRecord
 		));
 		return $data->getData();
 	}
-	
+
 	public static function getLogin($userId,$provider) {
 		$criteria=new CDbCriteria;
 		$criteria->compare('userId',$userId,true);

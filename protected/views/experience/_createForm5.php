@@ -115,10 +115,10 @@
                 $unique.removeAttr('checked');
 
                 var multipleAllowed = $('#multipleAllowed').val();
-                if (multipleAllowed == null)
+                if ((multipleAllowed == null) || (multipleAllowed.length == 0))
                 {
                     multipleAllowed = 0;
-                    $('#multipleAllowed').val(multipleAllowedl);
+                    $('#multipleAllowed').val(multipleAllowed);
                 }
 
                 $('#multipleAllowed' + multipleAllowed).attr('checked', true);

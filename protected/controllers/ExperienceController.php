@@ -228,10 +228,10 @@ class ExperienceController extends Controller
                     {
                         $userName = CHtml::link($model->createUser->fullName,
                                                 array('user/view', 'id' => $model->createUser->User_ID));
-                        $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
+                        $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
                         Message::SendNotification($student->User_ID,
-                                                  "{$userName} has updated the class details for \"{$className}\".");
+                                                  "{$userName} has updated the class details for \"{$experienceName}\".");
                     }
                 }
 
@@ -453,9 +453,9 @@ class ExperienceController extends Controller
             }
 
             $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-            $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
+            $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your class \"{$className}\".");
+            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your class \"{$experienceName}\".");
         }
 
         // Notify the students
@@ -464,9 +464,9 @@ class ExperienceController extends Controller
             if ($student->User_ID != $user_ID)
             {
                 $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-                $className = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
+                $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-                Message::SendNotification($student->User_ID, "{$userName} has also joined the class \"{$className}\".");
+                Message::SendNotification($student->User_ID, "{$userName} has also joined the class \"{$experienceName}\".");
             }
         }
 
@@ -497,10 +497,10 @@ class ExperienceController extends Controller
     {
         $this->layout = false;
 
-        if (isset($_REQUEST['lesson']))
+        if (isset($_REQUEST['session']))
         {
-            $lesson = Lesson::model()->findByPk($_REQUEST['lesson']);
-            $this->render('dialogs/viewDialog', array('model' => $lesson));
+            $session = Session::model()->findByPk($_REQUEST['session']);
+            $this->render('dialogs/viewDialog', array('model' => $session));
         }
     }
 

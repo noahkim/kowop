@@ -26,7 +26,7 @@
                 if (typeof $(this).data("qtip") !== "object") {
                     $(this).qtip({
                         content: {
-                            url:'<?php echo $this->createAbsoluteUrl("/experience/viewDialog"); ?>' + '?lesson=' + event.lesson
+                            url:'<?php echo $this->createAbsoluteUrl("/experience/viewDialog"); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{

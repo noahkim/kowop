@@ -284,7 +284,7 @@
                                                                                           array('id' => $model->Experience_ID))));
         ?>
 
-        <input type="submit" value="Confirm Cancellation" class="button secondary radius"/>
+        <input type="submit" value="Confirm Cancellation" class="button secondary radius" />
 
         <?php $this->endWidget(); ?>
     </div>
@@ -296,32 +296,38 @@
 </div>
 
 <script type="text/javascript">
-    $(window).load(function () {
+    $(window).load(function ()
+    {
         $('#slider').nivoSlider({
-            effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
-            slices:15, // For slice animations
-            boxCols:8, // For box animations
-            boxRows:4, // For box animations
-            animSpeed:1000, // Slide transition speed
-            pauseTime:4000, // How long each slide will show
-            startSlide:0, // Set starting Slide (0 index)
-            directionNav:true, // Next & Prev navigation
-            controlNav:true, // 1,2,3... navigation
+            effect          :'fade', // Specify sets like: 'fold,fade,sliceDown'
+            slices          :15, // For slice animations
+            boxCols         :8, // For box animations
+            boxRows         :4, // For box animations
+            animSpeed       :1000, // Slide transition speed
+            pauseTime       :4000, // How long each slide will show
+            startSlide      :0, // Set starting Slide (0 index)
+            directionNav    :true, // Next & Prev navigation
+            controlNav      :true, // 1,2,3... navigation
             controlNavThumbs:true, // Use thumbnails for Control Nav
-            pauseOnHover:true, // Stop animation while hovering
-            manualAdvance:false, // Force manual transitions
-            prevText:'Prev', // Prev directionNav text
-            nextText:'Next', // Next directionNav text
-            randomStart:false, // Start on a random slide
-            beforeChange:function () {
+            pauseOnHover    :true, // Stop animation while hovering
+            manualAdvance   :false, // Force manual transitions
+            prevText        :'Prev', // Prev directionNav text
+            nextText        :'Next', // Next directionNav text
+            randomStart     :false, // Start on a random slide
+            beforeChange    :function ()
+            {
             }, // Triggers before a slide transition
-            afterChange:function () {
+            afterChange     :function ()
+            {
             }, // Triggers after a slide transition
-            slideshowEnd:function () {
+            slideshowEnd    :function ()
+            {
             }, // Triggers after all slides have been shown
-            lastSlide:function () {
+            lastSlide       :function ()
+            {
             }, // Triggers when last slide is shown
-            afterLoad:function () {
+            afterLoad       :function ()
+            {
             } // Triggers when slider has loaded
         });
     });
@@ -329,7 +335,8 @@
 
 <script type='text/javascript'>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
         var date = new Date();
         var d = date.getDate();
@@ -337,13 +344,13 @@
         var y = date.getFullYear();
 
         $('#calendar').fullCalendar({
-            header:{
-                left:'',
+            header        :{
+                left  :'',
                 center:'title',
-                right:'prev,next'
+                right :'prev,next'
             },
-            editable:false,
-            events:[
+            editable      :false,
+            events        :[
             <?php
             $calendarJS = '';
             foreach ($model->sessions as $i => $session)
@@ -351,44 +358,42 @@
                 $title = 'Session ' . ($i + 1);
                 $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
                                                                            'session' => $session->Session_ID));
-
-                foreach ($session->lessons as $lesson)
+                $calendarJS .= <<<BLOCK
                 {
-                    $calendarJS .= <<<BLOCK
-                {
-                    id: {$lesson->Lesson_ID},
+                    id: {$i},
                     title: '{$title}',
-                    start: new Date('{$lesson->Start}'),
-                    end: new Date('{$lesson->End}'),
+                    start: new Date('{$session->Start}'),
+                    end: new Date('{$session->End}'),
                     allDay: false,
                     url: '{$link}',
                     session: {$session->Session_ID}
                 },
 BLOCK;
-                }
             }
 
             $calendarJS = rtrim($calendarJS, ",");
             echo $calendarJS;
             ?>
             ],
-            eventMouseover:function (event, jsEvent, view) {
-                if (typeof $(this).data("qtip") !== "object") {
+            eventMouseover:function (event, jsEvent, view)
+            {
+                if (typeof $(this).data("qtip") !== "object")
+                {
                     $(this).qtip({
-                        content:{
+                        content :{
                             url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
                                                                      array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{
-                                target:'topLeft',
+                                target :'topLeft',
                                 tooltip:'bottomMiddle'
                             }
                         },
-                        hide:{
+                        hide    :{
                             fixed:true // Make it fixed so it can be hovered over
                         },
-                        style:{
+                        style   :{
                             padding:'10px' // Give it some extra padding
                         }});
                 }

@@ -61,42 +61,47 @@
                 </div>
                 <!------------ Right column ------------------>
                 <div class="four columns">
-                <div class="detailsNextSession">
-                    <span>Next available session scheduled for</span>
-                <ul>
-                    <?php
+                    <div class="detailsNextSession">
+                        <span>Next available session scheduled for</span>
+                        <ul>
+                            <?php
 
-                    $nextSession = $model->nextAvailableSession;
+                            $nextSession = $model->nextAvailableSession;
 
-                    if ($nextSession != null) :
-                        $startTime = strtotime($nextSession->Start);
-                        $endTime = strtotime($nextSession->End);
+                            if ($nextSession != null)
+                            {
+                                $startTime = strtotime($nextSession->Start);
+                                $endTime = strtotime($nextSession->End);
 
-                        $dayOfWeek = date('l', $startTime);
-                        $date = date('F j', $startTime);
-                        $start = date('g:i a', $startTime);
-                        $end = date('g:i a', $endTime);
+                                $dayOfWeek = date('l', $startTime);
+                                $date = date('F j', $startTime);
+                                $start = date('g:i a', $startTime);
+                                $end = date('g:i a', $endTime);
 
-                        echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                        ?>
+                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
+                            }
+                            ?>
                         </ul>
                         </span>
                         <div class="enrollees">
                             <span>People in the next session</span>
                             <?php
 
-                            foreach ($nextSession->enrolled as $enrollee)
+                            if ($nextSession != null)
                             {
-                                $imgLink = 'http://placeskull.com/100/100/01a4a4';
-
-                                if ($enrollee->profilePic != null)
+                                foreach ($nextSession->enrolled as $enrollee)
                                 {
-                                    $imgLink = $enrollee->profilePic;
-                                }
+                                    $imgLink = 'http://placeskull.com/100/100/01a4a4';
 
-                                $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
-                                echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
-                                                 array('title' => $enrollee->fullname));
+                                    if ($enrollee->profilePic != null)
+                                    {
+                                        $imgLink = $enrollee->profilePic;
+                                    }
+
+                                    $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
+                                    echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
+                                                     array('title' => $enrollee->fullname));
+                                }
                             }
 
                             ?>
@@ -111,11 +116,9 @@
                                          array('class' => 'button large twelve enrollButton'));
                         ?>
                     </div>
-                        <div>
-                            <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later
-                                session</a>
-                        </div>
-                        <?php endif; ?>
+                    <div>
+                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -181,32 +184,38 @@
 </div>
 
 <script type="text/javascript">
-    $(window).load(function () {
+    $(window).load(function ()
+    {
         $('#slider').nivoSlider({
-            effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
-            slices:15, // For slice animations
-            boxCols:8, // For box animations
-            boxRows:4, // For box animations
-            animSpeed:1000, // Slide transition speed
-            pauseTime:4000, // How long each slide will show
-            startSlide:0, // Set starting Slide (0 index)
-            directionNav:true, // Next & Prev navigation
-            controlNav:true, // 1,2,3... navigation
+            effect          :'fade', // Specify sets like: 'fold,fade,sliceDown'
+            slices          :15, // For slice animations
+            boxCols         :8, // For box animations
+            boxRows         :4, // For box animations
+            animSpeed       :1000, // Slide transition speed
+            pauseTime       :4000, // How long each slide will show
+            startSlide      :0, // Set starting Slide (0 index)
+            directionNav    :true, // Next & Prev navigation
+            controlNav      :true, // 1,2,3... navigation
             controlNavThumbs:true, // Use thumbnails for Control Nav
-            pauseOnHover:true, // Stop animation while hovering
-            manualAdvance:false, // Force manual transitions
-            prevText:'Prev', // Prev directionNav text
-            nextText:'Next', // Next directionNav text
-            randomStart:false, // Start on a random slide
-            beforeChange:function () {
+            pauseOnHover    :true, // Stop animation while hovering
+            manualAdvance   :false, // Force manual transitions
+            prevText        :'Prev', // Prev directionNav text
+            nextText        :'Next', // Next directionNav text
+            randomStart     :false, // Start on a random slide
+            beforeChange    :function ()
+            {
             }, // Triggers before a slide transition
-            afterChange:function () {
+            afterChange     :function ()
+            {
             }, // Triggers after a slide transition
-            slideshowEnd:function () {
+            slideshowEnd    :function ()
+            {
             }, // Triggers after all slides have been shown
-            lastSlide:function () {
+            lastSlide       :function ()
+            {
             }, // Triggers when last slide is shown
-            afterLoad:function () {
+            afterLoad       :function ()
+            {
             } // Triggers when slider has loaded
         });
     });
@@ -214,7 +223,8 @@
 
 <script type='text/javascript'>
 
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
 
         var date = new Date();
         var d = date.getDate();
@@ -222,13 +232,13 @@
         var y = date.getFullYear();
 
         $('#calendar').fullCalendar({
-            header:{
-                left:'',
+            header        :{
+                left  :'',
                 center:'title',
-                right:'prev,next'
+                right :'prev,next'
             },
-            editable:false,
-            events:[
+            editable      :false,
+            events        :[
             <?php
             $calendarJS = '';
             foreach ($model->sessions as $i => $session)
@@ -236,44 +246,42 @@
                 $title = 'Session ' . ($i + 1);
                 $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
                                                                            'session' => $session->Session_ID));
-
-                foreach ($session->lessons as $lesson)
+                $calendarJS .= <<<BLOCK
                 {
-                    $calendarJS .= <<<BLOCK
-                {
-                    id: {$lesson->Lesson_ID},
+                    id: {$i},
                     title: '{$title}',
-                    start: new Date('{$lesson->Start}'),
-                    end: new Date('{$lesson->End}'),
+                    start: new Date('{$session->Start}'),
+                    end: new Date('{$session->End}'),
                     allDay: false,
                     url: '{$link}',
                     session: {$session->Session_ID}
                 },
 BLOCK;
-                }
             }
 
             $calendarJS = rtrim($calendarJS, ",");
             echo $calendarJS;
             ?>
             ],
-            eventMouseover:function (event, jsEvent, view) {
-                if (typeof $(this).data("qtip") !== "object") {
+            eventMouseover:function (event, jsEvent, view)
+            {
+                if (typeof $(this).data("qtip") !== "object")
+                {
                     $(this).qtip({
-                        content:{
+                        content :{
                             url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
                                                                      array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                         },
                         position:{
                             corner:{
-                                target:'topLeft',
+                                target :'topLeft',
                                 tooltip:'bottomMiddle'
                             }
                         },
-                        hide:{
+                        hide    :{
                             fixed:true // Make it fixed so it can be hovered over
                         },
-                        style:{
+                        style   :{
                             padding:'10px' // Give it some extra padding
                         }});
                 }

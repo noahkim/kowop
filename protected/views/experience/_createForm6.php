@@ -8,7 +8,7 @@
                                       array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
                                             'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
-        <input id="step" name="step" type="hidden"/>
+        <input id="step" name="step" type="hidden" />
         <?php $this->endWidget(); ?>
 
         <script>
@@ -37,8 +37,8 @@
         <h1>Setup your availability</h1>
 
         <p>While this step is optional, providing it gives you some benefits (look to the right). Add any time and day
-            you'd like to make available. Don't worry about getting them all in now. You can always come back and add
-            more. Make it as specific (like 10am-11am) or as general (8am-8pm) as you'd like.</p>
+           you'd like to make available. Don't worry about getting them all in now. You can always come back and add
+           more. Make it as specific (like 10am-11am) or as general (8am-8pm) as you'd like.</p>
 
         <?php
         $form = $this->beginWidget('CActiveForm',
@@ -47,7 +47,7 @@
                                          'htmlOptions' => array('enctype' => 'multipart/form-data'),));
         ?>
 
-        <input type='hidden' name='step' value='7'/>
+        <input type='hidden' name='step' value='7' />
         <?php echo $form->hiddenField($model, 'sessions', array('id' => 'sessions')); ?>
 
         <div class="row">
@@ -56,12 +56,12 @@
             </div>
             <div class="two columns">
                 <?php echo $form->textField($model, 'Min_occupancy',
-                                            array('placeholder' => 'min', 'maxlength' => '3')); ?>
+                                            array('placeholder' => 'min', 'maxlength' => '3', 'id' => 'minOccupancy')); ?>
             </div>
             <div class="one column"><label class="text-center inline">-</label></div>
             <div class="two columns">
                 <?php echo $form->textField($model, 'Max_occupancy',
-                                            array('placeholder' => 'max', 'maxlength' => '3')); ?>
+                                            array('placeholder' => 'max', 'maxlength' => '3', 'id' => 'maxOccupancy')); ?>
             </div>
             <div class="two columns end">
                 <label class="inline">(optional)</label>
@@ -113,7 +113,7 @@
 
     $(document).ready(function ()
     {
-        var calendar = $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar({
             header:{
                 left  :'prev,next today',
                 center:'title',
@@ -126,17 +126,17 @@
             editable    :true,
             select      :function (start, end, allDay)
             {
-                calendar.fullCalendar('renderEvent',
+                $('#calendar').fullCalendar('renderEvent',
                         {
                             title :'',
                             start :start,
                             end   :end,
                             allDay:allDay,
-                            id    :lastID++
+                            id    :'session' + (lastID++)
                         },
                         true // make the event "stick"
                 );
-                calendar.fullCalendar('unselect');
+                $('#calendar').fullCalendar('unselect');
             },
             eventRender :function (event, element)
             {
@@ -153,11 +153,58 @@
     {
         if (addSessions)
         {
-            $('#sessions').val('');
+            $('#minOccupancy').removeClass('error');
+            $('#maxOccupancy').removeClass('error');
+
+            var hasError = false;
+
+            if($('#minOccupancy').val().length == 0)
+            {
+                hasError = true;
+                $('#minOccupancy').addClass('error');
+            }
+
+            if($('#maxOccupancy').val().length == 0)
+            {
+                hasError = true;
+                $('#maxOccupancy').addClass('error');
+            }
+
+            var clientEvents = $('#calendar').fullCalendar('clientEvents');
+            var sessions = [];
+
+            for (var i in clientEvents)
+            {
+                var start = clientEvents[i].start.toString('yyyy-MM-dd HH:mm:ss');
+                var end = clientEvents[i].end.toString('yyyy-MM-dd HH:mm:ss');
+
+                var session = {
+                    Start:start,
+                    End  :end
+                };
+
+                sessions.push(session);
+            }
+
+            if(sessions.length == 0)
+            {
+                hasError = true;
+            }
+
+            if(hasError)
+            {
+                return;
+            }
+
+            var sessionsJSON = JSON.stringify(sessions);
+
+            $('#sessions').val(sessionsJSON);
             document.forms['experience-create-form'].submit();
         }
         else
         {
+            $('#minOccupancy').val('');
+            $('#maxOccupancy').val('');
             $('#sessions').val('');
             document.forms['experience-create-form'].submit();
         }

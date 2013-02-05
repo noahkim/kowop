@@ -169,11 +169,11 @@ class ExperienceCreateForm extends CFormModel
                                                                                                    'id' => $this->experience->createUser->User_ID));
                             $requestName = CHtml::link($request->Name,
                                                        array('//request/view', 'id' => $request->Request_ID));
-                            $className = CHtml::link($this->experience->Name, array('//experience/view',
+                            $experienceName = CHtml::link($this->experience->Name, array('//experience/view',
                                                                                     'id' => $this->experience->Experience_ID));
 
                             Message::SendNotification($user->User_ID,
-                                                      "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$className}\".");
+                                                      "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$experienceName}\".");
                         }
                     }
                 }

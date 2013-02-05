@@ -245,13 +245,13 @@
                 $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
-            $className = $class->Name;
-            if (strlen($className) > 60)
+            $experienceName = $class->Name;
+            if (strlen($experienceName) > 60)
             {
-                $className = substr($className, 0, 60);
-                $className .= ' ...';
+                $experienceName = substr($experienceName, 0, 60);
+                $experienceName .= ' ...';
             }
-            $className = CHtml::link('<h5>' . $className . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
+            $experienceName = CHtml::link('<h5>' . $experienceName . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
 
             if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0))
             {
@@ -269,7 +269,7 @@
         <!----------- 1 tile ---------->
         <div class="three columns">
             <div class="classTile">{$imageLink}
-                {$className}
+                {$experienceName}
                 <span class="tileInstructor">by {$teacherLink}</span> <span
                         class="tileDescription">{$description}</span>
 
@@ -334,7 +334,7 @@ BLOCK;
                 $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
             }
 
-            $className = CHtml::link('<h5>' . $class->Name . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
+            $experienceName = CHtml::link('<h5>' . $class->Name . '</h5>', array('experience/view', 'id' => $class->Experience_ID));
 
             if (($class->Price == null) || ($class->Price == 0) || (count($class->sessions) == 0))
             {
@@ -352,7 +352,7 @@ BLOCK;
         <!----------- 1 tile ---------->
         <div class="three columns">
             <div class="classTile">{$imageLink}
-                {$className}
+                {$experienceName}
                 <span class="tileInstructor">by {$teacherLink}</span> <span
                         class="tileDescription">{$description}</span>
 

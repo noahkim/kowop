@@ -23,12 +23,12 @@ class Rating extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
+	 * @param string $experienceName active record class name.
 	 * @return Rating the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($experienceName=__CLASS__)
 	{
-		return parent::model($className);
+		return parent::model($experienceName);
 	}
 
 	/**
