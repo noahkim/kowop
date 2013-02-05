@@ -13,14 +13,14 @@ class ExperienceSearchForm extends CFormModel
     public $category;
 
     // Filters
-    public $seatsInNextClass;
     public $minTuition;
     public $maxTuition;
-    public $nextClassStartsBy;
     public $daysOfWeek;
     public $categories;
     public $includedResults;
     public $location;
+    public $start;
+    public $end;
 
     public $page;
     public $totalResults;
@@ -28,25 +28,22 @@ class ExperienceSearchForm extends CFormModel
 
     public function rules()
     {
-        return array(
-            array('keywords, category, seatsInNextClass, minTuition, maxTuition, nextClassStartsBy, daysOfWeek, categories, includedResults, location, page', 'safe'),
-        );
+        return array(array('keywords, category, minTuition, maxTuition, daysOfWeek, categories, includedResults, location, start, end, page',
+                           'safe'),);
     }
 
     public function attributeLabels()
     {
-        return array(
-            'keywords' => 'keywords'
-        );
+        return array('keywords' => 'keywords');
     }
 
     public function search()
     {
         $requestCriteria = new CDbCriteria;
-        $classCriteria = new CDbCriteria;
+        $experienceCriteria = new CDbCriteria;
 
         $requestCriteria->with = array('category', 'tags', 'createUser');
-        $classCriteria->with = array('location', 'category', 'tags', 'createUser');
+        $experienceCriteria->with = array('location', 'category', 'tags', 'createUser');
 
         $keywords = explode(' ', $this->keywords);
 
@@ -54,14 +51,14 @@ class ExperienceSearchForm extends CFormModel
         {
             $included = json_decode($this->includedResults);
 
-            $classes = array();
+            $experiences = array();
             $requests = array();
 
             foreach ($included as $item)
             {
-                if ($item->type == 'class')
+                if ($item->type == 'experience')
                 {
-                    $classes[] = $item->id;
+                    $experiences[] = $item->id;
                 }
                 else
                 {
@@ -69,7 +66,7 @@ class ExperienceSearchForm extends CFormModel
                 }
             }
 
-            $classCriteria->addInCondition('t.Experience_ID', $classes);
+            $experienceCriteria->addInCondition('t.Experience_ID', $experiences);
             $requestCriteria->addInCondition('t.Request_ID', $requests);
         }
         else
@@ -84,72 +81,47 @@ class ExperienceSearchForm extends CFormModel
                 $requestCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
                 $requestCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
 
-                $classCriteria->compare('t.Name', $keyword, true, 'OR');
-                $classCriteria->compare('t.Description', $keyword, true, 'OR');
-                $classCriteria->compare('category.Name', $keyword, true, 'OR');
-                $classCriteria->compare('tags.Name', $keyword, true, 'OR');
-                $classCriteria->compare('createUser.First_name', $keyword, true, 'OR');
-                $classCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
-                $classCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
+                $experienceCriteria->compare('t.Name', $keyword, true, 'OR');
+                $experienceCriteria->compare('t.Description', $keyword, true, 'OR');
+                $experienceCriteria->compare('category.Name', $keyword, true, 'OR');
+                $experienceCriteria->compare('tags.Name', $keyword, true, 'OR');
+                $experienceCriteria->compare('createUser.First_name', $keyword, true, 'OR');
+                $experienceCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
+                $experienceCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
             }
         }
 
         $requestCriteria->addCondition('t.Created_Experience_ID is NULL');
 
         //$requestCriteria->compare('t.Status', '');
-        $classCriteria->compare('t.Status', ExperienceStatus::Active);
+        $experienceCriteria->compare('t.Status', ExperienceStatus::Active);
 
         if (isset($this->category) && is_numeric($this->category) && ($this->category > 0))
         {
             $requestCriteria->compare('t.Category_ID', $this->category);
-            $classCriteria->compare('t.Category_ID', $this->category);
+            $experienceCriteria->compare('t.Category_ID', $this->category);
         }
 
         if (($this->minTuition != null) && ($this->minTuition > 0))
         {
-            $classCriteria->compare('t.Tuition', '>=' . $this->minTuition);
+            $experienceCriteria->compare('t.Tuition', '>=' . $this->minTuition);
         }
         if (($this->maxTuition != null) && ($this->maxTuition > 0))
         {
-            $classCriteria->compare('t.Tuition', '<=' . $this->maxTuition);
+            $experienceCriteria->compare('t.Tuition', '<=' . $this->maxTuition);
         }
-        if (($this->nextClassStartsBy != null) && (strlen($this->nextClassStartsBy) > 0))
+
+        if (($this->start != null) && (strlen($this->start) > 0))
         {
-            $classCriteria->compare('t.Start', '<=' . date('Y-m-d', strtotime($this->nextClassStartsBy)));
+            $experienceCriteria->compare('t.Start', '<=' . date('Y-m-d', strtotime($this->start)));
         }
 
-        $classes = Experience::model()->findAll($classCriteria);
-
-        if (($this->seatsInNextClass != null) && ($this->seatsInNextClass > 1))
+        if (($this->end != null) && (strlen($this->end) > 0))
         {
-            foreach ($classes as $i => $class)
-            {
-                $enrolled = count($class->enrolled);
-
-                switch ($this->seatsInNextClass)
-                {
-                    case 2:
-                        if ($enrolled > 0)
-                        {
-                            unset($classes[$i]);
-                        }
-                        break;
-                    case 3:
-                        if ($enrolled < 1)
-                        {
-                            unset($classes[$i]);
-                        }
-                        break;
-                    case 4:
-                        $pctFull = $enrolled / $class->Max_occupancy;
-                        if ($pctFull < 0.75)
-                        {
-                            unset($classes[$i]);
-                        }
-                        break;
-                }
-            }
+            $experienceCriteria->compare('t.End', '<=' . date('Y-m-d', strtotime($this->end)));
         }
+
+        $experiences = Experience::model()->findAll($experienceCriteria);
 
         $requests = Request::model()->findAll($requestCriteria);
 
@@ -163,11 +135,11 @@ class ExperienceSearchForm extends CFormModel
 
         if (isset($this->location) && strlen($this->location) > 0)
         {
-            foreach ($classes as $i => $class)
+            foreach ($experiences as $i => $experience)
             {
-                if (!stristr($class->location->fullAddress, $this->location))
+                if (!stristr($experience->location->fullAddress, $this->location))
                 {
-                    unset($classes[$i]);
+                    unset($experiences[$i]);
                 }
             }
 
@@ -180,8 +152,8 @@ class ExperienceSearchForm extends CFormModel
             }
         }
 
-        $classes = array_values($classes);
-        $items = array_merge($classes, $requests);
+        $experiences = array_values($experiences);
+        $items = array_merge($experiences, $requests);
 
         $scores = array();
         foreach ($items as $item)
@@ -250,11 +222,4 @@ class ExperienceSearchForm extends CFormModel
 
         return $sortedItems;
     }
-
-    public static $seatsInNextClassLookup = array(
-        1 => "Doesn't matter",
-        2 => 'Empty',
-        3 => 'At least 1 filled',
-        4 => 'Almost full'
-    );
 }

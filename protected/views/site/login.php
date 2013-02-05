@@ -6,7 +6,7 @@
             <div class="three columns">
                 <div class="logo">
                     <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                    neighborhood classes &amp; activities
+                    neighborhood activities &amp; classes
                 </div>
             </div>
 

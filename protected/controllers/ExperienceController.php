@@ -136,7 +136,7 @@ class ExperienceController extends Controller
             $step = 1;
         }
 
-        if($step == 6)
+        if ($step == 6)
         {
             $this->layout = '//layouts/createSessions';
         }
@@ -228,7 +228,8 @@ class ExperienceController extends Controller
                     {
                         $userName = CHtml::link($model->createUser->fullName,
                                                 array('user/view', 'id' => $model->createUser->User_ID));
-                        $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
+                        $experienceName = CHtml::link($model->Name,
+                                                      array('experience/view', 'id' => $model->Experience_ID));
 
                         Message::SendNotification($student->User_ID,
                                                   "{$userName} has updated the experience details for \"{$experienceName}\".");
@@ -389,7 +390,26 @@ class ExperienceController extends Controller
 
         if (isset($_REQUEST['json']))
         {
-            echo CJSON::encode($results);
+            $formattedResults = array();
+
+            foreach ($results as $result)
+            {
+                $formattedResult = array();
+                $formattedResult['data'] = $result;
+
+                if ($result instanceof Experience)
+                {
+                    $formattedResult['location'] = $result->location->fullAddress;
+                }
+                else
+                {
+                    $formattedResult['location'] = $result->Zip;
+                }
+
+                $formattedResults[] = $formattedResult;
+            }
+
+            echo CJSON::encode($formattedResults);
         }
         else
         {
@@ -455,7 +475,8 @@ class ExperienceController extends Controller
             $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
             $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your experience \"{$experienceName}\".");
+            Message::SendNotification($model->Create_User_ID,
+                                      "{$userName} has joined your experience \"{$experienceName}\".");
         }
 
         // Notify the students
@@ -466,7 +487,8 @@ class ExperienceController extends Controller
                 $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
                 $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-                Message::SendNotification($student->User_ID, "{$userName} has also joined the experience \"{$experienceName}\".");
+                Message::SendNotification($student->User_ID,
+                                          "{$userName} has also joined the experience \"{$experienceName}\".");
             }
         }
 

@@ -25,22 +25,42 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="66" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
+            <state line="429" column="26" selection-start="19981" selection-end="19981" vertical-scroll-proportion="0.6476684">
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1360105034284" expanded="true" signature="10157:10210" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10435:10543" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10571:10869" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10635:10869" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10670:10869" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10706:10869" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="10964:11152" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="11000:11152" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="11247:11329" placeholder="..." />
+                <marker date="1360105034284" expanded="true" signature="11283:11329" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExperienceController.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="403" column="20" selection-start="14375" selection-end="14375" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
+      <file leaf-file-name="ExperienceSearchForm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/models/ExperienceSearchForm.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="246" column="50" selection-start="10878" selection-end="10878" vertical-scroll-proportion="0.6">
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
-              </folding>
+            <state line="165" column="40" selection-start="5512" selection-end="5512" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,13 +78,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/models/Session.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/enrollDialog.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/viewDialog.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/dialogs/enrollDialog.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_teacher.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_enrolled.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/ExperienceController.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/dialogs/viewDialog.php" />
         <option value="$PROJECT_DIR$/protected/views/user/account/_calendar.php" />
         <option value="$PROJECT_DIR$/protected/models/RequestJoinForm.php" />
@@ -73,7 +86,14 @@
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm6.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/_view.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/view/_default.php" />
+        <option value="$PROJECT_DIR$/protected/models/ExperienceSearchForm.php" />
         <option value="$PROJECT_DIR$/protected/views/experience/search.php" />
+        <option value="$PROJECT_DIR$/protected/views/layouts/mainNoSearch.php" />
+        <option value="$PROJECT_DIR$/protected/views/layouts/main.php" />
+        <option value="$PROJECT_DIR$/protected/views/kids/index.php" />
+        <option value="$PROJECT_DIR$/protected/views/layouts/createSessions.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/ExperienceController.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
       </list>
     </option>
   </component>
@@ -81,8 +101,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1586" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -129,7 +149,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -424,6 +443,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -431,8 +451,8 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -457,14 +477,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method />
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -501,16 +521,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1586" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32344827" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32252836" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19077651" sideWeight="0.6765517" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22040209" sideWeight="0.67747164" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -579,116 +599,123 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_calendar.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_teacher.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="6" selection-start="587" selection-end="587" vertical-scroll-proportion="0.15789473">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/RequestJoinForm.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_default.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="0" selection-start="1401" selection-end="1401" vertical-scroll-proportion="0.6077406">
-          <folding />
-        </state>
+        <state line="53" column="53" selection-start="2260" selection-end="2260" vertical-scroll-proportion="0.56303114" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Friend.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="65" selection-start="1991" selection-end="1991" vertical-scroll-proportion="0.2631579">
-          <folding />
-        </state>
+        <state line="140" column="50" selection-start="6173" selection-end="6173" vertical-scroll-proportion="0.42105263" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/ExperienceCreateForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="183" column="13" selection-start="6263" selection-end="6263" vertical-scroll-proportion="0.55382437">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="473" column="5" selection-start="16750" selection-end="16750" vertical-scroll-proportion="0.28421053">
+        <state line="42" column="0" selection-start="665" selection-end="665" vertical-scroll-proportion="0.53367877">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="61" selection-start="4933" selection-end="4933" vertical-scroll-proportion="0.01062323">
+        <state line="70" column="55" selection-start="2430" selection-end="2430" vertical-scroll-proportion="0.41450778">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/_replyDialog.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/layouts/createSessions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="41" selection-start="552" selection-end="552" vertical-scroll-proportion="0.0">
+        <state line="68" column="0" selection-start="3450" selection-end="3450" vertical-scroll-proportion="0.39896372">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Message.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/kids/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="0" selection-start="4693" selection-end="4693" vertical-scroll-proportion="0.0">
+        <state line="69" column="57" selection-start="3093" selection-end="3093" vertical-scroll-proportion="0.21761657">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="203" column="29" selection-start="5530" selection-end="5530" vertical-scroll-proportion="0.0">
+        <state line="8" column="21" selection-start="306" selection-end="306" vertical-scroll-proportion="0.20725389">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_profile.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/layouts/mainNoSearch.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="23" selection-start="6931" selection-end="6931" vertical-scroll-proportion="0.4631579">
+        <state line="12" column="53" selection-start="539" selection-end="539" vertical-scroll-proportion="0.31088084">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_teacher.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/update.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="53" selection-start="2260" selection-end="2260" vertical-scroll-proportion="0.56303114">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm6.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="50" selection-start="6173" selection-end="6173" vertical-scroll-proportion="0.42105263">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/layouts/mainOuter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="61" selection-start="1513" selection-end="1513" vertical-scroll-proportion="0.031578947">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="66" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.0">
+        <state line="28" column="0" selection-start="1597" selection-end="1739" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="246" column="50" selection-start="10878" selection-end="10878" vertical-scroll-proportion="0.6">
+        <state line="347" column="0" selection-start="13509" selection-end="13509" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceSearchForm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="165" column="40" selection-start="5512" selection-end="5512" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/_searchResults.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="9" selection-start="792" selection-end="792" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="403" column="20" selection-start="14375" selection-end="14375" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="429" column="26" selection-start="19981" selection-end="19981" vertical-scroll-proportion="0.6476684">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1360105034284" expanded="true" signature="10157:10210" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10435:10543" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10571:10869" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10635:10869" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10670:10869" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10706:10869" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="10964:11152" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="11000:11152" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="11247:11329" placeholder="..." />
+            <marker date="1360105034284" expanded="true" signature="11283:11329" placeholder="..." />
           </folding>
         </state>
       </provider>

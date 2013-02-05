@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!DOCTYPE html><!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --><!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]--><!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]--><!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
 <!--<![endif]-->
 <head>
@@ -19,17 +14,24 @@
     <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css">
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/yiidev/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="/ui/sitev2/javascripts/modernizr.foundation.js"></script>
     <script src="/ui/sitev2/javascripts/foundation.min.js"></script>
     <script src="/ui/sitev2/javascripts/app.js"></script>
     <script src="/ui/sitev2/javascripts/account_toggle.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
+    <script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
+
     <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
 </head>
 <body>
+
+
 <!---------------------------------------
      Main Homepage Banner / Logo / header nav
 ---------------------------------------->
-<div class="mainpic">
+<div class="mainMap">
 
     <?php if (Yii::app()->user->isGuest) : ?>
 
@@ -38,7 +40,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood classes &amp; activities
+                neighborhood activities &amp; classes
             </div>
         </div>
 
@@ -67,7 +69,7 @@
             <div class="three columns">
                 <div class="logo">
                     <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                    neighborhood classes &amp; activities
+                    neighborhood activities &amp; classes
                 </div>
             </div>
 
@@ -78,9 +80,7 @@
                 </span>
                 <!----- My account dropdown ------->
                 <div class="dropdown">
-                    <a href="#" class="account">
-                        <span class="headerAccount">my account</span>
-                    </a>
+                    <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
 
                     <div class="submenu" style="display: none;">
                         <ul class="root">
@@ -113,110 +113,79 @@
 
     <?php endif; ?>
 
-    <div class="row">
-        <div class="twelve columns">
-            <div class="alert-box secondary">
-                This is Kowop dev instance. Please excuse any bugs, we make lots of changes daily
-                <a href="" class="close">&times;</a>
+    <!--    <div class="row">
+            <div class="twelve columns">
+                <div class="alert-box secondary">
+                    This is Kowop dev instance. Please excuse any bugs, we make lots of changes daily.
+                    <a href="" class="close">&times;</a>
             </div>
         </div>
     </div>
-
-    <!----- Home blurb and search box --------->
-    <div class="row">
-        <div class="eight columns offset-by-two">
-            <div class="homeBlurb">
-                <span class="homeBlurbcopy">
-                    The neighborhood board for classes &amp; activities.<br/>Try something new, learn something awesome.
-                </span>
-
-                <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
-                                                                      'action' => Yii::app()->createUrl('/experience/search'),
-                                                                      'enableAjaxValidation' => false,
-                                                                      'method' => 'get')); ?>
-
-                <?php $model = new ExperienceSearchForm; ?>
-
-                <div class="row">
-                    <div class="five columns">
-                        <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
-                                                                              'class' => 'homeSearchinput twelve',
-                                                                              'placeholder' => 'What are you looking for?')); ?>
-                    </div>
-                    <div class="four columns">
-                        <?php echo $form->textField($model, 'location', array('value' => $model->location,
-                                                                              'class' => 'homeSearchinput twelve',
-                                                                              'placeholder' => 'city,state or zip')); ?>
-                    </div>
-                    <div class="three columns">
-                        <a href="#" onclick="document.forms['search-form'].submit(); return false;"
-                           class="large button twelve">Search</a>
-                    </div>
-                </div>
-
-                <?php $this->endWidget('CActiveForm'); ?>
-
-                <?php echo CHtml::link("or browse all", $this->createUrl("/experience/search"),
-                                       array('class' => 'homeBrowseall')); ?>
-
-            </div>
-        </div>
-    </div>
-    <!----- end Home blurb and search box ------------>
-    <!----- Featured class info ------------->
-    <div class=" homeFeaturedinfo">
+--><!----- Homepage Discovery Map ------>
+    <div class="homeMap">
         <div class="row">
-            <?php
-            $randomClass = Experience::model()->findAll(array('select' => '*, rand() as rand',
-                                                              'condition' => 'Status = ' . ExperienceStatus::Active,
-                                                              'limit' => 1, 'order' => 'rand',));
+            <div class="three columns end">
+                <div class="overlayMap">
+                    <h2>Discover</h2>
 
-            if (count($randomClass) > 0) :
-                $enrollees = '';
-                $randomClass = $randomClass[0];
+                    <p>
+                        Click on stuff you're <strong>not</strong> interested in <strong>90232</strong>
+                        (<a href="#" class="homeChangelocation">change location</a>) </p>
 
-                foreach ($randomClass->enrolled as $enrollee)
-                {
-                    $picLink = 'http://placeskull.com/100/100/868686';
+              <span class="tagsMap">
+              <a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Hacking</a><a href="#" class="homeTag">Adventure</a><a href="#" class="homeTag">Community</a><a href="#" class="homeTag">Scholastic</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
+              <a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
+              </span>
 
-                    if ($enrollee->profilePic != null)
-                    {
-                        $picLink = $user->profilePic;
-                    }
-
-                    $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
-                    $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
-                }
-
-                ?>
-
-                <div class="homeArrow"></div>
-                <div class="twelve columns">
-                    <h2>Featured</h2>
-
-                    <div class="homeFeaturedstudents">
-                        <?php echo $enrollees; ?>
+                    <div class="row">
+                        <div class="six columns">
+                            <?php echo CHtml::link("Reset", array('/site/index'),
+                                                   array('class' => 'homeChangelocation reset')); ?>
+                        </div>
+                        <div class="six columns">
+                            <?php echo CHtml::link("Switch to Kids", array('/kids'),
+                                                   array('class' => 'homeChangelocation')); ?>
+                        </div>
                     </div>
-                    <div class="homeFeaturedtext">
-                        <h3><?php echo $randomClass->Name; ?></h3>
-
-                        <?php if (isset($randomClass->sessions) && count($randomClass->sessions) > 0) : ?>
-
-                        <span>Next available session begins <?php echo date('F jS',
-                                                                            strtotime($randomClass->sessions[0]->Start)); ?></span>
-
-                        <?php endif; ?>
-
-                    </div>
-                    <?php echo CHtml::link('More Info', array('experience/view', 'id' => $randomClass->Experience_ID),
-                                           array('class' => 'button featuredButton')); ?>
                 </div>
-
-                <?php endif; ?>
+            </div>
         </div>
-        <!----- End Featured class info -------->
+
+        <div id='map' style='width: 100%; height: 550px;'></div>
+        <!--<iframe width="100%" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=activities+90232&amp;sll=34.020479,-118.411732&amp;sspn=0.813826,1.588898&amp;t=v&amp;ie=UTF8&amp;hq=activities&amp;hnear=Culver+City,+California+90232&amp;fll=34.020847,-118.394008&amp;fspn=0.025432,0.049653&amp;st=109112006908742164799&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=34.020847,-118.394008&amp;spn=0.025432,0.049653&amp;output=embed"></iframe>-->
     </div>
+    <!----- homepage discovery map -----><!----- Featured info ------------->
+    <div class="homeSearch">
+        <div class="row">
+            <div class="three columns">
+                <label class="inline right">...or the old fashioned way</label>
+            </div>
+
+            <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
+                                                                  'action' => Yii::app()->createUrl('/experience/search'),
+                                                                  'enableAjaxValidation' => false, 'method' => 'get',
+                                                                  'htmlOptions' => array('style' => 'margin: 0;'))); ?>
+
+            <?php $model = new ExperienceSearchForm; ?>
+
+            <div class="five columns">
+                <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
+                                                                      'placeholder' => 'What are you looking for?')); ?>
+            </div>
+            <div class="three columns">
+                <?php echo $form->textField($model, 'location', array('value' => $model->location,
+                                                                      'placeholder' => 'city,state or zip')); ?>
+            </div>
+            <div class="one columns">
+                <a href="#" onclick="document.forms['search-form'].submit(); return false;" class="button">Search</a>
+            </div>
+
+            <?php $this->endWidget('CActiveForm'); ?>
+        </div>
+    </div>
+    <!----- End Featured class info -------->
 </div>
+
 <!--------------------------------------
  Staff picks and Popular Classes
  --------------------------------------->
@@ -250,8 +219,8 @@
     <div class="row">
         <?php
         $experiences = Experience::model()->findAll(array('select' => '*, rand() as rand',
-                                                      'condition' => 'Status = ' . ExperienceStatus::Active,
-                                                      'limit' => 4, 'order' => 'rand',));
+                                                          'condition' => 'Status = ' . ExperienceStatus::Active,
+                                                          'limit' => 4, 'order' => 'rand',));
         foreach ($experiences as $experience)
         {
             $imageHTML = '<img src="' . ($experience->picture ? $experience->picture : 'http://placehold.it/400x300') . '" />';
@@ -293,7 +262,7 @@
                 $experienceName .= ' ...';
             }
             $experienceName = CHtml::link('<h5>' . $experienceName . '</h5>',
-                                     array('experience/view', 'id' => $experience->Experience_ID));
+                                          array('experience/view', 'id' => $experience->Experience_ID));
 
             if (($experience->Price == null) || ($experience->Price == 0))
             {
@@ -386,3 +355,89 @@ BLOCK;
 </div>
 
 </body>
+
+<script>
+    var initialLoad = true;
+
+    $(document).ready(function ()
+    {
+        google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
+        {
+            $("#map").gmap3({
+                map:{
+                    options:{
+                        mapTypeId         :google.maps.MapTypeId.ROADMAP,
+                        mapTypeControl    :false,
+                        streetViewControl :false,
+                        zoomControlOptions:{
+                            position:google.maps.ControlPosition.TOP_RIGHT
+                        },
+                        panControlOptions :{
+                            position:google.maps.ControlPosition.TOP_RIGHT
+                        }
+                    },
+                    events :{
+                        idle:function ()
+                        {
+                            if (initialLoad)
+                            {
+                                initialLoad = false;
+                            }
+                            else
+                            {
+                                return;
+                            }
+
+                            var map = $("#map").gmap3("get");
+                            var defaultZoomLevel = 13;
+
+                            if (google.loader.ClientLocation)
+                            {
+                                var lat = google.loader.ClientLocation.latitude;
+                                var lon = google.loader.ClientLocation.longitude
+                                var center = new google.maps.LatLng(lat, lon);
+
+                                map.setCenter(center);
+                                map.setZoom(defaultZoomLevel);
+                            }
+
+                            if (navigator.geolocation)
+                            {
+                                navigator.geolocation.getCurrentPosition(function (position)
+                                {
+                                    var lat = position.coords.latitude;
+                                    var lon = position.coords.longitude;
+                                    var center = new google.maps.LatLng(lat, lon);
+
+                                    map.setCenter(center);
+                                    map.setZoom(defaultZoomLevel);
+                                }, function (error)
+                                {
+                                    //use error.code to determine what went wrong
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+
+            $.ajax({
+                type   :'GET',
+                url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults",
+                                                                  array('json' => '1')); ?>',
+                success:function (data)
+                {
+                    //TODO
+                    var results = jQuery.parseJSON(data);
+
+                    for(var i in results)
+                    {
+
+                    }
+                }
+            });
+        }
+
+        });
+    });
+</script>
