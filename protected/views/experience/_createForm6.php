@@ -55,13 +55,13 @@
                 <label class="inline right">Available seats each session</label>
             </div>
             <div class="two columns">
-                <?php echo $form->textField($model, 'Min_occupancy',
-                                            array('placeholder' => 'min', 'maxlength' => '3', 'id' => 'minOccupancy')); ?>
+                <?php echo $form->textField($model, 'Min_occupancy', array('placeholder' => 'min', 'maxlength' => '3',
+                                                                           'id' => 'minOccupancy')); ?>
             </div>
             <div class="one column"><label class="text-center inline">-</label></div>
             <div class="two columns">
-                <?php echo $form->textField($model, 'Max_occupancy',
-                                            array('placeholder' => 'max', 'maxlength' => '3', 'id' => 'maxOccupancy')); ?>
+                <?php echo $form->textField($model, 'Max_occupancy', array('placeholder' => 'max', 'maxlength' => '3',
+                                                                           'id' => 'maxOccupancy')); ?>
             </div>
             <div class="two columns end">
                 <label class="inline">(optional)</label>
@@ -153,23 +153,6 @@
     {
         if (addSessions)
         {
-            $('#minOccupancy').removeClass('error');
-            $('#maxOccupancy').removeClass('error');
-
-            var hasError = false;
-
-            if($('#minOccupancy').val().length == 0)
-            {
-                hasError = true;
-                $('#minOccupancy').addClass('error');
-            }
-
-            if($('#maxOccupancy').val().length == 0)
-            {
-                hasError = true;
-                $('#maxOccupancy').addClass('error');
-            }
-
             var clientEvents = $('#calendar').fullCalendar('clientEvents');
             var sessions = [];
 
@@ -186,19 +169,15 @@
                 sessions.push(session);
             }
 
-            if(sessions.length == 0)
+            if (sessions.length == 0)
             {
-                hasError = true;
+                $('#sessions').val('');
             }
-
-            if(hasError)
+            else
             {
-                return;
+                var sessionsJSON = JSON.stringify(sessions);
+                $('#sessions').val(sessionsJSON);
             }
-
-            var sessionsJSON = JSON.stringify(sessions);
-
-            $('#sessions').val(sessionsJSON);
             document.forms['experience-create-form'].submit();
         }
         else

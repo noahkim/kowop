@@ -231,7 +231,7 @@ class ExperienceController extends Controller
                         $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
                         Message::SendNotification($student->User_ID,
-                                                  "{$userName} has updated the class details for \"{$experienceName}\".");
+                                                  "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
 
@@ -455,7 +455,7 @@ class ExperienceController extends Controller
             $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
             $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your class \"{$experienceName}\".");
+            Message::SendNotification($model->Create_User_ID, "{$userName} has joined your experience \"{$experienceName}\".");
         }
 
         // Notify the students
@@ -466,7 +466,7 @@ class ExperienceController extends Controller
                 $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
                 $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
 
-                Message::SendNotification($student->User_ID, "{$userName} has also joined the class \"{$experienceName}\".");
+                Message::SendNotification($student->User_ID, "{$userName} has also joined the experience \"{$experienceName}\".");
             }
         }
 

@@ -1,38 +1,30 @@
-<h4>Session <?php echo $session->Session_ID; ?> Info</h4>
+<h4>Session Info</h4>
 <ul>
     <?php
-    foreach ($session->lessons as $i => $lesson)
-    {
-        $lessonNum = $i + 1;
-
-        echo "<li>Lesson {$lessonNum}: {$lesson->Start} - {$lesson->End}</li>\n";
-    }
+    echo "<li>{$session->Start} - {$session->End}</li>\n";
     ?>
 </ul>
 <div class="enrollees spacebot10">
     <?php
-    foreach ($session->enrolled as $student)
+    foreach ($session->enrolled as $enrollee)
     {
         $imageLink = 'http://placeskull.com/100/100/01a4a4';
 
-        if ($student->profilePic != null)
+        if ($enrollee->profilePic != null)
         {
-            $imageLink = $student->profilePic;
+            $imageLink = $enrollee->profilePic;
         }
 
-        $imageHTML = "<img src='{$imageLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
+        $imageHTML = "<img src='{$imageLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />\n";
 
-        echo CHtml::link($imageHTML, array('/user/view', 'id' => $student->User_ID));
+        echo CHtml::link($imageHTML, array('/user/view', 'id' => $enrollee->User_ID));
     }
     ?>
 </div>
 
 <?php
 echo CHtml::link('Enroll',
-    array('/experience/join', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
-    array('class' => 'button radius stretch')
+                 array('/experience/join', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
+                 array('class' => 'button radius stretch')
 );
 ?>
-
-<!--<a href="<?php /*echo $this->createAbsoluteUrl('//experience/join', array('id' => $model->Experience_ID, 'session' => $session->Session_ID)); */?>"
-   class="button radius stretch">Enroll</a>-->

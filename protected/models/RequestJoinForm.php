@@ -65,6 +65,6 @@ class RequestJoinForm extends CFormModel
         $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
         $requestName = CHtml::link($request->Name, array('request/view', 'id' => $request->Request_ID));
 
-        Message::SendNotification($request->Create_User_ID, "{$userName} has joined your class request \"{$requestName}\".");
+        Message::SendNotification($request->Create_User_ID, "{$userName} has joined your request \"{$requestName}\".");
     }
 }

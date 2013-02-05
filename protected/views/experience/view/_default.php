@@ -108,17 +108,25 @@
                         </div>
 
                     </div>
+
+                    <?php if ($nextSession != null) : ?>
+
                     <div class="spacebot10">
                         <?php
+
                         echo CHtml::link('Enroll for this session',
                                          array('/experience/join', 'id' => $model->Experience_ID,
                                                array('session' => $nextSession->Session_ID)),
                                          array('class' => 'button large twelve enrollButton'));
+
                         ?>
                     </div>
                     <div>
                         <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
                     </div>
+
+                    <?php endif; ?>
+
                 </div>
             </div>
         </div>

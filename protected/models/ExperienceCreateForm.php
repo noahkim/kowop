@@ -173,7 +173,7 @@ class ExperienceCreateForm extends CFormModel
                                                                                     'id' => $this->experience->Experience_ID));
 
                             Message::SendNotification($user->User_ID,
-                                                      "{$userName} has picked up the request \"{$requestName}\" and created the class \"{$experienceName}\".");
+                                                      "{$userName} has picked up the request \"{$requestName}\" and created the experience \"{$experienceName}\".");
                         }
                     }
                 }

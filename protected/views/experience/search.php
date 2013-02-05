@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="six columns">
-                    <input type="text" placeholder="date" id="nextClassEndsBy" class='twelve'/>
+                    <input type="text" placeholder="date" id="nextClassEndsBy" class='twelve' />
                 </div>
 
                 <?php $this->endWidget('CActiveForm'); ?>
@@ -130,7 +130,7 @@
             <div class="sidebarBox">
                 <div class="row">
                     <div class="twelve columns text-center">
-                        Looking for a class or activity for kids? Try<br/><br/>
+                        Looking for a class or activity for kids? Try<br /><br />
                         <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_kids.png">', array('/kids')); ?>
                     </div>
                 </div>
@@ -144,8 +144,8 @@
     <!------- end main content container----->
 </div>
 
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4&sensor=false"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
+<!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4&sensor=false"></script>-->
 <script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
 
 <script>
@@ -153,6 +153,123 @@
 
     $(document).ready(function ()
     {
+        google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
+        {
+            $("#map").gmap3({
+                map   :{
+                    options:{
+                        mapTypeId     :google.maps.MapTypeId.ROADMAP,
+                        mapTypeControl:false,
+                        zoom          :5
+                    },
+                    events :{
+                        zoom_changed  :function ()
+                        {
+                            if (!$('#redoSearch').is(':checked'))
+                            {
+                                return;
+                            }
+
+                            clearTimeout(timeoutHandle);
+                            timeoutHandle = setTimeout(redoSearchWithMap, 500);
+                        },
+                        center_changed:function ()
+                        {
+                            if (!$('#redoSearch').is(':checked'))
+                            {
+                                return;
+                            }
+
+                            clearTimeout(timeoutHandle);
+                            timeoutHandle = setTimeout(redoSearchWithMap, 500);
+                        }
+                    }
+                },
+                marker:{
+                    values :[
+                    <?php
+                    $markerValues = '';
+
+                    foreach ($results as $i => $item)
+                    {
+                        $type = 'class';
+                        $id = 0;
+                        if ($item instanceof Experience)
+                        {
+                            $address = str_replace("'", "\\'", $item->location->fullAddress);
+
+                            $link = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
+                            $id = $item->Experience_ID;
+                        }
+                        elseif ($item instanceof Request)
+                        {
+                            $address = $item->Zip;
+
+                            $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
+                            $id = $item->Request_ID;
+                            $type = 'request';
+                        }
+
+                        $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}', 'type': '{$type}', 'id': {$id} } },\n";
+                    }
+
+                    $markerValues = Utils::str_lreplace(',', '', $markerValues);
+                    echo $markerValues;
+                    ?>
+                    ],
+                    options:{
+                        draggable:false
+                    },
+                    events :{
+                        mouseover:function (marker, event, context)
+                        {
+                            var index = context.data.index;
+                            $('#result' + index).css('border-width', '2');
+                            $('#result' + index).css('border-color', 'blue');
+                        },
+                        mouseout :function (marker, event, context)
+                        {
+                            var index = context.data.index;
+                            $('#result' + index).css('border-width', '');
+                            $('#result' + index).css('border-color', '');
+                        },
+                        click    :function (marker, event, context)
+                        {
+                            window.location.replace(context.data.link);
+                        }
+                    }
+                }
+                /*autofit:{}*/
+            });
+
+            if (google.loader.ClientLocation)
+            {
+                var lat = google.loader.ClientLocation.latitude;
+                var lon = google.loader.ClientLocation.longitude
+                var center = new google.maps.LatLng(lat, lon);
+
+                var map = $("#map").gmap3("get");
+                map.setCenter(center);
+            }
+
+            if (navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(function (position)
+                {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    var center = new google.maps.LatLng(lat, lon);
+
+                    var map = $("#map").gmap3("get");
+                    map.setCenter(center);
+                }, function (error)
+                {
+                    alert(error.code);
+                    //use error.code to determine what went wrong
+                });
+            }
+
+        }});
 
         $('.searchInput').keypress(function (e)
         {
@@ -178,93 +295,6 @@
             {
                 document.forms['search-form'].submit();
             }
-        });
-
-        $("#map").gmap3({
-            map    :{
-                options:{
-                    mapTypeId     :google.maps.MapTypeId.ROADMAP,
-                    mapTypeControl:false,
-                    zoom          :5
-                },
-                events :{
-                    zoom_changed  :function ()
-                    {
-                        if (!$('#redoSearch').is(':checked'))
-                        {
-                            return;
-                        }
-
-                        clearTimeout(timeoutHandle);
-                        timeoutHandle = setTimeout(redoSearchWithMap, 500);
-                    },
-                    center_changed:function ()
-                    {
-                        if (!$('#redoSearch').is(':checked'))
-                        {
-                            return;
-                        }
-
-                        clearTimeout(timeoutHandle);
-                        timeoutHandle = setTimeout(redoSearchWithMap, 500);
-                    }
-                }
-            },
-            marker :{
-                values :[
-                <?php
-                $markerValues = '';
-
-                foreach ($results as $i => $item)
-                {
-                    $type = 'class';
-                    $id = 0;
-                    if ($item instanceof Experience)
-                    {
-                        $address = str_replace("'", "\\'", $item->location->fullAddress);
-
-                        $link = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
-                        $id = $item->Experience_ID;
-                    }
-                    elseif ($item instanceof Request)
-                    {
-                        $address = $item->Zip;
-
-                        $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
-                        $id = $item->Request_ID;
-                        $type = 'request';
-                    }
-
-                    $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}', 'type': '{$type}', 'id': {$id} } },\n";
-                }
-
-                $markerValues = Utils::str_lreplace(',', '', $markerValues);
-                echo $markerValues;
-                ?>
-                ],
-                options:{
-                    draggable:false
-                },
-                events :{
-                    mouseover:function (marker, event, context)
-                    {
-                        var index = context.data.index;
-                        $('#result' + index).css('border-width', '2');
-                        $('#result' + index).css('border-color', 'blue');
-                    },
-                    mouseout :function (marker, event, context)
-                    {
-                        var index = context.data.index;
-                        $('#result' + index).css('border-width', '');
-                        $('#result' + index).css('border-color', '');
-                    },
-                    click    :function (marker, event, context)
-                    {
-                        window.location.replace(context.data.link);
-                    }
-                }
-            },
-            autofit:{}
         });
     });
 

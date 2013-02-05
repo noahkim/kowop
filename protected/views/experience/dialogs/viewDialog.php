@@ -2,24 +2,24 @@
 <ul>
     <li>Start Time: <?php echo $model->Start; ?></li>
     <li>End Time: <?php echo $model->End; ?></li>
-    <li>Duration: <?php echo $model->experience->LessonDuration; ?> hour(s)</li>
 </ul>
 <div class="enrollees spacebot10">
     <?php
-        foreach($model->session->enrolled as $student)
+    foreach ($model->enrolled as $enrollee)
+    {
+        $imageLink = 'http://placeskull.com/100/100/01a4a4';
+
+        if ($enrollee->profilePic != null)
         {
-            $imageLink = 'http://placeskull.com/100/100/01a4a4';
-
-            if($student->profilePic != null)
-            {
-                $imageLink = $student->profilePic;
-            }
-
-            $imageHTML = "<img src='{$imageLink}' alt='{$student->fullname}' title='{$student->fullname}' />\n";
-
-            echo CHtml::link($imageHTML, array('/user/view', 'id' => $student->User_ID));
+            $imageLink = $enrollee->profilePic;
         }
+
+        $imageHTML = "<img src='{$imageLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />\n";
+
+        echo CHtml::link($imageHTML, array('/user/view', 'id' => $enrollee->User_ID));
+    }
     ?>
 </div>
 
-<?php echo CHtml::link('View Class Details', array('/experience/view', 'id' => $model->experience->Experience_ID), array('class' => 'button radius stretch')); ?>
+<?php echo CHtml::link('View Class Details', array('/experience/view', 'id' => $model->experience->Experience_ID),
+                       array('class' => 'button radius stretch')); ?>

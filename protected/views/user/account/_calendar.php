@@ -1,14 +1,14 @@
 <!------- right column ------------->
-<h1>Class Calendar</h1>
+<h1>Experience Calendar</h1>
 <div class="nine columns accountCalendar">
-    <p>Click on a scheduled class in the calendar for more information.</p>
+    <p>Click on a scheduled experience in the calendar for more information.</p>
     <!---- legend ---->
     <div class="row">
         <div class="twelve columns legend">
             <span class="accountLegendEnrolled"></span>
-            <span>Enrolled classes</span>
+            <span>Experiences I've signed up for</span>
             <span class="accountLegendTeaching"></span>
-            <span>Classes I'm teaching</span>
+            <span>Experiences I'm hosting</span>
         </div>
     </div>
     <!---- end legend --->
@@ -45,35 +45,35 @@
             },
             events:[
             <?php
-            foreach ($model->enrolledIn as $class)
+            foreach ($model->enrolledIn as $experience)
             {
-                $classLink = Yii::app()->createUrl('/experience/view', array('id' => $class->Experience_ID));
+                $experienceLink = Yii::app()->createUrl('/experience/view', array('id' => $experience->Experience_ID));
 
-                foreach ($class->lessons as $lesson)
+                foreach ($experience->sessions as $session)
                 {
                     echo <<<BLOCK
                     {
-                        title:"{$class->Name}",
-                        start: Date.parse('{$lesson->Start}'),
-                        end: Date.parse('{$lesson->End}'),
-                        lesson: {$lesson->Lesson_ID}
+                        title:"{$experience->Name}",
+                        start: Date.parse('{$session->Start}'),
+                        end: Date.parse('{$session->End}'),
+                        session: {$session->Session_ID}
                     },
 BLOCK;
                 }
             }
 
-            foreach ($model->experiences as $class)
+            foreach ($model->experiences as $experience)
             {
-                $classLink = Yii::app()->createUrl('/experience/view', array('id' => $class->Experience_ID));
+                $experienceLink = Yii::app()->createUrl('/experience/view', array('id' => $experience->Experience_ID));
 
-                foreach ($class->lessons as $lesson)
+                foreach ($experience->sessions as $session)
                 {
                     echo <<<BLOCK
                     {
-                        title:"{$class->Name}",
-                        start: Date.parse('{$lesson->Start}'),
-                        end: Date.parse('{$lesson->End}'),
-                        lesson: {$lesson->Lesson_ID},
+                        title:"{$experience->Name}",
+                        start: Date.parse('{$session->Start}'),
+                        end: Date.parse('{$session->End}'),
+                        session: {$session->Session_ID},
                         color: '#D70060'
                     },
 BLOCK;

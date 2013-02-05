@@ -197,11 +197,11 @@ class UserController extends Controller
         $sender = Yii::app()->user->id;
 
         $text = $_POST['message'];
-        $replyTo = $_POST['replyTo'];
+        $replyTo = isset($_POST['replyTo']) ? $_POST['replyTo'] : null;
 
         Message::SendMessage($id, $sender, $text, $replyTo);
 
-        if (isset($replyTo) && $replyTo != null)
+        if ($replyTo != null)
         {
             $to = User::model()->findByPk($id);
             $toLink = CHtml::link($to->fullName, array('/user/view', 'id' => $to->User_ID));
