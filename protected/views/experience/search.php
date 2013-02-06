@@ -159,6 +159,13 @@ $(document).ready(function ()
                 options:{
                     mapTypeId     :google.maps.MapTypeId.ROADMAP,
                     mapTypeControl:false,
+                    streetViewControl :false,
+                    zoomControlOptions:{
+                        position:google.maps.ControlPosition.TOP_RIGHT
+                    },
+                    panControlOptions :{
+                        position:google.maps.ControlPosition.TOP_RIGHT
+                    }
                 },
                 events :{
                     zoom_changed  :function ()

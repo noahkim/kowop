@@ -77,7 +77,7 @@ class ExperienceCreateForm extends CFormModel
 
         $location->Address = $this->locationStreet;
         $location->City = $this->locationCity;
-        $location->State = $this->locationState;
+        $location->State = Location::GetStates()[$this->locationState];
         $location->Zip = $this->locationZip;
 
         $result = Location::model()->findExisting($location);

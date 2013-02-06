@@ -12,14 +12,8 @@ if (!Yii::app()->user->isGuest)
 
 foreach ($results as $i => $item)
 {
-    $teacherName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
-    $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $item->Create_User_ID));
-    $description = $item->Description;
-    if (strlen($description) > 85)
-    {
-        $description = substr($description, 0, 85);
-        $description .= ' ...';
-    }
+    $hostName = $item->createUser->Teacher_alias ? $item->createUser->Teacher_alias : $item->createUser->fullname;
+    $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $item->Create_User_ID));
 
     $sessionHTML = 'Request';
     if ($item instanceof Experience)
@@ -81,8 +75,7 @@ foreach ($results as $i => $item)
             <span class="tilenumber">{$itemNumber}</span>
             {$imageLink}
             {$name}
-            <span class="tileInstructor">by {$teacherLink}</span>
-            <span class="tileDescription">{$description}</span>
+            <span class="tileInstructor">by {$hostLink}</span>
             <div class="tileStudents">
                 {$enrollees}
             </div>
@@ -126,8 +119,7 @@ BLOCK;
       <div id="result{$i}" class="requestTile">
       <span class="tilenumber">{$itemNumber}</span>
         {$name}
-        <span class="tileInstructor">by {$teacherLink}</span>
-        <span class="tileDescription">{$description}</span>
+        <span class="tileInstructor">by {$hostLink}</span>
         <div class="tileStudents">
             {$enrollees}
         </div>

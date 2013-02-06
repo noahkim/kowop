@@ -74,18 +74,15 @@
                             {
                                 $nextSession = $nextSession[0];
 
-                                foreach ($nextSession->lessons as $lesson)
-                                {
-                                    $startTime = strtotime($nextSession->Start);
-                                    $endTime = strtotime($nextSession->End);
+                                $startTime = strtotime($nextSession->Start);
+                                $endTime = strtotime($nextSession->End);
 
-                                    $dayOfWeek = date('l', $startTime);
-                                    $date = date('F j', $startTime);
-                                    $start = date('g:i a', $startTime);
-                                    $end = date('g:i a', $endTime);
+                                $dayOfWeek = date('l', $startTime);
+                                $date = date('F j', $startTime);
+                                $start = date('g:i a', $startTime);
+                                $end = date('g:i a', $endTime);
 
-                                    echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                                }
+                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
                             }
 
                             ?>
@@ -166,8 +163,6 @@
                                 ?>
                                 <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
                                 <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
-                                <li><span># of Lessons</span><?php echo count($model->sessions[0]->lessons); ?></li>
-                                <li><span>1 lesson time</span><?php echo $model->LessonDuration * 60; ?> min</li>
                             </ul>
                         </div>
                     </div>

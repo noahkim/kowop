@@ -2,9 +2,9 @@
 <html class="no-js" lang="en">
 <!--<![endif]-->
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <!-- Set the viewport width to device width for mobile -->
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
 
     <link rel="stylesheet" href="/ui/sitev2/fonts/proxima/stylesheet.css">
     <link rel="stylesheet" href="/ui/sitev2/fonts/susa/stylesheet.css">
@@ -26,7 +26,6 @@
     <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
 </head>
 <body>
-
 
 <!---------------------------------------
      Main Homepage Banner / Logo / header nav
@@ -133,14 +132,15 @@
                         (<a href="#" class="homeChangelocation">change location</a>) </p>
 
               <span class="tagsMap">
-              <a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Hacking</a><a href="#" class="homeTag">Adventure</a><a href="#" class="homeTag">Community</a><a href="#" class="homeTag">Scholastic</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
-              <a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
+              <!--<a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Hacking</a><a href="#" class="homeTag">Adventure</a><a href="#" class="homeTag">Community</a><a href="#" class="homeTag">Scholastic</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
+              <a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>-->
               </span>
 
                     <div class="row">
                         <div class="six columns">
-                            <?php echo CHtml::link("Reset", array('/site/index'),
-                                                   array('class' => 'homeChangelocation reset')); ?>
+                            <a href="#" class='homeChangelocation reset' onclick='populateData(); return false;'>Reset</a>
+                            <?php /*echo CHtml::link("Reset", array('/site/index'),
+                                                   array('class' => 'homeChangelocation reset')); */?>
                         </div>
                         <div class="six columns">
                             <?php echo CHtml::link("Switch to Kids", array('/kids'),
@@ -152,7 +152,6 @@
         </div>
 
         <div id='map' style='width: 100%; height: 550px;'></div>
-        <!--<iframe width="100%" height="550" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=activities+90232&amp;sll=34.020479,-118.411732&amp;sspn=0.813826,1.588898&amp;t=v&amp;ie=UTF8&amp;hq=activities&amp;hnear=Culver+City,+California+90232&amp;fll=34.020847,-118.394008&amp;fspn=0.025432,0.049653&amp;st=109112006908742164799&amp;rq=1&amp;ev=zi&amp;split=1&amp;ll=34.020847,-118.394008&amp;spn=0.025432,0.049653&amp;output=embed"></iframe>-->
     </div>
     <!----- homepage discovery map -----><!----- Featured info ------------->
     <div class="homeSearch">
@@ -226,20 +225,14 @@
             $imageHTML = '<img src="' . ($experience->picture ? $experience->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $experience->Experience_ID));
 
-            $teacherName = $experience->createUser->Teacher_alias ? $experience->createUser->Teacher_alias : $experience->createUser->fullname;
-            if (strlen($teacherName) > 25)
+            $hostName = $experience->createUser->Teacher_alias ? $experience->createUser->Teacher_alias : $experience->createUser->fullname;
+            if (strlen($hostName) > 25)
             {
-                $teacherName = substr($teacherName, 0, 25);
-                $teacherName .= ' ...';
+                $hostName = substr($hostName, 0, 25);
+                $hostName .= ' ...';
             }
 
-            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $experience->Create_User_ID));
-            $description = $experience->Description;
-            if (strlen($description) > 82)
-            {
-                $description = substr($description, 0, 82);
-                $description .= ' ...';
-            }
+            $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $experience->Create_User_ID));
 
             $enrollees = '';
             foreach ($experience->enrolled as $enrollee)
@@ -278,9 +271,7 @@
         <div class="three columns">
             <div class="classTile">{$imageLink}
                 {$experienceName}
-                <span class="tileInstructor">by {$teacherLink}</span> <span
-                        class="tileDescription">{$description}</span>
-
+                <span class="tileInstructor">by {$hostLink}</span>
                 <div class="tileStudents">
                     {$enrollees}
                 </div>
@@ -358,6 +349,7 @@ BLOCK;
 
 <script>
     var initialLoad = true;
+    var excludedTags = [];
 
     $(document).ready(function ()
     {
@@ -389,7 +381,7 @@ BLOCK;
                             }
 
                             var map = $("#map").gmap3("get");
-                            var defaultZoomLevel = 13;
+                            var defaultZoomLevel = 12;
 
                             if (google.loader.ClientLocation)
                             {
@@ -421,23 +413,121 @@ BLOCK;
                 }
             });
 
-            $.ajax({
-                type   :'GET',
-                url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults",
-                                                                  array('json' => '1')); ?>',
-                success:function (data)
-                {
-                    //TODO
-                    var results = jQuery.parseJSON(data);
-
-                    for(var i in results)
-                    {
-
-                    }
-                }
-            });
+            populateData();
         }
 
         });
+
+
     });
+
+    function populateData()
+    {
+        excludedTags = [];
+
+        $("#map").gmap3({clear:{
+            name:'marker'
+        }});
+
+        $.ajax({
+            type   :'GET',
+            url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array('json' => '1')); ?>',
+            success:function (data)
+            {
+                var results = jQuery.parseJSON(data);
+
+                for (var i in results.results)
+                {
+                    $("#map").gmap3({
+                        marker:{
+                            address:results.results[i].location,
+                            data   :{
+                                link:results.results[i].link,
+                                type:results.results[i].type,
+                                tile:results.results[i].tile,
+                                tags:results.results[i].tags
+                            },
+                            id     :results.results[i].id,
+                            options:{
+                                draggable:false
+                            },
+                            events :{
+                                click    :function (marker, event, context)
+                                {
+                                    window.location.replace(context.data.link);
+                                },
+                                mouseover:function (marker, event, context)
+                                {
+                                    $(this).gmap3(
+                                            {clear:"overlay"},
+                                            {
+                                                overlay:{
+                                                    latLng :marker.getPosition(),
+                                                    options:{
+                                                        content:context.data.tile,
+                                                        offset :{
+                                                            x:-1,
+                                                            y:-22
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                },
+                                mouseout :function ()
+                                {
+                                    $(this).gmap3({clear:"overlay"});
+                                }
+                            }
+                        }
+                    });
+                }
+
+                $(".tagsMap").empty();
+
+                for (var i in results.tags)
+                {
+                    $(".tagsMap").append('<a href="#" class="homeTag">' + results.tags[i] + '</a>');
+                }
+
+                $('.tagsMap a').click(function ()
+                {
+                    var tag = $(this).text();
+                    excludedTags.push(tag);
+
+                    $("#map").gmap3({
+                        get:{
+                            name    :"marker",
+                            all     :true,
+                            full    :true,
+                            callback:function (objs)
+                            {
+                                $.each(objs, function (i, obj)
+                                {
+                                    var isValid = false;
+
+                                    for (var i in obj.data.tags)
+                                    {
+                                        if ($.inArray(obj.data.tags[i], excludedTags) == -1)
+                                        {
+                                            isValid = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!isValid)
+                                    {
+                                        $("#map").gmap3({clear:{
+                                            id:obj.id
+                                        }});
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                    $(this).remove();
+                });
+            }
+        });
+    }
 </script>

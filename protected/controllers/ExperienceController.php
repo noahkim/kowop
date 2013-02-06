@@ -390,31 +390,65 @@ class ExperienceController extends Controller
 
         if (isset($_REQUEST['json']))
         {
-            $formattedResults = array();
-
-            foreach ($results as $result)
-            {
-                $formattedResult = array();
-                $formattedResult['data'] = $result;
-
-                if ($result instanceof Experience)
-                {
-                    $formattedResult['location'] = $result->location->fullAddress;
-                }
-                else
-                {
-                    $formattedResult['location'] = $result->Zip;
-                }
-
-                $formattedResults[] = $formattedResult;
-            }
-
-            echo CJSON::encode($formattedResults);
+            echo $this->getJSONFormattedResults($results);
         }
         else
         {
             $this->render('_searchResults', array('model' => $model, 'results' => $results));
         }
+    }
+
+    private function getJSONFormattedResults($results)
+    {
+        $formattedResults = array();
+        $tags = array();
+
+        foreach ($results as $item)
+        {
+            $formattedResult = array();
+
+            $name = "<h5> {$item->Name} </h5>";
+            if ($item instanceof Experience)
+            {
+                $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));
+                $address = str_replace("'", "\\'", $item->location->fullAddress);
+
+                $itemTags = $item->tagList;
+                array_push($itemTags, $item->category->Name);
+
+                $formattedResult['tags'] = $itemTags;
+
+                $tags = array_unique(array_merge($tags, $itemTags));
+
+                $formattedResult['location'] = $address;
+                $formattedResult['link'] = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
+                $formattedResult['type'] = 'experience';
+                $formattedResult['id'] = $item->Experience_ID;
+
+                $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
+                if (count($item->contents) > 0)
+                {
+                    $link = $item->contents[0]->Link;
+                    $imageHTML = "<img src='{$link}' />";
+                }
+
+                $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $item->Experience_ID));
+
+                $formattedResult['tile'] = <<<BLOCK
+                <!---- Google maps tile ---->
+                <div class="mapTile">
+                    {$imageLink}
+                    {$name}
+                </div>
+BLOCK;
+            }
+
+            $formattedResults['results'][] = $formattedResult;
+        }
+
+        $formattedResults['tags'] = $tags;
+
+        return CJSON::encode($formattedResults);
     }
 
     /**

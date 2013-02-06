@@ -216,14 +216,14 @@
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
-            $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
-            if (strlen($teacherName) > 25)
+            $hostName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            if (strlen($hostName) > 25)
             {
-                $teacherName = substr($teacherName, 0, 25);
-                $teacherName .= ' ...';
+                $hostName = substr($hostName, 0, 25);
+                $hostName .= ' ...';
             }
 
-            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
+            $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
             if (strlen($description) > 82)
             {
@@ -270,7 +270,7 @@
         <div class="three columns">
             <div class="classTile">{$imageLink}
                 {$experienceName}
-                <span class="tileInstructor">by {$teacherLink}</span> <span
+                <span class="tileInstructor">by {$hostLink}</span> <span
                         class="tileDescription">{$description}</span>
 
                 <div class="tileStudents">
@@ -311,8 +311,8 @@ BLOCK;
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
-            $teacherName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
-            $teacherLink = CHtml::link($teacherName, array('/user/view', 'id' => $class->Create_User_ID));
+            $hostName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
             if (strlen($description) > 82)
             {
@@ -353,7 +353,7 @@ BLOCK;
         <div class="three columns">
             <div class="classTile">{$imageLink}
                 {$experienceName}
-                <span class="tileInstructor">by {$teacherLink}</span> <span
+                <span class="tileInstructor">by {$hostLink}</span> <span
                         class="tileDescription">{$description}</span>
 
                 <div class="tileStudents">
