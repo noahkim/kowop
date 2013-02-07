@@ -38,15 +38,15 @@ class ExperienceController extends Controller
     {
         $this->layout = '//layouts/main';
 
-        $view = 'view/_default';
-
         $model = $this->loadModel($id);
+
+        $view = 'view/_default';
 
         if (!Yii::app()->user->isGuest)
         {
             if (Yii::app()->user->id == $model->Create_User_ID)
             {
-                $view = 'view/_teacher';
+                $view = 'view/_host';
             }
             else
             {
@@ -222,16 +222,16 @@ class ExperienceController extends Controller
             if ($model->save())
             {
                 // Notify the students
-                foreach ($model->enrolled as $student)
+                foreach ($model->enrolled as $enrollee)
                 {
-                    if ($student->User_ID != $model->Create_User_ID)
+                    if ($enrollee->User_ID != $model->Create_User_ID)
                     {
                         $userName = CHtml::link($model->createUser->fullName,
                                                 array('user/view', 'id' => $model->createUser->User_ID));
                         $experienceName = CHtml::link($model->Name,
                                                       array('experience/view', 'id' => $model->Experience_ID));
 
-                        Message::SendNotification($student->User_ID,
+                        Message::SendNotification($enrollee->User_ID,
                                                   "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
@@ -402,6 +402,7 @@ class ExperienceController extends Controller
     {
         $formattedResults = array();
         $tags = array();
+        $categories = array();
 
         foreach ($results as $item)
         {
@@ -414,11 +415,12 @@ class ExperienceController extends Controller
                 $address = str_replace("'", "\\'", $item->location->fullAddress);
 
                 $itemTags = $item->tagList;
-                array_push($itemTags, $item->category->Name);
 
                 $formattedResult['tags'] = $itemTags;
+                $formattedResult['category'] = $item->category->Name;
 
                 $tags = array_unique(array_merge($tags, $itemTags));
+                array_push($categories, $item->category->Name);
 
                 $formattedResult['location'] = $address;
                 $formattedResult['link'] = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
@@ -447,6 +449,8 @@ BLOCK;
         }
 
         $formattedResults['tags'] = $tags;
+        $categories = array_unique($categories);
+        $formattedResults['categories'] = $categories;
 
         return CJSON::encode($formattedResults);
     }
@@ -469,62 +473,14 @@ BLOCK;
     public function actionJoin($id)
     {
         $model = $this->loadModel($id);
-        $user_ID = Yii::app()->user->id;
 
         $session = null;
-        if (count($model->sessions) > 0)
+        if (isset($_REQUEST['session']))
         {
-            if (isset($_REQUEST['session']))
-            {
-                $session_ID = $_REQUEST['session'];
-                $sessionFind = Session::model()->findByPk($session_ID);
-                if ($sessionFind != null)
-                {
-                    $session = $sessionFind;
-                }
-            }
-            else
-            {
-                $session = $model->nextAvailableSession;
-            }
+            $session = $_REQUEST['session'];
         }
 
-        $user = User::model()->findByPk($user_ID);
-
-        if ($model->Create_User_ID != $user_ID)
-        {
-            $existing = UserToSession::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID',
-                                                     array(':User_ID' => $user_ID,
-                                                           ':Session_ID' => $session->Session_ID));
-
-            if ($existing == null)
-            {
-                $userToSession = new UserToSession();
-                $userToSession->Session_ID = $session->Session_ID;
-                $userToSession->User_ID = $user_ID;
-
-                $userToSession->save();
-            }
-
-            $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-            $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
-
-            Message::SendNotification($model->Create_User_ID,
-                                      "{$userName} has joined your experience \"{$experienceName}\".");
-        }
-
-        // Notify the students
-        foreach ($model->enrolled as $student)
-        {
-            if ($student->User_ID != $user_ID)
-            {
-                $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-                $experienceName = CHtml::link($model->Name, array('experience/view', 'id' => $model->Experience_ID));
-
-                Message::SendNotification($student->User_ID,
-                                          "{$userName} has also joined the experience \"{$experienceName}\".");
-            }
-        }
+        $model->Join($session);
 
         $this->redirect(array('view', 'id' => $model->Experience_ID));
     }
@@ -534,7 +490,8 @@ BLOCK;
         $model = $this->loadModel($id);
         $user_ID = Yii::app()->user->id;
 
-        UserToSession::model()->deleteAll('User_ID=:User_ID', array(':User_ID' => $user_ID));
+        UserToExperience::model()->deleteAll('User_ID=:User_ID AND Experience_ID=:Experience_ID',
+                                             array(':User_ID' => $user_ID, ':Experience_ID' => $model->Experience_ID));
 
         $this->redirect(array('view', 'id' => $model->Experience_ID));
     }

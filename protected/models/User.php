@@ -24,7 +24,7 @@
  * @property Request[] $requests
  * @property RequestToUser[] $requestToUsers
  * @property UserToContent[] $userToContents
- * @property UserToSession[] $userToSessions
+ * @property UserToExperience[] $userToExperiences
  */
 class User extends CActiveRecord
 {
@@ -84,12 +84,12 @@ class User extends CActiveRecord
             'sentMessages' => array(self::HAS_MANY, 'Message', 'From'),
             'friended' => array(self::HAS_MANY, 'Friend', 'User_ID'),
             'friendOf' => array(self::HAS_MANY, 'Friend', 'Friend_User_ID'),
-            'userToSessions' => array(self::HAS_MANY, 'UserToSession', 'User_ID'),
+            'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'User_ID'),
             // Added
             'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
-            'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToSessions'),
-            'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'sessions'),
+            'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToExperiences'),
+            'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'userToExperiences'),
         );
     }
 

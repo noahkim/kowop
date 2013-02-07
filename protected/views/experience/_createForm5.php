@@ -7,7 +7,7 @@
                                       array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
                                             'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
-        <input id="step" name="step" type="hidden"/>
+        <input id="step" name="step" type="hidden" />
         <?php $this->endWidget(); ?>
 
         <script>
@@ -41,7 +41,7 @@
                                          'stateful' => true,));
         ?>
 
-        <input type="hidden" name="step" value="6"/>
+        <input type="hidden" name="step" value="6" />
 
         <div class="row">
             <div class="four columns">
@@ -80,6 +80,13 @@
                 }
             });
         </script>
+
+        <?php if ($model->ExperienceType == ExperienceType::Class_): ?>
+
+        <?php echo $form->hiddenField($model, 'MaxPerPerson', array('value' => '1')); ?>
+        <?php echo $form->hiddenField($model, 'MultipleAllowed', array('value' => '0')); ?>
+
+        <?php else : ?>
 
         <div class="row">
             <div class="four columns">
@@ -125,6 +132,8 @@
             });
         </script>
 
+        <?php endif; ?>
+
         <div class="row">
             <div class="four columns">
                 <label class="right inline">What do you get for this price?</label>
@@ -139,7 +148,7 @@
             </div>
             <div class="eight columns">
                 <p>Provide a detailed description of what your experience is all about, as well as any instructions or
-                    information people should know.</p>
+                   information people should know.</p>
 
                 <div id="toolbar" style="display: none;">
                     <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |

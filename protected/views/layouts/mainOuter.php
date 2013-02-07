@@ -27,11 +27,11 @@
     <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css" />
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/yiidev/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="/ui/sitev2/javascripts/foundation.min.js"></script>
 
 
-    <script src='/yiidev/kowop/js/date.js'></script>
+    <script src='<?php echo Yii::app()->params['siteBase']; ?>/js/date.js'></script>
     <script src='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.min.js'></script>
     <script src="/ui/sitev2/javascripts/modernizr.foundation.js"></script>
     <script src="/ui/sitev2/javascripts/app.js"></script>

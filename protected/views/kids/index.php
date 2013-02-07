@@ -161,17 +161,17 @@
 
                 $randomClass = $randomClass[0];
                 $enrollees = '';
-                foreach ($randomClass->enrolled as $student)
+                foreach ($randomClass->enrolled as $enrollee)
                 {
                     $picLink = 'http://placeskull.com/100/100/868686';
 
-                    if ($student->profilePic != null)
+                    if ($enrollee->profilePic != null)
                     {
-                        $picLink = $student->profilePic;
+                        $picLink = $enrollee->profilePic;
                     }
 
-                    $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                    $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+                    $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
+                    $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
                 }
 
                 ?>
@@ -232,17 +232,17 @@
             }
 
             $enrollees = '';
-            foreach ($class->enrolled as $student)
+            foreach ($class->enrolled as $enrollee)
             {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null)
+                if ($enrollee->profilePic != null)
                 {
-                    $picLink = $student->profilePic;
+                    $picLink = $enrollee->profilePic;
                 }
 
-                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+                $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
             }
 
             $experienceName = $class->Name;
@@ -321,17 +321,17 @@ BLOCK;
             }
 
             $enrollees = '';
-            foreach ($class->enrolled as $student)
+            foreach ($class->enrolled as $enrollee)
             {
                 $picLink = 'http://placeskull.com/100/100/868686';
 
-                if ($student->profilePic != null)
+                if ($enrollee->profilePic != null)
                 {
-                    $picLink = $student->profilePic;
+                    $picLink = $enrollee->profilePic;
                 }
 
-                $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+                $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
+                $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
             }
 
             $experienceName = CHtml::link('<h5>' . $class->Name . '</h5>', array('experience/view', 'id' => $class->Experience_ID));

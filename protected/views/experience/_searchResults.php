@@ -98,17 +98,17 @@ BLOCK;
         }
 
         $enrollees = '';
-        foreach ($item->requestors as $student)
+        foreach ($item->requestors as $enrollee)
         {
             $picLink = 'http://placeskull.com/100/100/868686';
 
-            if ($student->profilePic != null)
+            if ($enrollee->profilePic != null)
             {
-                $picLink = $student->profilePic;
+                $picLink = $enrollee->profilePic;
             }
 
-            $enrolleeText = "<img src='{$picLink}' alt='{$student->fullname}' title='{$student->fullname}' />";
-            $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $student->User_ID)) . "\n";
+            $enrolleeText = "<img src='{$picLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />";
+            $enrollees .= CHtml::link($enrolleeText, array('user/view', 'id' => $enrollee->User_ID)) . "\n";
         }
 
         echo <<<BLOCK

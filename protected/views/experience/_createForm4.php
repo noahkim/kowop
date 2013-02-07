@@ -7,7 +7,7 @@
                                       array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
                                             'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
-        <input id="step" name="step" type="hidden"/>
+        <input id="step" name="step" type="hidden" />
         <?php $this->endWidget(); ?>
 
         <script>
@@ -42,7 +42,7 @@
                                          'htmlOptions' => array('enctype' => 'multipart/form-data'),));
         ?>
 
-        <input name="step" type="hidden" value="5"/>
+        <input name="step" type="hidden" value="5" />
 
         <div class="row">
             <div class="four columns">
@@ -63,7 +63,8 @@
         </div>
         <div class="row">
             <div class="four columns">
-                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300" title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
+                <div class="helptip">
+                    <span class="has-tip tip-top noradius" data-width="300" title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
                 </div>
                 <label class="right inline">Tags</label>
             </div>
@@ -89,7 +90,8 @@
         </div>
         <div class="row">
             <div class="four columns">
-                <div class="helptip"><span class="has-tip tip-top noradius" data-width="300" title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
+                <div class="helptip">
+                    <span class="has-tip tip-top noradius" data-width="300" title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
                 </div>
                 <label class="right inline">Availability</label>
             </div>
@@ -130,7 +132,10 @@
                 <label class="right inline">Age appropriateness</label>
             </div>
             <div class="eight columns">
-                <?php echo $form->checkBoxList($model, 'AppropriateAges', ExperienceAppropriateAges::$Lookup); ?>
+                <div class="checkboxDiv">
+                    <?php echo $form->checkBoxList($model, 'AppropriateAges', ExperienceAppropriateAges::$Lookup,
+                                                   array('template' => '{input} {label}', 'separator' => "\n")); ?>
+                </div>
             </div>
         </div>
         <!----- End conditional div--------->
@@ -162,3 +167,9 @@
         });
     });
 </script>
+
+<style>
+    .checkboxDiv label {
+        display: inline;
+    }
+</style>

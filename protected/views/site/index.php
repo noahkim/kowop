@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css">
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="/yiidev/kowop/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="/ui/sitev2/javascripts/modernizr.foundation.js"></script>
     <script src="/ui/sitev2/javascripts/foundation.min.js"></script>
     <script src="/ui/sitev2/javascripts/app.js"></script>
     <script src="/ui/sitev2/javascripts/account_toggle.js"></script>
 
     <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
-    <script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
+    <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
 
     <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
 </head>
@@ -63,50 +63,48 @@
     <?php else: ?>
     <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
 
-    <div class="header spacebot20">
-        <div class="row">
-            <div class="three columns">
-                <div class="logo">
-                    <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                    neighborhood activities &amp; classes
-                </div>
+    <div class="row">
+        <div class="three columns">
+            <div class="logo">
+                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                neighborhood activities &amp; classes
             </div>
+        </div>
 
-            <div class="three columns headernav">
+        <div class="three columns headernav">
                 <span class="notifications">
                     <?php echo CHtml::link(count($user->messages(array('condition' => '`Read` = 0'))),
                                            array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
                 </span>
-                <!----- My account dropdown ------->
-                <div class="dropdown">
-                    <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
+            <!----- My account dropdown ------->
+            <div class="dropdown">
+                <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
 
-                    <div class="submenu" style="display: none;">
-                        <ul class="root">
-                            <li>
-                                <?php echo CHtml::link('notifications',
-                                                       array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
-                            </li>
-                            <li>
-                                <?php echo CHtml::link('my classes',
-                                                       array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
-                            </li>
-                            <li>
-                                <?php echo CHtml::link('calendar',
-                                                       array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
-                            </li>
-                            <li>
-                                <?php echo CHtml::link('account info',
-                                                       array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
-                            </li>
-                            <li>
-                                <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="submenu" style="display: none;">
+                    <ul class="root">
+                        <li>
+                            <?php echo CHtml::link('notifications',
+                                                   array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('my classes',
+                                                   array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('calendar',
+                                                   array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link('account info',
+                                                   array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
+                        </li>
+                        <li>
+                            <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
+                        </li>
+                    </ul>
                 </div>
-                <!----- end my account dropdown----->
             </div>
+            <!----- end my account dropdown----->
         </div>
     </div>
 
@@ -123,7 +121,7 @@
 --><!----- Homepage Discovery Map ------>
     <div class="homeMap">
         <div class="row">
-            <div class="three columns end">
+            <div class="four columns end">
                 <div class="overlayMap">
                     <h2>Discover</h2>
 
@@ -131,10 +129,11 @@
                         Click on stuff you're <strong>not</strong> interested in <strong>90232</strong>
                         (<a href="#" class="homeChangelocation">change location</a>) </p>
 
-              <span class="tagsMap">
-              <!--<a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Hacking</a><a href="#" class="homeTag">Adventure</a><a href="#" class="homeTag">Community</a><a href="#" class="homeTag">Scholastic</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>
-              <a href="#" class="homeTag">Entertainment</a><a href="#" class="homeTag">Fitness</a><a href="#" class="homeTag">Business</a><a href="#" class="homeTag">Music</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Technology</a><a href="#" class="homeTag">Romantic</a><a href="#">Off-Beat</a><a href="#" class="homeTag">Creative</a><a href="#" class="homeTag">Technology</a>-->
-              </span>
+                    <span class="categoriesMap">
+                    </span>
+
+                    <span class="tagsMap">
+                    </span>
 
                     <div class="row">
                         <div class="six columns">
@@ -348,186 +347,288 @@ BLOCK;
 </body>
 
 <script>
-    var initialLoad = true;
-    var excludedTags = [];
+var initialLoad = true;
+var excludedTags = [];
+var excludedCategories = [];
 
-    $(document).ready(function ()
+$(document).ready(function ()
+{
+    google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
     {
-        google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
+        $("#map").gmap3({
+            map:{
+                options :{
+                    mapTypeId         :google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl    :false,
+                    streetViewControl :false,
+                    zoomControlOptions:{
+                        position:google.maps.ControlPosition.TOP_RIGHT
+                    },
+                    panControlOptions :{
+                        position:google.maps.ControlPosition.TOP_RIGHT
+                    }
+                },
+                callback:function ()
+                {
+                    populateData();
+                }
+            }
+        });
+    }
+    });
+});
+
+function populateData()
+{
+    excludedTags = [];
+    excludedCategories = [];
+
+    $("#map").gmap3({clear:{
+        name:'marker'
+    }});
+
+    $.ajax({
+        type   :'GET',
+        url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array('json' => '1')); ?>',
+        success:function (data)
         {
+            var results = jQuery.parseJSON(data);
+
+            var markerValues = [];
+            for (var i in results.results)
+            {
+                var markerValue = {
+                    address:results.results[i].location,
+                    data   :{
+                        link    :results.results[i].link,
+                        type    :results.results[i].type,
+                        tile    :results.results[i].tile,
+                        tags    :results.results[i].tags,
+                        category:results.results[i].category
+                    },
+                    id     :results.results[i].id
+                };
+
+                markerValues.push(markerValue);
+            }
+
+
             $("#map").gmap3({
-                map:{
-                    options:{
-                        mapTypeId         :google.maps.MapTypeId.ROADMAP,
-                        mapTypeControl    :false,
-                        streetViewControl :false,
-                        zoomControlOptions:{
-                            position:google.maps.ControlPosition.TOP_RIGHT
+                marker:{
+                    values  :markerValues,
+                    options :{
+                        draggable:false
+                    },
+                    events  :{
+                        click    :function (marker, event, context)
+                        {
+                            window.location.replace(context.data.link);
                         },
-                        panControlOptions :{
-                            position:google.maps.ControlPosition.TOP_RIGHT
+                        mouseover:function (marker, event, context)
+                        {
+                            $(this).gmap3(
+                                    {clear:"overlay"},
+                                    {
+                                        overlay:{
+                                            latLng :marker.getPosition(),
+                                            options:{
+                                                content:context.data.tile,
+                                                offset :{
+                                                    x:-1,
+                                                    y:-22
+                                                }
+                                            }
+                                        }
+                                    });
+                        },
+                        mouseout :function ()
+                        {
+                            $(this).gmap3({clear:"overlay"});
                         }
                     },
-                    events :{
-                        idle:function ()
+                    callback:function ()
+                    {
+                        var map = $("#map").gmap3("get");
+                        var defaultZoomLevel = 12;
+
+                        if (navigator.geolocation)
                         {
-                            if (initialLoad)
+                            navigator.geolocation.getCurrentPosition(function (position)
                             {
-                                initialLoad = false;
-                            }
-                            else
-                            {
-                                return;
-                            }
-
-                            var map = $("#map").gmap3("get");
-                            var defaultZoomLevel = 12;
-
-                            if (google.loader.ClientLocation)
-                            {
-                                var lat = google.loader.ClientLocation.latitude;
-                                var lon = google.loader.ClientLocation.longitude
+                                var lat = position.coords.latitude;
+                                var lon = position.coords.longitude;
                                 var center = new google.maps.LatLng(lat, lon);
 
                                 map.setCenter(center);
                                 map.setZoom(defaultZoomLevel);
-                            }
-
-                            if (navigator.geolocation)
+                            }, function (error)
                             {
-                                navigator.geolocation.getCurrentPosition(function (position)
-                                {
-                                    var lat = position.coords.latitude;
-                                    var lon = position.coords.longitude;
-                                    var center = new google.maps.LatLng(lat, lon);
-
-                                    map.setCenter(center);
-                                    map.setZoom(defaultZoomLevel);
-                                }, function (error)
-                                {
-                                    //use error.code to determine what went wrong
-                                });
-                            }
+                                //use error.code to determine what went wrong
+                            });
                         }
+                        else if (google.loader.ClientLocation)
+                        {
+                            var lat = google.loader.ClientLocation.latitude;
+                            var lon = google.loader.ClientLocation.longitude
+                            var center = new google.maps.LatLng(lat, lon);
+
+                            map.setCenter(center);
+                            map.setZoom(defaultZoomLevel);
+                        }
+
+                        populateFilters();
                     }
                 }
             });
-
-            populateData();
         }
-
-        });
-
-
     });
+}
 
-    function populateData()
-    {
-        excludedTags = [];
+function populateFilters()
+{
+    $(".categoriesMap").empty();
+    $(".tagsMap").empty();
 
-        $("#map").gmap3({clear:{
-            name:'marker'
-        }});
-
-        $.ajax({
-            type   :'GET',
-            url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array('json' => '1')); ?>',
-            success:function (data)
+    $("#map").gmap3({
+        get:{
+            name    :"marker",
+            all     :true,
+            full    :true,
+            callback:function (objs)
             {
-                var results = jQuery.parseJSON(data);
+                var categories = [];
+                var tags = [];
 
-                for (var i in results.results)
+                $.each(objs, function (i, obj)
                 {
-                    $("#map").gmap3({
-                        marker:{
-                            address:results.results[i].location,
-                            data   :{
-                                link:results.results[i].link,
-                                type:results.results[i].type,
-                                tile:results.results[i].tile,
-                                tags:results.results[i].tags
-                            },
-                            id     :results.results[i].id,
-                            options:{
-                                draggable:false
-                            },
-                            events :{
-                                click    :function (marker, event, context)
-                                {
-                                    window.location.replace(context.data.link);
-                                },
-                                mouseover:function (marker, event, context)
-                                {
-                                    $(this).gmap3(
-                                            {clear:"overlay"},
-                                            {
-                                                overlay:{
-                                                    latLng :marker.getPosition(),
-                                                    options:{
-                                                        content:context.data.tile,
-                                                        offset :{
-                                                            x:-1,
-                                                            y:-22
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                },
-                                mouseout :function ()
-                                {
-                                    $(this).gmap3({clear:"overlay"});
-                                }
-                            }
+                    if ($.inArray(obj.data.category, excludedCategories) == -1)
+                    {
+                        categories.push(obj.data.category);
+                    }
+
+                    for (var i in obj.data.tags)
+                    {
+                        if ($.inArray(obj.data.tags[i], excludedTags) == -1)
+                        {
+                            tags.push(obj.data.tags[i]);
                         }
-                    });
-                }
+                    }
+                });
 
-                $(".tagsMap").empty();
-
-                for (var i in results.tags)
+                categories = $.grep(categories, function (v, k)
                 {
-                    $(".tagsMap").append('<a href="#" class="homeTag">' + results.tags[i] + '</a>');
+                    return $.inArray(v, categories) === k;
+                });
+                categories.sort();
+
+                tags = $.grep(tags, function (v, k)
+                {
+                    return $.inArray(v, tags) === k;
+                });
+                tags.sort();
+
+                for (var i in categories)
+                {
+                    if ($.inArray(categories[i], excludedCategories) == -1)
+                    {
+                        $(".categoriesMap").append('<a href="#" class="homeTag">' + categories[i] + '</a>');
+                    }
                 }
+
+                for (var i in tags)
+                {
+                    if ($.inArray(tags[i], excludedTags) == -1)
+                    {
+                        $(".tagsMap").append('<a href="#" class="homeTag">' + tags[i] + '</a>');
+                    }
+                }
+
+                $('.categoriesMap a').click(function ()
+                {
+                    var category = $(this).text();
+                    removeCategory(category);
+                });
 
                 $('.tagsMap a').click(function ()
                 {
                     var tag = $(this).text();
-                    excludedTags.push(tag);
-
-                    $("#map").gmap3({
-                        get:{
-                            name    :"marker",
-                            all     :true,
-                            full    :true,
-                            callback:function (objs)
-                            {
-                                $.each(objs, function (i, obj)
-                                {
-                                    var isValid = false;
-
-                                    for (var i in obj.data.tags)
-                                    {
-                                        if ($.inArray(obj.data.tags[i], excludedTags) == -1)
-                                        {
-                                            isValid = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!isValid)
-                                    {
-                                        $("#map").gmap3({clear:{
-                                            id:obj.id
-                                        }});
-                                    }
-                                });
-                            }
-                        }
-                    });
-
-                    $(this).remove();
+                    removeTag(tag);
                 });
             }
-        });
-    }
+        }
+    });
+}
+
+function removeTag(tag)
+{
+    excludedTags.push(tag);
+
+    $("#map").gmap3({
+        get:{
+            name    :"marker",
+            all     :true,
+            full    :true,
+            callback:function (objs)
+            {
+                $.each(objs, function (i, obj)
+                {
+                    var isValid = false;
+
+                    if (obj.data.tags.length == 0)
+                    {
+                        isValid = true;
+                    }
+                    else
+                    {
+                        for (var i in obj.data.tags)
+                        {
+                            if ($.inArray(obj.data.tags[i], excludedTags) == -1)
+                            {
+                                isValid = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!isValid)
+                    {
+                        $("#map").gmap3({clear:{
+                            id:obj.id
+                        }});
+                    }
+                });
+
+                populateFilters();
+            }
+        }
+    });
+}
+
+function removeCategory(category)
+{
+    excludedCategories.push(category);
+
+    $("#map").gmap3({
+        get:{
+            name    :"marker",
+            all     :true,
+            full    :true,
+            callback:function (objs)
+            {
+                $.each(objs, function (i, obj)
+                {
+                    if ($.inArray(obj.data.category, excludedCategories) != -1)
+                    {
+                        $("#map").gmap3({clear:{
+                            id:obj.id
+                        }});
+                    }
+                });
+
+                populateFilters();
+            }
+        }
+    });
+}
+
 </script>

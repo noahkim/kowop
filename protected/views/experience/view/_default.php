@@ -1,239 +1,75 @@
-<!--------- main content container------>
-<div class="row" id="wrapper">
-    <div class="twelve columns classdetails">
-        <!---------------------------------------
-                     Main class details
-        ----------------------------------------><!----- Class title------->
-        <div class="row">
-            <div class="twelve columns">
-                <div class="followClass"><a href="#" class="button ">Follow Class</a></div>
-                <h1><?php echo $model->Name; ?></h1>
+<?php if ($section == 'rightColumnTop') : ?>
+
+<?php if ($model->hasSessions) : ?>
+
+    <div class="four columns">
+        <div class="detailsNextSession">
+            <h5>Next available session</h5>
+            <span class="nextDay">Tues</span> <span class="nextDate">Nov 13</span> <span class="nextTime">6pm-7pm</span>
+
+            <div class="enrollees">
+                <h5>People in the next session</h5>
+
+                <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                <a href="#"><img src="http://placeskull.com/100/100/d70060"></a>
+                <a href="#"><img src="http://placeskull.com/100/100/113f8c"></a>
+                <a href="#"><img src="http://placehold.it/100x100"></a>
+                <a href="#"><img src="http://placehold.it/100x100"></a>
+                <a href="#"><img src="http://placehold.it/100x100"></a>
+
             </div>
         </div>
-        <!-------- main class details ---->
-        <div class="detailsMain">
-            <div class="row">
-                <div class="six columns">
-                    <div class="slider-wrapper theme-default">
-                        <div id="slider" class="nivoSlider">
-                            <?php
 
-                            foreach ($model->contents as $content)
-                            {
-                                echo "<img src='{$content->Link}' data-thumb='{$content->Link}' alt=''/>\n";
-                            }
+        <div class="spacebot10">
+            <a href="#" class="button large twelve enrollButton">Sign up for this session</a>
+        </div>
+        <div>
+            <a href="#enrolllater" class="button large twelve enrollButton">Sign up for a later session</a>
+        </div>
 
-                            ?>
-                        </div>
-                    </div>
-                </div>
-                <!---------- Middle column ------------------->
-                <div class="two columns">
-                    <div class=" infoTuition">
-                        <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo $model->Price; ?>
-                        </span>
-                    </div>
+    </div>
 
-                    <?php
-                    $instructorPic = 'http://placehold.it/300x300';
+    <?php else : ?>
 
-                    if ($model->createUser->profilePic != null)
-                    {
-                        $instructorPic = $model->createUser->profilePic;
-                    }
-
-                    echo CHtml::link("<img src='{$instructorPic}' class='detailsInstructorpic' />",
-                                     array('/user/view', 'id' => $model->Create_User_ID));
-                    ?>
-
-                    <div class="detailsInstructor">
-                        Instructor
-                        <span class="detailsName">
-                            <?php
-                            $name = ($model->createUser->Teacher_alias == null) ? $model->createUser->fullname : $model->createUser->Teacher_alias;
-                            echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
-                            ?>
-                        </span>
-
-                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
-                    </div>
-                </div>
-                <!------------ Right column ------------------>
-                <div class="four columns">
-                    <div class="detailsNextSession">
-                        <span>Next available session scheduled for</span>
-                        <ul>
-                            <?php
-
-                            $nextSession = $model->nextAvailableSession;
-
-                            if ($nextSession != null)
-                            {
-                                $startTime = strtotime($nextSession->Start);
-                                $endTime = strtotime($nextSession->End);
-
-                                $dayOfWeek = date('l', $startTime);
-                                $date = date('F j', $startTime);
-                                $start = date('g:i a', $startTime);
-                                $end = date('g:i a', $endTime);
-
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                            }
-                            ?>
-                        </ul>
-                        </span>
-                        <div class="enrollees">
-                            <span>People in the next session</span>
-                            <?php
-
-                            if ($nextSession != null)
-                            {
-                                foreach ($nextSession->enrolled as $enrollee)
-                                {
-                                    $imgLink = 'http://placeskull.com/100/100/01a4a4';
-
-                                    if ($enrollee->profilePic != null)
-                                    {
-                                        $imgLink = $enrollee->profilePic;
-                                    }
-
-                                    $imgHTML = "<img src='{$imgLink}' alt='{$enrollee->fullname}' />";
-                                    echo CHtml::link($imgHTML, array('/user/view', 'id' => $enrollee->User_ID),
-                                                     array('title' => $enrollee->fullname));
-                                }
-                            }
-
-                            ?>
-                        </div>
-
-                    </div>
-
-                    <?php if ($nextSession != null) : ?>
-
-                    <div class="spacebot10">
-                        <?php
-
-                        echo CHtml::link('Enroll for this session',
-                                         array('/experience/join', 'id' => $model->Experience_ID,
-                                               array('session' => $nextSession->Session_ID)),
-                                         array('class' => 'button large twelve enrollButton'));
-
-                        ?>
-                    </div>
-                    <div>
-                        <a href="#enrolllater" class="button large twelve enrollButton">Enroll for a later session</a>
-                    </div>
-
-                    <?php endif; ?>
-
-                </div>
+    <div class="four columns">
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right">Quantity</label>
+            </div>
+            <div class="eight columns">
+                <select>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                </select>
             </div>
         </div>
-        <!---------------------------------------
-                         Left Column
-        ---------------------------------------->
-        <div class="row">
-            <div class="six columns detailsDescription">
-                <?php echo $model->Description; ?>
-            </div>
-            <!--- end left column----><!---------------------------------------
-                             right column
-            ---------------------------------------->
-            <div class="six columns">
-                <!------- Stats------->
-                <div class="row">
-                    <div class="twelve columns">
-                        <div class="detailStats">
-                            <div class="statBox">
-                                Graduates<span><?php echo count($model->enrolled); ?></span>
-                            </div>
-                            <div class="statBox">
-                                Enrollees<span><?php echo count($model->enrolled); ?></span>
-                            </div>
-                            <div class="statBox">
-                                Views<span>536</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-------- end stats---------->
-                <div class="detailSidebar">
-                    <div class="row">
-                        <div class="twelve columns">
-                            <ul>
-                                <li><span>Location</span><?php echo $model->location->Zip; ?></li>
-                                <?php
-                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j',
-                                                                                                   strtotime($model->End));
-                                echo "<li><span>Availability</span>{$availability}</li>\n";
-                                ?>
-                                <li><span>Max. seats</span><?php echo $model->Max_occupancy; ?></li>
-                                <li><span>Min. seats</span><?php echo $model->Min_occupancy; ?></li>
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="twelve columns spacebot10 detailsMap">
-                            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
-                        </div>
-                    </div>
-                    <div class="detailEnrolllater" id="enrolllater">
-                        <h4 class="spacebot10">Enroll for a later session</h4>
-
-                        <div id='calendar'></div>
-                    </div>
-                </div>
+        <div class="spacebot10">
+            <a href="#" class="button large twelve enrollButton">Sign up</a>
+        </div>
+        <div class="detailsNextSession">
+            <div class="enrollees">
+                <h5>Recently signed up</h5>
+                <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a> <a href="#"><img src="http://placeskull.com/100/100/d70060"></a> <a href="#"><img src="http://placeskull.com/100/100/113f8c"></a>
             </div>
         </div>
     </div>
-    <!------- end main content container----->
-</div>
 
-<script type="text/javascript">
-    $(window).load(function ()
-    {
-        $('#slider').nivoSlider({
-            effect          :'fade', // Specify sets like: 'fold,fade,sliceDown'
-            slices          :15, // For slice animations
-            boxCols         :8, // For box animations
-            boxRows         :4, // For box animations
-            animSpeed       :1000, // Slide transition speed
-            pauseTime       :4000, // How long each slide will show
-            startSlide      :0, // Set starting Slide (0 index)
-            directionNav    :true, // Next & Prev navigation
-            controlNav      :true, // 1,2,3... navigation
-            controlNavThumbs:true, // Use thumbnails for Control Nav
-            pauseOnHover    :true, // Stop animation while hovering
-            manualAdvance   :false, // Force manual transitions
-            prevText        :'Prev', // Prev directionNav text
-            nextText        :'Next', // Next directionNav text
-            randomStart     :false, // Start on a random slide
-            beforeChange    :function ()
-            {
-            }, // Triggers before a slide transition
-            afterChange     :function ()
-            {
-            }, // Triggers after a slide transition
-            slideshowEnd    :function ()
-            {
-            }, // Triggers after all slides have been shown
-            lastSlide       :function ()
-            {
-            }, // Triggers when last slide is shown
-            afterLoad       :function ()
-            {
-            } // Triggers when slider has loaded
-        });
-    });
-</script>
+    <?php endif; ?>
+
+<?php elseif ($section == 'rightColumnBottom') : ?>
+
+<?php endif; ?>
 
 <script type='text/javascript'>
 
     $(document).ready(function ()
     {
-
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
@@ -295,7 +131,6 @@ BLOCK;
                 }
             }
         });
-
     });
 
 </script>

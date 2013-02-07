@@ -36,6 +36,7 @@
  * @property Rating[] $ratings
  * @property Request[] $requests
  * @property Session[] $sessions
+ * @property UserToExperience[] $userToExperiences
  */
 class Experience extends CActiveRecord
 {
@@ -93,15 +94,17 @@ class Experience extends CActiveRecord
                      'experienceToContents' => array(self::HAS_MANY, 'ExperienceToContent', 'Experience_ID'),
                      'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
                      'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
-                     'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'), // Added
+                     'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
+                     'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Experience_ID'),
+
+            // Added
+
                      'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'),
                                          'through' => 'experienceToContents'),
                      'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'),
                                      'through' => 'experienceToTags'),
-                     'userToSessions' => array(self::HAS_MANY, 'UserToSession', array('Session_ID' => 'Session_ID'),
-                                               'through' => 'sessions'),
                      'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
-                                         'through' => 'userToSessions'),);
+                                         'through' => 'userToExperiences'),);
     }
 
     /**
@@ -193,14 +196,18 @@ class Experience extends CActiveRecord
 
         $upcoming = $this->sessions(array('condition' => 'Start >= now()', 'order' => 'Start asc'));
 
-        if (count($upcoming) == 0)
+        if (count($upcoming) > 0)
         {
             return $upcoming[0];
         }
 
-        $sessions = $this->sessions(array('order' => 'Start asc'));
-        return end($sessions);
+        return null;
 
+    }
+
+    public function getHasSessions()
+    {
+        return (count($this->sessions) > 0);
     }
 
     public function beforeSave()
@@ -223,5 +230,66 @@ class Experience extends CActiveRecord
         $this->Create_User_ID = Yii::app()->user->id;
 
         return parent::beforeSave();
+    }
+
+    public function Join($session = null, $quantity = 1)
+    {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+
+        if ($this->Create_User_ID == $user->User_ID)
+        {
+            return false;
+        }
+
+        if ($session == null)
+        {
+
+        }
+        else
+        {
+            $existing = UserToExperience::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID AND Experience_ID=:Experience_ID',
+                                                        array(':User_ID' => $user->User_ID,
+                                                              ':Session_ID' => $session->Session_ID,
+                                                              ':Experience_ID' => $this->Experience_ID));
+
+            if ($existing == null)
+            {
+                $userToExperience = new UserToExperience();
+                $userToExperience->Session_ID = $session->Session_ID;
+                $userToExperience->User_ID = $user->User_ID;
+                $userToExperience->Experience_ID = $this->Experience_ID;
+
+                $userToExperience->save();
+            }
+            elseif ($this->MultipleAllowed)
+            {
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+        $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
+
+        Message::SendNotification($this->Create_User_ID,
+                                  "{$userName} has joined your experience \"{$experienceName}\".");
+
+
+        // Notify the enrollees
+        foreach ($this->enrolled as $enrollee)
+        {
+            if ($enrollee->User_ID != $user->User_ID)
+            {
+                $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+                $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
+
+                Message::SendNotification($enrollee->User_ID,
+                                          "{$userName} has also joined the experience \"{$experienceName}\".");
+            }
+        }
+
+        return true;
     }
 }

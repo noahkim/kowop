@@ -40,9 +40,7 @@
         </div>
         <!----- end search summary ------>
 
-        <div id="results">
-            <?php echo $this->renderPartial('_searchResults', array('model' => $model, 'results' => $results)); ?>
-        </div>
+        <div id="results"></div>
         <!------ end left column------------------>
     </div>
 
@@ -59,8 +57,8 @@
             </div>
             <div class="searchMap">
 
-                <label for="redoSearch"> <input type="checkbox" id="redoSearch" onclick="redoSearchWithMap();"> <span class="custom checkbox"></span>
-                    Redo search when map moves? </label>
+                <label for="redoSearch"> <input type="checkbox" id="redoSearch" onclick="redoSearchWithMap();">
+                    <span class="custom checkbox"></span> Redo search when map moves? </label>
 
                 <div id="map" style="width: 100%; height: 200px;"></div>
             </div>
@@ -96,15 +94,13 @@
                 <label>Available from:</label>
 
                 <div class="six columns">
-                    <?php echo $form->textField($model, 'start',
-                                                array('id' => 'start', 'placeholder' => 'date',
-                                                      'class' => 'twelve')); ?>
+                    <?php echo $form->textField($model, 'start', array('id' => 'start', 'placeholder' => 'date',
+                                                                       'class' => 'twelve')); ?>
                 </div>
 
                 <div class="six columns">
                     <?php echo $form->textField($model, 'end',
-                                                array('id' => 'end', 'placeholder' => 'date',
-                                                      'class' => 'twelve')); ?>
+                                                array('id' => 'end', 'placeholder' => 'date', 'class' => 'twelve')); ?>
                 </div>
 
                 <?php $this->endWidget('CActiveForm'); ?>
@@ -130,7 +126,7 @@
             <div class="sidebarBox">
                 <div class="row">
                     <div class="twelve columns text-center">
-                        Looking for a class or activity for kids? Try<br/><br/>
+                        Looking for a class or activity for kids? Try<br /><br />
                         <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_kids.png">', array('/kids')); ?>
                     </div>
                 </div>
@@ -144,21 +140,21 @@
 </div>
 
 <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
-<script type="text/javascript" src="/yii/kowop/js/gmap3.min.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
 
 <script>
 var timeoutHandle;
-var initialLoad = true;
+var loadAll = false;
 
 $(document).ready(function ()
 {
     google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
     {
         $("#map").gmap3({
-            map    :{
-                options:{
-                    mapTypeId     :google.maps.MapTypeId.ROADMAP,
-                    mapTypeControl:false,
+            map:{
+                options :{
+                    mapTypeId         :google.maps.MapTypeId.ROADMAP,
+                    mapTypeControl    :false,
                     streetViewControl :false,
                     zoomControlOptions:{
                         position:google.maps.ControlPosition.TOP_RIGHT
@@ -167,7 +163,7 @@ $(document).ready(function ()
                         position:google.maps.ControlPosition.TOP_RIGHT
                     }
                 },
-                events :{
+                events  :{
                     zoom_changed  :function ()
                     {
                         if (!$('#redoSearch').is(':checked'))
@@ -187,112 +183,14 @@ $(document).ready(function ()
 
                         clearTimeout(timeoutHandle);
                         timeoutHandle = setTimeout(redoSearchWithMap, 500);
-                    },
-                    idle          :function ()
-                    {
-                        if(initialLoad)
-                        {
-                            initialLoad = false;
-                        }
-                        else
-                        {
-                            return;
-                        }
-
-                        var map = $("#map").gmap3("get");
-                        var defaultZoomLevel = 11;
-
-                        if (google.loader.ClientLocation)
-                        {
-                            var lat = google.loader.ClientLocation.latitude;
-                            var lon = google.loader.ClientLocation.longitude
-                            var center = new google.maps.LatLng(lat, lon);
-
-                            map.setCenter(center);
-                            map.setZoom(defaultZoomLevel);
-
-                            redoSearchWithMap();
-                        }
-
-                        if (navigator.geolocation)
-                        {
-                            navigator.geolocation.getCurrentPosition(function (position)
-                            {
-                                var lat = position.coords.latitude;
-                                var lon = position.coords.longitude;
-                                var center = new google.maps.LatLng(lat, lon);
-
-                                map.setCenter(center);
-                                map.setZoom(defaultZoomLevel);
-
-                                redoSearchWithMap();
-
-                            }, function (error)
-                            {
-                                //use error.code to determine what went wrong
-                            });
-                        }
                     }
-                }
-            },
-            marker :{
-                values :[
-                <?php
-                $markerValues = '';
-
-                foreach ($results as $i => $item)
-                {
-                    $type = 'experience';
-                    $id = 0;
-                    if ($item instanceof Experience)
-                    {
-                        $address = str_replace("'", "\\'", $item->location->fullAddress);
-
-                        $link = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
-                        $id = $item->Experience_ID;
-                    }
-                    elseif ($item instanceof Request)
-                    {
-                        $address = $item->Zip;
-
-                        $link = $this->createUrl('/request/view', array('id' => $item->Request_ID));
-                        $id = $item->Request_ID;
-                        $type = 'request';
-                    }
-
-                    $markerValues .= "{ address: '{$address}', data: { index: '{$i}', link: '{$link}', 'type': '{$type}', 'id': {$id} } },\n";
-                }
-
-                $markerValues = Utils::str_lreplace(',', '', $markerValues);
-                echo $markerValues;
-                ?>
-                ],
-                options:{
-                    draggable:false
                 },
-                events :{
-                    mouseover:function (marker, event, context)
-                    {
-                        var index = context.data.index;
-                        $('#result' + index).css('border-width', '2');
-                        $('#result' + index).css('border-color', 'blue');
-                    },
-                    mouseout :function (marker, event, context)
-                    {
-                        var index = context.data.index;
-                        $('#result' + index).css('border-width', '');
-                        $('#result' + index).css('border-color', '');
-                    },
-                    click    :function (marker, event, context)
-                    {
-                        window.location.replace(context.data.link);
-                    }
+                callback:function ()
+                {
+                    populateResults();
                 }
-            },
-            autofit:{}
+            }
         });
-
-
     }});
 
     $('.searchInput').keypress(function (e)
@@ -317,13 +215,18 @@ $(document).ready(function ()
     {
         if (!$('#redoSearch').is(':checked'))
         {
-            document.forms['search-form'].submit();
+            populateResults();
         }
     });
 });
 
 function redoSearchWithMap()
 {
+    if(loadAll)
+    {
+        return;
+    }
+
     var map = $("#map").gmap3("get");
 
     var included = [];
@@ -341,17 +244,33 @@ function redoSearchWithMap()
                     {
                         included.push({
                             type:obj.data.type,
-                            id  :obj.data.id
+                            id  :obj.id
                         });
+                    }
+                });
+
+                var query = '<?php echo http_build_query($_GET); ?>';
+                var includedString = '&ExperienceSearchForm[includedResults]=' + JSON.stringify(included);
+                query += includedString;
+
+                $.ajax({
+                    type   :'POST',
+                    url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults"); ?>',
+                    data   :query,
+                    success:function (data)
+                    {
+                        $('#results').html(data);
                     }
                 });
             }
         }
     });
+}
 
+function populateResults()
+{
+    loadAll = true;
     var query = '<?php echo http_build_query($_GET); ?>';
-    var includedString = '&ExperienceSearchForm[includedResults]=' + JSON.stringify(included);
-    query += includedString;
 
     $.ajax({
         type   :'POST',
@@ -360,9 +279,109 @@ function redoSearchWithMap()
         success:function (data)
         {
             $('#results').html(data);
+
+            $("#map").gmap3({clear:{
+                name:'marker'
+            }});
+
+            $.ajax({
+                type   :'GET',
+                url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults",
+                                                                  array('json' => '1')); ?>',
+                success:function (data)
+                {
+                    var results = jQuery.parseJSON(data);
+
+                    var markerValues = [];
+                    for (var i in results.results)
+                    {
+                        var markerValue = {
+                            address:results.results[i].location,
+                            data   :{
+                                link    :results.results[i].link,
+                                type    :results.results[i].type,
+                                tile    :results.results[i].tile,
+                                tags    :results.results[i].tags,
+                                category:results.results[i].category
+                            },
+                            id     :results.results[i].id
+                        };
+
+                        markerValues.push(markerValue);
+                    }
+
+                    $("#map").gmap3({
+                        marker :{
+                            values  :markerValues,
+                            options :{
+                                draggable:false
+                            },
+                            events  :{
+                                click    :function (marker, event, context)
+                                {
+                                    window.location.replace(context.data.link);
+                                },
+                                mouseover:function (marker, event, context)
+                                {
+                                    $(this).gmap3(
+                                            {clear:"overlay"},
+                                            {
+                                                overlay:{
+                                                    latLng :marker.getPosition(),
+                                                    options:{
+                                                        content:context.data.tile,
+                                                        offset :{
+                                                            x:-1,
+                                                            y:-22
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                },
+                                mouseout :function ()
+                                {
+                                    $(this).gmap3({clear:"overlay"});
+                                }
+                            },
+                            callback:function ()
+                            {
+                                var map = $("#map").gmap3("get");
+                                var defaultZoomLevel = 9;
+
+                                if (navigator.geolocation)
+                                {
+                                    navigator.geolocation.getCurrentPosition(function (position)
+                                    {
+                                        var lat = position.coords.latitude;
+                                        var lon = position.coords.longitude;
+                                        var center = new google.maps.LatLng(lat, lon);
+
+                                        map.setCenter(center);
+                                        map.setZoom(defaultZoomLevel);
+
+                                    }, function (error)
+                                    {
+                                        //use error.code to determine what went wrong
+                                    });
+                                }
+                                else if (google.loader.ClientLocation)
+                                {
+                                    var lat = google.loader.ClientLocation.latitude;
+                                    var lon = google.loader.ClientLocation.longitude
+                                    var center = new google.maps.LatLng(lat, lon);
+
+                                    map.setCenter(center);
+                                    map.setZoom(defaultZoomLevel);
+                                }
+
+                                loadAll = false;
+                            }
+                        },
+                        autofit:{}
+                    });
+                }
+            });
         }
     });
-
-
 }
 </script>
