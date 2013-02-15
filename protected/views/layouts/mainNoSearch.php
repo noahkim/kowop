@@ -14,12 +14,9 @@
             </div>
         </div>
 
-        <div class="four columns notlogged">
+        <div class="three columns notlogged">
             <span class="navWhatskowop">
-                <?php echo CHtml::link("how's it work?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-            </span>
-            <span class="navPost">
-                <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
+                <?php echo CHtml::link("what's Kowop?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
             </span>
             <span class="navSignup">
                 <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
@@ -32,8 +29,8 @@
 </div>
 <!----- End Homepage logo and header nav ---------->
 
-    <?php else: ?>
-    <?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
+<?php else: ?>
+<?php $user = User::model()->findByPk(Yii::app()->user->id); ?>
 
 <div class="header spacebot20">
     <div class="row">
@@ -50,9 +47,7 @@
             </span>
             <!----- My account dropdown ------->
             <div class="dropdown">
-                <a href="#" class="account">
-                    <span class="headerAccount">my account</span>
-                </a>
+                <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
 
                 <div class="submenu" style="display: none;">
                     <ul class="root">
@@ -79,7 +74,7 @@
     </div>
 </div>
 
-    <?php endif; ?>
+<?php endif; ?>
 
 <?php echo $content; ?>
 

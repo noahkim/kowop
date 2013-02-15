@@ -192,6 +192,12 @@ class User extends CActiveRecord
         return $isFriends;
     }
 
+    public function getDisplayName()
+    {
+        $name = ($this->Teacher_alias == null) ? $this->fullname : $this->Teacher_alias;
+        return $name;
+    }
+
     public function getClassReport($filter)
     {
         $startDate = $filter->start;

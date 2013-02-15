@@ -52,9 +52,12 @@ class UserController extends Controller
             $section = $_REQUEST['s'];
         }
 
-        if ($id != Yii::app()->user->id)
+        if ($id == Yii::app()->user->id)
         {
-            //$section = 0;
+            if($section == 0)
+            {
+                //TODO: maybe get rid of this conditional, not used currently
+            }
         }
 
         $this->render('view', array(

@@ -30,7 +30,13 @@ foreach ($results as $i => $item)
 
     $itemNumber = $i + 1;
 
-    $name = "<h5> {$item->Name} </h5>";
+    $itemName = $item->Name;
+    if(strlen($itemName) > 50)
+    {
+        $itemName = substr($itemName, 0, 50);
+        $itemName .= ' ...';
+    }
+    $name = "<h5> {$itemName} </h5>";
     if ($item instanceof Experience)
     {
         $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));

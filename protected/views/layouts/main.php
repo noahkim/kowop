@@ -18,12 +18,9 @@
             <?php $this->widget('SearchWidget'); ?>
         </div>
 
-        <div class="four columns notlogged">
+        <div class="three columns notlogged">
             <span class="navWhatskowop">
-                <?php echo CHtml::link("how's it work?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-            </span>
-            <span class="navPost">
-                <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
+                <?php echo CHtml::link("what's Kowop?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
             </span>
             <span class="navSignup">
                 <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>

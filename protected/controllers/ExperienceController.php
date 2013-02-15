@@ -8,7 +8,7 @@ class ExperienceController extends Controller
     public function filters()
     {
         return array('accessControl', // perform access control for CRUD operations
-                     'postOnly + delete', // we only allow deletion via POST request
+            'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -20,14 +20,14 @@ class ExperienceController extends Controller
     public function accessRules()
     {
         return array(array('allow', // allow all users to perform 'index' and 'view' actions
-                           'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
-                           'users' => array('*'),),
-                     array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                           'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete',
-                                              'uploadImages'), 'users' => array('@'),),
-                     array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                           'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
-                                                                                           'users' => array('*'),),);
+            'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
+            'users' => array('*'),),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete',
+                    'uploadImages'), 'users' => array('@'),),
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
+                'users' => array('*'),),);
     }
 
     /**
@@ -39,11 +39,14 @@ class ExperienceController extends Controller
         $this->layout = '//layouts/main';
 
         $model = $this->loadModel($id);
+        $user = null;
 
         $view = 'view/_default';
 
         if (!Yii::app()->user->isGuest)
         {
+            $user = User::model()->findByPk(Yii::app()->user->id);
+
             if (Yii::app()->user->id == $model->Create_User_ID)
             {
                 $view = 'view/_host';
@@ -59,7 +62,7 @@ class ExperienceController extends Controller
             }
         }
 
-        $this->render('view', array('model' => $model, 'view' => $view));
+        $this->render('view', array('model' => $model, 'view' => $view, 'user' => $user));
     }
 
     public function actionCreate()
@@ -136,12 +139,18 @@ class ExperienceController extends Controller
             $step = 1;
         }
 
-        if ($step == 6)
+        if ($step == 4)
+        {
+            Yii::app()->user->setState('imageFileNames', array());
+        }
+        elseif ($step == 6)
         {
             $this->layout = '//layouts/createSessions';
         }
 
-        $this->render('_createForm' . $step, array('model' => $model, 'images' => $images));
+        $user = User::model()->findByPk(Yii::app()->user->id);
+
+        $this->render('_createForm' . $step, array('model' => $model, 'images' => $images, 'user' => $user));
 
     }
 
@@ -204,7 +213,7 @@ class ExperienceController extends Controller
             if (isset($imageFiles) && count($imageFiles) > 0)
             {
                 ExperienceToContent::model()->deleteAll('Experience_ID = :Experience_ID',
-                                                        array(':Experience_ID' => $model->Experience_ID));
+                    array(':Experience_ID' => $model->Experience_ID));
 
                 foreach ($imageFiles as $imageFile)
                 {
@@ -227,12 +236,12 @@ class ExperienceController extends Controller
                     if ($enrollee->User_ID != $model->Create_User_ID)
                     {
                         $userName = CHtml::link($model->createUser->fullName,
-                                                array('user/view', 'id' => $model->createUser->User_ID));
+                            array('user/view', 'id' => $model->createUser->User_ID));
                         $experienceName = CHtml::link($model->Name,
-                                                      array('experience/view', 'id' => $model->Experience_ID));
+                            array('experience/view', 'id' => $model->Experience_ID));
 
                         Message::SendNotification($enrollee->User_ID,
-                                                  "{$userName} has updated the experience details for \"{$experienceName}\".");
+                            "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
 
@@ -320,20 +329,20 @@ class ExperienceController extends Controller
                     //We do so, using the json structure defined in
                     // https://github.com/blueimp/jQuery-File-Upload/wiki/Setup
                     echo json_encode(array(array("name" => $model->name, "type" => $model->mime_type,
-                                                 "size" => $model->size,
-                                                 "url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
-                                                 "thumbnail_url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
-                                                 "delete_url" => $this->createUrl("//experience/uploadImages",
-                                                                                  array("_method" => "delete",
-                                                                                        "file" => $imageFileName)),
-                                                 "delete_type" => "POST")));
+                        "size" => $model->size,
+                        "url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
+                        "thumbnail_url" => Yii::app()->params['siteBase'] . '/temp/' . $imageFileName,
+                        "delete_url" => $this->createUrl("//experience/uploadImages",
+                            array("_method" => "delete",
+                                "file" => $imageFileName)),
+                        "delete_type" => "POST")));
                 }
                 else
                 {
                     //If the upload failed for some reason we log some data and let the widget know
                     echo json_encode(array(array("error" => $model->getErrors('file'),)));
                     Yii::log("XUploadAction: " . CVarDumper::dumpAsString($model->getErrors()), CLogger::LEVEL_ERROR,
-                             "xupload.actions.XUploadAction");
+                        "xupload.actions.XUploadAction");
                 }
             }
             else
@@ -491,7 +500,7 @@ BLOCK;
         $user_ID = Yii::app()->user->id;
 
         UserToExperience::model()->deleteAll('User_ID=:User_ID AND Experience_ID=:Experience_ID',
-                                             array(':User_ID' => $user_ID, ':Experience_ID' => $model->Experience_ID));
+            array(':User_ID' => $user_ID, ':Experience_ID' => $model->Experience_ID));
 
         $this->redirect(array('view', 'id' => $model->Experience_ID));
     }

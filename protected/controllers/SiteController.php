@@ -70,4 +70,23 @@ class SiteController extends Controller
         Yii::app()->session->destroy();
         $this->redirect(Yii::app()->homeUrl);
     }
+
+    public function actionGetLocation()
+    {
+        $this->layout = false;
+
+        if(isset($_REQUEST['latlng']))
+        {
+            $latlng = $_REQUEST['latlng'];
+            $url = "http://maps.googleapis.com/maps/api/geocode/json?&latlng={$latlng}&sensor=false";
+        }
+        elseif(isset($_REQUEST['address']))
+        {
+            $address = $_REQUEST['address'];
+            $url = "http://maps.googleapis.com/maps/api/geocode/json?&address={$address}&sensor=false";
+        }
+
+        $results = file_get_contents($url);
+        echo $results;
+    }
 }

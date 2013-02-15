@@ -63,15 +63,14 @@
                     <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("teach a class", $this->createUrl("experience/create")); ?>
+                    <?php echo CHtml::link("post new experience", $this->createUrl("experience/create")); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("take a class", $this->createUrl("experience/search")); ?>
+                    <?php echo CHtml::link("find experiences", $this->createUrl("experience/search")); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("request a class", $this->createUrl("request/create")); ?>
+                    <?php echo CHtml::link("make a request", $this->createUrl("request/create")); ?>
                 </li>
-
             </ul>
         </div>
         <div class="two columns footerlinks company">

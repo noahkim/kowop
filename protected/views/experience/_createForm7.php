@@ -5,32 +5,37 @@
             <h1>One Last Look</h1>
 
             <p>This is how your experience will appear. Just make sure everything looks right, then post. Don't worry if
-                you
-                missed a detail or need to change something in the future. You can always come back to it and edit it
-                later.</p>
+                you missed a detail or need to change something in the future. You can always come back to it and edit
+                it later.</p>
 
             <?php $form = $this->beginWidget('CActiveForm',
-                                             array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
-                                                   'stateful' => true,
-                                                   'htmlOptions' => array('style' => 'margin: 0;'))); ?>
+            array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
+                'stateful' => true,
+                'htmlOptions' => array('style' => 'margin: 0;'))); ?>
 
             <?php echo CHtml::submitButton('Make Changes',
-                                           array('name' => 'change', 'class' => 'button large radius')); ?>
+            array('name' => 'change', 'class' => 'button large radius')); ?>
             <?php echo CHtml::submitButton("Let's post it!", array('name' => 'submit', 'id' => 'submit',
-                                                                   'class' => 'button large primary radius')); ?>
+            'class' => 'button large primary radius')); ?>
 
             <?php $this->endWidget(); ?>
         </div>
     </div>
 </div>
+
+
 <!--------- main content container------>
 <div class="row" id="wrapper">
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-    ---------------------------------------->
-        <h1><?php echo $model->Name; ?></h1>
-
+        ----------------------------------------><!----- Experience Title------->
+        <div class="row">
+            <div class="twelve columns">
+                <h1><?php echo $model->Name; ?></h1>
+            </div>
+        </div>
+        <!-------- main class details ---->
         <div class="detailsMain">
             <div class="row">
                 <div class="six columns">
@@ -54,149 +59,126 @@
                 <!---------- Middle column ------------------->
                 <div class="two columns">
                     <div class=" infoTuition">
-                        <span class="classTuition">
-                            <sup class="dollarsign">$</sup><?php echo $model->Price; ?>
-                        </span>
+                    <span class="detailPrice">
+                        <?php if ($model->Price) : ?>
+
+                        <sup class="dollarsign">$</sup>
+                        <?php echo $model->Price; ?>
+
+                        <?php else: ?>
+
+                        Free
+
+                        <?php endif;?>
+                    </span>
                     </div>
 
                     <?php
-                    $instructorPic = 'http://placehold.it/300x300';
-
-                    $user = User::model()->findByPk(Yii::app()->user->id);
-
-                    if ($user->profilePic != null)
-                    {
-                        $instructorPic = $user->profilePic;
-                    }
-
-                    echo "<img src='{$instructorPic}' class='detailsInstructorpic' />\n";
+                    echo "<img src='{$user->profilePic}' class='detailsInstructorpic' />\n";
                     ?>
 
                     <div class="detailsInstructor">
-                        Instructor
+                        Host
                         <span class="detailsName">
-                            <?php
-                            $name = ($user->Teacher_alias == null) ? $user->fullname : $user->Teacher_alias;
-                            echo CHtml::link($name, array('/user/view', 'id' => $user->User_ID));
-                            ?>
+                            <?php echo CHtml::link($user->displayName, array('/user/view', 'id' => $user->User_ID)); ?>
                         </span>
 
-                        <div class="detailsReccomendations"><a href="#">31</a></div>
+                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
                     </div>
                 </div>
+
                 <!------------ Right column ------------------>
                 <div class="four columns">
-                    <div class="detailsNextSession">
-                        <span>Next available session scheduled for</span>
-                        <ul>
-                            <?php
 
-                            if (isset($model->sessions) && strlen($model->sessions) > 0)
-                            {
-                                $nextSession = json_decode($model->sessions)[0];
+                    <?php if ($model->MaxPerPerson != null) : ?>
 
-                                $startTime = strtotime($nextSession->Start);
-                                $endTime = strtotime($nextSession->End);
-
-                                $dayOfWeek = date('l', $startTime);
-                                $date = date('F j', $startTime);
-                                $start = date('g:i a', $startTime);
-                                $end = date('g:i a', ($endTime));
-
-                                echo "<li><span>{$dayOfWeek}</span> {$date} <span class='time'>{$start}-<br />{$end}</span></li>\n";
-                            }
-
-                            ?>
-                        </ul>
-                        </span>
-                        <div class="enrollees">
-                            <span>Classmates in the next session</span>
-                            <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                            <a href="#"><img src="http://placeskull.com/100/100/d70060"></a>
-                            <a href="#"><img src="http://placeskull.com/100/100/113f8c"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
-                            <a href="#"><img src="http://placehold.it/100x100"></a>
+                    <div class="row">
+                        <div class="four columns">
+                            <label class="inline right">Quantity</label>
                         </div>
+                        <div class="eight columns">
+                            <select>
+                                <?php
+                                for ($i = 1; $i <= $model->MaxPerPerson; $i++)
+                                {
+                                    echo "<option>{$i}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
 
-                    </div>
+                    <?php endif; ?>
+
                     <div class="spacebot10">
-                        <a href="#" class="button large twelve enrollButton">sign up for this session</a>
+                        <a href="#" class="button large twelve enrollButton">Sign up</a>
                     </div>
-                    <div>
-                        <a href="#enrolllater" class="button large twelve enrollButton">sign up for a later
-                            session</a>
+                    <div class="detailsNextSession">
+                        <div class="enrollees">
+                            <h5>Recently signed up</h5>
+                            <a href="#"><img src="http://placeskull.com/100/100/01a4a4"></a> <a href="#"><img
+                                src="http://placeskull.com/100/100/d70060"></a> <a href="#"><img
+                                src="http://placeskull.com/100/100/113f8c"></a>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <!---------------------------------------
-                         Left Column
+                     Left Column
         ---------------------------------------->
         <div class="row">
-            <div class="six columns detailsDescription">
-                <?php echo $model->Description; ?>
+            <div class="six columns ">
+                <dl class="tabs">
+                    <dd class="active"><a href="#simple1">Description</a></dd>
+                    <dd><a href="#simple2">Photos</a></dd>
+                </dl>
+                <ul class="tabs-content">
+                    <li class="active" id="simple1Tab">
+                        <h5>Description</h5>
+
+                        <p>
+                            <?php echo $model->Description; ?>
+                        </p>
+
+                        <h5>What to expect</h5>
+
+                        <p>
+                            <?php echo $model->Offering; ?>
+                        </p>
+
+                        <h5>Fine Print</h5>
+
+                        <p>
+                            <?php echo $model->FinePrint; ?>
+                        </p>
+                    </li>
+                    <li id="simple2Tab">This is where instagram photos will go!</li>
+                </ul>
             </div>
             <!--- end left column---->
+
             <!---------------------------------------
-                             right column
+                       right column
             ---------------------------------------->
             <div class="six columns">
-                <!------- Stats------->
                 <div class="row">
-                    <div class="twelve columns">
-                        <div class="detailStats">
-                            <div class="statBox">
-                                Graduates<span>32</span>
-                            </div>
-                            <div class="statBox">
-                                Enrollees<span>23</span>
-                            </div>
-                            <div class="statBox">
-                                Views<span>536</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-------- end stats---------->
-                <div class="detailSidebar">
-                    <div class="row">
-                        <div class="twelve columns">
-                            <ul>
-                                <li><span>Location</span><?php echo $model->locationZip; ?></li>
-                                <?php
-                                $availability = date('n.j', strtotime($model->Start)) . '-' . date('n.j',
-                                                                                                   strtotime($model->End));
-                                echo "<li><span>Availability</span>{$availability}</li>\n";
-                                ?>
-                                <!--<li><span>Max. seats</span><?php /*echo $model->maxOccupancy; */?></li>
-                                <li><span>Min. seats</span><?php /*echo $model->minOccupancy; */?></li>
-                                <li><span># of Lessons</span><?php /*echo $model->numLessons; */?></li>
-                                <li><span>1 lesson time</span><?php /*echo $model->lessonDuration * 60; */?> min</li>-->
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="twelve columns spacebot10 detailsMap">
-                            <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
-                                    marginwidth="0"
-                                    src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
-                        </div>
-                    </div>
-                    <div class="detailEnrolllater" id="enrolllater">
-                        <h4 class="spacebot10">Enroll for a later session</h4>
-
-                        <div id='calendar'></div>
+                    <div class="twelve columns spacebot10 detailsMap">
+                        <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0"
+                                marginwidth="0"
+                                src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <!------- end main content container----->
 </div>
 
 <script type="text/javascript">
-    $(window).load(function () {
+    $(document).ready(function () {
         $('#slider').nivoSlider({
             effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
             slices:15, // For slice animations
@@ -226,4 +208,3 @@
         });
     });
 </script>
-

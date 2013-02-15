@@ -66,19 +66,19 @@ class Experience extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(array('Name, Description, Start, End, Category_ID, Audience, ExperienceType, PosterType, Offering',
-                           'required'),
-                     array('Create_User_ID, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Audience, ExperienceType, PosterType, AppropriateAges, Status, MaxPerPerson, MultipleAllowed',
-                           'numerical', 'integerOnly' => true), array('Name', 'length', 'max' => 255),
-                     array('Description', 'length', 'max' => 2000),
-                     array('Offering, FinePrint', 'length', 'max' => 1000), array('Price', 'length', 'max' => 10),
+            'required'),
+            array('Create_User_ID, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Audience, ExperienceType, PosterType, AppropriateAges, Status, MaxPerPerson, MultipleAllowed',
+                'numerical', 'integerOnly' => true), array('Name', 'length', 'max' => 255),
+            array('Description', 'length', 'max' => 2000),
+            array('Offering, FinePrint', 'length', 'max' => 1000), array('Price', 'length', 'max' => 10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-                     array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, PosterType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated',
-                           'safe'),
-                     array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
-                           'on' => 'update'),
-                     array('Created,Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
-                           'on' => 'insert'));
+            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, PosterType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated',
+                'safe'),
+            array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
+                'on' => 'update'),
+            array('Created,Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
+                'on' => 'insert'));
     }
 
     /**
@@ -89,22 +89,22 @@ class Experience extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array('location' => array(self::BELONGS_TO, 'Location', 'Location_ID'),
-                     'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
-                     'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
-                     'experienceToContents' => array(self::HAS_MANY, 'ExperienceToContent', 'Experience_ID'),
-                     'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
-                     'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
-                     'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
-                     'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Experience_ID'),
+            'category' => array(self::BELONGS_TO, 'Category', 'Category_ID'),
+            'createUser' => array(self::BELONGS_TO, 'User', 'Create_User_ID'),
+            'experienceToContents' => array(self::HAS_MANY, 'ExperienceToContent', 'Experience_ID'),
+            'experienceToTags' => array(self::HAS_MANY, 'ExperienceToTag', 'Experience_ID'),
+            'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
+            'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
+            'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Experience_ID'),
 
             // Added
 
-                     'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'),
-                                         'through' => 'experienceToContents'),
-                     'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'),
-                                     'through' => 'experienceToTags'),
-                     'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
-                                         'through' => 'userToExperiences'),);
+            'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'),
+                'through' => 'experienceToContents'),
+            'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'),
+                'through' => 'experienceToTags'),
+            'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
+                'through' => 'userToExperiences'),);
     }
 
     /**
@@ -113,13 +113,13 @@ class Experience extends CActiveRecord
     public function attributeLabels()
     {
         return array('Experience_ID' => 'Experience', 'Create_User_ID' => 'Create User', 'Name' => 'Name',
-                     'Description' => 'Description', 'Start' => 'Start', 'End' => 'End',
-                     'Min_occupancy' => 'Min Occupancy', 'Max_occupancy' => 'Max Occupancy',
-                     'Location_ID' => 'Location', 'Category_ID' => 'Category', 'Price' => 'Price',
-                     'Audience' => 'Audience', 'ExperienceType' => 'Experience Type', 'PosterType' => 'Poster Type',
-                     'AppropriateAges' => 'AppropriateAges', 'Offering' => 'Offering', 'FinePrint' => 'Fine Print',
-                     'MaxPerPerson' => 'Max per person', 'MultipleAllowed' => 'Multiple allowed', 'Status' => 'Status',
-                     'Created' => 'Created', 'Updated' => 'Updated',);
+            'Description' => 'Description', 'Start' => 'Start', 'End' => 'End',
+            'Min_occupancy' => 'Min Occupancy', 'Max_occupancy' => 'Max Occupancy',
+            'Location_ID' => 'Location', 'Category_ID' => 'Category', 'Price' => 'Price',
+            'Audience' => 'Audience', 'ExperienceType' => 'Experience Type', 'PosterType' => 'Poster Type',
+            'AppropriateAges' => 'AppropriateAges', 'Offering' => 'Offering', 'FinePrint' => 'Fine Print',
+            'MaxPerPerson' => 'Max per person', 'MultipleAllowed' => 'Multiple allowed', 'Status' => 'Status',
+            'Created' => 'Created', 'Updated' => 'Updated',);
     }
 
     /**
@@ -241,40 +241,50 @@ class Experience extends CActiveRecord
             return false;
         }
 
+        $userToExperience = new UserToExperience();
+        $userToExperience->User_ID = $user->User_ID;
+        $userToExperience->Experience_ID = $this->Experience_ID;
+
         if ($session == null)
         {
-
+            $existing = UserToExperience::model()->find('User_ID=:User_ID AND Experience_ID=:Experience_ID',
+                array(':User_ID' => $user->User_ID,
+                    ':Experience_ID' => $this->Experience_ID));
         }
         else
         {
             $existing = UserToExperience::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID AND Experience_ID=:Experience_ID',
-                                                        array(':User_ID' => $user->User_ID,
-                                                              ':Session_ID' => $session->Session_ID,
-                                                              ':Experience_ID' => $this->Experience_ID));
+                array(':User_ID' => $user->User_ID,
+                    ':Session_ID' => $session,
+                    ':Experience_ID' => $this->Experience_ID));
 
-            if ($existing == null)
-            {
-                $userToExperience = new UserToExperience();
-                $userToExperience->Session_ID = $session->Session_ID;
-                $userToExperience->User_ID = $user->User_ID;
-                $userToExperience->Experience_ID = $this->Experience_ID;
+            $userToExperience->Session_ID = $session;
+        }
 
-                $userToExperience->save();
-            }
-            elseif ($this->MultipleAllowed)
-            {
-            }
-            else
+        if ($this->MaxPerPerson != null)
+        {
+            if ($quantity > $this->MaxPerPerson)
             {
                 return false;
             }
+        }
+
+        $userToExperience->Quantity = $quantity;
+
+        if (($existing == null) || ($this->MultipleAllowed))
+        {
+            $userToExperience->save();
+        }
+        else
+        {
+            return false;
         }
 
         $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
         $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
 
         Message::SendNotification($this->Create_User_ID,
-                                  "{$userName} has joined your experience \"{$experienceName}\".");
+            "{$userName} has joined your experience \"{$experienceName}\".");
 
 
         // Notify the enrollees
@@ -286,7 +296,7 @@ class Experience extends CActiveRecord
                 $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
 
                 Message::SendNotification($enrollee->User_ID,
-                                          "{$userName} has also joined the experience \"{$experienceName}\".");
+                    "{$userName} has also joined the experience \"{$experienceName}\".");
             }
         }
 
