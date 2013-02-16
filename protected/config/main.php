@@ -34,7 +34,7 @@ return array(
             //'params'=>array('directory'=>'C:/ImageMagick'),
         ),
         'hybridauth' => array(
-            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yiidev/kowop/hybridauth',
+            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/yii/kowop/hybridauth',
             'withYiiUser' => false, // Set to true if using yii-user
             "providers" => array(
                 /*"Google" => array(
@@ -85,10 +85,10 @@ return array(
         */
         // uncomment the following to use a MySQL database
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=rebuttme_kowopdev',
+            'connectionString' => 'mysql:host=localhost;dbname=kowop',
             'emulatePrepare' => true,
-            'username' => 'rebuttme_kowop',
-            'password' => 'kowop123',
+            'username' => 'root',
+            'password' => 'kowop123!',
             'charset' => 'utf8',
         ),
         'errorHandler' => array(
@@ -125,8 +125,9 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
-        'siteBase' => '/yiidev/kowop',
-        'uploads' => '/home4/rebuttme/public_html/yiidev/kowop/uploads',
-        'temp' => '/home4/rebuttme/public_html/yiidev/kowop/temp'
+        'siteBase' => '/yii/kowop',
+        'uploads' => '/var/www/yii/kowop/uploads',
+        'temp' => '/var/www/yii/kowop/temp',
+        'balancedMarketPlaceURI' => '/v1/marketplaces/TEST-MPShQ51qyQNTEoxoNRJA9zW',
     ),
 );

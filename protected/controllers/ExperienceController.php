@@ -434,6 +434,7 @@ class ExperienceController extends Controller
                 $formattedResult['location'] = $address;
                 $formattedResult['link'] = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
                 $formattedResult['type'] = 'experience';
+                $formattedResult['experienceType'] = ExperienceType::$Lookup[$item->ExperienceType];
                 $formattedResult['id'] = $item->Experience_ID;
 
                 $imageHTML = "<img src='http://flickholdr.com/400/300/bbq' />";
@@ -510,7 +511,7 @@ BLOCK;
         $this->layout = false;
         $model = $this->loadModel($id);
 
-        $session = isset($_REQUEST['session']) ? Session::model()->findByPk($_REQUEST['session']) : $model->sessions[0];
+        $session = isset($_REQUEST['session']) ? Session::model()->findByPk($_REQUEST['session']) : $model->nextAvailableSession;
 
         $this->render('dialogs/enrollDialog', array('model' => $model, 'session' => $session));
     }

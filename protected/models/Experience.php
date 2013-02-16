@@ -33,6 +33,7 @@
  * @property User $createUser
  * @property ExperienceToContent[] $experienceToContents
  * @property ExperienceToTag[] $experienceToTags
+ * @property Payment[] $payments
  * @property Rating[] $ratings
  * @property Request[] $requests
  * @property Session[] $sessions
@@ -96,6 +97,7 @@ class Experience extends CActiveRecord
             'requests' => array(self::HAS_MANY, 'Request', 'Created_Experience_ID'),
             'sessions' => array(self::HAS_MANY, 'Session', 'Experience_ID'),
             'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Experience_ID'),
+            'payments' => array(self::HAS_MANY, 'Payment', 'Experience_ID'),
 
             // Added
 
@@ -104,7 +106,21 @@ class Experience extends CActiveRecord
             'tags' => array(self::HAS_MANY, 'Tag', array('Tag_ID' => 'Tag_ID'),
                 'through' => 'experienceToTags'),
             'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
-                'through' => 'userToExperiences'),);
+                'through' => 'userToExperiences'),
+            'currentSessions' => array(self::HAS_MANY, 'Session', 'Experience_ID', 'scopes' => array('current')),
+        );
+    }
+
+    public function scopes()
+    {
+        $t = $this->getTableAlias(false);
+
+        return array(
+            'active' => array('condition' => "{$t}.Status = " . ExperienceStatus::Active),
+            'inactive' => array('condition' => "{$t}.Status = " . ExperienceStatus::Inactive),
+            'past' => array('condition' => "{$t}.End <= now()"),
+            'current' => array('condition' => "{$t}.End > now()"),
+        );
     }
 
     /**

@@ -57,7 +57,20 @@ class SiteController extends Controller
     {
         $this->layout = '//layouts/mainOuter';
 
-        $this->render('login');
+        $model = new LoginForm;
+
+        if (isset($_POST['LoginForm']))
+        {
+            // collects user input data
+            $model->attributes = $_POST['LoginForm'];
+            // validates user input and redirect to previous page if validated
+            if ($model->validate())
+            {
+                $this->redirect(Yii::app()->user->returnUrl);
+            }
+        }
+        // displays the login form
+        $this->render('login', array('model' => $model));
     }
 
     /**
@@ -75,12 +88,12 @@ class SiteController extends Controller
     {
         $this->layout = false;
 
-        if(isset($_REQUEST['latlng']))
+        if (isset($_REQUEST['latlng']))
         {
             $latlng = $_REQUEST['latlng'];
             $url = "http://maps.googleapis.com/maps/api/geocode/json?&latlng={$latlng}&sensor=false";
         }
-        elseif(isset($_REQUEST['address']))
+        elseif (isset($_REQUEST['address']))
         {
             $address = $_REQUEST['address'];
             $url = "http://maps.googleapis.com/maps/api/geocode/json?&address={$address}&sensor=false";

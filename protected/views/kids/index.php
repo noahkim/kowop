@@ -216,7 +216,7 @@
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
-            $hostName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            $hostName = $class->createUser->DisplayName ? $class->createUser->DisplayName : $class->createUser->fullname;
             if (strlen($hostName) > 25)
             {
                 $hostName = substr($hostName, 0, 25);
@@ -311,7 +311,7 @@ BLOCK;
             $imageHTML = '<img src="' . ($class->picture ? $class->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $class->Experience_ID));
 
-            $hostName = $class->createUser->Teacher_alias ? $class->createUser->Teacher_alias : $class->createUser->fullname;
+            $hostName = $class->createUser->DisplayName ? $class->createUser->DisplayName : $class->createUser->fullname;
             $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $class->Create_User_ID));
             $description = $class->Description;
             if (strlen($description) > 82)

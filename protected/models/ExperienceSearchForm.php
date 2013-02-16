@@ -79,7 +79,7 @@ class ExperienceSearchForm extends CFormModel
                 $requestCriteria->compare('tags.Name', $keyword, true, 'OR');
                 $requestCriteria->compare('createUser.First_name', $keyword, true, 'OR');
                 $requestCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
-                $requestCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
+                $requestCriteria->compare('createUser.DisplayName', $keyword, true, 'OR');
 
                 $experienceCriteria->compare('t.Name', $keyword, true, 'OR');
                 $experienceCriteria->compare('t.Description', $keyword, true, 'OR');
@@ -87,7 +87,7 @@ class ExperienceSearchForm extends CFormModel
                 $experienceCriteria->compare('tags.Name', $keyword, true, 'OR');
                 $experienceCriteria->compare('createUser.First_name', $keyword, true, 'OR');
                 $experienceCriteria->compare('createUser.Last_name', $keyword, true, 'OR');
-                $experienceCriteria->compare('createUser.Teacher_alias', $keyword, true, 'OR');
+                $experienceCriteria->compare('createUser.DisplayName', $keyword, true, 'OR');
             }
         }
 

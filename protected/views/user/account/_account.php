@@ -26,9 +26,9 @@
         </div>
     </div>
     <div class="row accountEditrow">
-        <div class="three columns accountEditlabel">Instructor Title</div>
-        <div class="nine columns edit_teacher_alias" id='Teacher_alias'>
-            <?php echo $model->Teacher_alias; ?>
+        <div class="three columns accountEditlabel">Display Name</div>
+        <div class="nine columns edit_DisplayName" id='DisplayName'>
+            <?php echo $model->DisplayName; ?>
         </div>
     </div>
     <div class="row accountEditrow">
@@ -47,7 +47,7 @@
 <script>
     $(document).ready(function () {
 
-        $('.edit_teacher_alias').editable('<?php echo $this->createAbsoluteUrl('/user/submitProfileChange'); ?>', {
+        $('.edit_DisplayName').editable('<?php echo $this->createAbsoluteUrl('/user/submitProfileChange'); ?>', {
             select:true,
             submit:'OK',
             cancel:'cancel',
@@ -65,26 +65,4 @@
         });
 
     });
-    /*
-        $('.edit').editable('http://www.example.com/save.php', {
-            cssclass:'jeditableinput',
-            cancel:'Cancel',
-            submit:'OK'
-        });
-
-        $('.editZipcode').editable('http://www.example.com/save.php', {
-            cssclass:'jeditableinput',
-            cancel:'Cancel',
-            submit:'OK',
-            maxlength:5
-        });
-
-        $('.editState').editable('http://www.example.com/save.php', {
-            type:"select",
-            data:"{'Alabama':'Alabama', 'Alaska':'Alaska','Arizona':'Arizona', 'Arkansas':'Arkansas', 'California':'California', 'Colorado':'Colorado', 'Connecticut':'Connecticut', 'Delaware':'Delaware', 'Florida':'Florida', 'Georgia':'Georgia', 'Hawaii':'Hawaii', 'Idaho':'Idaho', 'Illinois':'Illinois', 'Indiana':'Indiana', 'Iowa':'Iowa', 'Kansas':'Kansas', 'Kentucky':'Kentucky', 'Louisiana':'Louisiana', 'Maine':'Maine', 'Maryland':'Maryland', 'Massachusetts':'Massachusetts', 'Michigan':'Michigan', 'Minnesota':'Minnesota', 'Mississippi':'Mississippi', 'Missouri':'Missouri', 'Montana':'Montana', 'Nebraska':'Nebraska', 'Nevada':'Nevada', 'New Hampshire':'New Hampshire', 'New Jersey':'New Jersey', 'New Mexico':'New Mexico', 'New York':'New York', 'North Carolina':'North Carolina', 'North Dakota':'North Dakota', 'Ohio':'Ohio', 'Oklahoma':'Oklahoma', 'Oregon':'Oregon', 'Pennsylvania':'Pennsylvania', 'Rhode Island':'Rhode Island', 'South Carolina':'South Carolina', 'South Dakota':'South Dakota', 'Tennessee':'Tennessee', 'Texas':'Texas', 'Utah':'Utah', 'Vermont':'Vermont', 'Virginia':'Virginia', 'Washington':'Washington', 'West Virginia':'West Virginia', 'Wisconsin':'Wisconsin', 'Wyoming':'Wyoming'}",
-            cssclass:'jeditableinput',
-            cancel:'Cancel',
-            submit:'OK'
-        });*/
-
 </script>

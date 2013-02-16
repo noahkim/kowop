@@ -22,11 +22,11 @@ class UserController extends Controller
     {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
+                'actions' => array('index', 'view', 'create'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'classReport', 'submitProfileChange', 'sendMessage', 'getReplyDialog', 'friendRequest', 'acceptFriend'),
+                'actions' => array('update', 'submitProfileChange', 'sendMessage', 'getReplyDialog', 'friendRequest', 'acceptFriend'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -52,12 +52,9 @@ class UserController extends Controller
             $section = $_REQUEST['s'];
         }
 
-        if ($id == Yii::app()->user->id)
+        if (($id != Yii::app()->user->id) && ($section > 0))
         {
-            if($section == 0)
-            {
-                //TODO: maybe get rid of this conditional, not used currently
-            }
+            $section = 0;
         }
 
         $this->render('view', array(
@@ -72,18 +69,23 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-        $model = new User;
+        $this->layout = '//layouts/mainOuter';
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+        $model = new User;
 
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
 
+            $identity = new UserIdentity($model->Email, $model->Password);
+
             if ($model->save())
             {
-                $this->redirect(array('view', 'id' => $model->User_ID));
+                if ($identity->authenticate())
+                {
+                    Yii::app()->user->login($identity);
+                    $this->redirect(array('/site/index'));
+                }
             }
         }
 
@@ -230,10 +232,10 @@ class UserController extends Controller
 
     public function actionFriendRequest($id)
     {
-/*        if($id == Yii::app()->user->id)
-        {
-            return;
-        }*/
+        /*        if($id == Yii::app()->user->id)
+                {
+                    return;
+                }*/
 
         $message = $_POST['message'];
 
@@ -247,7 +249,7 @@ class UserController extends Controller
         $friendship = Friend::model()->find('User_ID = :User_ID AND Friend_User_ID = :Friend_User_ID AND Status = :Status',
             array(':User_ID' => $id, ':Friend_User_ID' => Yii::app()->user->id, ':Status' => FriendStatus::AwaitingApproval));
 
-        if($friendship != null)
+        if ($friendship != null)
         {
             $friendship->Status = FriendStatus::Friend;
             $friendship->save();
@@ -255,7 +257,7 @@ class UserController extends Controller
             $notification = Message::model()->find('`From` = :From AND `To` = :To AND Type = :Type',
                 array(':From' => $id, ':To' => Yii::app()->user->id, ':Type' => MessageType::FriendRequest));
 
-            if($notification != null)
+            if ($notification != null)
             {
                 $notification->Deleted = 1;
                 $notification->save();
@@ -282,6 +284,7 @@ class UserController extends Controller
         {
             throw new CHttpException(404, 'The requested page does not exist.');
         }
+
         return $model;
     }
 

@@ -1,6 +1,6 @@
 <?php if ($section == 'rightColumnTop') : ?>
 
-<?php if ($model->hasSessions) : ?>
+<?php if ($model->hasSessions && ($model->nextAvailableSession != null)) : ?>
 
     <div class="four columns">
         <div class="detailsNextSession">
@@ -83,7 +83,7 @@
 
 <?php elseif ($section == 'rightColumnBottom') : ?>
 
-<?php if ($model->hasSessions) : ?>
+<?php if ($model->hasSessions && ($model->nextAvailableSession != null)) : ?>
 
     <div class="six columns">
         <div class="row">
@@ -128,7 +128,7 @@
                 events:[
                     <?php
                     $calendarJS = '';
-                    foreach ($model->sessions as $i => $session)
+                    foreach ($model->currentSessions as $i => $session)
                     {
                         $title = 'Session ' . ($i + 1);
                         $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,

@@ -24,55 +24,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="400" column="54" selection-start="16222" selection-end="16222" vertical-scroll-proportion="-19.153847">
-              <folding>
-                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="42" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.05762712">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="search.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="60" selection-start="3204" selection-end="3204" vertical-scroll-proportion="-45.76923">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_host.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_host.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="89" selection-start="3948" selection-end="3979" vertical-scroll-proportion="-22.423077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SiteController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/controllers/SiteController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="9" selection-start="2296" selection-end="2296" vertical-scroll-proportion="-24.884615">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -85,22 +37,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_teacher.php" />
+        <option value="$PROJECT_DIR$/js/jquery.cookie.js" />
+        <option value="$PROJECT_DIR$/protected/views/user/view.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_account.php" />
+        <option value="$PROJECT_DIR$/protected/views/layouts/createSessions.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/_headernav.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_experiences.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_payment.php" />
         <option value="$PROJECT_DIR$/protected/models/User.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/_createForm7.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/main.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/mainNoSearch.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/ExperienceController.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_host.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_default.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/view/_enrolled.php" />
         <option value="$PROJECT_DIR$/protected/models/Experience.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/_searchResults.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/mainOuter.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/SiteController.php" />
+        <option value="$PROJECT_DIR$/protected/models/Payment.php" />
+        <option value="$PROJECT_DIR$/protected/models/CreditCard.php" />
+        <option value="$PROJECT_DIR$/protected/models/BankAccountType.php" />
+        <option value="$PROJECT_DIR$/protected/models/BankAccount.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/ExperienceController.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/UserController.php" />
+        <option value="$PROJECT_DIR$/protected/config/main.php" />
       </list>
     </option>
   </component>
@@ -156,7 +108,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -208,6 +159,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protected" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="account" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -287,80 +264,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="experience" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protected" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="experience" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protected" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="experience" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dialogs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kowop" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="protected" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -383,18 +286,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protected" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode.HTML" />
+    <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/php.ini" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -419,14 +341,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -484,15 +406,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32158118" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32083333" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23901713" sideWeight="0.29951692" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Framework" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21982077" sideWeight="0.67094016" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21982077" sideWeight="0.6791667" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -561,116 +483,86 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/views/layouts/main.php">
+    <entry file="file://$PROJECT_DIR$/protected/modules/httpful/bootstrap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="25" selection-start="702" selection-end="702" vertical-scroll-proportion="0.32655367">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="84" selection-end="84" vertical-scroll-proportion="0.07480748" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/User.php">
+    <entry file="file://$PROJECT_DIR$/protected/modules/httpful/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="30" selection-start="3220" selection-end="3237" vertical-scroll-proportion="0.5774011">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/UserToExperience.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="44" selection-start="574" selection-end="574" vertical-scroll-proportion="0.36497176">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="77" selection-start="2203" selection-end="2203" vertical-scroll-proportion="0.5378531">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_enrolled.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="161" selection-start="2490" selection-end="2490" vertical-scroll-proportion="0.50688076">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="43" selection-start="9126" selection-end="9126" vertical-scroll-proportion="0.25917432">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="483" column="35" selection-start="16461" selection-end="16461" vertical-scroll-proportion="0.3898305">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_default.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1785" selection-end="1785" vertical-scroll-proportion="-3.9230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_searchResults.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="9" selection-start="548" selection-end="548" vertical-scroll-proportion="0.40338984">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/layouts/mainOuter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="16" selection-start="3166" selection-end="3166" vertical-scroll-proportion="-23.576923">
-          <folding />
-        </state>
+        <state line="30" column="68" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.5610561" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/view/_host.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_payment.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="89" selection-start="3948" selection-end="3979" vertical-scroll-proportion="-22.423077">
-          <folding />
-        </state>
+        <state line="80" column="34" selection-start="3740" selection-end="3740" vertical-scroll-proportion="-52.307693" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/Category.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="60" selection-start="3204" selection-end="3204" vertical-scroll-proportion="-45.76923">
-          <folding />
-        </state>
+        <state line="17" column="31" selection-start="421" selection-end="421" vertical-scroll-proportion="0.3179318" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm4.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="25" selection-start="778" selection-end="778" vertical-scroll-proportion="45.115383">
-          <folding />
-        </state>
+        <state line="12" column="32" selection-start="336" selection-end="336" vertical-scroll-proportion="-7.8461537" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/SiteController.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/BankAccountType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="9" selection-start="2296" selection-end="2296" vertical-scroll-proportion="-24.884615">
+        <state line="10" column="0" selection-start="133" selection-end="133" vertical-scroll-proportion="0.1870187" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/ContentType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="1" selection-start="32" selection-end="32" vertical-scroll-proportion="0.05610561" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/CreditCard.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="33" selection-start="1402" selection-end="1402" vertical-scroll-proportion="-31.384615" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/BankAccount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="109" column="0" selection-start="3387" selection-end="3387" vertical-scroll-proportion="-71.26923" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="40" selection-start="1279" selection-end="1279" vertical-scroll-proportion="-30.73077" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="241" column="9" selection-start="9381" selection-end="9381" vertical-scroll-proportion="4.3828125" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="1" selection-start="256" selection-end="256" vertical-scroll-proportion="0.2618262" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/ExperienceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="440" column="44" selection-start="15330" selection-end="15330" vertical-scroll-proportion="0.87678766" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/config/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="46" selection-start="700" selection-end="700" vertical-scroll-proportion="0.43014303">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="400" column="54" selection-start="16222" selection-end="16222" vertical-scroll-proportion="-19.153847">
-          <folding>
-            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="42" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.05762712">
+        <state line="512" column="21" selection-start="20149" selection-end="20149" vertical-scroll-proportion="0.018973215">
           <folding />
         </state>
       </provider>

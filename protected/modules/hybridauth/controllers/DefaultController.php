@@ -104,7 +104,7 @@ class DefaultController extends Controller
                     $user->Phone_number = $profile->phone;
                 }
 
-                $user->save();
+                $user->save(false);
 
                 if (isset($profile->photoURL))
                 {

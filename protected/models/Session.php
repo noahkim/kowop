@@ -44,9 +44,9 @@ class Session extends CActiveRecord
         return array(array('Experience_ID', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-                     array('Session_ID, Experience_ID, Start, End, Created', 'safe'),
-                     array('Created', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
-                           'on' => 'insert'));
+            array('Session_ID, Experience_ID, Start, End, Created', 'safe'),
+            array('Created', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
+                'on' => 'insert'));
     }
 
     /**
@@ -57,9 +57,20 @@ class Session extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array('experience' => array(self::BELONGS_TO, 'Experience', 'Experience_ID'),
-                     'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Session_ID'),
-                     'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
-                                         'through' => 'userToExperiences'));
+            'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'Session_ID'),
+            'enrolled' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'),
+                'through' => 'userToExperiences'));
+    }
+
+
+    public function scopes()
+    {
+        $t = $this->getTableAlias(false);
+
+        return array(
+            'past' => array('condition' => "{$t}.End <= now()"),
+            'current' => array('condition' => "{$t}.End > now()"),
+        );
     }
 
     /**
@@ -68,7 +79,7 @@ class Session extends CActiveRecord
     public function attributeLabels()
     {
         return array('Session_ID' => 'Session', 'Experience_ID' => 'Experience', 'Start' => 'Start', 'End' => 'End',
-                     'Created' => 'Created',);
+            'Created' => 'Created',);
     }
 
     /**

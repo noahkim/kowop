@@ -1,6 +1,6 @@
 <?php if ($section == 'rightColumnTop') : ?>
 
-<?php if ($model->hasSessions) : ?>
+<?php if ($model->hasSessions && ($model->nextAvailableSession != null)) : ?>
 
     <div class="four columns">
         <div class="detailsNextSession">

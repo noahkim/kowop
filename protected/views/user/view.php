@@ -10,9 +10,9 @@
     }
 
     $sections = array();
-    for ($i = 1; $i <= 6; $i++)
+    foreach (AccountSections::$Lookup as $sectionID => $name)
     {
-        $sections[$i] = '';
+        $sections[$sectionID] = '';
     }
 
     $sections[$section] = 'class="active"';
@@ -24,34 +24,26 @@
 
     <!-------------left column------------->
     <div class="three columns sideNav">
-        <img src='<?php echo $imageLink; ?>'/>
+        <img src='<?php echo $imageLink; ?>' />
 
         <h2>My account</h2>
         <ul class="side-nav">
-            <li <?php echo $sections[1]; ?> >
-                <?php echo CHtml::link('Notifications', array('/user/view', 'id' => $model->User_ID, 's' => 1)); ?>
-            </li>
-            <li <?php echo $sections[2]; ?> >
-                <?php echo CHtml::link('Homies', array('/user/view', 'id' => $model->User_ID, 's' => 2)); ?>
-            </li>
-            <li <?php echo $sections[3]; ?> >
-                <?php echo CHtml::link('My Classes', array('/user/view', 'id' => $model->User_ID, 's' => 3)); ?>
-            </li>
-            <li <?php echo $sections[4]; ?> >
-                <?php echo CHtml::link("Classes I'm teaching", array('/user/view', 'id' => $model->User_ID, 's' => 4)); ?>
-            </li>
-            <li <?php echo $sections[5]; ?> >
-                <?php echo CHtml::link('Class Calendar', array('/user/view', 'id' => $model->User_ID, 's' => 5)); ?>
-            </li>
-            <li <?php echo $sections[6]; ?> >
-                <?php echo CHtml::link('Account Information', array('/user/view', 'id' => $model->User_ID, 's' => 6)); ?>
-            </li>
+            <?php
+            foreach (AccountSections::$Lookup as $sectionID => $name)
+            {
+                echo "<li {$sections[$sectionID]}> \n";
+                echo CHtml::link($name, array('/user/view', 'id' => $model->User_ID, 's' => $sectionID));
+                echo "</li>\n";
+            }
+            ?>
 
             <li>
                 <?php echo CHtml::link("View public profile", array("user/view", 'id' => $model->User_ID)); ?>
             </li>
 
-            <li><a href="user_profile_reviews.html">Feedback</a></li>
+            <li>
+                <a href="user_profile_reviews.html">Feedback</a>
+            </li>
         </ul>
         <div class="spacebot10">
             <?php echo CHtml::link("I'd like to post", $this->createUrl("experience/create"), array('class' => 'button twelve')); ?>
@@ -66,20 +58,23 @@
 
     switch ($section)
     {
-        case 2:
+        case AccountSections::Friends:
             $page = 'account/_homies';
             break;
-        case 3:
-            $page = 'account/_classes';
+        case AccountSections::MyExperiences:
+            $page = 'account/_experiences';
             break;
-        case 4:
-            $page = 'account/_teaching';
+        case AccountSections::MyListings:
+            $page = 'account/_listings';
             break;
-        case 5:
+        case AccountSections::MyCalendar:
             $page = 'account/_calendar';
             break;
-        case 6:
+        case AccountSections::AccountInformation:
             $page = 'account/_account';
+            break;
+        case AccountSections::PaymentInformation:
+            $page = 'account/_payment';
             break;
         default:
             $page = 'account/_notifications';
