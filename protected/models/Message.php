@@ -153,5 +153,7 @@ class Message extends CActiveRecord
         }
 
         $message->save();
+
+        Mail::Send($message->to->Email, "{$message->from->display} has sent you a message.", $text);
     }
 }

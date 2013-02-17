@@ -12,8 +12,7 @@ if (!Yii::app()->user->isGuest)
 
 foreach ($results as $i => $item)
 {
-    $hostName = $item->createUser->DisplayName ? $item->createUser->DisplayName : $item->createUser->fullname;
-    $hostLink = CHtml::link($hostName, array('/user/view', 'id' => $item->Create_User_ID));
+    $hostLink = CHtml::link($item->createUser->display, array('/user/view', 'id' => $item->Create_User_ID));
 
     $sessionHTML = 'Request';
     if ($item instanceof Experience)

@@ -66,6 +66,16 @@ class BankAccount extends CActiveRecord
         );
     }
 
+    public function scopes()
+    {
+        $t = $this->getTableAlias(false);
+
+        return array(
+            'active' => array('condition' => "{$t}.Active = " . 1),
+            'inactive' => array('condition' => "{$t}.Active <> " . 1),
+        );
+    }
+
     /**
      * @return array customized attribute labels (name=>label)
      */

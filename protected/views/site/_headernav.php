@@ -18,7 +18,7 @@
                 <?php echo CHtml::link("what's Kowop?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
             </span>
             <span class="navSignup">
-                <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
+                <?php echo CHtml::link("sign up", $this->createUrl("user/create")); ?>
             </span>
             <span class="navLogin">
                 <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>

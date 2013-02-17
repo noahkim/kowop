@@ -1,104 +1,97 @@
 <!--------- main content container------>
 <div class="row" id="wrapper">
-    <!---- left sidebar------>
-    <div class="three columns">
-        <div class="spacebot10">
-            <?php
-            $imageLink = 'http://placehold.it/300x300';
-
-            if ($model->profilePic != null)
-            {
-                $imageLink = $model->profilePic;
-            }
-
-            echo "<img src='{$imageLink}' alt='{$model->fullname}' title='{$model->fullname}' />\n";
-            ?>
-        </div>
-        <div class="spacebot10">
-            <a href="#" class="twelve button" data-reveal-id="myModal">Send a message</a>
-        </div>
-        <div>
-            <?php
-            $showFriendRequest = true;
-
-            if (!Yii::app()->user->isGuest)
-            {
-                $user = User::model()->findByPk(Yii::app()->user->id);
-                if ($user->isFriendsWith($model->User_ID))
-                {
-                    $showFriendRequest = false;
-                }
-            }
-            ?>
-            <?php if ($showFriendRequest) : ?>
-                <a href="#" class="twelve button" data-reveal-id="homieRequest">Homie request</a>
-            <?php else: ?>
-                <a href="#" class="twelve button">You are homies</a>
-            <?php endif; ?>
-        </div>
-        <div class="profileBadges">
-            <div class="helptip">
-                <span class="has-tip tip-top noradius" data-width="300"
-                      title="Merit badges are awarded by the instructor once you've completed a class. Each one represents a meaningful experience and new powers acquired. Wear them with honor!">?</span>
-            </div>
-            <span class="profileCount">16</span>
-
-            <h2>Merit Badges</h2>
-
-            <div class="meritBadges">
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-            </div>
-        </div>
+<!---- left sidebar------>
+<div class="three columns">
+    <div class="spacebot10">
+        <?php echo "<img src='{$model->profilePic}' alt='{$model->display}' title='{$model->display}' />\n"; ?>
     </div>
-    <!---- Right side----------->
-    <div class="nine columns profilePublic">
-        <h1><?php echo $model->fullname; ?></h1>
-        <span class="profileRating"><a href="user_profile_reviews.html">95</a></span>
-        <span class="profileLocation">Los Angeles, California</span>
-        <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span>
-        <span class="profileDescription"><?php echo $model->Description; ?></span>
-        <span class="profileCount"><?php echo count($model->experiences); ?></span>
+    <div class="spacebot10">
+        <a href="#" class="twelve button" data-reveal-id="myModal">Send a message</a>
+    </div>
+    <div>
+        <?php
+        $showFriendRequest = true;
 
-        <h2>Classes I'm teaching</h2>
-
-        <div class="row">
-            <?php
-
-            $index = 1;
-
-            foreach ($model->experiences as $class)
+        if (!Yii::app()->user->isGuest)
+        {
+            $user = User::model()->findByPk(Yii::app()->user->id);
+            if ($user->isFriendsWith($model->User_ID))
             {
-                $imgLink = 'http://placehold.it/400x300';
+                $showFriendRequest = false;
+            }
+        }
+        ?>
+        <?php if ($showFriendRequest) : ?>
+        <a href="#" class="twelve button" data-reveal-id="homieRequest">Homie request</a>
+        <?php else: ?>
+        <a href="#" class="twelve button">You are homies</a>
+        <?php endif; ?>
+    </div>
+    <!--        <div class="profileBadges">
+                <div class="helptip">
+                    <span class="has-tip tip-top noradius"
+                          data-width="300"
+                          title="Merit badges are awarded by the instructor once you've completed a class. Each one represents a meaningful experience and new powers acquired. Wear them with honor!">?</span>
+                </div>
+                <span class="profileCount">16</span>
 
-                if (count($class->contents) > 0)
-                {
-                    $imgLink = $class->contents[0]->Link;
-                }
+                <h2>Merit Badges</h2>
 
-                $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+                <div class="meritBadges">
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
+                </div>
+            </div>-->
+</div>
+<!---- Right side----------->
+<div class="nine columns profilePublic">
+    <h1><?php echo $model->display; ?></h1>
+    <span class="profileRating"><a href="user_profile_reviews.html">95</a></span>
+    <span class="profileLocation"></span>
+    <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span>
+    <span class="profileDescription"><?php echo $model->Description; ?></span>
 
-                $end = '';
-                if ($index == count($model->experiences))
-                {
-                    $end = 'end';
-                }
+    <span class="profileCount"><?php echo count($model->experiences); ?></span>
 
-                echo <<<BLOCK
+    <h2>My listings</h2>
+
+    <div class="row">
+        <?php
+
+        $index = 1;
+
+        foreach ($model->experiences as $class)
+        {
+            $imgLink = 'http://placehold.it/400x300';
+
+            if (count($class->contents) > 0)
+            {
+                $imgLink = $class->contents[0]->Link;
+            }
+
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+
+            $end = '';
+            if ($index == count($model->experiences))
+            {
+                $end = 'end';
+            }
+
+            echo <<<BLOCK
                 <div class="three columns {$end}">
                     <div class="profileTile">
                         <img src="{$imgLink}">
@@ -109,36 +102,36 @@
                 </div>
 BLOCK;
 
-                $index++;
-            }
-            ?>
-        </div>
-        <span class="profileCount"><?php echo count($model->enrolledIn); ?></span>
+            $index++;
+        }
+        ?>
+    </div>
+    <span class="profileCount"><?php echo count($model->enrolledIn); ?></span>
 
-        <h2>Classes I'm enrolled in</h2>
+    <h2>Experiences I'm signed up for</h2>
 
-        <div class="row">
-            <?php
+    <div class="row">
+        <?php
 
-            $index = 1;
+        $index = 1;
 
-            foreach ($model->enrolledIn as $class)
+        foreach ($model->enrolledIn as $class)
+        {
+            $imgLink = 'http://placehold.it/400x300';
+            if (count($class->contents) > 0)
             {
-                $imgLink = 'http://placehold.it/400x300';
-                if (count($class->contents) > 0)
-                {
-                    $imgLink = $class->contents[0]->Link;
-                }
+                $imgLink = $class->contents[0]->Link;
+            }
 
-                $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
-                $end = '';
-                if ($index == count($model->enrolledIn))
-                {
-                    $end = 'end';
-                }
+            $end = '';
+            if ($index == count($model->enrolledIn))
+            {
+                $end = 'end';
+            }
 
-                echo <<<BLOCK
+            echo <<<BLOCK
         <div class="three columns {$end}">
             <div class="profileTile">
                 <img src="{$imgLink}">
@@ -149,31 +142,31 @@ BLOCK;
         </div>
 BLOCK;
 
-                $index++;
+            $index++;
+        }
+
+        ?>
+    </div>
+    <span class="profileCount"><?php echo count($model->requests); ?></span>
+
+    <h2>My requests</h2>
+
+    <div class="row">
+        <?php
+
+        $index = 1;
+
+        foreach ($model->requests as $request)
+        {
+            $requestLink = CHtml::link($request->Name, array('/request/view', 'id' => $request->Request_ID));
+
+            $end = '';
+            if ($index == count($model->requests))
+            {
+                $end = 'end';
             }
 
-            ?>
-        </div>
-        <span class="profileCount"><?php echo count($model->requests); ?></span>
-
-        <h2>My class requests</h2>
-
-        <div class="row">
-            <?php
-
-            $index = 1;
-
-            foreach ($model->requests as $request)
-            {
-                $requestLink = CHtml::link($request->Name, array('/request/view', 'id' => $request->Request_ID));
-
-                $end = '';
-                if ($index == count($model->requests))
-                {
-                    $end = 'end';
-                }
-
-                echo <<<BLOCK
+            echo <<<BLOCK
         <div class="three columns {$end}">
             <div class="profileTile">
                 <img src="http://placehold.it/400x300">
@@ -184,19 +177,54 @@ BLOCK;
         </div>
 BLOCK;
 
-                $index++;
+            $index++;
+        }
+
+        ?>
+    </div>
+    <span class="profileCount"><?php echo count($model->pastExperiencesHosted); ?></span>
+
+    <h2>Experiences I've hosted in the past</h2>
+
+    <div class="row">
+        <?php
+
+        $index = 1;
+
+        foreach ($model->pastExperiencesHosted as $class)
+        {
+            $imgLink = 'http://placehold.it/400x300';
+            if (count($class->contents) > 0)
+            {
+                $imgLink = $class->contents[0]->Link;
             }
 
-            ?>
-        </div>
-        <span class="profileCount">0</span>
+            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
-        <h2>Classes I've taught</h2>
+            $end = '';
+            if ($index == count($model->pastExperiencesHosted))
+            {
+                $end = 'end';
+            }
 
-        <div class="row">
+            echo <<<BLOCK
+        <div class="three columns {$end}">
+            <div class="profileTile">
+                <img src="{$imgLink}">
+                    <span class="profileClassTitle">
+                        {$classLink}
+                    </span>
+            </div>
         </div>
+BLOCK;
+
+            $index++;
+        }
+
+        ?>
     </div>
-    <!------- end main content container----->
+</div>
+<!------- end main content container----->
 </div>
 
 <!----------------- Modal--------------------->
@@ -209,8 +237,7 @@ BLOCK;
     'enableAjaxValidation' => false
 )); ?>
 
-    <textarea name="message" rows="10"></textarea>
-    <input type="submit" value="send" class="button secondary radius">
+    <textarea name="message" rows="10"></textarea> <input type="submit" value="send" class="button secondary radius">
 
     <?php $this->endWidget('CActiveForm'); ?>
 
@@ -227,8 +254,7 @@ BLOCK;
     'enableAjaxValidation' => false
 )); ?>
 
-    <textarea name="message" rows="10"></textarea>
-    <input type="submit" value="Request" class="button secondary radius">
+    <textarea name="message" rows="10"></textarea> <input type="submit" value="Request" class="button secondary radius">
 
     <?php $this->endWidget('CActiveForm'); ?>
 

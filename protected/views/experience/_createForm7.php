@@ -80,7 +80,7 @@
                     <div class="detailsInstructor">
                         Host
                         <span class="detailsName">
-                            <?php echo CHtml::link($user->displayName, array('/user/view', 'id' => $user->User_ID)); ?>
+                            <?php echo CHtml::link($user->display, array('/user/view', 'id' => $user->User_ID)); ?>
                         </span>
 
                         <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>

@@ -25,6 +25,15 @@
 
                 <div class="row">
                     <div class="three columns">
+                        <label class="right inline">Display Name</label>
+                    </div>
+                    <div class="nine columns">
+                        <?php echo $form->textField($model, 'DisplayName', array('class' => 'twelve')); ?>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="three columns">
                         <label class="right inline">Email</label>
                     </div>
                     <div class="nine columns">
@@ -71,17 +80,30 @@
 <script>
     function submitForm()
     {
+        $('input').removeClass('error');
         var hasError = false;
+
+        if ($('#email').val().length == 0)
+        {
+            $('#email').addClass('error');
+            hasError = true;
+        }
+
+        if ($('#password').val().length == 0)
+        {
+            $('#password').addClass('error');
+            hasError = true;
+        }
 
         if ($('#email').val() != $('#verifyEmail').val())
         {
-            $('#email, #verifyEmail').addClass('error');
+            $('#verifyEmail').addClass('error');
             hasError = true;
         }
 
         if ($('#password').val() != $('#verifyPassword').val())
         {
-            $('#password, #verifyPassword').addClass('error');
+            $('#verifyPassword').addClass('error');
             hasError = true;
         }
 

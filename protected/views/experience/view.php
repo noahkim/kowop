@@ -62,8 +62,7 @@
                     <div class="detailsInstructor"> Host
                         <span class="detailsName">
                             <?php
-                            $name = ($model->createUser->DisplayName == null) ? $model->createUser->fullname : $model->createUser->DisplayName;
-                            echo CHtml::link($name, array('/user/view', 'id' => $model->Create_User_ID));
+                            echo CHtml::link($model->createUser->display, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
 

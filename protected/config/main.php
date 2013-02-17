@@ -44,7 +44,8 @@ return array(
                 ),*/
                 "Facebook" => array(
                     "enabled" => true,
-                    "keys" => array("id" => "126428637531867", "secret" => "732e1160e96faa0cd5bf4c6e43607dd1"),
+                    //"keys" => array("id" => "126428637531867", "secret" => "732e1160e96faa0cd5bf4c6e43607dd1"),
+                    "keys" => array("id" => "552165668142008", "secret" => "d0dcaaad8b6545a7154ac4384e1320ff"),
                     "scope" => "email,user_about_me,publish_stream",
                     "display" => ""
                 ),
@@ -66,8 +67,6 @@ return array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
         ),
-        // uncomment the following to enable URLs in path-format
-
         'urlManager' => array(
             'urlFormat' => 'path',
             'rules' => array(
@@ -75,15 +74,10 @@ return array(
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
-            'showScriptName' => false
+            'showScriptName' => false,
+            'caseSensitive' => false,
         ),
 
-        /*
-        'db'=>array(
-            'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-        ),
-        */
-        // uncomment the following to use a MySQL database
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=kowop',
             'emulatePrepare' => true,
@@ -129,5 +123,9 @@ return array(
         'uploads' => '/var/www/yii/kowop/uploads',
         'temp' => '/var/www/yii/kowop/temp',
         'balancedMarketPlaceURI' => '/v1/marketplaces/TEST-MPShQ51qyQNTEoxoNRJA9zW',
+        'balancedAPISecret' => '1cb3181a76ee11e28739026ba7f8ec28',
+        'AmazonSESKey'    => 'AKIAI7UQ3ZYLL5SGGILA',
+        'AmazonSESSecret' => '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',
+        'AmazonSESRegion' => 'us-east-1',
     ),
 );

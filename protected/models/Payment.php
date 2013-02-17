@@ -19,6 +19,8 @@
  */
 class Payment extends CActiveRecord
 {
+    const CODE_BASE = 36;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -67,6 +69,8 @@ class Payment extends CActiveRecord
             'creditCard' => array(self::BELONGS_TO, 'CreditCard', 'CreditCard_ID'),
             'bankAccount' => array(self::BELONGS_TO, 'BankAccount', 'BankAccount_ID'),
             'experience' => array(self::BELONGS_TO, 'Experience', 'Experience_ID'),
+            'buyer' => array(self::HAS_ONE, 'User', array('User_ID' => 'User_ID'), 'through' => 'creditCard'),
+            'seller' => array(self::HAS_ONE, 'User', array('User_ID' => 'User_ID'), 'through' => 'bankAccount'),
         );
     }
 
@@ -108,5 +112,16 @@ class Payment extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+
+    public function getCode()
+    {
+        return base_convert($this->Payment_ID, 10, CODE_BASE);
+    }
+
+    public static function GetPaymentFromCode($code)
+    {
+        $payment = Payment::model()->findByPk(intval($code, CODE_BASE));
+        return $payment;
     }
 }

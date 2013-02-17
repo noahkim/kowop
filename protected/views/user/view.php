@@ -76,6 +76,9 @@
         case AccountSections::PaymentInformation:
             $page = 'account/_payment';
             break;
+        case AccountSections::MyCustomers:
+            $page = 'account/_customers';
+            break;
         default:
             $page = 'account/_notifications';
             break;

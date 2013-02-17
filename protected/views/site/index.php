@@ -55,7 +55,7 @@
                 <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
             </span>
             <span class="navSignup">
-                <?php echo CHtml::link("sign up", $this->createUrl("site/login")); ?>
+                <?php echo CHtml::link("sign up", $this->createUrl("user/create")); ?>
             </span>
             <span class="navLogin">
                 <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
@@ -221,7 +221,7 @@
             $imageHTML = '<img src="' . ($experience->picture ? $experience->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $experience->Experience_ID));
 
-            $hostName = $experience->createUser->DisplayName ? $experience->createUser->DisplayName : $experience->createUser->fullname;
+            $hostName = $experience->createUser->display;
             if (strlen($hostName) > 25)
             {
                 $hostName = substr($hostName, 0, 25);

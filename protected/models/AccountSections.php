@@ -13,12 +13,14 @@ final class AccountSections
     const MyCalendar = 5;
     const AccountInformation = 6;
     const PaymentInformation = 7;
+    const MyCustomers = 8;
 
     public static $Lookup = array(
         AccountSections::Notifications => 'Notifications',
         AccountSections::Friends => 'Homies',
         AccountSections::MyExperiences => 'My Experiences',
         AccountSections::MyListings => 'My Listings',
+        AccountSections::MyCustomers => 'My Customers',
         AccountSections::MyCalendar => 'My Calendar',
         AccountSections::AccountInformation => 'Account Information',
         AccountSections::PaymentInformation => 'Payment Information',

@@ -17,7 +17,7 @@
  * @property string $Updated
  *
  * The followings are the available model relations:
- * @property BankAccount[] $bankAccounts
+ * @property BankAccount[] $bankAccount
  * @property CreditCard[] $creditCards
  * @property Friend[] $friended
  * @property Friend[] $friendOf
@@ -57,7 +57,7 @@ class User extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('Email, Password', 'required'),
+            array('Email, Password, DisplayName', 'required'),
             array('First_name, Last_name, Email, Description, DisplayName', 'length', 'max' => 255),
             array('Phone_number', 'length', 'max' => 45),
             array('Password', 'length', 'min' => 1),
@@ -92,14 +92,19 @@ class User extends CActiveRecord
             'friended' => array(self::HAS_MANY, 'Friend', 'User_ID'),
             'friendOf' => array(self::HAS_MANY, 'Friend', 'Friend_User_ID'),
             'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'User_ID'),
-            'bankAccounts' => array(self::HAS_MANY, 'BankAccount', 'User_ID'),
-            'creditCards' => array(self::HAS_MANY, 'CreditCard', 'User_ID'),
+            'bankAccount' => array(self::HAS_ONE, 'BankAccount', 'User_ID', 'scopes' => array('active')),
+            'creditCards' => array(self::HAS_MANY, 'CreditCard', 'User_ID', 'scopes' => array('active')),
             // Added
             'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
             'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToExperiences'),
             'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'userToExperiences', 'scopes' => array('active', 'current')),
             'pastExperiencesHosted' => array(self::HAS_MANY, 'Experience', 'Create_user_ID', 'scopes' => array('active', 'past')),
+            'allExperiencesHosted' => array(self::HAS_MANY, 'Experience', 'Create_user_ID'),
+
+            'customerPayments' => array(self::HAS_MANY, 'Payment', array('Experience_ID' => 'Experience_ID'), 'through' => 'allExperiencesHosted'),
+            'customerCards' => array(self::HAS_MANY, 'CreditCard', array('CreditCard_ID' => 'CreditCard_ID'), 'through' => 'customerPayments'),
+            'customers' => array(self::HAS_MANY, 'User', array('User_ID' => 'User_ID'), 'through' => 'customerCards'),
         );
     }
 
@@ -202,7 +207,7 @@ class User extends CActiveRecord
         return $isFriends;
     }
 
-    public function getDisplayName()
+    public function getDisplay()
     {
         $name = ($this->DisplayName == null) ? $this->fullname : $this->DisplayName;
 
