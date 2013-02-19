@@ -94,11 +94,11 @@ class ExperienceCreateForm extends CFormModel
     {
         $isSaved = null;
 
+        $experience = new Experience;
+        $transaction = $experience->dbConnection->beginTransaction();
+
         try
         {
-            $experience = new Experience;
-            $transaction = $experience->dbConnection->beginTransaction();
-
             if (isset($this->free) && ($this->free === true))
             {
                 unset($this->Price);

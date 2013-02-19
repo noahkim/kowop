@@ -24,7 +24,7 @@
 
 <?php
 echo CHtml::link('Enroll',
-                 array('/experience/join', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
+                 array('/experience/signup', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
                  array('class' => 'button radius stretch')
 );
 ?>

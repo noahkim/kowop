@@ -10,6 +10,8 @@
  * @property integer $Experience_ID
  * @property string $Amount
  * @property string $Batch_ID
+ * @property integer $Processed
+ * @property string $ProcessedTimestamp
  * @property string $Created
  *
  * The followings are the available model relations:
@@ -52,7 +54,7 @@ class Payment extends CActiveRecord
             array('Batch_ID', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Payment_ID, CreditCard_ID, BankAccount_ID, Experience_ID, Amount, Batch_ID, Created', 'safe'),
+            array('Payment_ID, CreditCard_ID, BankAccount_ID, Experience_ID, Amount, Batch_ID, Processed, ProcessedTimestamp, Created', 'safe'),
             array('Created', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'insert'),
         );
@@ -86,6 +88,8 @@ class Payment extends CActiveRecord
             'Experience_ID' => 'Experience',
             'Amount' => 'Amount',
             'Batch_ID' => 'Batch',
+            'Processed' => 'Processed',
+            'ProcessedTimestamp' => 'Processing Timestamp',
             'Created' => 'Created',
         );
     }
@@ -107,6 +111,8 @@ class Payment extends CActiveRecord
         $criteria->compare('Experience_ID', $this->Experience_ID);
         $criteria->compare('Amount', $this->Amount, true);
         $criteria->compare('Batch_ID', $this->Batch_ID, true);
+        $criteria->compare('Processed', $this->Processed, true);
+        $criteria->compare('ProcessedTimestamp', $this->ProcessedTimestamp, true);
         $criteria->compare('Created', $this->Created, true);
 
         return new CActiveDataProvider($this, array(
@@ -123,5 +129,10 @@ class Payment extends CActiveRecord
     {
         $payment = Payment::model()->findByPk(intval($code, CODE_BASE));
         return $payment;
+    }
+
+    public static function ProcessPayments()
+    {
+
     }
 }

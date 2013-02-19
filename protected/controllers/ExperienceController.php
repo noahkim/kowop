@@ -23,7 +23,7 @@ class ExperienceController extends Controller
             'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
             'users' => array('*'),),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'updateSessions', 'join', 'leave', 'delete',
+                'actions' => array('create', 'update', 'updateSessions', 'signUp', 'leave', 'delete',
                     'uploadImages'), 'users' => array('@'),),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
@@ -480,19 +480,40 @@ BLOCK;
         $this->render('admin', array('model' => $model,));
     }
 
-    public function actionJoin($id)
+    public function actionSignUp($id)
     {
         $model = $this->loadModel($id);
 
         $session = null;
+        $sessionID = null;
         if (isset($_REQUEST['session']))
         {
-            $session = $_REQUEST['session'];
+            $sessionID = $_REQUEST['session'];
+            $session = Session::model()->findByPk($sessionID);
         }
 
-        $model->Join($session);
+        $quantity = 1;
+        if (isset($_POST['quantity']))
+        {
+            $quantity = $_POST['quantity'];
+        }
 
-        $this->redirect(array('view', 'id' => $model->Experience_ID));
+        if (isset($_POST['confirm']))
+        {
+            $creditCard = null;
+
+            if (isset($_POST['CreditCard_ID']))
+            {
+                $creditCard = $_POST['CreditCard_ID'];
+            }
+
+            if ($model->SignUp($sessionID, $quantity, $creditCard))
+            {
+                $this->redirect(array('view', 'id' => $model->Experience_ID));
+            }
+        }
+
+        $this->render('signup', array('model' => $model, 'session' => $session, 'quantity' => $quantity));
     }
 
     public function actionLeave($id)

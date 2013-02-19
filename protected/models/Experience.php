@@ -248,72 +248,96 @@ class Experience extends CActiveRecord
         return parent::beforeSave();
     }
 
-    public function Join($session = null, $quantity = 1)
+    public function SignUp($session = null, $quantity = 1, $creditCard = null)
     {
-        $user = User::model()->findByPk(Yii::app()->user->id);
+        $transaction = $this->dbConnection->beginTransaction();
 
-        if ($this->Create_User_ID == $user->User_ID)
+        try
         {
-            return false;
-        }
+            $user = User::model()->findByPk(Yii::app()->user->id);
 
-        $userToExperience = new UserToExperience();
-        $userToExperience->User_ID = $user->User_ID;
-        $userToExperience->Experience_ID = $this->Experience_ID;
-
-        if ($session == null)
-        {
-            $existing = UserToExperience::model()->find('User_ID=:User_ID AND Experience_ID=:Experience_ID',
-                array(':User_ID' => $user->User_ID,
-                    ':Experience_ID' => $this->Experience_ID));
-        }
-        else
-        {
-            $existing = UserToExperience::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID AND Experience_ID=:Experience_ID',
-                array(':User_ID' => $user->User_ID,
-                    ':Session_ID' => $session,
-                    ':Experience_ID' => $this->Experience_ID));
-
-            $userToExperience->Session_ID = $session;
-        }
-
-        if ($this->MaxPerPerson != null)
-        {
-            if ($quantity > $this->MaxPerPerson)
+            if ($this->Create_User_ID == $user->User_ID)
             {
-                return false;
+                throw new Exception("Can't sign up for own experience.");
             }
-        }
 
-        $userToExperience->Quantity = $quantity;
+            $userToExperience = new UserToExperience();
+            $userToExperience->User_ID = $user->User_ID;
+            $userToExperience->Experience_ID = $this->Experience_ID;
 
-        if (($existing == null) || ($this->MultipleAllowed))
-        {
+            if ($session == null)
+            {
+                $existing = UserToExperience::model()->find('User_ID=:User_ID AND Experience_ID=:Experience_ID',
+                    array(':User_ID' => $user->User_ID,
+                        ':Experience_ID' => $this->Experience_ID));
+            }
+            else
+            {
+                $existing = UserToExperience::model()->find('User_ID=:User_ID AND Session_ID=:Session_ID AND Experience_ID=:Experience_ID',
+                    array(':User_ID' => $user->User_ID,
+                        ':Session_ID' => $session,
+                        ':Experience_ID' => $this->Experience_ID));
+
+                $userToExperience->Session_ID = $session;
+            }
+
+            if ($this->MaxPerPerson != null)
+            {
+                if ($quantity > $this->MaxPerPerson)
+                {
+                    throw new Exception("Quantity exceeds limit.");
+                }
+            }
+
+            $userToExperience->Quantity = $quantity;
+
+            if (($existing != null) && (!$this->MultipleAllowed))
+            {
+                throw new Exception("Can't sign up multiple times.");
+            }
+
+            if (isset($this->Price) && ($this->Price != null) && ($this->Price > 0))
+            {
+                $amount = $quantity * $this->Price;
+
+                $payment = new Payment;
+                $payment->Experience_ID = $this->Experience_ID;
+                $payment->CreditCard_ID = $creditCard;
+                $payment->BankAccount_ID = $this->createUser->bankAccount->BankAccount_ID;
+                $payment->Amount = $amount;
+                $payment->Batch_ID = uniqid();
+                $payment->save();
+            }
+
             $userToExperience->save();
-        }
-        else
-        {
-            return false;
-        }
 
-        $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-        $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
+            $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+            $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
 
-        Message::SendNotification($this->Create_User_ID,
-            "{$userName} has joined your experience \"{$experienceName}\".");
+            Message::SendNotification($this->Create_User_ID,
+                "{$userName} has joined your experience \"{$experienceName}\".");
 
 
-        // Notify the enrollees
-        foreach ($this->enrolled as $enrollee)
-        {
-            if ($enrollee->User_ID != $user->User_ID)
+            // Notify the enrollees
+            foreach ($this->enrolled as $enrollee)
             {
-                $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
-                $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
+                if ($enrollee->User_ID != $user->User_ID)
+                {
+                    $userName = CHtml::link($user->fullName, array('user/view', 'id' => $user->User_ID));
+                    $experienceName = CHtml::link($this->Name, array('experience/view', 'id' => $this->Experience_ID));
 
-                Message::SendNotification($enrollee->User_ID,
-                    "{$userName} has also joined the experience \"{$experienceName}\".");
+                    Message::SendNotification($enrollee->User_ID,
+                        "{$userName} has also joined the experience \"{$experienceName}\".");
+                }
             }
+
+            $transaction->commit();
+        }
+        catch (Exception $e)
+        {
+            $transaction->rollback();
+
+            return false;
         }
 
         return true;

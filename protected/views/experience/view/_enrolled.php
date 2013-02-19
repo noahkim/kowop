@@ -31,7 +31,7 @@
         </div>
 
         <div class="spacebot10">
-            <?php echo CHtml::link('Sign up for this session', array('/experience/join', 'id' => $model->Experience_ID, 'session' => $model->nextAvailableSession->Session_ID), array('class' => 'button large twelve enrollButton')); ?>
+            <?php echo CHtml::link('Sign up for this session', array('/experience/signup', 'id' => $model->Experience_ID, 'session' => $model->nextAvailableSession->Session_ID), array('class' => 'button large twelve enrollButton')); ?>
         </div>
         <div>
             <a href="#enrolllater" class="button large twelve enrollButton">Sign up for a later session</a>
@@ -64,7 +64,7 @@
         <?php endif; ?>
 
         <div class="spacebot10">
-            <?php echo CHtml::link('Sign up', array('/experience/join', 'id' => $model->Experience_ID), array('class' => 'button large twelve enrollButton')); ?>
+            <?php echo CHtml::link('Sign up', array('/experience/signup', 'id' => $model->Experience_ID), array('class' => 'button large twelve enrollButton')); ?>
         </div>
         <div class="detailsNextSession">
             <div class="enrollees">
@@ -131,7 +131,7 @@
                     foreach ($model->currentSessions as $i => $session)
                     {
                         $title = 'Session ' . ($i + 1);
-                        $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
+                        $link = $this->createAbsoluteUrl('/experience/signup', array('id' => $model->Experience_ID,
                             'session' => $session->Session_ID));
                         $calendarJS .= <<<BLOCK
                 {

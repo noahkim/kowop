@@ -76,6 +76,7 @@ class UserController extends Controller
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
+            $model->Password = md5($model->Password);
 
             $identity = new UserIdentity($model->Email, $model->Password);
 

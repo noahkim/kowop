@@ -12,6 +12,7 @@
  * @property string $Phone_number
  * @property string $Description
  * @property string $DisplayName
+ * @property string $AccountURI
  * @property integer $IsAdmin
  * @property string $Created
  * @property string $Updated
@@ -65,7 +66,7 @@ class User extends CActiveRecord
             array('Email', 'unique', 'allowEmpty' => false, 'caseSensitive' => false),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('User_ID, First_name, Last_name, Email, Phone_number, Description, DisplayName, IsAdmin, Created, Updated', 'safe', 'on' => 'search'),
+            array('User_ID, First_name, Last_name, Email, Phone_number, Description, DisplayName, AccountURI, IsAdmin, Created, Updated', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -93,7 +94,7 @@ class User extends CActiveRecord
             'friendOf' => array(self::HAS_MANY, 'Friend', 'Friend_User_ID'),
             'userToExperiences' => array(self::HAS_MANY, 'UserToExperience', 'User_ID'),
             'bankAccount' => array(self::HAS_ONE, 'BankAccount', 'User_ID', 'scopes' => array('active')),
-            'creditCards' => array(self::HAS_MANY, 'CreditCard', 'User_ID', 'scopes' => array('active')),
+            'creditCards' => array(self::HAS_MANY, 'CreditCard', 'User_ID', 'scopes' => array('active', 'saved')),
             // Added
             'requestsJoined' => array(self::HAS_MANY, 'Request', array('Request_ID' => 'Request_ID'), 'through' => 'requestToUsers'),
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
@@ -122,6 +123,7 @@ class User extends CActiveRecord
             'Phone_number' => 'Phone Number',
             'Description' => 'Description',
             'DisplayName' => 'Teacher Alias',
+            'AccountURI' => 'AccountURI',
             'IsAdmin' => 'Is Admin',
             'Created' => 'Created',
             'Updated' => 'Updated',
@@ -146,6 +148,7 @@ class User extends CActiveRecord
         $criteria->compare('Phone_number', $this->Phone_number, true);
         $criteria->compare('Description', $this->Description, true);
         $criteria->compare('DisplayName', $this->DisplayName, true);
+        $criteria->compare('AccountURI', $this->AccountURI);
         $criteria->compare('IsAdmin', $this->IsAdmin);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);
@@ -304,15 +307,5 @@ class User extends CActiveRecord
         $results['avgPerHour'] = number_format($results['avgPerHour'], 2);
 
         return $results;
-    }
-
-    public function beforeSave()
-    {
-        if (isset($this->Password))
-        {
-            $this->Password = md5($this->Password);
-        }
-
-        return parent::beforeSave();
     }
 }

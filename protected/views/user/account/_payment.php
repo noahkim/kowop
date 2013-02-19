@@ -21,16 +21,12 @@
                 <div class="eight columns">
                     <label>Card Number</label>
 
-                    <input type="text"
-                           value="4111111111111111"
-                           autocomplete="off"
-                           placeholder="Card Number"
-                           class="cc-number">
+                    <input type="text" value="" autocomplete="off" placeholder="Card Number" class="cc-number">
                 </div>
                 <div class="four columns">
                     <label>Security Code (CSC)</label>
 
-                    <input type="text" value="123" autocomplete="off" placeholder="CSC" class="cc-csc">
+                    <input type="text" value="" autocomplete="off" placeholder="CSC" class="cc-csc">
                 </div>
             </div>
 
@@ -44,7 +40,7 @@
                         <option value='3'>March</option>
                         <option value='4'>April</option>
                         <option value='5'>May</option>
-                        <option value='6' selected>June</option>
+                        <option value='6'>June</option>
                         <option value='7'>July</option>
                         <option value='8'>August</option>
                         <option value='9'>September</option>
@@ -57,7 +53,7 @@
                     <label>Exp. Year</label>
 
                     <select class="cc-ey">
-                        <option selected>2013</option>
+                        <option>2013</option>
                         <option>2014</option>
                         <option>2015</option>
                         <option>2016</option>
@@ -114,17 +110,11 @@
         {
             e.preventDefault();
 
-            var expiryYear = $('.cc-ey').val();
-            if (expiryYear.length == 2)
-            {
-                expiryYear = "20" + expiryYear;
-            }
-
             var card = {
                 "card_number"     :$('.cc-number').val(),
                 "security_code"   :$('.cc-csc').val(),
                 "expiration_month":$('.cc-em').val(),
-                "expiration_year" :expiryYear
+                "expiration_year" :$('.cc-ey').val()
             };
 
             balanced.card.create(card, cardCallbackHandler);
@@ -283,7 +273,11 @@
             url    :"<?php echo Yii::app()->createAbsoluteUrl('/payment/getBankAccount'); ?>",
             success:function (results)
             {
-                console.log(results);
+                if (results == "null")
+                {
+                    return;
+                }
+
                 var account = JSON.parse(results);
 
                 $('.ba-name').val(account.data.name);

@@ -13,6 +13,36 @@
             </div>
         </div>
 
+        <?php if (isset($search) && $search) : ?>
+
+        <div class="six columns">
+            <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
+            'action' => Yii::app()->createUrl('/experience/search'),
+            'enableAjaxValidation' => false, 'method' => 'get',
+            'htmlOptions' => array('style' => 'margin: 0;'))); ?>
+
+            <?php $model = new ExperienceSearchForm; ?>
+
+            <div class="row">
+                <div class="seven columns">
+                    <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
+                    'placeholder' => 'What are you looking for?', 'class' => 'twelve')); ?>
+                </div>
+                <div class="three columns">
+                    <?php echo $form->textField($model, 'location', array('value' => $model->location,
+                    'placeholder' => 'city,state or zip', 'class' => 'twelve')); ?>
+                </div>
+                <div class="two columns">
+                    <a href="#"
+                       onclick="document.forms['search-form'].submit(); return false;"
+                       class="small button twelve minisearch">Search</a>
+                </div>
+            </div>
+            <?php $this->endWidget('CActiveForm'); ?>
+        </div>
+
+        <?php endif; ?>
+
         <div class="three columns notlogged">
             <span class="navWhatskowop">
                 <?php echo CHtml::link("what's Kowop?", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
@@ -39,6 +69,36 @@
                 neighborhood activities &amp; classes
             </div>
         </div>
+
+        <?php if (isset($search) && $search) : ?>
+
+        <div class="six columns">
+            <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
+            'action' => Yii::app()->createUrl('/experience/search'),
+            'enableAjaxValidation' => false, 'method' => 'get',
+            'htmlOptions' => array('style' => 'margin: 0;'))); ?>
+
+            <?php $model = new ExperienceSearchForm; ?>
+
+            <div class="row">
+                <div class="seven columns">
+                    <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
+                    'placeholder' => 'What are you looking for?', 'class' => 'twelve')); ?>
+                </div>
+                <div class="three columns">
+                    <?php echo $form->textField($model, 'location', array('value' => $model->location,
+                    'placeholder' => 'city,state or zip', 'class' => 'twelve')); ?>
+                </div>
+                <div class="two columns">
+                    <a href="#"
+                       onclick="document.forms['search-form'].submit(); return false;"
+                       class="small button twelve minisearch">Search</a>
+                </div>
+            </div>
+            <?php $this->endWidget('CActiveForm'); ?>
+        </div>
+
+        <?php endif; ?>
 
         <div class="three columns headernav">
             <span class="notifications">

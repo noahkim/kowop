@@ -8,6 +8,7 @@
  * @property integer $User_ID
  * @property string $URI
  * @property integer $Active
+ * @property integer $Saved
  * @property string $Created
  *
  * The followings are the available model relations:
@@ -42,11 +43,11 @@ class CreditCard extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('User_ID, Active', 'numerical', 'integerOnly'=>true),
+            array('User_ID, Active, Saved', 'numerical', 'integerOnly'=>true),
             array('URI', 'length', 'max'=>255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('CreditCard_ID, User_ID, URI, Active, Created', 'safe'),
+            array('CreditCard_ID, User_ID, URI, Active, Saved, Created', 'safe'),
             array('Created', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'insert'),
         );
@@ -72,6 +73,7 @@ class CreditCard extends CActiveRecord
         return array(
             'active' => array('condition' => "{$t}.Active = " . 1),
             'inactive' => array('condition' => "{$t}.Active <> " . 1),
+            'saved' => array('condition' => "{$t}.Saved = " . 1),
         );
     }
 
@@ -85,6 +87,7 @@ class CreditCard extends CActiveRecord
             'User_ID' => 'User',
             'URI' => 'Uri',
             'Active' => 'Active',
+            'Saved' => 'Saved',
             'Created' => 'Created',
         );
     }
@@ -104,6 +107,7 @@ class CreditCard extends CActiveRecord
         $criteria->compare('User_ID',$this->User_ID);
         $criteria->compare('URI',$this->URI,true);
         $criteria->compare('Active',$this->Active);
+        $criteria->compare('Saved',$this->Saved);
         $criteria->compare('Created',$this->Created,true);
 
         return new CActiveDataProvider($this, array(

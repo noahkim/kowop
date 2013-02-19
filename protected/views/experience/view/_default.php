@@ -31,7 +31,7 @@
         </div>
 
         <div class="spacebot10">
-            <?php echo CHtml::link('Sign up for this session', array('/experience/join', 'id' => $model->Experience_ID, 'session' => $model->nextAvailableSession->Session_ID), array('class' => 'button large twelve enrollButton')); ?>
+            <?php echo CHtml::link('Sign up for this session', array('/experience/signup', 'id' => $model->Experience_ID, 'session' => $model->nextAvailableSession->Session_ID), array('class' => 'button large twelve enrollButton')); ?>
         </div>
         <div>
             <a href="#enrolllater" class="button large twelve enrollButton">Sign up for a later session</a>
@@ -50,7 +50,7 @@
                 <label class="inline right">Quantity</label>
             </div>
             <div class="eight columns">
-                <select>
+                <select id='selectQuantity'>
                     <?php
                     for ($i = 1; $i <= $model->MaxPerPerson; $i++)
                     {
@@ -64,7 +64,8 @@
         <?php endif; ?>
 
         <div class="spacebot10">
-            <?php echo CHtml::link('Sign up', array('/experience/join', 'id' => $model->Experience_ID), array('class' => 'button large twelve enrollButton')); ?>
+            <a href='#' class='button large twelve enrollButton' onclick='signUp(); return false;'> Sign up </a>
+            <?php /*echo CHtml::link('Sign up', array('/experience/signup', 'id' => $model->Experience_ID), array('class' => 'button large twelve enrollButton')); */?>
         </div>
         <div class="detailsNextSession">
             <div class="enrollees">
@@ -88,7 +89,12 @@
     <div class="six columns">
         <div class="row">
             <div class="twelve columns spacebot10 detailsMap">
-                <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                <iframe width="100%"
+                        height="200"
+                        frameborder="0"
+                        scrolling="no"
+                        marginheight="0"
+                        marginwidth="0"
                         src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
             </div>
         </div>
@@ -112,26 +118,27 @@
 
     <script type='text/javascript'>
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
 
             $('#calendar').fullCalendar({
-                header:{
-                    left:'',
+                header        :{
+                    left  :'',
                     center:'title',
-                    right:'prev,next'
+                    right :'prev,next'
                 },
-                editable:false,
-                events:[
+                editable      :false,
+                events        :[
                     <?php
                     $calendarJS = '';
                     foreach ($model->currentSessions as $i => $session)
                     {
                         $title = 'Session ' . ($i + 1);
-                        $link = $this->createAbsoluteUrl('/experience/join', array('id' => $model->Experience_ID,
+                        $link = $this->createAbsoluteUrl('/experience/signup', array('id' => $model->Experience_ID,
                             'session' => $session->Session_ID));
                         $calendarJS .= <<<BLOCK
                 {
@@ -150,23 +157,25 @@ BLOCK;
                     echo $calendarJS;
                     ?>
                 ],
-                eventMouseover:function (event, jsEvent, view) {
-                    if (typeof $(this).data("qtip") !== "object") {
+                eventMouseover:function (event, jsEvent, view)
+                {
+                    if (typeof $(this).data("qtip") !== "object")
+                    {
                         $(this).qtip({
-                            content:{
+                            content :{
                                 url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
                                     array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                             },
                             position:{
                                 corner:{
-                                    target:'topLeft',
+                                    target :'topLeft',
                                     tooltip:'bottomMiddle'
                                 }
                             },
-                            hide:{
+                            hide    :{
                                 fixed:true // Make it fixed so it can be hovered over
                             },
-                            style:{
+                            style   :{
                                 padding:'10px' // Give it some extra padding
                             }});
                     }
@@ -181,11 +190,34 @@ BLOCK;
     <div class="six columns">
         <div class="row">
             <div class="twelve columns spacebot10 detailsMap">
-                <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                <iframe width="100%"
+                        height="200"
+                        frameborder="0"
+                        scrolling="no"
+                        marginheight="0"
+                        marginwidth="0"
                         src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
             </div>
         </div>
     </div>
+
+    <?php $form = $this->beginWidget('CActiveForm', array('id' => 'signup-form', 'enableAjaxValidation' => false, 'action' => array('/experience/signup', 'id' => $model->Experience_ID))); ?>
+
+    <input type='hidden' name='quantity' id='quantity' />
+
+    <?php $this->endWidget('CActiveForm'); ?>
+
+    <script>
+        function signUp()
+        {
+            if ($('#selectQuantity').length > 0)
+            {
+                var quantity = $('#selectQuantity').val();
+                $('#quantity').val(quantity);
+            }
+            $('#signup-form').submit();
+        }
+    </script>
 
     <?php endif; ?>
 
