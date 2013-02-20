@@ -10,8 +10,9 @@
  * @property integer $Experience_ID
  * @property string $Amount
  * @property string $Batch_ID
- * @property integer $Processed
- * @property string $ProcessedTimestamp
+ * @property integer $Status
+ * @property string $Processed
+ * @property string $ScheduledFor
  * @property string $Created
  *
  * The followings are the available model relations:
@@ -54,7 +55,7 @@ class Payment extends CActiveRecord
             array('Batch_ID', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Payment_ID, CreditCard_ID, BankAccount_ID, Experience_ID, Amount, Batch_ID, Processed, ProcessedTimestamp, Created', 'safe'),
+            array('Payment_ID, CreditCard_ID, BankAccount_ID, Experience_ID, Amount, Batch_ID, Status, Processed, ScheduledFor, Created', 'safe'),
             array('Created', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'insert'),
         );
@@ -88,8 +89,9 @@ class Payment extends CActiveRecord
             'Experience_ID' => 'Experience',
             'Amount' => 'Amount',
             'Batch_ID' => 'Batch',
+            'Status' => 'Status',
             'Processed' => 'Processed',
-            'ProcessedTimestamp' => 'Processing Timestamp',
+            'ScheduledFor' => 'Scheduled For',
             'Created' => 'Created',
         );
     }
@@ -111,8 +113,9 @@ class Payment extends CActiveRecord
         $criteria->compare('Experience_ID', $this->Experience_ID);
         $criteria->compare('Amount', $this->Amount, true);
         $criteria->compare('Batch_ID', $this->Batch_ID, true);
+        $criteria->compare('Status', $this->Status, true);
         $criteria->compare('Processed', $this->Processed, true);
-        $criteria->compare('ProcessedTimestamp', $this->ProcessedTimestamp, true);
+        $criteria->compare('ScheduledFor', $this->ScheduledFor, true);
         $criteria->compare('Created', $this->Created, true);
 
         return new CActiveDataProvider($this, array(
@@ -128,11 +131,40 @@ class Payment extends CActiveRecord
     public static function GetPaymentFromCode($code)
     {
         $payment = Payment::model()->findByPk(intval($code, CODE_BASE));
+
         return $payment;
     }
 
     public static function ProcessPayments()
     {
+        //$pending = Payment::model()->findAll();
+        $pending = Payment::model()->findAll(array('condition' => '(Status = ' + PaymentStatus::Scheduled + ')')); // AND ScheduledFor <= now()'));
 
+        echo "Found " . count($pending) . " payments to process.\n\n";
+
+        foreach ($pending as $payment)
+        {
+            //TODO: process the payment
+
+            $hostAmount = $payment->Amount * Yii::app()->params['HostPercentage'];
+
+            print_r($payment->attributes);
+            echo str_repeat('-', 40) . "\n\n";
+
+            $payment->Status = PaymentStatus::Processed;
+            $payment->Processed = date('Y-m-d H:i:s');
+            //$payment->save();
+        }
+    }
+
+    public static function BalancedCallback($post)
+    {
+        $data = json_decode($post);
+        if ($data == null)
+        {
+            return;
+        }
+
+        Yii::log(print_r($data, true), 'info', 'BalancedCallback');
     }
 }

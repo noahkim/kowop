@@ -21,7 +21,7 @@ class PaymentController extends Controller
     {
         return array(
             array('allow',
-                'actions' => array('processPayments'),
+                'actions' => array('processPayments', 'balancedCallback'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -200,6 +200,12 @@ class PaymentController extends Controller
         Payment::ProcessPayments();
     }
 
+    public function actionBalancedCallback()
+    {
+        $raw_post = @file_get_contents("php://input");
+        Payment::BalancedCallback($raw_post);
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -244,15 +250,5 @@ class PaymentController extends Controller
         }
 
         return $account;
-    }
-
-    public function actionGetUserAccount()
-    {
-        $account = $this->getUserAccount();
-        echo '<pre>';
-        var_dump($account);
-        echo "\n\n\n";
-        echo $account->uri;
-        die;
     }
 }

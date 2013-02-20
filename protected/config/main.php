@@ -96,6 +96,18 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
+                array(
+                    'class' => 'CEmailLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => array('ilija1@gmail.com'),
+                    'sentFrom' => 'noreply@kowop.com',
+                ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'info',
+                    'categories' => 'BalancedCallback',
+                    'logFile' => 'balancedCallback.log',
+                ),
                 // uncomment the following to show log messages on web pages
                 /*
                 array(
@@ -127,5 +139,7 @@ return array(
         'AmazonSESKey'    => 'AKIAI7UQ3ZYLL5SGGILA',
         'AmazonSESSecret' => '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',
         'AmazonSESRegion' => 'us-east-1',
+        'PaymentDelay' => '3',
+        'HostPercentage' => 0.9,
     ),
 );

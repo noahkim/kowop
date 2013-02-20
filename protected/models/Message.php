@@ -110,7 +110,7 @@ class Message extends CActiveRecord
         $criteria->compare('From', $this->From);
         $criteria->compare('Subject', $this->Subject, true);
         $criteria->compare('Content', $this->Content, true);
-        $criteria->compare('Parent_ID',$this->Parent_ID);
+        $criteria->compare('Parent_ID', $this->Parent_ID);
         $criteria->compare('Type', $this->Type);
         $criteria->compare('Read', $this->Read);
         $criteria->compare('Deleted', $this->Deleted);
@@ -147,13 +147,13 @@ class Message extends CActiveRecord
         $message->From = $from;
         $message->Content = $text;
 
-        if($replyTo != null && is_numeric($replyTo))
+        if ($replyTo != null && is_numeric($replyTo))
         {
             $message->Parent_ID = $replyTo;
         }
 
         $message->save();
 
-        Mail::Send($message->to->Email, "{$message->from->display} has sent you a message.", $text);
+        Mail::Instance()->Send($message->to->Email, "{$message->from->display} has sent you a message.", $text);
     }
 }

@@ -300,12 +300,31 @@ class Experience extends CActiveRecord
             {
                 $amount = $quantity * $this->Price;
 
+                $scheduledFor = strtotime('+' . Yii::app()->params["PaymentDelay"] . ' days');
+
+                if ($session != null)
+                {
+                    $sessionModel = Session::model()->findByPk($session);
+                    $start = strtotime($sessionModel->Start);
+
+                    if ($start < time())
+                    {
+                        throw new Exception("Session starts in the past.");
+                    }
+
+                    if ($start < $scheduledFor)
+                    {
+                        $scheduledFor = $start;
+                    }
+                }
+
                 $payment = new Payment;
                 $payment->Experience_ID = $this->Experience_ID;
                 $payment->CreditCard_ID = $creditCard;
                 $payment->BankAccount_ID = $this->createUser->bankAccount->BankAccount_ID;
                 $payment->Amount = $amount;
                 $payment->Batch_ID = uniqid();
+                $payment->ScheduledFor = date('Y-m-d H:i:s', $scheduledFor);
                 $payment->save();
             }
 
