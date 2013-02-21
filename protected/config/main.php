@@ -101,6 +101,7 @@ return array(
                     'levels' => 'error, warning',
                     'emails' => array('ilija1@gmail.com'),
                     'sentFrom' => 'noreply@kowop.com',
+                    'enabled' => false,
                 ),
                 array(
                     'class' => 'CFileLogRoute',

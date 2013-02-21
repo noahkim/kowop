@@ -44,6 +44,7 @@
     <script src="/ui/sitev2/javascripts/wysiwyg.js"></script>
     <script src="/ui/sitev2/javascripts/wysiwyg_advanced.js"></script>
     <script src="/ui/sitev2/javascripts/jeditable.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
 
     <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
 </head>

@@ -13,14 +13,17 @@ class ExperienceSearchForm extends CFormModel
     public $category;
 
     // Filters
-    public $minTuition;
-    public $maxTuition;
+    public $minPrice;
+    public $maxPrice;
     public $daysOfWeek;
     public $categories;
     public $includedResults;
     public $location;
     public $start;
     public $end;
+    public $posterType;
+    public $experienceType;
+    public $ageRanges;
 
     public $page;
     public $totalResults;
@@ -28,8 +31,8 @@ class ExperienceSearchForm extends CFormModel
 
     public function rules()
     {
-        return array(array('keywords, category, minTuition, maxTuition, daysOfWeek, categories, includedResults, location, start, end, page',
-                           'safe'),);
+        return array(array('keywords, category, minPrice, maxPrice, daysOfWeek, categories, includedResults, location, start, end, posterType, experienceType, ageRanges, page',
+            'safe'),);
     }
 
     public function attributeLabels()
@@ -93,36 +96,55 @@ class ExperienceSearchForm extends CFormModel
 
         $requestCriteria->addCondition('t.Created_Experience_ID is NULL');
 
-        //$requestCriteria->compare('t.Status', '');
-        $experienceCriteria->compare('t.Status', ExperienceStatus::Active);
-
         if (isset($this->category) && is_numeric($this->category) && ($this->category > 0))
         {
             $requestCriteria->compare('t.Category_ID', $this->category);
             $experienceCriteria->compare('t.Category_ID', $this->category);
         }
 
-        if (($this->minTuition != null) && ($this->minTuition > 0))
+        if (($this->minPrice != null) && ($this->minPrice > 0))
         {
-            $experienceCriteria->compare('t.Tuition', '>=' . $this->minTuition);
+            $experienceCriteria->compare('t.Price', '>=' . $this->minPrice);
         }
-        if (($this->maxTuition != null) && ($this->maxTuition > 0))
+        if (($this->maxPrice != null) && ($this->maxPrice > 0))
         {
-            $experienceCriteria->compare('t.Tuition', '<=' . $this->maxTuition);
+            $experienceCriteria->compare('t.Price', '<=' . $this->maxPrice);
         }
 
         if (($this->start != null) && (strlen($this->start) > 0))
         {
-            $experienceCriteria->compare('t.Start', '<=' . date('Y-m-d', strtotime($this->start)));
+            $experienceCriteria->compare('t.End', '>' . date('Y-m-d', strtotime($this->start)));
         }
 
         if (($this->end != null) && (strlen($this->end) > 0))
         {
-            $experienceCriteria->compare('t.End', '<=' . date('Y-m-d', strtotime($this->end)));
+            $experienceCriteria->compare('t.Start', '<' . date('Y-m-d', strtotime($this->end)));
         }
 
-        $experiences = Experience::model()->findAll($experienceCriteria);
+        if (($this->posterType != null) && ($this->posterType > 0))
+        {
+            $experienceCriteria->compare('t.PosterType', '=' . $this->posterType);
+        }
 
+        if (($this->experienceType != null) && ($this->experienceType > 0))
+        {
+            $experienceCriteria->compare('t.ExperienceType', '=' . $this->experienceType);
+        }
+
+        if (($this->ageRanges != null) && !in_array(0, $this->ageRanges))
+        {
+            $ageRange = 0;
+
+            foreach ($this->ageRanges as $item)
+            {
+                $ageRange += $item;
+            }
+
+            $experienceCriteria->addCondition('t.AppropriateAges | ' . $ageRange . ' = ' . $ageRange);
+            $experienceCriteria->compare('t.AppropriateAges', '>' . 0);
+        }
+
+        $experiences = Experience::model()->active()->current()->findAll($experienceCriteria);
         $requests = Request::model()->findAll($requestCriteria);
 
         foreach ($requests as $i => $request)

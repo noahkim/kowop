@@ -4,17 +4,19 @@
 <div class="bigsearchbar">
 
     <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
-                                                          'action' => Yii::app()->createUrl('/experience/search'),
-                                                          'enableAjaxValidation' => false, 'method' => 'get')); ?>
+    'action' => Yii::app()->createUrl('/experience/search'),
+    'enableAjaxValidation' => false, 'method' => 'get')); ?>
 
     <div class="row">
         <div class="seven columns">
             <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
-                                                                  'class' => 'homeSearchinput twelve searchInput',
-                                                                  'placeholder' => 'What are you looking for?')); ?>
+            'class' => 'homeSearchinput twelve searchInput',
+            'placeholder' => 'What are you looking for?')); ?>
         </div>
         <div class="three columns">
-            <input type="text" class="homeSearchinput twelve searchInput" placeholder="city,state or zip">
+            <?php echo $form->textField($model, 'location', array('value' => $model->location,
+            'class' => 'homeSearchinput twelve searchInput',
+            'placeholder' => 'city,state or zip')); ?>
         </div>
         <div class="two columns">
             <a href="#" onclick="document.forms['search-form'].submit(); return false;" class="large button twelve">Search</a>
@@ -34,7 +36,25 @@
         <div class="searchSummary">
             <div class="row">
                 <div class="twelve columns breadCrumbs">
-                    results for "<?php echo $model->keywords; ?>" in "<?php echo $model->location; ?>"
+                    <?php
+                    $resultsText = '';
+
+                    if (strlen($model->keywords) == 0)
+                    {
+                        $resultsText .= "Showing all results";
+                    }
+                    else
+                    {
+                        $resultsText .= "Results for \"{$model->keywords}\"";
+                    }
+
+                    if (strlen($model->location) > 0)
+                    {
+                        $resultsText .= " in \"{$model->location}\"";
+                    }
+
+                    echo $resultsText;
+                    ?>
                 </div>
             </div>
         </div>
@@ -48,90 +68,116 @@
     <div class="three columns">
         <div class="searchSidebar">
             <div class="spacebot10">
-                <?php echo CHtml::link("I'd like to post", $this->createUrl("experience/create"),
-                                       array('class' => 'large button twelve')); ?>
+                <?php echo CHtml::link("post your experience", $this->createUrl("experience/create"),
+                array('class' => 'large button twelve')); ?>
             </div>
             <div class="spacebot10">
                 <?php echo CHtml::link("make a request", $this->createUrl("request/create"),
-                                       array('class' => 'large button twelve')); ?>
+                array('class' => 'large button twelve')); ?>
             </div>
             <div class="searchMap">
 
-                <label for="redoSearch"> <input type="checkbox" id="redoSearch" onclick="redoSearchWithMap();">
-                    <span class="custom checkbox"></span> Redo search when map moves? </label>
+                <label for="redoSearch"> <input type="checkbox" id="redoSearch" onclick="redoSearchWithMap();"> <span
+                        class="custom checkbox"></span> Redo search when map moves? </label>
 
                 <div id="map" style="width: 100%; height: 200px;"></div>
             </div>
+
+
             <!---- Sidebar box for filters----->
             <div class="sidebarBox">
-                <h5>Organize Results</h5>
-
                 <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form-filters',
-                                                                      'action' => Yii::app()->createUrl('/experience/search'),
-                                                                      'enableAjaxValidation' => false,
-                                                                      'method' => 'get')); ?>
+                'action' => Yii::app()->createUrl('/experience/search'),
+                'enableAjaxValidation' => false,
+                'method' => 'get')); ?>
+
+                <fieldset>
+                    <legend>Age Range</legend>
+
+                    <div class="checkboxDiv">
+                        <?php
+                        $ageGroups = ExperienceAppropriateAges::$Lookup;
+                        $ageGroups[0] = 'Whole Family';
+                        ksort($ageGroups);
+
+                        if ($model->ageRanges == null)
+                        {
+                            $model->ageRanges = array(0);
+                        }
+
+                        echo $form->checkBoxList($model, 'ageRanges', $ageGroups,
+                            array(
+                                'template' => '{input} {label} <br />',
+                                'separator' => "\n",
+                                'class' => 'ageChoice filterInput',
+                            )
+                        );
+
+                        ?>
+                    </div>
+                </fieldset>
+
+                <label>Class or Activity?</label>
+
+                <?php
+                $experienceType = ExperienceType::$Lookup;
+                $experienceType[0] = 'Both';
+                ksort($experienceType);
+
+                echo $form->dropDownList($model, 'experienceType', $experienceType, array('class' => 'twelve filterInput'));
+                ?>
+
+                <label>Individuals or Businesses</label>
+
+                <?php
+                $posterType = ExperiencePosterType::$Lookup;
+                $posterType[0] = 'Both';
+                ksort($posterType);
+
+                echo $form->dropDownList($model, 'posterType', $posterType, array('class' => 'twelve filterInput'));
+                ?>
 
                 <label>Category</label>
+
                 <?php
                 $categories = Category::GetCategories();
                 $categories[0] = 'Any';
                 ksort($categories);
 
-                echo $form->dropDownList($model, 'category', $categories, array('class' => 'stretch'));
+                echo $form->dropDownList($model, 'category', $categories, array('class' => 'twelve filterInput'));
                 ?>
 
                 <label>Price</label>
 
                 <div class="row">
                     <div class="six columns">
-                        <?php echo $form->textField($model, 'minTuition', array('placeholder' => 'min')); ?>
+                        <?php echo $form->textField($model, 'minPrice', array('placeholder' => 'min', 'class' => 'filterInput')); ?>
                     </div>
                     <div class="six columns">
-                        <?php echo $form->textField($model, 'maxTuition', array('placeholder' => 'max')); ?>
+                        <?php echo $form->textField($model, 'maxPrice', array('placeholder' => 'max', 'class' => 'filterInput')); ?>
                     </div>
                 </div>
 
                 <label>Available from:</label>
 
-                <div class="six columns">
-                    <?php echo $form->textField($model, 'start', array('id' => 'start', 'placeholder' => 'date',
-                                                                       'class' => 'twelve')); ?>
-                </div>
-
-                <div class="six columns">
-                    <?php echo $form->textField($model, 'end',
-                                                array('id' => 'end', 'placeholder' => 'date', 'class' => 'twelve')); ?>
+                <div class="row">
+                    <div class="six columns">
+                        <?php echo $form->textField($model, 'start', array('id' => 'start', 'placeholder' => 'date', 'class' => 'filterInput')); ?>
+                    </div>
+                    <div class="six columns">
+                        <?php echo $form->textField($model, 'end', array('id' => 'end', 'placeholder' => 'date', 'class' => 'filterInput')); ?>
+                    </div>
                 </div>
 
                 <?php $this->endWidget('CActiveForm'); ?>
 
                 <div class="row">
-                    <div class="six columns">
-                        <a href="#" onclick="document.forms['search-form-filters'].submit(); return false;" class="button twelve">Apply</a>
-                    </div>
-                    <div class="six columns">
-                        <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form-filters-blank',
-                                                                              'action' => Yii::app()->createUrl('/experience/search'),
-                                                                              'enableAjaxValidation' => false,
-                                                                              'method' => 'get',
-                                                                              'htmlOptions' => array('style' => 'margin: 0;'))); ?>
-                        <?php $this->endWidget('CActiveForm'); ?>
-                        <a href="#" onclick="document.forms['search-form-filters-blank'].submit(); return false;" class="button twelve">Reset</a>
+                    <div class="twelve columns">
+                        <a href="#" onclick="resetFilters(); return false;" class="button twelve">Reset</a>
                     </div>
                 </div>
             </div>
             <!----- End Sidebar Box----->
-
-            <!---- Sidebar box for Kowop Kids----->
-            <div class="sidebarBox">
-                <div class="row">
-                    <div class="twelve columns text-center">
-                        Looking for a class or activity for kids? Try<br /><br />
-                        <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_kids.png">', array('/kids')); ?>
-                    </div>
-                </div>
-            </div>
-            <!---- end sidebar box---->
 
         </div>
         <!------- end right column --------------->
@@ -139,12 +185,19 @@
     <!------- end main content container----->
 </div>
 
+<style>
+    .checkboxDiv label {
+        display: inline;
+    }
+</style>
+
 <script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
 
 <script>
 var timeoutHandle;
 var loadAll = false;
+var defaultZoomLevel = 9;
 
 $(document).ready(function ()
 {
@@ -203,12 +256,33 @@ $(document).ready(function ()
 
     $('#start').Zebra_DatePicker({
         direction:1,
-        format   :'m/d/Y'
+        format   :'m/d/Y',
+        pair     :$('#end'),
+        onSelect :function ()
+        {
+            clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(populateResults, 500);
+        },
+        onClear  :function ()
+        {
+            clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(populateResults, 500);
+        }
     });
 
     $('#end').Zebra_DatePicker({
         direction:1,
-        format   :'m/d/Y'
+        format   :'m/d/Y',
+        onSelect :function ()
+        {
+            clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(populateResults, 500);
+        },
+        onClear  :function ()
+        {
+            clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(populateResults, 500);
+        }
     });
 
     $('#redoSearch').change(function ()
@@ -218,11 +292,47 @@ $(document).ready(function ()
             populateResults();
         }
     });
+
+    $('input.ageChoice').click(function ()
+    {
+        var value = $(this).val();
+        if (value == 0)
+        {
+            $('input.ageChoice').each(function ()
+            {
+                if ($(this).val() > 0)
+                {
+                    $(this).removeAttr('checked');
+                }
+            });
+        }
+        else
+        {
+            $("input.ageChoice[value='0']").removeAttr('checked');
+        }
+
+        if ($('input.ageChoice:checked').length == 0)
+        {
+            $("input.ageChoice[value='0']").prop('checked', true);
+        }
+    });
+
+    $('.filterInput').change(function ()
+    {
+        clearTimeout(timeoutHandle);
+        timeoutHandle = setTimeout(populateResults, 500);
+    });
+
+    $('input.filterInput[type=text]').keypress(function ()
+    {
+        clearTimeout(timeoutHandle);
+        timeoutHandle = setTimeout(populateResults, 500);
+    });
 });
 
 function redoSearchWithMap()
 {
-    if(loadAll)
+    if (loadAll)
     {
         return;
     }
@@ -249,9 +359,18 @@ function redoSearchWithMap()
                     }
                 });
 
+                var includedString = 'ExperienceSearchForm%5BincludedResults%5D=' + JSON.stringify(included);
+
                 var query = '<?php echo http_build_query($_GET); ?>';
-                var includedString = '&ExperienceSearchForm[includedResults]=' + JSON.stringify(included);
-                query += includedString;
+                query += '&' + includedString;
+
+                var filters = $('#search-form-filters').serialize();
+                if (filters.length > 0)
+                {
+                    query += '&' + filters;
+                }
+
+                console.log(query);
 
                 $.ajax({
                     type   :'POST',
@@ -271,6 +390,12 @@ function populateResults()
 {
     loadAll = true;
     var query = '<?php echo http_build_query($_GET); ?>';
+    var filters = $('#search-form-filters').serialize();
+
+    if (filters.length > 0)
+    {
+        query += '&' + filters;
+    }
 
     $.ajax({
         type   :'POST',
@@ -287,7 +412,8 @@ function populateResults()
             $.ajax({
                 type   :'GET',
                 url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults",
-                                                                  array('json' => '1')); ?>',
+                    array('json' => '1')); ?>',
+                data   :query,
                 success:function (data)
                 {
                     var results = jQuery.parseJSON(data);
@@ -323,30 +449,24 @@ function populateResults()
                                 },
                                 mouseover:function (marker, event, context)
                                 {
-                                    $(this).gmap3(
-                                            {clear:"overlay"},
-                                            {
-                                                overlay:{
-                                                    latLng :marker.getPosition(),
-                                                    options:{
-                                                        content:context.data.tile,
-                                                        offset :{
-                                                            x:-1,
-                                                            y:-22
-                                                        }
-                                                    }
-                                                }
-                                            });
                                 },
                                 mouseout :function ()
                                 {
-                                    $(this).gmap3({clear:"overlay"});
                                 }
                             },
                             callback:function ()
                             {
                                 var map = $("#map").gmap3("get");
-                                var defaultZoomLevel = 9;
+
+                                var savedLocation = $.cookie('kowop_location');
+                                if ((typeof savedLocation != 'undefined') && (savedLocation != null))
+                                {
+                                    changeLocation(savedLocation);
+                                }
+                                else
+                                {
+                                    detectLocation();
+                                }
 
                                 if (navigator.geolocation)
                                 {
@@ -383,5 +503,66 @@ function populateResults()
             });
         }
     });
+}
+
+function changeLocation(zipCode)
+{
+    var url = '<?php echo Yii::app()->createAbsoluteUrl("/site/getLocation"); ?>?address=' + zipCode;
+
+    $.ajax({
+        type   :'GET',
+        url    :url,
+        success:function (data)
+        {
+            var results = jQuery.parseJSON(data);
+            var locationData = results.results[0];
+
+            var lat = locationData.geometry.location.lat;
+            var lon = locationData.geometry.location.lng;
+            var center = new google.maps.LatLng(lat, lon);
+
+            var map = $("#map").gmap3("get");
+            map.setCenter(center);
+            map.setZoom(defaultZoomLevel);
+
+            $.removeCookie('kowop_location');
+            $.cookie('kowop_location', zipCode);
+        }
+    });
+}
+
+function detectLocation()
+{
+    $.removeCookie('kowop_location');
+
+    var map = $("#map").gmap3("get");
+
+    var lat = geoplugin_latitude();
+    var lon = geoplugin_longitude();
+    var center = new google.maps.LatLng(lat, lon);
+
+    map.setCenter(center);
+    map.setZoom(defaultZoomLevel);
+
+    if (navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(function (position)
+        {
+            var lat = position.coords.latitude;
+            var lon = position.coords.longitude;
+            var center = new google.maps.LatLng(lat, lon);
+
+            map.setCenter(center);
+            map.setZoom(defaultZoomLevel);
+        }, function (error)
+        {
+        });
+    }
+}
+
+function resetFilters()
+{
+    $('#search-form-filters')[0].reset();
+    populateResults();
 }
 </script>

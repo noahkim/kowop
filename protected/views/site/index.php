@@ -135,12 +135,9 @@
                             <a href="#"
                                class='homeChangelocation reset'
                                onclick='populateData(); return false;'>Reset</a>
-                            <?php /*echo CHtml::link("Reset", array('/site/index'),
-                                                   array('class' => 'homeChangelocation reset')); */?>
                         </div>
                         <div class="six columns">
-                            <?php echo CHtml::link("Switch to Kids", array('/kids'),
-                            array('class' => 'homeChangelocation')); ?>
+                            <a href="#" class='homeChangelocation'>Show me kids stuff</a>
                         </div>
                     </div>
                 </div>
@@ -191,25 +188,25 @@
     <div class="row">
         <div class="four columns">
             <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>learn</i> something new or <i>try</i> something fun.</h5>",
-                array('/experience/search')); ?>
-            </div>
-        </div>
-        <div class="four columns">
-            <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I want to <i>post</i> an interesting activity or class</h5>",
+                <?php echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_post.gif'/><h5>Post an activity or class</h5>",
                 array('/experience/create')); ?>
             </div>
         </div>
         <div class="four columns">
             <div class="homeIntro">
-                <?php echo CHtml::link("<h5>I'm a <i>parent</i> looking for classes &amp; activities for <i>kids</i>.</h5>",
-                array('/kids')); ?>
+                <?php echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_discover.gif'/><h5>Find something for the whole family</h5>",
+                array('/experience/search')); ?>
+            </div>
+        </div>
+        <div class="four columns">
+            <div class="homeIntro">
+                <?php echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_kids.gif'/><h5>Find classes &amp; activities for kids</h5>",
+                array('/experience/search')); ?>
             </div>
         </div>
     </div>
 
-    <h3>Staff Picks in Los Angeles</h3>
+    <h3>Staff Picks in <span id='city'>Los Angeles</span></h3>
     <!----------- 1 row of tiles---->
     <div class="row">
         <?php
@@ -368,7 +365,7 @@ BLOCK;
 var initialLoad = true;
 var excludedTags = [];
 var excludedCategories = [];
-var defaultZoomLevel = 12;
+var defaultZoomLevel = 11;
 
 $(document).ready(function ()
 {
@@ -432,12 +429,6 @@ function populateData()
         url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array("json" => "1")); ?>',
         success:function (data)
         {
-/*            var activityIcon = 'http://maps.google.com/mapfiles/marker_orange.png';
-            var activityShadow = 'http://maps.google.com/mapfiles/shadow50.png';
-
-            var classIcon = 'http://maps.google.com/mapfiles/marker_yellow.png';
-            var classShadow = 'http://maps.google.com/mapfiles/shadow50.png';*/
-
             var results = jQuery.parseJSON(data);
 
             var markerValues = [];
@@ -453,11 +444,6 @@ function populateData()
                         category:results.results[i].category
                     },
                     id     :results.results[i].id
-                    /*,
-                    options:{
-                        icon  :(results.results[i].experienceType == 'Class') ? classIcon : activityIcon,
-                        shadow:(results.results[i].experienceType == 'Class') ? classShadow : activityShadow
-                    }*/
                 };
 
                 markerValues.push(markerValue);
@@ -674,6 +660,7 @@ function getZipCode(lat, lon)
         success:function (data)
         {
             var zipCode = 'your area';
+            var city = '';
             var results = jQuery.parseJSON(data);
             var locationData = results.results[0];
 
@@ -684,11 +671,34 @@ function getZipCode(lat, lon)
                 if (component.types[0] == 'postal_code')
                 {
                     zipCode = component.long_name;
-                    break;
+                }
+                else if (component.types[0] == 'administrative_area_level_2')
+                {
+                    city = component.long_name;
                 }
             }
 
+            if (city.length == 0)
+            {
+                for (var i in locationData.address_components)
+                {
+                    var component = locationData.address_components[i];
+
+                    if (component.types[0] == 'locality')
+                    {
+                        city = component.long_name;
+                        break;
+                    }
+                }
+            }
+
+            if(city.length == 0)
+            {
+                city = 'Los Angeles';
+            }
+
             $('#zipcode').text(zipCode);
+            $('#city').text(city);
         }
     });
 }
@@ -708,6 +718,37 @@ function changeLocation(zipCode)
             var lat = locationData.geometry.location.lat;
             var lon = locationData.geometry.location.lng;
             var center = new google.maps.LatLng(lat, lon);
+            var city = '';
+
+            for (var i in locationData.address_components)
+            {
+                var component = locationData.address_components[i];
+
+                if (component.types[0] == 'administrative_area_level_2')
+                {
+                    city = component.long_name;
+                    break;
+                }
+            }
+
+            if (city.length == 0)
+            {
+                for (var i in locationData.address_components)
+                {
+                    var component = locationData.address_components[i];
+
+                    if (component.types[0] == 'locality')
+                    {
+                        city = component.long_name;
+                        break;
+                    }
+                }
+            }
+
+            if(city.length == 0)
+            {
+                city = 'Los Angeles';
+            }
 
             var map = $("#map").gmap3("get");
             map.setCenter(center);
@@ -715,6 +756,7 @@ function changeLocation(zipCode)
 
             $('#inputZipCode').val('');
             $('#zipcode').text(zipCode);
+            $('#city').text(city);
 
             $.removeCookie('kowop_location');
             $.cookie('kowop_location', zipCode);

@@ -9,7 +9,8 @@ final class ExperiencePosterType
     const Individual = 1;
     const Business = 2;
 
-    public static $Lookup = array(ExperiencePosterType::Individual => 'Individual',
+    public static $Lookup = array(
+        ExperiencePosterType::Individual => 'Individual',
         ExperiencePosterType::Business => 'Business',
     );
 }

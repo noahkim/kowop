@@ -7,11 +7,9 @@ final class ExperienceAudience
     }
 
     const Everyone = 1;
-    const Adults = 2;
-    const Kids = 3;
+    const Kids = 2;
 
     public static $Lookup = array(ExperienceAudience::Everyone => 'Everyone',
-        ExperienceAudience::Adults => 'Adults',
         ExperienceAudience::Kids => 'Kids',
     );
 }
