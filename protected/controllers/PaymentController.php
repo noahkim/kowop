@@ -156,40 +156,58 @@ class PaymentController extends Controller
 
         $outcome = array('success' => 0);
 
-        if (isset($_POST['data']))
+        try
         {
-            $dataString = $_POST['data'];
-            $data = json_decode($dataString);
-
-            $uri = $data->uri;
-
-            $user = $this->getUser();
-            if ($user->bankAccount != null)
+            if (isset($_POST['data']) && isset($_POST['merchantData']))
             {
-                $bankAccount = $user->bankAccount;
+                $data = json_decode($_POST['data']);
+                $merchantData = json_decode($_POST['merchantData']);
 
-                $balancedBankAccount = Balanced\BankAccount::get($bankAccount->URI);
-                $balancedBankAccount->delete();
+                $uri = $data->uri;
 
-                $bankAccount->Active = 0;
-                $bankAccount->save();
+                $user = $this->getUser();
+                if ($user->bankAccount != null)
+                {
+                    $bankAccount = $user->bankAccount;
+
+                    $balancedBankAccount = Balanced\BankAccount::get($bankAccount->URI);
+                    $balancedBankAccount->delete();
+
+                    $bankAccount->Active = 0;
+                    $bankAccount->save();
+                }
+
+                $account = new BankAccount();
+                $account->User_ID = $user->User_ID;
+                $account->URI = $uri;
+
+                if ($account->save())
+                {
+                    $balancedAccount = $this->getUserAccount();
+                    $balancedAccount->addBankAccount($uri);
+
+                    if (!in_array('merchant', $balancedAccount->roles))
+                    {
+                        $balancedAccount->promoteToMerchant($merchantData);
+                    }
+
+                    $outcome = array('success' => 1, 'BankAccount_ID' => $account->BankAccount_ID);
+                }
+                else
+                {
+                    $outcome = array('success' => 0, 'Errors' => $account->getErrors());
+                }
             }
-
-            $account = new BankAccount();
-            $account->User_ID = $user->User_ID;
-            $account->URI = $uri;
-
-            if ($account->save())
-            {
-                $balancedAccount = $this->getUserAccount();
-                $balancedAccount->addBankAccount($uri);
-
-                $outcome = array('success' => 1, 'BankAccount_ID' => $account->BankAccount_ID);
-            }
-            else
-            {
-                $outcome = array('success' => 0, 'Errors' => $account->getErrors());
-            }
+        }
+        catch (Balanced\Errors\IdentityVerificationFailed $error)
+        {
+            /* could not identify this account. */
+            $outcome = array('success' => 0, 'Errors' => "redirect merchant to:" . $error->redirect_uri . "\n");
+        }
+        catch (Balanced\Errors\HTTPError $error)
+        {
+            /* TODO: handle 400 and 409 exceptions as required */
+            $outcome = array('success' => 0, 'Errors' => print_r($error, true));
         }
 
         echo CJSON::encode($outcome);

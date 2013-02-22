@@ -1,27 +1,24 @@
-<!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
+<!DOCTYPE html><!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --><!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]--><!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]--><!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]--><!--[if gt IE 8]><!-->
 <html class="no-js" lang="en">
 <!--<![endif]-->
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <!-- Set the viewport width to device width for mobile -->
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width" />
 
     <link rel="stylesheet" href="/ui/sitev2/fonts/proxima/stylesheet.css">
     <link rel="stylesheet" href="/ui/sitev2/fonts/susa/stylesheet.css">
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
 
-    <link rel='stylesheet' type='text/css' href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.css'/>
-    <link rel='stylesheet' type='text/css' href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.print.css'
-          media='print'/>
-    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/nivo-default.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/nivo-slider.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/zebra_datepicker.css"/>
+    <link rel='stylesheet' type='text/css' href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.css' />
+    <link rel='stylesheet'
+          type='text/css'
+          href='/ui/sitev2/fullcalendar/fullcalendar/fullcalendar.print.css'
+          media='print' />
+    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/nivo-default.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/nivo-slider.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/ui/sitev2/stylesheets/zebra_datepicker.css" />
 
     <link rel="stylesheet" href="/ui/sitev2/stylesheets/foundation.css" />
     <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css" />
@@ -64,7 +61,9 @@
                     <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("post new experience", $this->createUrl("experience/create")); ?>
+                    <?php
+                    echo CHtml::link("post new experience", $this->createUrl("site/page", array('view' => 'postingAgreement')));
+                    ?>
                 </li>
                 <li>
                     <?php echo CHtml::link("find experiences", $this->createUrl("experience/search")); ?>

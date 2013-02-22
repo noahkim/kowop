@@ -1,6 +1,6 @@
 <?php
 
-final class ExperiencePosterType
+final class UserPosterType
 {
     private function __construct()
     {
@@ -10,7 +10,7 @@ final class ExperiencePosterType
     const Business = 2;
 
     public static $Lookup = array(
-        ExperiencePosterType::Individual => 'Individual',
-        ExperiencePosterType::Business => 'Business',
+        UserPosterType::Individual => 'Individual',
+        UserPosterType::Business => 'Business',
     );
 }

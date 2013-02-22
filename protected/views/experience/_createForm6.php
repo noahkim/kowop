@@ -36,6 +36,10 @@
 
         <h1>Setup your availability</h1>
 
+        <p>
+            <a href="#" class="button" onclick="submitForm(false); return false;">Skip this step</a>
+        </p>
+
         <p>While this step is optional, providing it gives you some benefits (look to the right). Add any time and day
            you'd like to make available. Don't worry about getting them all in now. You can always come back and add
            more. Make it as specific (like 10am-11am) or as general (8am-8pm) as you'd like.</p>

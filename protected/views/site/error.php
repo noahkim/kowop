@@ -2,33 +2,29 @@
                  Search
 ---------------------------------------->
 <div class="bigsearchbar">
-    <?php $form = $this->beginWidget('CActiveForm', array(
-    'id' => 'search-form',
-    'action' => Yii::app()->createUrl('/experience/search'),
-    'enableAjaxValidation' => false,
-    'method' => 'get'
-)); ?>
 
-    <?php $model = new ExperienceSearchForm; ?>
+    <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
+    'action' => Yii::app()->createUrl('/experience/search'),
+    'enableAjaxValidation' => false, 'method' => 'get')); ?>
 
     <div class="row">
         <div class="seven columns">
-            <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'homeSearchinput twelve', 'placeholder' => 'What are you looking for?')); ?>
+            <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords,
+            'class' => 'homeSearchinput twelve searchInput',
+            'placeholder' => 'What are you looking for?')); ?>
         </div>
         <div class="three columns">
-            <input type="text" class="homeSearchinput twelve" placeholder="city,state or zip">
+            <?php echo $form->textField($model, 'location', array('value' => $model->location,
+            'class' => 'homeSearchinput twelve searchInput',
+            'placeholder' => 'city,state or zip')); ?>
         </div>
         <div class="two columns">
-            <div href="#" class="large button dropdown twelve" style="float:right;"> Go...
-                <ul>
-                    <li><a onclick="document.forms['search-form'].submit(); return false;" href="#">Learn</a></li>
-                    <li><?php echo CHtml::link('Teach', array('experience/create')); ?></li>
-                </ul>
-            </div>
+            <a href="#" onclick="document.forms['search-form'].submit(); return false;" class="large button twelve">Search</a>
         </div>
     </div>
 
     <?php $this->endWidget('CActiveForm'); ?>
+
 </div>
 <!--------- main content container------>
 <div class="row" id="wrapper">

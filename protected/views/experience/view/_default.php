@@ -24,7 +24,7 @@
                 <?php
                 foreach ($model->nextAvailableSession->enrolled as $enrollee)
                 {
-                    echo CHtml::link("<img src='{$user->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
+                    echo CHtml::link("<img src='{$enrollee->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
                 }
                 ?>
             </div>
@@ -73,7 +73,7 @@
                 <?php
                 foreach ($model->enrolled as $enrollee)
                 {
-                    echo CHtml::link("<img src='{$user->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
+                    echo CHtml::link("<img src='{$enrollee->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
                 }
                 ?>
             </div>

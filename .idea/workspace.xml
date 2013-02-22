@@ -37,22 +37,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/protected/views/user/account/_payment.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/protected/models/User.php" />
-        <option value="$PROJECT_DIR$/protected/models/Experience.php" />
-        <option value="$PROJECT_DIR$/protected/models/Mail.php" />
-        <option value="$PROJECT_DIR$/protected/models/Message.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/PaymentController.php" />
-        <option value="$PROJECT_DIR$/protected/models/PaymentStatus.php" />
-        <option value="$PROJECT_DIR$/protected/models/Payment.php" />
-        <option value="$PROJECT_DIR$/protected/config/main.php" />
-        <option value="$PROJECT_DIR$/protected/models/ExperienceAudience.php" />
         <option value="$PROJECT_DIR$/protected/models/ExperiencePosterType.php" />
-        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
-        <option value="$PROJECT_DIR$/protected/views/layouts/mainOuter.php" />
-        <option value="$PROJECT_DIR$/protected/views/experience/search.php" />
+        <option value="$PROJECT_DIR$/protected/models/Experience.php" />
         <option value="$PROJECT_DIR$/protected/models/ExperienceSearchForm.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/search.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_createForm3.php" />
+        <option value="$PROJECT_DIR$/protected/models/ExperienceCreateForm.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_createForm5.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_createForm6.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_creditcards.php" />
+        <option value="$PROJECT_DIR$/protected/models/AccountSections.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/view.php" />
+        <option value="$PROJECT_DIR$/protected/views/experience/_createForm1.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/_headernav.php" />
+        <option value="$PROJECT_DIR$/protected/controllers/PaymentController.php" />
+        <option value="$PROJECT_DIR$/protected/views/user/account/_bankaccount.php" />
       </list>
     </option>
   </component>
@@ -108,7 +108,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -208,6 +207,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kowop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="protected" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -381,6 +406,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -389,16 +415,16 @@
     <property name="options.lastSelected" value="preferences.sourceCode.JavaScript" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/php.ini" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Development\kowop\protected\views\user\account" />
       <recent name="E:\Development\kowop\protected\views\experience" />
       <recent name="D:\Development\kowop\protected\views\class\view" />
       <recent name="D:\Development\kowop\protected\views\user" />
       <recent name="D:\Development\kowop\protected\models" />
-      <recent name="E:\Development\kowop\protected\views\layouts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Development\kowop\protected\views\experience\old" />
@@ -415,14 +441,14 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -557,115 +583,123 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/protected/models/MessageType.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/AccountSections.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="1" selection-start="0" selection-end="419" vertical-scroll-proportion="0.0">
+        <state line="14" column="26" selection-start="278" selection-end="278" vertical-scroll-proportion="0.2618262">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/PaymentStatus.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/user/view.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="48" selection-start="340" selection-end="340" vertical-scroll-proportion="0.28052804">
+        <state line="66" column="43" selection-start="1888" selection-end="1888" vertical-scroll-proportion="0.77557755">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Payment.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm1.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="29" selection-start="4511" selection-end="4511" vertical-scroll-proportion="0.0">
+        <state line="70" column="0" selection-start="2048" selection-end="2048" vertical-scroll-proportion="0.38283828">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/config/main.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_account.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="55" selection-start="4104" selection-end="4104" vertical-scroll-proportion="0.43014303">
+        <state line="21" column="36" selection-start="673" selection-end="673" vertical-scroll-proportion="0.39273927">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceAudience.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_creditcards.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="43" selection-start="254" selection-end="254" vertical-scroll-proportion="0.33943427">
+        <state line="27" column="21" selection-start="842" selection-end="842" vertical-scroll-proportion="0.11661166">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/SiteController.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceCreateForm.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="10" selection-start="697" selection-end="697" vertical-scroll-proportion="-0.66446644">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/_headernav.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="14" selection-start="520" selection-end="520" vertical-scroll-proportion="0.2431243">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ExperiencePosterType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="140" selection-end="140" vertical-scroll-proportion="-6.5384617">
+        <state line="75" column="71" selection-start="1991" selection-end="1991" vertical-scroll-proportion="0.3469388">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/experience/_createForm4.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="6630" selection-end="6630" vertical-scroll-proportion="-10.923077">
+        <state line="119" column="16" selection-start="5529" selection-end="5611" vertical-scroll-proportion="0.22767857">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceAppropriateAges.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/Location.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="26" selection-start="194" selection-end="194" vertical-scroll-proportion="0.20572057">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/Experience.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="209" column="24" selection-start="8715" selection-end="8715" vertical-scroll-proportion="0.45535713">
+        <state line="122" column="56" selection-start="4548" selection-end="4548" vertical-scroll-proportion="0.79427946">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="4" selection-start="1737" selection-end="1849" vertical-scroll-proportion="-16.346153">
+        <state line="44" column="77" selection-start="2537" selection-end="2598" vertical-scroll-proportion="-9.153846">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/layouts/mainOuter.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/site/_headernav.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="64" selection-start="864" selection-end="864" vertical-scroll-proportion="-10.461538">
+        <state line="19" column="49" selection-start="769" selection-end="769" vertical-scroll-proportion="0.35533553">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/models/ExperienceSearchForm.php">
+    <entry file="file://$PROJECT_DIR$/protected/models/UserPosterType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="48" selection-start="4003" selection-end="4003" vertical-scroll-proportion="0.23982398">
+        <state line="15" column="1" selection-start="278" selection-end="278" vertical-scroll-proportion="0.28052804">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/experience/search.php">
+    <entry file="file://$PROJECT_DIR$/protected/extensions/vendor/balanced/balanced/example/example.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="407" column="36" selection-start="13063" selection-end="13063" vertical-scroll-proportion="-0.6171617">
+        <state line="25" column="43" selection-start="677" selection-end="677" vertical-scroll-proportion="-0.84158415">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/vendor/balanced/balanced/src/Balanced/Merchant.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="882" selection-end="882" vertical-scroll-proportion="0.4950495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/extensions/vendor/balanced/balanced/src/Balanced/Account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="12" selection-start="6257" selection-end="6257" vertical-scroll-proportion="1.5881697">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/PaymentController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="186" column="59" selection-start="5342" selection-end="5342" vertical-scroll-proportion="0.40154016">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/user/account/_bankaccount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="172" column="0" selection-start="6020" selection-end="6020" vertical-scroll-proportion="0.41144115">
+          <folding>
+            <marker date="1361574582097" expanded="true" signature="3423:3597" placeholder="..." />
+            <marker date="1361574582097" expanded="true" signature="3458:3534" placeholder="..." />
+            <marker date="1361574582097" expanded="true" signature="3570:3597" placeholder="..." />
+            <element signature="n#style#0;n#option#0;n#select#0;n#div#1;n#div#8;n#div#0;n#!!top" expanded="true" />
+            <marker date="1361574582097" expanded="true" signature="3896:3998" placeholder="..." />
+            <marker date="1361574582097" expanded="true" signature="3946:3998" placeholder="..." />
+            <marker date="1361574582097" expanded="true" signature="4205:4268" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

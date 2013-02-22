@@ -123,7 +123,7 @@ class ExperienceSearchForm extends CFormModel
 
         if (($this->posterType != null) && ($this->posterType > 0))
         {
-            $experienceCriteria->compare('t.PosterType', '=' . $this->posterType);
+            $experienceCriteria->compare('createUser.PosterType', '=' . $this->posterType);
         }
 
         if (($this->experienceType != null) && ($this->experienceType > 0))

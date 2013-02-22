@@ -42,7 +42,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes
+                neighborhood activities &amp; classes for kids &amp; families
             </div>
         </div>
 
@@ -52,7 +52,9 @@
                 $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
             </span>
             <span class="navPost">
-                <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
+                <?php
+                echo CHtml::link("post on Kowop", $this->createUrl("site/page", array('view' => 'postingAgreement')));
+                ?>
             </span>
             <span class="navSignup">
                 <?php echo CHtml::link("sign up", $this->createUrl("user/create")); ?>
@@ -70,7 +72,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes
+                neighborhood activities &amp; classes for kids &amp; families
             </div>
         </div>
 
@@ -81,26 +83,19 @@
                 </span>
             <!----- My account dropdown ------->
             <div class="dropdown">
-                <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
-
+                <?php
+                echo CHtml::link(
+                    '<span class="headerAccount">my account</span>',
+                    array(
+                        '/user/view',
+                        'id' => $user->User_ID,
+                        's' => AccountSections::Notifications
+                    ),
+                    array('class' => 'account')
+                );
+                ?>
                 <div class="submenu" style="display: none;">
                     <ul class="root">
-                        <li>
-                            <?php echo CHtml::link('notifications',
-                            array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('my experiences',
-                            array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('calendar',
-                            array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('account info',
-                            array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
-                        </li>
                         <li>
                             <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
                         </li>
@@ -188,8 +183,10 @@
     <div class="row">
         <div class="four columns">
             <div class="homeIntro">
-                <?php echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_post.gif'/><h5>Post an activity or class</h5>",
-                array('/experience/create')); ?>
+                <?php
+                echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_post.gif'/><h5>Post an activity or class</h5>",
+                    $this->createUrl("site/page", array('view' => 'postingAgreement')));
+                ?>
             </div>
         </div>
         <div class="four columns">
@@ -294,7 +291,9 @@ BLOCK;
                     $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("post new experience", $this->createUrl("experience/create")); ?>
+                    <?php
+                    echo CHtml::link("post new experience", $this->createUrl("site/page", array('view' => 'postingAgreement')));
+                    ?>
                 </li>
                 <li>
                     <?php echo CHtml::link("find experiences", $this->createUrl("experience/search")); ?>
@@ -370,6 +369,17 @@ var defaultZoomLevel = 11;
 $(document).ready(function ()
 {
     initialize();
+
+    $('a.account, .submenu').hover(
+            function ()
+            {
+                $('.submenu').show();
+            },
+            function ()
+            {
+                $('.submenu').hide();
+            }
+    );
 });
 
 function initialize()
@@ -459,7 +469,7 @@ function populateData()
                     events  :{
                         click    :function (marker, event, context)
                         {
-                            window.location.replace(context.data.link);
+                            window.location.href = context.data.link;
                         },
                         mouseover:function (marker, event, context)
                         {
@@ -692,7 +702,7 @@ function getZipCode(lat, lon)
                 }
             }
 
-            if(city.length == 0)
+            if (city.length == 0)
             {
                 city = 'Los Angeles';
             }
@@ -745,7 +755,7 @@ function changeLocation(zipCode)
                 }
             }
 
-            if(city.length == 0)
+            if (city.length == 0)
             {
                 city = 'Los Angeles';
             }

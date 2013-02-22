@@ -12,8 +12,9 @@ final class AccountSections
     const MyListings = 4;
     const MyCalendar = 5;
     const AccountInformation = 6;
-    const PaymentInformation = 7;
-    const MyCustomers = 8;
+    const MyCustomers = 7;
+    const CreditCards = 8;
+    const BankAccount = 9;
 
     public static $Lookup = array(
         AccountSections::Notifications => 'Notifications',
@@ -23,6 +24,7 @@ final class AccountSections
         AccountSections::MyCustomers => 'My Customers',
         AccountSections::MyCalendar => 'My Calendar',
         AccountSections::AccountInformation => 'Account Information',
-        AccountSections::PaymentInformation => 'Payment Information',
+        AccountSections::CreditCards => 'Credit Card Information',
+        AccountSections::BankAccount => 'Receive Payments',
     );
 }

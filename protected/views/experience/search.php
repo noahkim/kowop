@@ -68,8 +68,12 @@
     <div class="three columns">
         <div class="searchSidebar">
             <div class="spacebot10">
-                <?php echo CHtml::link("post your experience", $this->createUrl("experience/create"),
-                array('class' => 'large button twelve')); ?>
+                <?php
+                echo CHtml::link("post your experience",
+                    $this->createUrl("site/page", array('view' => 'postingAgreement')),
+                    array('class' => 'large button twelve')
+                );
+                ?>
             </div>
             <div class="spacebot10">
                 <?php echo CHtml::link("make a request", $this->createUrl("request/create"),
@@ -130,7 +134,7 @@
                 <label>Individuals or Businesses</label>
 
                 <?php
-                $posterType = ExperiencePosterType::$Lookup;
+                $posterType = UserPosterType::$Lookup;
                 $posterType[0] = 'Both';
                 ksort($posterType);
 
@@ -197,7 +201,7 @@
 <script>
 var timeoutHandle;
 var loadAll = false;
-var defaultZoomLevel = 9;
+var defaultZoomLevel = 10;
 
 $(document).ready(function ()
 {
@@ -428,7 +432,7 @@ function populateResults()
                                 type    :results.results[i].type,
                                 tile    :results.results[i].tile,
                                 tags    :results.results[i].tags,
-                                category:results.results[i].category
+                                category:results.results[i].category,
                             },
                             id     :results.results[i].id
                         };
@@ -445,13 +449,15 @@ function populateResults()
                             events  :{
                                 click    :function (marker, event, context)
                                 {
-                                    window.location.replace(context.data.link);
+                                    window.location.href = context.data.link;
                                 },
                                 mouseover:function (marker, event, context)
                                 {
+                                    $('#result' + context.data.type + context.id).addClass('maphover');
                                 },
-                                mouseout :function ()
+                                mouseout :function (marker, event, context)
                                 {
+                                    $('#result' + context.data.type + context.id).removeClass('maphover');
                                 }
                             },
                             callback:function ()

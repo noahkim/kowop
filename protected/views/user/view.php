@@ -46,7 +46,9 @@
             </li>
         </ul>
         <div class="spacebot10">
-            <?php echo CHtml::link("I'd like to post", $this->createUrl("experience/create"), array('class' => 'button twelve')); ?>
+            <?php
+            echo CHtml::link("post new experience", $this->createUrl("site/page", array('view' => 'postingAgreement')), array('class' => 'button twelve'));
+            ?>
         </div>
         <div>
             <?php echo CHtml::link("make a request", $this->createUrl("request/create"), array('class' => 'button twelve')); ?>
@@ -73,11 +75,14 @@
         case AccountSections::AccountInformation:
             $page = 'account/_account';
             break;
-        case AccountSections::PaymentInformation:
-            $page = 'account/_payment';
-            break;
         case AccountSections::MyCustomers:
             $page = 'account/_customers';
+            break;
+        case AccountSections::CreditCards:
+            $page = 'account/_creditcards';
+            break;
+        case AccountSections::BankAccount:
+            $page = 'account/_bankaccount';
             break;
         default:
             $page = 'account/_notifications';

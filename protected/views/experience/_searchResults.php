@@ -36,6 +36,8 @@ foreach ($results as $i => $item)
         $itemName .= ' ...';
     }
     $name = "<h5> {$itemName} </h5>";
+    $type = 'experience';
+
     if ($item instanceof Experience)
     {
         $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));
@@ -43,6 +45,7 @@ foreach ($results as $i => $item)
     elseif ($item instanceof Request)
     {
         $name = CHtml::link($name, array('/request/view', 'id' => $item->Request_ID));
+        $type = 'request';
     }
 
     if ($item instanceof Experience)
@@ -75,8 +78,8 @@ foreach ($results as $i => $item)
         echo <<<BLOCK
 
     <!----------- 1 tile ---------->
-    <div id="resultContainer{$i}" class="four columns">
-        <div id="result{$i}" class="classTile">
+    <div class="four columns">
+        <div id="result{$type}{$item->Experience_ID}" class="classTile">
             <span class="tilenumber">{$itemNumber}</span>
             {$imageLink}
             {$name}
@@ -119,9 +122,9 @@ BLOCK;
         echo <<<BLOCK
 
     <!----------- 1 REQUEST tile ---------->
-    <div id="resultContainer{$i}" class="four columns">
+    <div class="four columns">
     <span class="ribbon request"></span>
-      <div id="result{$i}" class="requestTile">
+      <div id="result{$type}{$item->Request_ID}" class="requestTile">
       <span class="tilenumber">{$itemNumber}</span>
         {$name}
         <span class="tileInstructor">by {$hostLink}</span>

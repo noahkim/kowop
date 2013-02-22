@@ -6,7 +6,7 @@ class ExperienceCreateForm extends CFormModel
 {
     // Step 1
 
-    public $PosterType;
+    public $free;
 
     // Step 2
 
@@ -41,10 +41,6 @@ class ExperienceCreateForm extends CFormModel
     public $MaxPerPerson;
     public $MultipleAllowed;
 
-    // Additional elements
-
-    public $free;
-
     // Step 6
 
     public $sessions;
@@ -61,13 +57,13 @@ class ExperienceCreateForm extends CFormModel
 
     public function rules()
     {
-        return array(array('PosterType', 'required', 'on' => 'step1'),
+        return array(array('free', 'required', 'on' => 'step1'),
                      array('ExperienceType', 'required', 'on' => 'step2'),
                      array('Audience', 'required', 'on' => 'step3'),
                      array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip',
                            'required', 'on' => 'step4'),
                      array('Offering, Description', 'required', 'on' => 'step5'),
-                     array('PosterType,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,free,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID,MaxPerPerson,MultipleAllowed',
+                     array('free,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID,MaxPerPerson,MultipleAllowed',
                            'safe'),);
     }
 
@@ -105,7 +101,6 @@ class ExperienceCreateForm extends CFormModel
             }
 
             $experience->Name = $this->Name;
-            $experience->PosterType = $this->PosterType;
             $experience->ExperienceType = $this->ExperienceType;
             $experience->Audience = $this->Audience;
             $experience->Category_ID = $this->Category_ID;

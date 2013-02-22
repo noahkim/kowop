@@ -17,7 +17,6 @@
  * @property string $Price
  * @property integer $Audience
  * @property integer $ExperienceType
- * @property integer $PosterType
  * @property integer $AppropriateAges
  * @property string $Offering
  * @property string $FinePrint
@@ -66,15 +65,15 @@ class Experience extends CActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
-        return array(array('Name, Description, Start, End, Category_ID, Audience, ExperienceType, PosterType, Offering',
+        return array(array('Name, Description, Start, End, Category_ID, Audience, ExperienceType, Offering',
             'required'),
-            array('Create_User_ID, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Audience, ExperienceType, PosterType, AppropriateAges, Status, MaxPerPerson, MultipleAllowed',
+            array('Create_User_ID, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Audience, ExperienceType, AppropriateAges, Status, MaxPerPerson, MultipleAllowed',
                 'numerical', 'integerOnly' => true), array('Name', 'length', 'max' => 255),
             array('Description', 'length', 'max' => 2000),
             array('Offering, FinePrint', 'length', 'max' => 1000), array('Price', 'length', 'max' => 10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, PosterType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated',
+            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated',
                 'safe'),
             array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'update'),
@@ -132,7 +131,7 @@ class Experience extends CActiveRecord
             'Description' => 'Description', 'Start' => 'Start', 'End' => 'End',
             'Min_occupancy' => 'Min Occupancy', 'Max_occupancy' => 'Max Occupancy',
             'Location_ID' => 'Location', 'Category_ID' => 'Category', 'Price' => 'Price',
-            'Audience' => 'Audience', 'ExperienceType' => 'Experience Type', 'PosterType' => 'Poster Type',
+            'Audience' => 'Audience', 'ExperienceType' => 'Experience Type',
             'AppropriateAges' => 'AppropriateAges', 'Offering' => 'Offering', 'FinePrint' => 'Fine Print',
             'MaxPerPerson' => 'Max per person', 'MultipleAllowed' => 'Multiple allowed', 'Status' => 'Status',
             'Created' => 'Created', 'Updated' => 'Updated',);
@@ -162,7 +161,6 @@ class Experience extends CActiveRecord
         $criteria->compare('Price', $this->Price, true);
         $criteria->compare('Audience', $this->Audience);
         $criteria->compare('ExperienceType', $this->Type);
-        $criteria->compare('PosterType', $this->PosterType);
         $criteria->compare('AppropriateAges', $this->AppropriateAges);
         $criteria->compare('Offering', $this->Offering);
         $criteria->compare('FinePrint', $this->FinePrint);

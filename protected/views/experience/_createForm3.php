@@ -38,25 +38,16 @@
         <h1>What age is best for your experience?</h1>
 
         <div class="row">
-            <div class="four columns">
+            <div class="six columns">
                 <a href="#" onclick='submitForm(<?php echo ExperienceAudience::Everyone; ?>); return false;'>
                     <div class="createOption">
                         <span>Doesn't matter</span>
 
-                        <p>Fun for everyone!</p>
+                        <p>Fun for the whole family!</p>
                     </div>
                 </a>
             </div>
-            <div class="four columns">
-                <a href="#" onclick='submitForm(<?php echo ExperienceAudience::Adults; ?>); return false;'>
-                    <div class="createOption">
-                        <span>Mostly Adults</span>
-
-                        <p>18'ish or older</p>
-                    </div>
-                </a>
-            </div>
-            <div class="four columns">
+            <div class="six columns">
                 <a href="#" onclick='submitForm(<?php echo ExperienceAudience::Kids; ?>); return false;'>
                     <div class="createOption">
                         <span>Primarily Kids</span>

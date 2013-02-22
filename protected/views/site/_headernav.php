@@ -9,7 +9,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes
+                neighborhood activities &amp; classes for kids &amp; families
             </div>
         </div>
 
@@ -66,7 +66,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes
+                neighborhood activities &amp; classes for kids &amp; families
             </div>
         </div>
 
@@ -106,22 +106,19 @@
             </span>
             <!----- My account dropdown ------->
             <div class="dropdown">
-                <a href="#" class="account"> <span class="headerAccount">my account</span> </a>
-
+                <?php
+                echo CHtml::link(
+                    '<span class="headerAccount">my account</span>',
+                    array(
+                        '/user/view',
+                        'id' => $user->User_ID,
+                        's' => AccountSections::Notifications
+                    ),
+                    array('class' => 'account')
+                );
+                ?>
                 <div class="submenu" style="display: none;">
                     <ul class="root">
-                        <li>
-                            <?php echo CHtml::link('notifications', array('/user/view', 'id' => $user->User_ID, 's' => 1)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('my experiences', array('/user/view', 'id' => $user->User_ID, 's' => 3)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('calendar', array('/user/view', 'id' => $user->User_ID, 's' => 5)); ?>
-                        </li>
-                        <li>
-                            <?php echo CHtml::link('account info', array('/user/view', 'id' => $user->User_ID, 's' => 6)); ?>
-                        </li>
                         <li>
                             <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
                         </li>
@@ -132,5 +129,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function ()
+    {
+        $('a.account, .submenu').hover(
+                function ()
+                {
+                    $('.submenu').show();
+                },
+                function ()
+                {
+                    $('.submenu').hide();
+                }
+        );
+    });
+</script>
 
 <?php endif; ?>
