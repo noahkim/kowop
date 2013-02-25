@@ -4,6 +4,7 @@ class Mail
 {
     protected static $instance = null;
     protected $emailClient;
+    protected $defaultFrom;
 
     protected function __construct()
     {
@@ -14,6 +15,8 @@ class Mail
             'secret' => Yii::app()->params['AmazonSESSecret'],
             'region' => Yii::app()->params['AmazonSESRegion'],
         ));
+
+        $defaultFrom = 'noreply@kowop.com';
     }
 
     protected function __clone()
@@ -33,8 +36,24 @@ class Mail
     public function Send($to, $subject, $message)
     {
         $args = array(
-            'Source' => 'noreply@kowop.com',
+            'Source' => $this->defaultFrom,
             'Destination' => array('ToAddresses' => array($to)),
+            'Message' => array(
+                'Subject' => array('Data' => $subject),
+                'Body' => array('Html' => array('Data' => $message))
+            )
+        );
+
+        $this->emailClient->sendEmail($args);
+    }
+
+    public function Alert($subject, $message)
+    {
+        $alertTo = array("ilija1@gmail.com", "ilija@kowop.com", "noah@kowop.com");
+
+        $args = array(
+            'Source' => $this->defaultFrom,
+            'Destination' => array('ToAddresses' => $alertTo),
             'Message' => array(
                 'Subject' => array('Data' => $subject),
                 'Body' => array('Html' => array('Data' => $message))

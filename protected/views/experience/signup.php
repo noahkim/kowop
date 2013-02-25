@@ -48,7 +48,11 @@
                         <div class="eight columns">
                             <label>Card Number</label>
 
-                            <input type="text" value="" autocomplete="off" placeholder="Card Number" class="cc-number" />
+                            <input type="text"
+                                   value=""
+                                   autocomplete="off"
+                                   placeholder="Card Number"
+                                   class="cc-number" />
                         </div>
                         <div class="four columns">
                             <label>Security Code (CSC)</label>
@@ -184,7 +188,7 @@
                 // WOO HOO!
                 // response.data.uri == uri of the card or bank account resource
                 var dataString = JSON.stringify(response.data);
-                var saveCard = $('#saveCard').is(':checked');
+                var saveCard = $('#saveCard').is(':checked') ? 1 : 0;
 
                 $.ajax({
                     type   :'post',
@@ -192,9 +196,11 @@
                     data   :{ data:dataString, save:saveCard },
                     success:function (results)
                     {
-                        if (results.success)
+                        var data = JSON.parse(results);
+
+                        if (data.success)
                         {
-                            signUp(results.CreditCard_ID);
+                            signUp(data.CreditCard_ID);
                         }
                     }
                 });

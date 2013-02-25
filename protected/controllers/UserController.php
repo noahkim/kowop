@@ -76,9 +76,10 @@ class UserController extends Controller
         if (isset($_POST['User']))
         {
             $model->attributes = $_POST['User'];
-            $model->Password = md5($model->Password);
 
-            $identity = new UserIdentity($model->Email, $model->Password);
+            $password = $model->Password;
+            $model->Password = md5($password);
+            $identity = new UserIdentity($model->Email, $password);
 
             if ($model->save())
             {
@@ -87,6 +88,10 @@ class UserController extends Controller
                     Yii::app()->user->login($identity);
                     $this->redirect(array('/site/index'));
                 }
+            }
+            else
+            {
+                $model->Password = $password;
             }
         }
 

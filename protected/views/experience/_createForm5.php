@@ -49,7 +49,7 @@
             <div class="four columns">
                 <label class="right inline">Price - $</label>
             </div>
-            <div class="two columns">
+            <div class="two columns end">
                 <?php echo $form->textField($model, 'Price',
                 array('maxlength' => '4', 'placeholder' => '39', 'id' => 'price')); ?>
             </div>

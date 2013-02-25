@@ -97,6 +97,9 @@
                 <div class="submenu" style="display: none;">
                     <ul class="root">
                         <li>
+                            <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
+                        </li>
+                        <li>
                             <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>
                         </li>
                     </ul>

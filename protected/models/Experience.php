@@ -323,6 +323,7 @@ class Experience extends CActiveRecord
                 $payment->Amount = $amount;
                 $payment->Batch_ID = uniqid();
                 $payment->ScheduledFor = date('Y-m-d H:i:s', $scheduledFor);
+                $payment->Status = PaymentStatus::Scheduled;
                 $payment->save();
             }
 

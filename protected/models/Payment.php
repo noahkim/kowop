@@ -137,34 +137,114 @@ class Payment extends CActiveRecord
 
     public static function ProcessPayments()
     {
+        Yii::import('application.extensions.vendor.autoload', true);
+
+        Httpful\Bootstrap::init();
+        Balanced\Bootstrap::init();
+        Balanced\Settings::$api_key = Yii::app()->params['balancedAPISecret'];
+
         //$pending = Payment::model()->findAll();
-        $pending = Payment::model()->findAll(array('condition' => '(Status = ' + PaymentStatus::Scheduled + ')')); // AND ScheduledFor <= now()'));
+        $pending = Payment::model()->findAll(array('condition' => '(Status = ' . PaymentStatus::Scheduled . ')')); // AND ScheduledFor <= now()'));
 
         echo "Found " . count($pending) . " payments to process.\n\n";
 
         foreach ($pending as $payment)
         {
-            //TODO: process the payment
+            try
+            {
+                $user = $payment->creditCard->user;
 
-            $hostAmount = $payment->Amount * Yii::app()->params['HostPercentage'];
+                $balancedAccount = null;
+                if (isset($user->AccountURI) && ($user->AccountURI != null))
+                {
+                    echo 'Account URI: ' . $user->AccountURI . "\n";
 
-            print_r($payment->attributes);
-            echo str_repeat('-', 40) . "\n\n";
+                    $balancedAccount = Balanced\Account::get($user->AccountURI);
+                }
 
-            $payment->Status = PaymentStatus::Processed;
-            $payment->Processed = date('Y-m-d H:i:s');
-            //$payment->save();
+                // Convert to cents
+                $amount = $payment->Amount * 100;
+
+                $statementText = "Kowop.com";
+                $meta = array("Payment_ID" => "{$payment->Payment_ID}");
+                $description = "Charged \${$payment->Amount} for {$payment->experience->Name}";
+
+                $balancedAccount->debit(
+                    $amount,
+                    $statementText,
+                    $description,
+                    $meta,
+                    $payment->creditCard->URI
+                );
+
+                print_r($payment->attributes);
+                echo str_repeat('-', 40) . "\n\n";
+
+                $payment->Status = PaymentStatus::Processed;
+                $payment->Processed = date('Y-m-d H:i:s');
+                $payment->save();
+            }
+            catch (Exception $e)
+            {
+                Mail::Instance()->Alert("Error charging card", print_r($e));
+
+                echo 'Error: ' . print_r($e, true) . "\n";
+
+                $payment->Status = PaymentStatus::Error;
+                $payment->save();
+            }
         }
     }
 
     public static function BalancedCallback($post)
     {
+        Yii::import('application.extensions.vendor.autoload', true);
+
+        Httpful\Bootstrap::init();
+        Balanced\Bootstrap::init();
+        Balanced\Settings::$api_key = Yii::app()->params['balancedAPISecret'];
+
+        $log = "Received callback... \n";
+
         $data = json_decode($post);
-        if ($data == null)
+
+        if ($data->type == 'debit.succeeded')
         {
-            return;
+            try
+            {
+                $log .= "Customer debit succeeded. Paying the host...\n";
+
+                $paymentID = $data->entity->meta->Payment_ID;
+
+                $log .= "Payment_ID: {$paymentID}\n";
+
+                $payment = Payment::model()->findByPk($paymentID);
+
+                $hostAmount = $payment->Amount * Yii::app()->params['HostPercentage'];
+
+                $log .= "Host's share is \${$hostAmount}\n";
+
+                // Convert to cents
+                $hostAmount *= 100;
+
+                $hostBankAccount = Balanced\BankAccount::get($payment->bankAccount->URI);
+                $credit = $hostBankAccount->credit($hostAmount);
+
+                $log .= 'Sent credit, response is: ' . print_r($credit, true) . "\n";
+            }
+            catch (Exception $e)
+            {
+                Mail::Instance()->Alert("Error crediting host account", print_r($e));
+
+                Yii::log(print_r($e, true), 'info', 'BalancedCallback');
+            }
+        }
+        else
+        {
+            $log .= print_r($data, true) . "\n";
+
         }
 
-        Yii::log(print_r($data, true), 'info', 'BalancedCallback');
+        Yii::log($log, 'info', 'BalancedCallback');
     }
 }

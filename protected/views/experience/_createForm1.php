@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="six columns">
-                <a href="#" onclick='submitForm(true); return false;'>
+                <a href="#" onclick='submitForm(1); return false;'>
                     <div class="createOption">
                         <span>Free</span>
 
@@ -32,7 +32,7 @@
 
                 <?php if ($user->bankAccount != null): ?>
 
-                <a href="#" onclick='submitForm(false); return false;'>
+                <a href="#" onclick='submitForm(0); return false;'>
                     <div class="createOption">
                         <span>Paid</span>
 

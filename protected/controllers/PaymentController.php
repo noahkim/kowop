@@ -140,7 +140,7 @@ class PaymentController extends Controller
         if ($user->bankAccount != null)
         {
             $accountData = Balanced\BankAccount::get($user->bankAccount->URI);
-            $account = array('BankAccount_ID' => $user->bankAccount->BankAccount_ID, 'data' => $accountData);
+            $account = array('BankAccount_ID' => $user->bankAccount->BankAccount_ID, 'data' => $accountData, 'account' => $this->getUserAccount());
         }
 
         echo CJSON::encode($account);
