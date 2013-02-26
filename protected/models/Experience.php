@@ -73,7 +73,7 @@ class Experience extends CActiveRecord
             array('Offering, FinePrint', 'length', 'max' => 1000), array('Price', 'length', 'max' => 10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated',
+            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated, tagString, locationStreet, locationCity, locationState, locationZip',
                 'safe'),
             array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'update'),
@@ -190,6 +190,22 @@ class Experience extends CActiveRecord
         return Tag::model()->array2string($this->taglist);
     }
 
+    public function setTagString($value)
+    {
+        ExperienceToTag::model()->deleteAll('Experience_ID=:Experience_ID', array(':Experience_ID' => $this->Experience_ID));
+
+        $tagsArray = Tag::model()->string2array($value);
+        foreach ($tagsArray as $tagName)
+        {
+            $tag = Tag::model()->findOrCreate($tagName);
+
+            $experienceToTag = new ExperienceToTag;
+            $experienceToTag->Experience_ID = $this->Experience_ID;
+            $experienceToTag->Tag_ID = $tag->Tag_ID;
+            $experienceToTag->save();
+        }
+    }
+
     public function getPicture()
     {
         $numContents = count($this->contents);
@@ -222,6 +238,55 @@ class Experience extends CActiveRecord
     public function getHasSessions()
     {
         return (count($this->sessions) > 0);
+    }
+
+    public function getLocationStreet()
+    {
+        return $this->location->Address;
+    }
+
+    public function setLocationStreet($value)
+    {
+        $this->location->Address = $value;
+        $this->location->save();
+    }
+
+    public function getLocationCity()
+    {
+        return $this->location->City;
+    }
+
+    public function setLocationCity($value)
+    {
+        $this->location->City = $value;
+        $this->location->save();
+    }
+
+    public function getLocationState()
+    {
+        return $this->location->State;
+    }
+
+    public function setLocationState($value)
+    {
+        if(is_numeric($value))
+        {
+            $value = Location::GetStates()[$value];
+        }
+
+        $this->location->State = $value;
+        $this->location->save();
+    }
+
+    public function getLocationZip()
+    {
+        return $this->location->Zip;
+    }
+
+    public function setLocationZip($value)
+    {
+        $this->location->Zip = $value;
+        $this->location->save();
     }
 
     public function beforeSave()

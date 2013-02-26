@@ -1,135 +1,139 @@
 <!--------- main content container------>
 <div class="row" id="wrapper">
-    <!--------- end left column ------------->
+    <div class="three columns sideNav">
+        <h2>Edit your listing</h2>
+        <ul class="side-nav">
+            <li class="active"><a href="#">General Information</a></li>
+            <li><a href="class_edit2.html">Pricing &amp; Description</a></li>
+            <li><a href="class_edit3.html">Scheduling</a></li>
+        </ul>
+    </div>
+
     <div class="nine columns">
-        <div class="createContainer">
-            <h1>Update your experience</h1>
-            <?php $form = $this->beginWidget('CActiveForm',
-                                             array('id' => 'experience-update-form', 'enableAjaxValidation' => false,
-                                                   'htmlOptions' => array('enctype' => 'multipart/form-data'))); ?>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Name your class</label>
+        <h1>Editing "<?php echo $model->Name; ?>"</h1>
+
+        <?php
+        $form = $this->beginWidget('CActiveForm',
+            array('id' => 'experience-update-form', 'enableAjaxValidation' => false,
+                'stateful' => true,
+                'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+        ?>
+
+        <input name="step" type="hidden" value="5" />
+
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Name your experience</label>
+            </div>
+            <div class="eight columns">
+                <?php echo $form->textField($model, 'Name'); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Category</label>
+            </div>
+            <div class="eight columns">
+                <?php echo $form->dropDownList($model, 'Category_ID', Category::GetCategories(),
+                array('class' => 'five')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <div class="helptip">
+                    <span class="has-tip tip-top noradius"
+                          data-width="300"
+                          title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
                 </div>
-                <div class="nine columns">
-                    <?php echo $form->textField($model, 'Name',
-                                                array('size' => 60, 'maxlength' => 255, 'class' => 'ten',
-                                                      'placeholder' => 'ex. Real Life Guitar Hero for the absolute beginner')); ?>
+                <label class="right inline">Tags</label>
+            </div>
+            <div class="eight columns">
+                <?php echo $form->textField($model, 'tagString',
+                array('placeholder' => 'ex. risky, adrenaline, skydiving, birthday suit, bucket list')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Image</label>
+            </div>
+            <div class="eight columns">
+                <?php
+                $this->widget('xupload.XUpload',
+                    array('url' => Yii::app()->createUrl("//experience/uploadImages"), 'model' => $images,
+                        //We set this for the widget to be able to target our own form
+                        'htmlOptions' => array('id' => 'experience-update-form'), 'attribute' => 'file',
+                        'multiple' => true, 'showForm' => false,
+                        'options' => array('acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'),));
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <div class="helptip">
+                    <span class="has-tip tip-top noradius"
+                          data-width="300"
+                          title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
+                </div>
+                <label class="right inline">Availability</label>
+            </div>
+            <div class="three columns">
+                <?php echo $form->textField($model, 'Start', array('id' => 'experience-start')); ?>
+            </div>
+            <div class="three columns end">
+                <?php echo $form->textField($model, 'End', array('id' => 'experience-end')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Location</label>
+            </div>
+            <div class="eight columns">
+                <?php echo $form->textField($model, 'locationStreet', array('maxlength' => 2000,
+                'placeholder' => 'Street ex. 444 Charles Ave')); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="three columns offset-by-four">
+                <?php echo $form->textField($model, 'locationCity',
+                array('maxlength' => 255, 'placeholder' => 'City')); ?>
+            </div>
+            <div class="three columns">
+                <?php echo $form->dropDownList($model, 'locationState', array_combine(Location::GetStates(), Location::GetStates())); ?>
+            </div>
+            <div class="two columns">
+                <?php echo $form->textField($model, 'locationZip', array('maxlength' => 5)); ?>
+            </div>
+        </div>
+
+        <?php if (isset($model->Audience) && ($model->Audience == ExperienceAudience::Kids)) : ?>
+
+        <!----- Only show this if they previously selected that this is a kids experience------>
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Age appropriateness</label>
+            </div>
+            <div class="eight columns">
+                <div class="checkboxDiv">
+                    <?php echo $form->checkBoxList($model, 'AppropriateAges', ExperienceAppropriateAges::$Lookup,
+                    array('template' => '{input} {label}', 'separator' => "\n")); ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="nine offset-by-three">
-                    <h5>Description</h5>
+        </div>
+        <!----- End conditional div--------->
 
-                    <p class="createDescription">Provide a detailed description of what you'll be teaching, and what
-                        students can expect from this class. Remember to include any prerequisites, such as things
-                        students should already know before taking your class or class materials they need to bring that
-                        you won't be providing.</p>
+        <?php endif; ?>
 
-                    <div id="toolbar" style="display: none;">
-                        <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> |
-                        <a data-wysihtml5-command="italic" title="CTRL+I">italic</a> |
-                        <a data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h2">Heading</a> |
-                        <a data-wysihtml5-command="insertUnorderedList">List</a> |
-                        <a data-wysihtml5-command="insertOrderedList">Ordered List</a> |
-                        <a data-wysihtml5-command="insertSpeech">Speech Input</a>
+        <?php $this->endWidget(); ?>
 
-                        <div data-wysihtml5-dialog="createLink" style="display: none;">
-                            <label> Link: <input data-wysihtml5-dialog-field="href" value="http://"> </label>
-                            <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-                        </div>
-
-                        <div data-wysihtml5-dialog="insertImage" style="display: none;">
-                            <label> Image: <input data-wysihtml5-dialog-field="src" value="http://"> </label> <label>
-                            Align: <select data-wysihtml5-dialog-field="className">
-                            <option value="">default</option>
-                            <option value="wysiwyg-float-left">left</option>
-                            <option value="wysiwyg-float-right">right</option>
-                        </select> </label>
-                            <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
-                        </div>
-                    </div>
-
-                    <?php echo $form->textArea($model, 'Description',
-                                               array('id' => 'description', 'maxlength' => 2000, 'rows' => 20)); ?>
-                </div>
+        <div class="row">
+            <div class="four columns offset-by-four">
+                <?php echo CHtml::link('Cancel', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
             </div>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Category</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->dropDownList($model, 'Category_ID', Category::GetCategories(),
-                                                   array('class' => 'five')); ?>
-                </div>
+            <div class="four columns">
+                <a href="#"
+                   class="button twelve"
+                   onclick="document.forms['experience-update-form'].submit(); return false;">Save</a>
             </div>
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Tags</label>
-                </div>
-                <div class="nine columns">
-                    <input name="tags" type="text" placeholder="ex. music, guitar, acoustic"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Image(s)</label>
-                </div>
-                <div class="nine columns">
-                    <?php
-                    $this->widget('xupload.XUpload',
-                                  array('url' => Yii::app()->createUrl("//experience/uploadImages"), 'model' => $images,
-                                        //We set this for the widget to be able to target our own form
-                                        'htmlOptions' => array('id' => 'experience-update-form'), 'attribute' => 'file',
-                                        'multiple' => true, /*'formView' => 'application.views.somemodel._form',*/
-                                        'showForm' => false,
-                                        'options' => array('acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'),));
-                    ?>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Availability</label>
-                </div>
-                <div class="two columns">
-                    <?php echo $form->textField($model, 'Start',
-                                                array('id' => 'startDate', 'placeholder' => 'from')); ?>
-                </div>
-                <div class="two columns end">
-                    <?php echo $form->textField($model, 'End', array('id' => 'endDate', 'placeholder' => 'to')); ?>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Seats</label>
-                </div>
-                <div class="two columns">
-                    <?php echo $form->textField($model, 'Min_occupancy', array('placeholder' => 'minimum')); ?>
-                </div>
-                <div class="two columns end">
-                    <?php echo $form->textField($model, 'Max_occupancy', array('placeholder' => 'maximum')); ?>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="three columns">
-                    <label class="right inline">Price</label>
-                </div>
-                <div class="nine columns">
-                    <?php echo $form->textField($model, 'Price', array('placeholder' => 'ex. 25.00')); ?>
-                </div>
-            </div>
-
-            <div class="row borderTop">
-                <div class="twelve columns alignRight">
-                    <?php echo CHtml::submitButton('Save', array('class' => 'button radius')); ?>
-                </div>
-            </div>
-
-            <?php $this->endWidget(); ?>
         </div>
     </div>
 </div>
@@ -137,21 +141,19 @@
 <script>
     $(document).ready(function ()
     {
-        $('#startDate').Zebra_DatePicker({
-            direction:1,
-            format   :'m/d/Y',
-            pair     :$('#endDate')
+        $('#experience-start').Zebra_DatePicker({
+            direction:true,
+            pair     :$('#experience-end')
         });
 
-        $('#endDate').Zebra_DatePicker({
-            format   :'m/d/Y',
+        $('#experience-end').Zebra_DatePicker({
             direction:1
-        });
-
-        var editor = new wysihtml5.Editor("description", {
-            toolbar    :"toolbar",
-            stylesheets:"/ui/sitev2/stylesheets/wysiwyg.css",
-            parserRules:wysihtml5ParserRules
         });
     });
 </script>
+
+<style>
+    .checkboxDiv label {
+        display: inline;
+    }
+</style>

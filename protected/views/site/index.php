@@ -439,7 +439,7 @@ function populateData()
 
     $.ajax({
         type   :'GET',
-        url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array("json" => "1")); ?>',
+        url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults", array("json" => "1", "ExperienceSearchForm[disablePaging]" => "1")); ?>',
         success:function (data)
         {
             var results = jQuery.parseJSON(data);
@@ -448,20 +448,20 @@ function populateData()
             for (var i in results.results)
             {
                 var markerValue = {
-                    address:results.results[i].location,
-                    data   :{
+                    latLng:[results.results[i].lat, results.results[i].lng],
+                    //address:results.results[i].location,
+                    data  :{
                         link    :results.results[i].link,
                         type    :results.results[i].type,
                         tile    :results.results[i].tile,
                         tags    :results.results[i].tags,
                         category:results.results[i].category
                     },
-                    id     :results.results[i].id
+                    id    :results.results[i].id
                 };
 
                 markerValues.push(markerValue);
             }
-
 
             $("#map").gmap3({
                 marker:{

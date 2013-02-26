@@ -9,6 +9,8 @@
  * @property string $City
  * @property string $State
  * @property string $Zip
+ * @property string $Latitude
+ * @property string $Longitude
  * @property string $Created
  * @property string $Updated
  *
@@ -44,14 +46,14 @@ class Location extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(array('Address, City, State, Zip', 'required'), array('Address', 'length', 'max' => 2000),
-                     array('City', 'length', 'max' => 255), array('State', 'length', 'max' => 2),
-                     array('Zip', 'length', 'max' => 45), // The following rule is used by search().
+            array('City', 'length', 'max' => 255), array('State', 'length', 'max' => 2),
+            array('Zip', 'length', 'max' => 45), // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-                     array('Location_ID, Address, City, State, Zip, Created, Updated', 'safe'),
-                     array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
-                           'on' => 'update'),
-                     array('Created,Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
-                           'on' => 'insert'));
+            array('Location_ID, Address, City, State, Zip, Latitude, Longitude, Created, Updated', 'safe'),
+            array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
+                'on' => 'update'),
+            array('Created,Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
+                'on' => 'insert'));
     }
 
     /**
@@ -62,7 +64,7 @@ class Location extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array('experiences' => array(self::HAS_MANY, 'Experience', 'Location_ID'),
-                     'requests' => array(self::HAS_MANY, 'Request', 'Location_ID'),);
+            'requests' => array(self::HAS_MANY, 'Request', 'Location_ID'),);
     }
 
     /**
@@ -71,7 +73,7 @@ class Location extends CActiveRecord
     public function attributeLabels()
     {
         return array('Location_ID' => 'Location', 'Address' => 'Address', 'City' => 'City', 'State' => 'State',
-                     'Zip' => 'Zip', 'Created' => 'Created', 'Updated' => 'Updated',);
+            'Zip' => 'Zip', 'Created' => 'Created', 'Updated' => 'Updated',);
     }
 
     /**
@@ -96,6 +98,18 @@ class Location extends CActiveRecord
         return new CActiveDataProvider($this, array('criteria' => $criteria,));
     }
 
+    public function populateLatitudeLongitude()
+    {
+        $address = urlencode($this->fullAddress);
+
+        $url = "http://maps.googleapis.com/maps/api/geocode/json?address={$address}&sensor=false";
+        $results = file_get_contents($url);
+        $data = json_decode($results);
+
+        $this->Latitude = $data->results[0]->geometry->location->lat;
+        $this->Longitude = $data->results[0]->geometry->location->lng;
+    }
+
     public function getFullAddress()
     {
         $fullAddress = $this->Address . ', ';
@@ -109,9 +123,10 @@ class Location extends CActiveRecord
     public static function findExisting($location)
     {
         $criteria = array('Address' => $location->Address, 'City' => $location->City, 'State' => $location->State,
-                          'Zip' => $location->Zip);
+            'Zip' => $location->Zip);
 
         $result = Location::model()->findByAttributes($criteria);
+
         return $result;
     }
 
@@ -119,9 +134,17 @@ class Location extends CActiveRecord
     {
 
         $states = array('AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA',
-                        'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
-                        'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA',
-                        'WV', 'WI', 'WY',);
+            'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM',
+            'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA',
+            'WV', 'WI', 'WY',);
+
         return $states;
+    }
+
+    public function beforeSave()
+    {
+        $this->populateLatitudeLongitude();
+
+        return parent::beforeSave();
     }
 }

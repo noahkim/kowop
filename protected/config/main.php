@@ -97,13 +97,6 @@ return array(
                     'levels' => 'error, warning',
                 ),
                 array(
-                    'class' => 'CEmailLogRoute',
-                    'levels' => 'error, warning',
-                    'emails' => array('ilija1@gmail.com'),
-                    'sentFrom' => 'noreply@kowop.com',
-                    'enabled' => false,
-                ),
-                array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'info',
                     'categories' => 'BalancedCallback',

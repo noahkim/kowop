@@ -179,7 +179,6 @@
                     data   :{ data:dataString, merchantData:merchantDataString },
                     success:function (results)
                     {
-                        console.log(results);
                         loadBankAccount();
                     }
                 });
@@ -222,8 +221,6 @@
                 $('.ba-an').val(account.data.account_number);
                 $('.ba-rn').val(account.data.routing_number);
                 $('.ba-type').val(account.data.type);
-
-                console.log(results);
             }
         });
     }

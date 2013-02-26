@@ -374,8 +374,6 @@ function redoSearchWithMap()
                     query += '&' + filters;
                 }
 
-                console.log(query);
-
                 $.ajax({
                     type   :'POST',
                     url    :'<?php echo Yii::app()->createAbsoluteUrl("experience/searchResults"); ?>',
@@ -426,15 +424,16 @@ function populateResults()
                     for (var i in results.results)
                     {
                         var markerValue = {
-                            address:results.results[i].location,
-                            data   :{
+                            latLng:[results.results[i].lat, results.results[i].lng],
+                            //address:results.results[i].location,
+                            data  :{
                                 link    :results.results[i].link,
                                 type    :results.results[i].type,
                                 tile    :results.results[i].tile,
                                 tags    :results.results[i].tags,
                                 category:results.results[i].category,
                             },
-                            id     :results.results[i].id
+                            id    :results.results[i].id
                         };
 
                         markerValues.push(markerValue);

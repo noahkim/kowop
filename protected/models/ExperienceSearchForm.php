@@ -28,10 +28,11 @@ class ExperienceSearchForm extends CFormModel
     public $page;
     public $totalResults;
     public $totalPages;
+    public $disablePaging;
 
     public function rules()
     {
-        return array(array('keywords, category, minPrice, maxPrice, daysOfWeek, categories, includedResults, location, start, end, posterType, experienceType, ageRanges, page',
+        return array(array('keywords, category, minPrice, maxPrice, daysOfWeek, categories, includedResults, location, start, end, posterType, experienceType, ageRanges, page, disablePaging',
             'safe'),);
     }
 
@@ -233,6 +234,11 @@ class ExperienceSearchForm extends CFormModel
 
         $this->totalResults = count($sortedItems);
         $this->totalPages = ceil($this->totalResults / ExperienceSearchForm::PageSize);
+
+        if(isset($this->disablePaging) && ($this->disablePaging != null))
+        {
+            return $sortedItems;
+        }
 
         if (!isset($this->page))
         {

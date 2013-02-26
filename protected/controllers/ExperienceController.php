@@ -228,7 +228,7 @@ class ExperienceController extends Controller
                 Yii::app()->user->setState('imageFileNames', array());
             }
 
-            if ($model->save())
+            if ($model->save(false))
             {
                 // Notify the students
                 foreach ($model->enrolled as $enrollee)
@@ -421,7 +421,11 @@ class ExperienceController extends Controller
             if ($item instanceof Experience)
             {
                 $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));
-                $address = str_replace("'", "\\'", $item->location->fullAddress);
+
+                $lat = $item->location->Latitude;
+                $lng = $item->location->Longitude;
+                $formattedResult['lat'] = $lat;
+                $formattedResult['lng'] = $lng;
 
                 $itemTags = $item->tagList;
 
@@ -431,7 +435,6 @@ class ExperienceController extends Controller
                 $tags = array_unique(array_merge($tags, $itemTags));
                 array_push($categories, $item->category->Name);
 
-                $formattedResult['location'] = $address;
                 $formattedResult['link'] = $this->createUrl('/experience/view', array('id' => $item->Experience_ID));
                 $formattedResult['type'] = 'experience';
                 $formattedResult['experienceType'] = ExperienceType::$Lookup[$item->ExperienceType];
