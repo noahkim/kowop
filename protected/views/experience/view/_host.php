@@ -37,8 +37,8 @@
         </div>
 
         <div class="spacebot10">
-            <?php echo CHtml::link("Manage sessions",
-            array('/experience/updateSessions', 'id' => $model->Experience_ID),
+            <?php echo CHtml::link("Scheduling",
+            array('/experience/updateScheduling', 'id' => $model->Experience_ID),
             array('class' => 'button large twelve')); ?>
         </div>
 

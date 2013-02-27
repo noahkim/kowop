@@ -171,7 +171,7 @@ class User extends CActiveRecord
             return $this->contents[$numContents - 1]->Link;
         }
 
-        return null;
+        return 'http://placehold.it/300x300';
     }
 
     public function getFriends()

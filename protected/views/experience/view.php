@@ -3,8 +3,7 @@
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-        ---------------------------------------->
-        <!----- Experience Title------->
+        ----------------------------------------><!----- Experience Title------->
         <div class="row">
             <div class="twelve columns">
                 <h1><?php echo $model->Name; ?></h1>
@@ -48,14 +47,7 @@
                     </div>
 
                     <?php
-                    $hostPic = 'http://placehold.it/300x300';
-
-                    if ($model->createUser->profilePic != null)
-                    {
-                        $hostPic = $model->createUser->profilePic;
-                    }
-
-                    echo CHtml::link("<img src='{$hostPic}' class='detailsInstructorpic' />",
+                    echo CHtml::link("<img src='{$model->createUser->profilePic}' class='detailsInstructorpic' />",
                         array('/user/view', 'id' => $model->Create_User_ID));
                     ?>
 
@@ -66,7 +58,7 @@
                             ?>
                         </span>
 
-                        <div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>
+                        <!--<div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>-->
                     </div>
                 </div>
 
@@ -82,7 +74,7 @@
             <div class="six columns ">
                 <dl class="tabs">
                     <dd class="active"><a href="#simple1">Description</a></dd>
-                    <dd><a href="#simple2">Photos</a></dd>
+                    <!--<dd><a href="#simple2">Photos</a></dd>-->
                 </dl>
                 <ul class="tabs-content">
                     <li class="active" id="simple1Tab">
@@ -121,32 +113,38 @@
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function ()
+    {
         $('#slider').nivoSlider({
-            effect:'fade', // Specify sets like: 'fold,fade,sliceDown'
-            slices:15, // For slice animations
-            boxCols:8, // For box animations
-            boxRows:4, // For box animations
-            animSpeed:1000, // Slide transition speed
-            pauseTime:4000, // How long each slide will show
-            startSlide:0, // Set starting Slide (0 index)
-            directionNav:true, // Next & Prev navigation
-            controlNav:true, // 1,2,3... navigation
+            effect          :'fade', // Specify sets like: 'fold,fade,sliceDown'
+            slices          :15, // For slice animations
+            boxCols         :8, // For box animations
+            boxRows         :4, // For box animations
+            animSpeed       :1000, // Slide transition speed
+            pauseTime       :4000, // How long each slide will show
+            startSlide      :0, // Set starting Slide (0 index)
+            directionNav    :true, // Next & Prev navigation
+            controlNav      :true, // 1,2,3... navigation
             controlNavThumbs:true, // Use thumbnails for Control Nav
-            pauseOnHover:true, // Stop animation while hovering
-            manualAdvance:false, // Force manual transitions
-            prevText:'Prev', // Prev directionNav text
-            nextText:'Next', // Next directionNav text
-            randomStart:false, // Start on a random slide
-            beforeChange:function () {
+            pauseOnHover    :true, // Stop animation while hovering
+            manualAdvance   :false, // Force manual transitions
+            prevText        :'Prev', // Prev directionNav text
+            nextText        :'Next', // Next directionNav text
+            randomStart     :false, // Start on a random slide
+            beforeChange    :function ()
+            {
             }, // Triggers before a slide transition
-            afterChange:function () {
+            afterChange     :function ()
+            {
             }, // Triggers after a slide transition
-            slideshowEnd:function () {
+            slideshowEnd    :function ()
+            {
             }, // Triggers after all slides have been shown
-            lastSlide:function () {
+            lastSlide       :function ()
+            {
             }, // Triggers when last slide is shown
-            afterLoad:function () {
+            afterLoad       :function ()
+            {
             } // Triggers when slider has loaded
         });
     });

@@ -41,9 +41,9 @@
                 <?php echo CHtml::link("View public profile", array("user/view", 'id' => $model->User_ID)); ?>
             </li>
 
-            <li>
+            <!--<li>
                 <a href="user_profile_reviews.html">Feedback</a>
-            </li>
+            </li>-->
         </ul>
         <div class="spacebot10">
             <?php

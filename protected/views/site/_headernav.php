@@ -9,7 +9,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes for kids &amp; families
+                activities &amp; classes for<br/> kids &amp; families
             </div>
         </div>
 
@@ -66,7 +66,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes for kids &amp; families
+                activities &amp; classes for<br/> kids &amp; families
             </div>
         </div>
 

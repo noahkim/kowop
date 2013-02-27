@@ -4,8 +4,12 @@
         <h2>Edit your listing</h2>
         <ul class="side-nav">
             <li class="active"><a href="#">General Information</a></li>
-            <li><a href="class_edit2.html">Pricing &amp; Description</a></li>
-            <li><a href="class_edit3.html">Scheduling</a></li>
+            <li>
+                <?php echo CHtml::link('Pricing &amp; Description', array('/experience/updateDescription', 'id' => $model->Experience_ID)); ?>
+            </li>
+            <li>
+                <?php echo CHtml::link('Scheduling', array('/experience/updateScheduling', 'id' => $model->Experience_ID)); ?>
+            </li>
         </ul>
     </div>
 
@@ -15,7 +19,6 @@
         <?php
         $form = $this->beginWidget('CActiveForm',
             array('id' => 'experience-update-form', 'enableAjaxValidation' => false,
-                'stateful' => true,
                 'htmlOptions' => array('enctype' => 'multipart/form-data'),));
         ?>
 
@@ -54,7 +57,7 @@
         </div>
         <div class="row">
             <div class="four columns">
-                <label class="right inline">Image</label>
+                <label class="right inline">Upload new images</label>
             </div>
             <div class="eight columns">
                 <?php
@@ -66,6 +69,12 @@
                         'options' => array('acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'),));
                 ?>
             </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="right inline">Existing images</label>
+            </div>
+            <div class="eight columns" id='images'></div>
         </div>
         <div class="row">
             <div class="four columns">
@@ -141,19 +150,73 @@
 <script>
     $(document).ready(function ()
     {
+        var start = $('#experience-start').val();
+
         $('#experience-start').Zebra_DatePicker({
-            direction:true,
+            direction:start,
             pair     :$('#experience-end')
         });
 
         $('#experience-end').Zebra_DatePicker({
             direction:1
         });
+
+        loadImages();
     });
+
+    function loadImages()
+    {
+        $.ajax({
+            type   :'get',
+            url    :"<?php echo Yii::app()->createAbsoluteUrl('/experience/getPictures', array('id' => $model->Experience_ID)); ?>",
+            success:function (results)
+            {
+                var imageData = jQuery.parseJSON(results);
+
+                $('#images').empty();
+
+                for (var i in imageData)
+                {
+                    var html = "<div class='classImage'>\n";
+                    html += "    <img src='" + imageData[i].Link + "' />\n"
+                    html += "    <button class='button small' onclick='deleteImage(" + imageData[i].Content_ID + "); return false'>Delete</button>\n";
+                    html += "</div>\n";
+
+                    $('#images').append(html);
+                }
+            }
+        });
+    }
+
+    function deleteImage(imageID)
+    {
+        $.ajax({
+            type   :'post',
+            url    :"<?php echo Yii::app()->createAbsoluteUrl('/experience/deletePicture', array('id' => $model->Experience_ID)); ?>",
+            data   :{ Content_ID:imageID },
+            success:function (results)
+            {
+                loadImages();
+            }
+        });
+    }
 </script>
 
 <style>
     .checkboxDiv label {
         display: inline;
+    }
+
+    .classImage {
+        padding-bottom: 10px;
+    }
+
+    .classImage img, .classImage button {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .classImage img {
+        width: 140px;
     }
 </style>

@@ -12,7 +12,7 @@
                 <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
             </td>
             <td class="start">{% if (!o.options.autoUpload) { %}
-                <button class="button small">
+                <button class="btn btn-primary">
                     <i class="icon-upload icon-white"></i>
                     <span>{%=locale.fileupload.start%}</span>
                 </button>
@@ -21,7 +21,7 @@
             <td colspan="2"></td>
         {% } %}
         <td class="cancel">{% if (!i) { %}
-            <button class="button small">
+            <button class="btn btn-warning">
                 <i class="icon-ban-circle icon-white"></i>
                 <span>{%=locale.fileupload.cancel%}</span>
             </button>

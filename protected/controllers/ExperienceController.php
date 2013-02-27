@@ -20,11 +20,11 @@ class ExperienceController extends Controller
     public function accessRules()
     {
         return array(array('allow', // allow all users to perform 'index' and 'view' actions
-            'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults'),
+            'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults', 'getPictures'),
             'users' => array('*'),),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'updateSessions', 'signUp', 'leave', 'delete',
-                    'uploadImages'), 'users' => array('@'),),
+                'actions' => array('create', 'update', 'updateDescription', 'updateScheduling', 'signUp', 'leave', 'delete',
+                    'uploadImages', 'deletePicture'), 'users' => array('@'),),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
                 'users' => array('*'),),);
@@ -154,51 +154,9 @@ class ExperienceController extends Controller
 
     }
 
-    public function actionUpdateSessions($id)
-    {
-        $this->layout = '//layouts/main';
-
-        $model = $this->loadModel($id);
-
-        if (isset($_POST['sessionsData']))
-        {
-            $sessionData = json_decode($_POST['sessionsData']);
-
-            $keptSessions = array();
-
-            foreach ($sessionData as $sessionItem)
-            {
-                if ($sessionItem->existingSessionID > 0)
-                {
-                    $keptSessions[] = $sessionItem->existingSessionID;
-                }
-                else
-                {
-                    $session = new Session;
-                    $session->Experience_ID = $model->Experience_ID;
-                    $session->save();
-
-                    foreach ($sessionItem->lessons as $lessonItem)
-                    {
-                        $lesson = new Lesson;
-                        $lesson->Session_ID = $session->Session_ID;
-                        $lesson->Start = $lessonItem->start;
-                        $lesson->End = $lessonItem->end;
-
-                        $lesson->save();
-                    }
-
-                    $keptSessions[] = $session->Session_ID;
-                }
-            }
-        }
-
-        $this->render('updateSessions', array('model' => $model,));
-    }
-
     public function actionUpdate($id)
     {
-        $this->layout = '//layouts/main';
+        $this->checkOwner($id);
 
         $model = $this->loadModel($id);
         Yii::import("xupload.models.XUploadForm");
@@ -254,6 +212,76 @@ class ExperienceController extends Controller
         }
 
         $this->render('update', array('model' => $model, 'images' => $images,));
+    }
+
+    public function actionUpdateDescription($id)
+    {
+        $this->checkOwner($id);
+
+        $model = $this->loadModel($id);
+
+        if (isset($_POST['Experience']))
+        {
+            $model->attributes = $_POST['Experience'];
+
+            if ($model->save(false))
+            {
+                // Notify the students
+                foreach ($model->enrolled as $enrollee)
+                {
+                    if ($enrollee->User_ID != $model->Create_User_ID)
+                    {
+                        $userName = CHtml::link($model->createUser->fullName,
+                            array('user/view', 'id' => $model->createUser->User_ID));
+                        $experienceName = CHtml::link($model->Name,
+                            array('experience/view', 'id' => $model->Experience_ID));
+
+                        Message::SendNotification($enrollee->User_ID,
+                            "{$userName} has updated the experience details for \"{$experienceName}\".");
+                    }
+                }
+
+                $this->redirect(array('view', 'id' => $model->Experience_ID));
+            }
+        }
+
+        $this->render('updateDescription', array('model' => $model));
+    }
+
+    public function actionUpdateScheduling($id)
+    {
+        $this->checkOwner($id);
+
+        $this->layout = '//layouts/createSessions';
+
+        $model = $this->loadModel($id);
+
+        if (isset($_POST['Experience']))
+        {
+            $model->attributes = $_POST['Experience'];
+
+            if ($model->save(false))
+            {
+                // Notify the students
+                foreach ($model->enrolled as $enrollee)
+                {
+                    if ($enrollee->User_ID != $model->Create_User_ID)
+                    {
+                        $userName = CHtml::link($model->createUser->fullName,
+                            array('user/view', 'id' => $model->createUser->User_ID));
+                        $experienceName = CHtml::link($model->Name,
+                            array('experience/view', 'id' => $model->Experience_ID));
+
+                        Message::SendNotification($enrollee->User_ID,
+                            "{$userName} has updated the experience details for \"{$experienceName}\".");
+                    }
+                }
+
+                $this->redirect(array('view', 'id' => $model->Experience_ID));
+            }
+        }
+
+        $this->render('updateScheduling', array('model' => $model));
     }
 
     public function actionUploadImages()
@@ -359,6 +387,8 @@ class ExperienceController extends Controller
      */
     public function actionDelete($id)
     {
+        $this->checkOwner($id);
+
         $model = $this->loadModel($id);
         $model->Status = ExperienceStatus::Inactive;
         $model->save();
@@ -413,7 +443,7 @@ class ExperienceController extends Controller
         $tags = array();
         $categories = array();
 
-        foreach ($results as $item)
+        foreach ($results as $i => $item)
         {
             $formattedResult = array();
 
@@ -421,6 +451,8 @@ class ExperienceController extends Controller
             if ($item instanceof Experience)
             {
                 $name = CHtml::link($name, array('/experience/view', 'id' => $item->Experience_ID));
+
+                $formattedResult['itemNumber'] = $i + 1;
 
                 $lat = $item->location->Latitude;
                 $lng = $item->location->Longitude;
@@ -551,6 +583,36 @@ BLOCK;
         }
     }
 
+    public function actionGetPictures($id)
+    {
+        $model = $this->loadModel($id);
+
+        $pictures = array();
+
+        foreach ($model->contents as $item)
+        {
+            $pictures[] = array(
+                'Content_ID' => $item->Content_ID,
+                'Link' => $item->Link
+            );
+        }
+
+        echo CJSON::encode($pictures);
+    }
+
+    public function actionDeletePicture($id)
+    {
+        $this->checkOwner($id);
+
+        if (isset($_POST['Content_ID']))
+        {
+            $contentID = $_POST['Content_ID'];
+
+            ExperienceToContent::model()->deleteAll('Experience_ID=:Experience_ID AND Content_ID=:Content_ID',
+                array(':Experience_ID' => $id, ':Content_ID' => $contentID));
+        }
+    }
+
     /**
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
@@ -577,6 +639,17 @@ BLOCK;
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
+        }
+    }
+
+    protected function checkOwner($experienceID)
+    {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $model = $this->loadModel($experienceID);
+
+        if ($user->User_ID != $model->createUser->User_ID)
+        {
+            throw new Exception('Only the experience host may modify the experience.');
         }
     }
 }

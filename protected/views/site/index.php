@@ -26,7 +26,7 @@
     <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
     <script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
 
-    <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
+    <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>
 </head>
 <body>
 
@@ -42,7 +42,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes for kids &amp; families
+                activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
 
@@ -72,7 +72,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                neighborhood activities &amp; classes for kids &amp; families
+                activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
 
@@ -119,24 +119,18 @@
                     <h2>Discover</h2>
 
                     <p>
-                        Click on stuff you're <strong>not</strong> interested in <strong id='zipcode'>your area</strong>
-                        (<a href="#" class="homeChangelocation" id="showChangeLocation">change location</a>) </p>
-
+                        It's faster to explore by what you <strong>don't</strong> want, so click on stuff you're
+                        <strong>NOT</strong> interested in to narrow down your choices in <strong id='zipcode'>your
+                        area</strong> (<a href="#" class="homeChangelocation" id="showChangeLocation">change
+                        location</a>) </p>
                     <span class="categoriesMap">
                     </span>
 
                     <span class="tagsMap">
                     </span>
 
-                    <div class="row">
-                        <div class="six columns">
-                            <a href="#"
-                               class='homeChangelocation reset'
-                               onclick='populateData(); return false;'>Reset</a>
-                        </div>
-                        <div class="six columns">
-                            <a href="#" class='homeChangelocation'>Show me kids stuff</a>
-                        </div>
+                    <div class="overlayLinks">
+                        <a href="#" class='homeChangelocation reset' onclick='populateData(); return false;'>Reset</a>
                     </div>
                 </div>
             </div>
@@ -148,7 +142,7 @@
     <div class="homeSearch">
         <div class="row">
             <div class="three columns">
-                <label class="inline right">...or the old fashioned way</label>
+                <label class="inline right">Know what you want? Search here:</label>
             </div>
 
             <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
@@ -281,63 +275,8 @@ BLOCK;
     </div>
     <!------ end 1 row of tiles ----->
 </div>
-<!---------------------------------------
-              Footer
----------------------------------------->
-<div class="footer">
-    <div class="row">
-        <div class="two columns footerlinks discover">
-            <h5>Discover</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("how it works",
-                    $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-                </li>
-                <li>
-                    <?php
-                    echo CHtml::link("post new experience", $this->createUrl("site/page", array('view' => 'postingAgreement')));
-                    ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("find experiences", $this->createUrl("experience/search")); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("make a request", $this->createUrl("request/create")); ?>
-                </li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks company">
-            <h5>Company</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("FAQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
-                </li>
-                <li><a href="#">policies</a></li>
-                <li><a href="#">contact</a></li>
-                <li><a href="#">terms &amp; privacy</a></li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks joinuson">
-            <h5>Join us on:</h5>
-            <ul>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Google+</a></li>
-                <li><a href="#">Newsletter</a></li>
-            </ul>
-        </div>
-        <div class="six columns"></div>
-    </div>
-    <div class="row">
-        <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
-    </div>
-</div>
+
+<?php echo $this->renderPartial('/site/_footer'); ?>
 
 <div id="changeLocation" class="reveal-modal small" style="z-index: 999;">
 

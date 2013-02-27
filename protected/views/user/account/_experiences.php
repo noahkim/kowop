@@ -2,22 +2,12 @@
 <div class="nine columns accountClasses">
     <h1>My Experiences</h1>
     <!---- Need to review ---------->
-    <span class="profileCount">0</span>
+<!--    <span class="profileCount">0</span>
 
     <h2>Leave Feedback for the following experiences</h2>
 
     <div class="row">
-        <!--        <div class="three columns">
-                    <div class="profileTile"> <img src="http://placehold.it/400x300"> <span class="profileClassTitle"><a href="class_detail.html" class="spacebot10">Class Title</a></span>
-                        <a href="#" class="button radius tiny secondary twelve" data-reveal-id="leaveFeedback">Leave Feedback</a>
-                    </div>
-                </div>
-                <div class="three columns end">
-                    <div class="profileTile"> <img src="http://placehold.it/400x300"> <span class="profileClassTitle"><a href="class_detail.html" class="spacebot10">Class Title</a></span>
-                        <a href="#" class="button radius tiny secondary twelve" data-reveal-id="leaveFeedback">Leave Feedback</a>
-                    </div>
-                </div>-->
-    </div>
+    </div>-->
 
     <!---- enrolled classes ---------->
     <span class="profileCount"><?php echo count($model->enrolledIn); ?></span>

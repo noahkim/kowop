@@ -73,8 +73,13 @@ class Experience extends CActiveRecord
             array('Offering, FinePrint', 'length', 'max' => 1000), array('Price', 'length', 'max' => 10),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy, Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint, MaxPerPerson, MultipleAllowed, Status, Created, Updated, tagString, locationStreet, locationCity, locationState, locationZip',
-                'safe'),
+            array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy', 'safe'),
+            array('Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint', 'safe'),
+            array('MaxPerPerson, MultipleAllowed, Status, Created, Updated', 'safe'),
+
+            // Virtual attributes
+            array('tagString, locationStreet, locationCity, locationState, locationZip, sessionsJSON', 'safe'),
+
             array('Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
                 'on' => 'update'),
             array('Created,Updated', 'default', 'value' => new CDbExpression('NOW()'), 'setOnEmpty' => false,
@@ -269,7 +274,7 @@ class Experience extends CActiveRecord
 
     public function setLocationState($value)
     {
-        if(is_numeric($value))
+        if (is_numeric($value))
         {
             $value = Location::GetStates()[$value];
         }
@@ -287,6 +292,40 @@ class Experience extends CActiveRecord
     {
         $this->location->Zip = $value;
         $this->location->save();
+    }
+
+    public function getSessionsJSON()
+    {
+        $sessionData = array();
+
+        foreach ($this->sessions as $item)
+        {
+            $sessionData[] = array(
+                'Session_ID' => $item->Session_ID,
+                'Start' => $item->Start,
+                'End' => $item->End,
+                'New' => '0',
+            );
+        }
+
+        return CJSON::encode($sessionData);
+    }
+
+    public function setSessionsJSON($value)
+    {
+        $sessionData = json_decode($value);
+
+        foreach ($sessionData as $sessionItem)
+        {
+            if ($sessionItem->New == 1)
+            {
+                $session = new Session;
+                $session->Experience_ID = $this->Experience_ID;
+                $session->Start = $sessionItem->Start;
+                $session->End = $sessionItem->End;
+                $session->save();
+            }
+        }
     }
 
     public function beforeSave()

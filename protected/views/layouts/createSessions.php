@@ -41,7 +41,7 @@
     <script src="/ui/sitev2/javascripts/wysiwyg_advanced.js"></script>
     <script src="/ui/sitev2/javascripts/jeditable.js"></script>
 
-    <title>Kowop | Your local neighborhood board, online. Try something new, learn something awesome.</title>
+    <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>
 </head>
 <body>
 
@@ -49,62 +49,7 @@
 
 <?php echo $content; ?>
 
-<!---------------------------------------
-              Footer
----------------------------------------->
-<div class="footer">
-    <div class="row">
-        <div class="two columns footerlinks discover">
-            <h5>Discover</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
-                </li>
-                <li>
-                    <?php
-                    echo CHtml::link("post new experience", $this->createUrl("site/page", array('view' => 'postingAgreement')));
-                    ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("find experiences", $this->createUrl("experience/search")); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("make a request", $this->createUrl("request/create")); ?>
-                </li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks company">
-            <h5>Company</h5>
-            <ul>
-                <li>
-                    <?php echo CHtml::link("about us", $this->createUrl("site/page", array('view' => 'about'))); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("join the team", $this->createUrl("site/page", array('view' => 'meet'))); ?>
-                </li>
-                <li>
-                    <?php echo CHtml::link("FAQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
-                </li>
-                <li><a href="#">policies</a></li>
-                <li><a href="#">contact</a></li>
-                <li><a href="#">terms &amp; privacy</a></li>
-            </ul>
-        </div>
-        <div class="two columns footerlinks joinuson">
-            <h5>Join us on:</h5>
-            <ul>
-                <li><a href="#">Twitter</a></li>
-                <li><a href="#">Facebook</a></li>
-                <li><a href="#">Google+</a></li>
-                <li><a href="#">Newsletter</a></li>
-            </ul>
-        </div>
-        <div class="six columns"></div>
-    </div>
-    <div class="row">
-        <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
-    </div>
-</div>
+<?php echo $this->renderPartial('/site/_footer'); ?>
 
 </body>
 </html>

@@ -5,6 +5,15 @@
     <div class="spacebot10">
         <?php echo "<img src='{$model->profilePic}' alt='{$model->display}' title='{$model->display}' />\n"; ?>
     </div>
+    <?php
+    $user = null;
+    if (!Yii::app()->user->isGuest)
+    {
+        $user = User::model()->findByPk(Yii::app()->user->id);
+    }
+    ?>
+
+    <?php if ($user == null || $user->User_ID != $model->User_ID) : ?>
     <div class="spacebot10">
         <a href="#" class="twelve button" data-reveal-id="myModal">Send a message</a>
     </div>
@@ -12,13 +21,9 @@
         <?php
         $showFriendRequest = true;
 
-        if (!Yii::app()->user->isGuest)
+        if ($user != null && $user->isFriendsWith($model->User_ID))
         {
-            $user = User::model()->findByPk(Yii::app()->user->id);
-            if ($user->isFriendsWith($model->User_ID))
-            {
-                $showFriendRequest = false;
-            }
+            $showFriendRequest = false;
         }
         ?>
         <?php if ($showFriendRequest) : ?>
@@ -27,43 +32,14 @@
         <a href="#" class="twelve button">You are homies</a>
         <?php endif; ?>
     </div>
-    <!--        <div class="profileBadges">
-                <div class="helptip">
-                    <span class="has-tip tip-top noradius"
-                          data-width="300"
-                          title="Merit badges are awarded by the instructor once you've completed a class. Each one represents a meaningful experience and new powers acquired. Wear them with honor!">?</span>
-                </div>
-                <span class="profileCount">16</span>
-
-                <h2>Merit Badges</h2>
-
-                <div class="meritBadges">
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                    <a href="class_detail.html"><img src="http://placeskull.com/100/100/01a4a4"></a>
-                </div>
-            </div>-->
+    <?php endif; ?>
 </div>
 <!---- Right side----------->
 <div class="nine columns profilePublic">
     <h1><?php echo $model->display; ?></h1>
-    <span class="profileRating"><a href="user_profile_reviews.html">95</a></span>
+    <!--<span class="profileRating"><a href="user_profile_reviews.html">95</a></span>-->
     <span class="profileLocation"></span>
-    <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span>
-    <span class="profileDescription"><?php echo $model->Description; ?></span>
+    <span class="profileSince">Kowop'ing since <?php echo date('F Y', strtotime($model->Created)); ?></span> <span class="profileDescription"><?php echo $model->Description; ?></span>
 
     <span class="profileCount"><?php echo count($model->experiences); ?></span>
 

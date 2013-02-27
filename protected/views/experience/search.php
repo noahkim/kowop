@@ -424,16 +424,20 @@ function populateResults()
                     for (var i in results.results)
                     {
                         var markerValue = {
-                            latLng:[results.results[i].lat, results.results[i].lng],
+                            latLng :[results.results[i].lat, results.results[i].lng],
                             //address:results.results[i].location,
-                            data  :{
-                                link    :results.results[i].link,
-                                type    :results.results[i].type,
-                                tile    :results.results[i].tile,
-                                tags    :results.results[i].tags,
-                                category:results.results[i].category,
+                            data   :{
+                                link      :results.results[i].link,
+                                type      :results.results[i].type,
+                                tile      :results.results[i].tile,
+                                tags      :results.results[i].tags,
+                                category  :results.results[i].category,
+                                itemNumber:results.results[i].itemNumber
                             },
-                            id    :results.results[i].id
+                            id     :results.results[i].id,
+                            options:{
+                                icon:'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + results.results[i].itemNumber + '|FE7569'
+                            }
                         };
 
                         markerValues.push(markerValue);
