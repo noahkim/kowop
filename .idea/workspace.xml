@@ -34,27 +34,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="279" column="36" selection-start="12602" selection-end="12602" vertical-scroll-proportion="232.76923">
+            <state line="236" column="18" selection-start="10637" selection-end="10637" vertical-scroll-proportion="-0.17075893">
               <folding>
-                <marker date="1362090833737" expanded="true" signature="2902:2987" placeholder="..." />
-                <marker date="1362090833737" expanded="true" signature="2943:2987" placeholder="..." />
-                <marker date="1362090833737" expanded="true" signature="3137:3246" placeholder="..." />
-                <marker date="1362090833737" expanded="true" signature="3635:3780" placeholder="..." />
-                <marker date="1362090833737" expanded="true" signature="3671:3780" placeholder="..." />
-                <marker date="1362090833737" expanded="true" signature="4973:5048" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="2902:2987" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="2943:2987" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="3137:3246" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="3635:3780" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="3671:3780" placeholder="..." />
+                <marker date="1362094051726" expanded="true" signature="4973:5048" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_footer.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/protected/views/site/_footer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="20" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.44884488">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -83,11 +74,11 @@
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm5.php" />
         <option value="$PROJECT_DIR$/protected/views/layouts/createSessions.php" />
         <option value="$PROJECT_DIR$/protected/views/request/view.php" />
-        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
         <option value="$PROJECT_DIR$/protected/config/main.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/protected/views/site/_headernav.php" />
         <option value="$PROJECT_DIR$/protected/views/site/_footer.php" />
+        <option value="$PROJECT_DIR$/protected/views/site/index.php" />
       </list>
     </option>
   </component>
@@ -591,24 +582,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/site/_footer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="279" column="36" selection-start="12602" selection-end="12602" vertical-scroll-proportion="232.76923">
-          <folding>
-            <marker date="1362090833737" expanded="true" signature="2902:2987" placeholder="..." />
-            <marker date="1362090833737" expanded="true" signature="2943:2987" placeholder="..." />
-            <marker date="1362090833737" expanded="true" signature="3137:3246" placeholder="..." />
-            <marker date="1362090833737" expanded="true" signature="3635:3780" placeholder="..." />
-            <marker date="1362090833737" expanded="true" signature="3671:3780" placeholder="..." />
-            <marker date="1362090833737" expanded="true" signature="4973:5048" placeholder="..." />
-          </folding>
+        <state line="21" column="14" selection-start="876" selection-end="876" vertical-scroll-proportion="0.35533553">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/_footer.php">
+    <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="20" selection-start="1022" selection-end="1022" vertical-scroll-proportion="0.44884488">
-          <folding />
+        <state line="236" column="18" selection-start="10637" selection-end="10637" vertical-scroll-proportion="-0.17075893">
+          <folding>
+            <marker date="1362094051726" expanded="true" signature="2902:2987" placeholder="..." />
+            <marker date="1362094051726" expanded="true" signature="2943:2987" placeholder="..." />
+            <marker date="1362094051726" expanded="true" signature="3137:3246" placeholder="..." />
+            <marker date="1362094051726" expanded="true" signature="3635:3780" placeholder="..." />
+            <marker date="1362094051726" expanded="true" signature="3671:3780" placeholder="..." />
+            <marker date="1362094051726" expanded="true" signature="4973:5048" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

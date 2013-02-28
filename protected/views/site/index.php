@@ -265,8 +265,7 @@
     <!----------- 1 row of tiles---->
     <div class="row">
         <?php
-        $experiences = Experience::model()->findAll(array('select' => '*, rand() as rand',
-            'condition' => 'Status = ' . ExperienceStatus::Active,
+        $experiences = Experience::model()->active()->current()->findAll(array('select' => '*, rand() as rand',
             'limit' => 4, 'order' => 'rand',));
         foreach ($experiences as $experience)
         {
