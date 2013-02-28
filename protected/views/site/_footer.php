@@ -23,9 +23,9 @@
         <div class="two columns footerlinks company">
             <h5>Company</h5>
             <ul>
-                <li>
-                    <?php echo CHtml::link("about Kowop", array("site/page", 'view' => 'about')); ?>
-                </li>
+                <!--<li>
+                    <?php /*echo CHtml::link("about Kowop", array("site/page", 'view' => 'about')); */?>
+                </li>-->
                 <li>
                     <?php echo CHtml::link("FAQ", array("site/page", 'view' => 'faq')); ?>
                 </li>

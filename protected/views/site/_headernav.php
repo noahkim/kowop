@@ -123,7 +123,7 @@
             </div>
         </div>
 
-        <?php if (isset($search) && $search) : ?>
+        <?php if (isset($search) && $search): ?>
 
         <div class="six columns">
             <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
