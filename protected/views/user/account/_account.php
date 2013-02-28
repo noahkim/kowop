@@ -7,16 +7,7 @@
     <div class="row accountEditrow">
         <div class="three columns accountEditlabel">Profile image</div>
         <div class="nine columns">
-            <?php
-            $imgLink = 'http://placehold.it/800x800';
-
-            if ($model->profilePic != null)
-            {
-                $imgLink = $model->profilePic;
-            }
-
-            echo "<img src='{$imgLink}'>\n";
-            ?>
+            <?php echo "<img src='{$model->profilePic}'>\n"; ?>
         </div>
     </div>
     <div class="row accountEditrow">
@@ -29,13 +20,6 @@
         <div class="three columns accountEditlabel">Display Name</div>
         <div class="nine columns edit_DisplayName" id='DisplayName'>
             <?php echo $model->DisplayName; ?>
-        </div>
-    </div>
-    <div class="row accountEditrow">
-        <div class="three columns accountEditlabel">Networks</div>
-        <div class="nine columns">
-            Google+ <a href="#">(hookup)</a>, Twitter <a href="#">(hookup)</a>, Facebook <a
-                href="#">(connected)</a>
         </div>
     </div>
 </div>

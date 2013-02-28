@@ -125,12 +125,12 @@ class Payment extends CActiveRecord
 
     public function getCode()
     {
-        return base_convert($this->Payment_ID, 10, CODE_BASE);
+        return base_convert($this->Payment_ID, 10, Payment::CODE_BASE);
     }
 
     public static function GetPaymentFromCode($code)
     {
-        $payment = Payment::model()->findByPk(intval($code, CODE_BASE));
+        $payment = Payment::model()->findByPk(intval($code, Payment::CODE_BASE));
 
         return $payment;
     }

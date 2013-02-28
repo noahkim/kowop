@@ -8,14 +8,7 @@
     <?php
     foreach ($session->enrolled as $enrollee)
     {
-        $imageLink = 'http://placeskull.com/100/100/01a4a4';
-
-        if ($enrollee->profilePic != null)
-        {
-            $imageLink = $enrollee->profilePic;
-        }
-
-        $imageHTML = "<img src='{$imageLink}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />\n";
+        $imageHTML = "<img src='{$enrollee->profilePic}' alt='{$enrollee->fullname}' title='{$enrollee->fullname}' />\n";
 
         echo CHtml::link($imageHTML, array('/user/view', 'id' => $enrollee->User_ID));
     }

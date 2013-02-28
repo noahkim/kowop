@@ -5,67 +5,72 @@
     <p>Complete the information below if you plan on listing paid classes or activities on Kowop. Payments from your
         customers will be directly transferred into the account you provide below.</p>
 
-    <h4>Billing Information</h4>
+    <div id="billingInfo">
 
-    <div class="row">
-        <div class="four columns">
-            <label class="inline right">Are you an individual or business?</label>
+        <h4>Billing Information</h4>
+
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right">Are you an individual or business?</label>
+            </div>
+            <div class="eight columns">
+                <select id="posterType">
+                    <option value="<?php echo UserPosterType::Individual; ?>">Individual</option>
+                    <option value="<?php echo UserPosterType::Business; ?>">Business</option>
+                </select>
+            </div>
         </div>
-        <div class="eight columns">
-            <select id="posterType">
-                <option value="<?php echo UserPosterType::Individual; ?>">Individual</option>
-                <option value="<?php echo UserPosterType::Business; ?>">Business</option>
-            </select>
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right" id='nameLabel'>Name</label>
+            </div>
+            <div class="eight columns">
+                <input type="text" id="name" />
+            </div>
         </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right">Phone Number</label>
+            </div>
+            <div class="two columns">
+                <input id="areaCode" type="text" placeholder="area code" maxlength="3" />
+            </div>
+            <div class="two columns">
+                <input id="number1" type="text" placeholder="555" maxlength="3" />
+            </div>
+            <div class="four columns">
+                <input id="number2" type="text" placeholder="1234" maxlength="4" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="four columns">
+                <label class="inline right">Address</label>
+            </div>
+            <div class="eight columns">
+                <input id="address" type="text" placeholder="Street Address" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="three columns offset-by-four">
+                <input id="city" type="text" placeholder="City">
+            </div>
+            <div class="two columns">
+                <select id="state">
+                    <?php
+                    foreach (Location::GetStates() as $state)
+                    {
+                        echo "<option value='{$state}}'>{$state}</option>\n";
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="three columns">
+                <input id="zip" type="text" maxlength="5" placeholder="Zip Code" />
+            </div>
+        </div>
+
     </div>
-    <div class="row">
-        <div class="four columns">
-            <label class="inline right" id='nameLabel'>Name</label>
-        </div>
-        <div class="eight columns">
-            <input type="text" id="name" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="four columns">
-            <label class="inline right">Phone Number</label>
-        </div>
-        <div class="two columns">
-            <input id="areaCode" type="text" placeholder="area code" maxlength="3" />
-        </div>
-        <div class="two columns">
-            <input id="number1" type="text" placeholder="555" maxlength="3" />
-        </div>
-        <div class="four columns">
-            <input id="number2" type="text" placeholder="1234" maxlength="4" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="four columns">
-            <label class="inline right">Address</label>
-        </div>
-        <div class="eight columns">
-            <input id="address" type="text" placeholder="Street Address" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="three columns offset-by-four">
-            <input id="city" type="text" placeholder="City">
-        </div>
-        <div class="two columns">
-            <select id="state">
-                <?php
-                foreach (Location::GetStates() as $state)
-                {
-                    echo "<option value='{$state}}'>{$state}</option>\n";
-                }
-                ?>
-            </select>
-        </div>
-        <div class="three columns">
-            <input id="zip" type="text" maxlength="5" placeholder="Zip Code" />
-        </div>
-    </div>
+
     <h4>Bank Account Information</h4>
 
     <div class="row">
@@ -116,6 +121,8 @@
 <script>
     $(document).ready(function ()
     {
+        $('#billingInfo').hide();
+
         balanced.init('<?php echo Yii::app()->params["balancedMarketPlaceURI"]; ?>');
 
         loadBankAccount();
@@ -136,7 +143,7 @@
 
         $('#posterType').change(function ()
         {
-            if($(this).val() == <?php echo UserPosterType::Individual; ?>)
+            if ($(this).val() == <?php echo UserPosterType::Individual; ?>)
             {
                 $('#nameLabel').text('Name');
             }
@@ -212,6 +219,7 @@
             {
                 if (results == "null")
                 {
+                    $('#billingInfo').show();
                     return;
                 }
 

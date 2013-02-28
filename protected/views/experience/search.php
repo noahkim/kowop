@@ -195,9 +195,6 @@
     }
 </style>
 
-<script type="text/javascript" src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
-
 <script>
 var timeoutHandle;
 var loadAll = false;
@@ -477,32 +474,6 @@ function populateResults()
                                     detectLocation();
                                 }
 
-                                if (navigator.geolocation)
-                                {
-                                    navigator.geolocation.getCurrentPosition(function (position)
-                                    {
-                                        var lat = position.coords.latitude;
-                                        var lon = position.coords.longitude;
-                                        var center = new google.maps.LatLng(lat, lon);
-
-                                        map.setCenter(center);
-                                        map.setZoom(defaultZoomLevel);
-
-                                    }, function (error)
-                                    {
-                                        //use error.code to determine what went wrong
-                                    });
-                                }
-                                else if (google.loader.ClientLocation)
-                                {
-                                    var lat = google.loader.ClientLocation.latitude;
-                                    var lon = google.loader.ClientLocation.longitude
-                                    var center = new google.maps.LatLng(lat, lon);
-
-                                    map.setCenter(center);
-                                    map.setZoom(defaultZoomLevel);
-                                }
-
                                 loadAll = false;
                             }
                         },
@@ -535,14 +506,14 @@ function changeLocation(zipCode)
             map.setZoom(defaultZoomLevel);
 
             $.removeCookie('kowop_location');
-            $.cookie('kowop_location', zipCode);
+            $.cookie('kowop_location', zipCode, { expires:30, path:'/' });
         }
     });
 }
 
 function detectLocation()
 {
-    $.removeCookie('kowop_location');
+    $.removeCookie('kowop_location', { path:'/' });
 
     var map = $("#map").gmap3("get");
 

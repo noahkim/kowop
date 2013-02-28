@@ -88,8 +88,7 @@
     <div class="six columns">
         <div class="row">
             <div class="twelve columns spacebot10 detailsMap">
-                <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+                <div id="map"></div>
             </div>
         </div>
         <!------- Stats------->
@@ -112,20 +111,21 @@
 
     <script type='text/javascript'>
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             var date = new Date();
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
 
             $('#calendar').fullCalendar({
-                header:{
-                    left:'',
+                header        :{
+                    left  :'',
                     center:'title',
-                    right:'prev,next'
+                    right :'prev,next'
                 },
-                editable:false,
-                events:[
+                editable      :false,
+                events        :[
                     <?php
                     $calendarJS = '';
                     foreach ($model->currentSessions as $i => $session)
@@ -150,28 +150,57 @@ BLOCK;
                     echo $calendarJS;
                     ?>
                 ],
-                eventMouseover:function (event, jsEvent, view) {
-                    if (typeof $(this).data("qtip") !== "object") {
+                eventMouseover:function (event, jsEvent, view)
+                {
+                    if (typeof $(this).data("qtip") !== "object")
+                    {
                         $(this).qtip({
-                            content:{
+                            content :{
                                 url:'<?php echo $this->createAbsoluteUrl("/experience/enrollDialog",
                                     array("id" => $model->Experience_ID)); ?>' + '?session=' + event.session
                             },
                             position:{
                                 corner:{
-                                    target:'topLeft',
+                                    target :'topLeft',
                                     tooltip:'bottomMiddle'
                                 }
                             },
-                            hide:{
+                            hide    :{
                                 fixed:true // Make it fixed so it can be hovered over
                             },
-                            style:{
+                            style   :{
                                 padding:'10px' // Give it some extra padding
                             }});
                     }
                 }
             });
+
+            google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
+            {
+                $("#map").gmap3({
+                    map   :{
+                        options :{
+                            mapTypeId         :google.maps.MapTypeId.ROADMAP,
+                            mapTypeControl    :false,
+                            streetViewControl :false,
+                            zoomControlOptions:{
+                                position:google.maps.ControlPosition.TOP_RIGHT
+                            },
+                            panControlOptions :{
+                                position:google.maps.ControlPosition.TOP_RIGHT
+                            },
+                            zoom              :15,
+                            center            :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>],
+                        },
+                        callback:function ()
+                        {
+                        }
+                    },
+                    marker:{
+                        latLng:[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>]
+                    }
+                });
+            }});
         });
 
     </script>
@@ -181,11 +210,42 @@ BLOCK;
     <div class="six columns">
         <div class="row">
             <div class="twelve columns spacebot10 detailsMap">
-                <iframe width="100%" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=90232&amp;aq=&amp;sll=34.020795,-118.410645&amp;sspn=0.911712,1.443329&amp;ie=UTF8&amp;hq=&amp;hnear=Culver+City,+California+90232&amp;t=m&amp;z=14&amp;ll=34.023688,-118.39002&amp;output=embed"></iframe>
+                <div id="map"></div>
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function ()
+        {
+            google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
+            {
+                $("#map").gmap3({
+                    map   :{
+                        options :{
+                            mapTypeId         :google.maps.MapTypeId.ROADMAP,
+                            mapTypeControl    :false,
+                            streetViewControl :false,
+                            zoomControlOptions:{
+                                position:google.maps.ControlPosition.TOP_RIGHT
+                            },
+                            panControlOptions :{
+                                position:google.maps.ControlPosition.TOP_RIGHT
+                            },
+                            zoom              :15,
+                            center            :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>],
+                        },
+                        callback:function ()
+                        {
+                        }
+                    },
+                    marker:{
+                        latLng:[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>]
+                    }
+                });
+            }});
+        });
+    </script>
 
     <?php endif; ?>
 

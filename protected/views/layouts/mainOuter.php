@@ -41,7 +41,11 @@
     <script src="/ui/sitev2/javascripts/wysiwyg.js"></script>
     <script src="/ui/sitev2/javascripts/wysiwyg_advanced.js"></script>
     <script src="/ui/sitev2/javascripts/jeditable.js"></script>
+    <script src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
+    <script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+
 
     <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>
 </head>

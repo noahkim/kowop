@@ -170,8 +170,8 @@ class ExperienceController extends Controller
 
             if (isset($imageFiles) && count($imageFiles) > 0)
             {
-                ExperienceToContent::model()->deleteAll('Experience_ID = :Experience_ID',
-                    array(':Experience_ID' => $model->Experience_ID));
+                /*ExperienceToContent::model()->deleteAll('Experience_ID = :Experience_ID',
+                    array(':Experience_ID' => $model->Experience_ID));*/
 
                 foreach ($imageFiles as $imageFile)
                 {
@@ -518,6 +518,12 @@ BLOCK;
     public function actionSignUp($id)
     {
         $model = $this->loadModel($id);
+
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        if ($user->User_ID == $model->createUser->User_ID)
+        {
+            $this->redirect(array('view', 'id' => $model->Experience_ID));
+        }
 
         $session = null;
         $sessionID = null;

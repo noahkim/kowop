@@ -171,19 +171,6 @@ class UserController extends Controller
         ));
     }
 
-    public function actionClassReport()
-    {
-        $this->layout = false;
-
-        $id = Yii::app()->user->id;
-        $model = $this->loadModel($id);
-
-        $filter = json_decode($_REQUEST['filter']);
-        $results = $model->getClassReport($filter);
-
-        echo json_encode($results);
-    }
-
     public function actionSubmitProfileChange()
     {
         $model = $this->loadModel(Yii::app()->user->id);
@@ -196,7 +183,7 @@ class UserController extends Controller
             $attributes = array($attribute => $value);
             $model->attributes = $attributes;
 
-            $model->save();
+            $model->save(false);
 
             $this->layout = false;
             echo $value;

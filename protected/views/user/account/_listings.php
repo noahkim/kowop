@@ -1,104 +1,25 @@
 <!------- right column ------------->
 <div class="nine columns accountClasses">
-    <h1>Classes I'm teaching</h1>
-    <!---- Stats ------>
-    <div class="row">
-        <div class="detailStats">
-            <div class="row">
-                <div class="two columns">
-                    <label class="right inline">Custom Range</label>
-                </div>
-                <div class="three columns">
-                    <input id="datepicker-start" type="text">
-                </div>
-                <div class="three columns">
-                    <input id="datepicker-end" type="text">
-                </div>
-                <div class="two columns">
-                    <label class="right inline">Choose class</label>
-                </div>
-                <div class="two columns">
-                    <select id='classFilter'>
-                        <option value="active">All active classes</option>
-                        <option value="all">All classes ever</option>
-                        <option value="past">Past classes</option>
-                        <?php
-                            foreach($model->experiences as $class)
-                            {
-                                echo "<option value='{$class->Experience_ID}'>{$class->Name}</option>\n";
-                            }
-                        ?>
-                    </select>
-                </div>
-            </div>
+    <h1>My listings</h1>
 
-            <h4>To Date</h4>
+    <!----- current listings --------->
+    <span class="profileCount"><?php echo count($model->experiences(array('scopes' => array('active', 'current')))); ?></span>
 
-            <div class="statBox">
-                Students<span id='studentsToDate'></span>
-            </div>
-            <div class="statBox">
-                Net Income<span id='netIncomeToDate'></span>
-            </div>
-            <div class="statBox">
-                Hours Taught<span id='hoursTaught'></span>
-            </div>
-
-            <h4>Enrolled</h4>
-
-            <div class="statBox">
-                Students<span id='studentsEnrolled'></span>
-            </div>
-            <div class="statBox">
-                Projected Income<span id='projectedIncome'></span>
-            </div>
-            <div class="statBox">
-                Hours to Teach<span id='hoursToTeach'></span>
-            </div>
-
-            <h4>Host Stats</h4>
-
-            <div class="statBox">
-                Avg. Per Session<span id='avgPerClass'></span>
-            </div>
-            <div class="statBox">
-                Avg. Per Hour<span id='avgPerHour'></span>
-            </div>
-            <div class="statBox">
-                Net Income<span id='netIncomeTeacher'></span>
-            </div>
-        </div>
-    </div>
-    <!----- end Stats----->
-    <!----- currently teaching --------->
-    <?php
-    //Start <= now() AND
-    $condition = 'End >= now() AND Status = ' . ExperienceStatus::Active;
-    ?>
-    <span class="profileCount"><?php echo count($model->experiences(array('condition' => $condition))); ?></span>
-
-    <h2>Currently teaching</h2>
+    <h2>Current listings</h2>
 
     <div class="row">
         <?php
 
         $index = 1;
 
-        $classes = $model->experiences(array('condition' => $condition));
+        $experiences = $model->experiences(array('scopes' => array('active', 'current')));
 
-        foreach ($classes as $class)
+        foreach ($experiences as $experience)
         {
-            $imgLink = 'http://placehold.it/400x300';
-
-            if (count($class->contents) > 0)
-            {
-                $imgLink = $class->contents[0]->Link;
-            }
-
-            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+            $link = CHtml::link($experience->Name, array('/experience/view', 'id' => $experience->Experience_ID));
 
             $end = '';
-            if ($index == count($classes))
+            if ($index == count($experiences))
             {
                 $end = 'end';
             }
@@ -106,9 +27,9 @@
             echo <<<BLOCK
                 <div class="three columns {$end}">
                     <div class="profileTile">
-                        <img src="{$imgLink}">
+                        <img src="{$experience->picture}">
                         <span class="profileClassTitle">
-                            {$classLink}
+                            {$link}
                         </span>
                     </div>
                 </div>
@@ -118,36 +39,26 @@ BLOCK;
         }
         ?>
     </div>
-    <!------ end currently teaching -------->
-    <!------ Past taught classes ------------->
-    <?php
-    $condition = 'End < now() AND Status = ' . ExperienceStatus::Active;
-    ?>
+    <!------ end current listings -------->
 
-    <span class="profileCount"><?php echo count($model->experiences(array('condition' => $condition))); ?></span>
+    <!------ Past listings ------------->
+    <span class="profileCount"><?php echo count($model->experiences(array('scopes' => array('active', 'past')))); ?></span>
 
-    <h2>Past taught classes</h2>
+    <h2>Past listings</h2>
 
     <div class="row">
         <?php
 
         $index = 1;
 
-        $classes = $model->experiences(array('condition' => $condition));
+        $experiences = $model->experiences(array('scopes' => array('active', 'past')));
 
-        foreach ($classes as $class)
+        foreach ($experiences as $experience)
         {
-            $imgLink = 'http://placehold.it/400x300';
-
-            if (count($class->contents) > 0)
-            {
-                $imgLink = $class->contents[0]->Link;
-            }
-
-            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+            $link = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
 
             $end = '';
-            if ($index == count($classes))
+            if ($index == count($experiences))
             {
                 $end = 'end';
             }
@@ -155,9 +66,9 @@ BLOCK;
             echo <<<BLOCK
                 <div class="three columns {$end}">
                     <div class="profileTile">
-                        <img src="{$imgLink}">
+                        <img src="{$experience->picture}">
                         <span class="profileClassTitle">
-                            {$classLink}
+                            {$link}
                         </span>
                     </div>
                 </div>
@@ -167,73 +78,7 @@ BLOCK;
         }
         ?>
     </div>
-    <!------ End Past taught classes ---->
+    <!------ End past listings ---->
+
     <!-------- end right column --------->
 </div>
-
-<script>
-    $(document).ready(function () {
-
-        $('#datepicker-start').Zebra_DatePicker({
-            format:'m/d/Y',
-            pair:$('#datepicker-end'),
-            onSelect: function() {
-                populateStats();
-            },
-            onClear: function() {
-                populateStats();
-            }
-        });
-
-        $('#datepicker-end').Zebra_DatePicker({
-            format:'m/d/Y',
-            direction:1,
-            onSelect: function() {
-                populateStats();
-            },
-            onClear: function() {
-                populateStats();
-            }
-        });
-
-        $('#classFilter').change(function() {
-            populateStats();
-        });
-
-        populateStats();
-    });
-
-    function populateStats()
-    {
-        var start = $('#datepicker-start').val();
-        var end = $('#datepicker-end').val();
-        var classFilter = $('#classFilter').val();
-
-        var filter = {
-            start: start,
-            end: end,
-            classFilter: classFilter
-        };
-
-        var data = 'filter=' + JSON.stringify(filter);
-
-        $.ajax({
-            url: '<?php echo Yii::app()->createAbsoluteUrl("user/classReport"); ?>',
-            data: data,
-            dataType: 'json',
-            success: function(data) {
-                $('#studentsToDate').text(data.studentsToDate);
-                $('#netIncomeToDate').text('$' + data.netIncomeToDate);
-                $('#hoursTaught').text(data.hoursTaught);
-
-                $('#studentsEnrolled').text(data.studentsEnrolled);
-                $('#projectedIncome').text('$' + data.projectedIncome);
-                $('#hoursToTeach').text(data.hoursToTeach);
-
-                $('#avgPerClass').text('$' + data.avgPerClass);
-                $('#avgPerHour').text('$' + data.avgPerHour);
-                $('#netIncomeTeacher').text('$' + data.netIncomeTeacher);
-            }
-        })
-    }
-</script>

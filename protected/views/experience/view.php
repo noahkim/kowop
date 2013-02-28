@@ -112,6 +112,13 @@
     <!------- end main content container----->
 </div>
 
+<style>
+    #map {
+        width: 100%;
+        height: 200px;
+    }
+</style>
+
 <script type="text/javascript">
     $(document).ready(function ()
     {
@@ -149,3 +156,4 @@
         });
     });
 </script>
+

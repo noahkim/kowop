@@ -22,32 +22,30 @@
                 'enableAjaxValidation' => false,
             )); ?>
 
-                <form>
-                    <div class="row">
-                        <div class="two columns">
-                            <label class="right inline">Email</label>
-                        </div>
-                        <div class="ten columns">
-                            <?php echo $form->textField($model, 'username', array('class' => 'twelve')); ?>
-                        </div>
+                <div class="row">
+                    <div class="two columns">
+                        <label class="right inline">Email</label>
                     </div>
-                    <div class="row">
-                        <div class="two columns">
-                            <label class="right inline">Password</label>
-                        </div>
-                        <div class="ten columns">
-                            <?php echo $form->passwordField($model, 'password', array('class' => 'twelve')); ?>
-                        </div>
+                    <div class="ten columns">
+                        <?php echo $form->textField($model, 'username', array('class' => 'twelve')); ?>
                     </div>
-                    <div class="row">
-                        <div class="four columns offset-by-two">
-                            <a href="#"
-                               class="button twelve"
-                               onclick="document.forms['login-form'].submit(); return false;">Sign in</a>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="two columns">
+                        <label class="right inline">Password</label>
                     </div>
+                    <div class="ten columns">
+                        <?php echo $form->passwordField($model, 'password', array('class' => 'twelve')); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four columns offset-by-two">
+                        <a href="#"
+                           class="button twelve"
+                           onclick="document.forms['login-form'].submit(); return false;">Sign in</a>
+                    </div>
+                </div>
 
-                </form>
                 <?php $this->endWidget('CActiveForm'); ?>
 
                 <p>

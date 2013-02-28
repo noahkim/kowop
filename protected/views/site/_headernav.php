@@ -9,7 +9,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                activities &amp; classes for<br/> kids &amp; families
+                activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
 
@@ -51,8 +51,61 @@
                 <?php echo CHtml::link("sign up", $this->createUrl("user/create")); ?>
             </span>
             <span class="navLogin">
-                <?php echo CHtml::link("log in", $this->createUrl("site/login")); ?>
+                <a href="#">log in</a>
             </span>
+            <!----- login box dropdown---->
+            <div class="loginbox">
+                <div class="login">
+                    <p>Log in using Facebook</p>
+                    <a href="<?php echo Yii::app()->params['siteBase']; ?>/hybridauth/default/login/?provider=facebook">
+                        <img src="/ui/sitev2/images/facebook.jpg"> </a>
+
+                    <p>- or -</p>
+
+                    <p>Log in with your Kowop account</p>
+
+                    <?php
+                    $loginModel = new LoginForm;
+
+                    $form = $this->beginWidget(
+                        'CActiveForm', array(
+                        'id' => 'login-form-header',
+                        'enableAjaxValidation' => false,
+                        'action' => array('site/login'),
+                    ));
+                    ?>
+
+                    <?php echo $form->textField($loginModel, 'username', array('class' => 'twelve', 'placeholder' => 'login email')); ?>
+                    <?php echo $form->passwordField($loginModel, 'password', array('class' => 'twelve', 'placeholder' => 'password')); ?>
+                    <a href="#" class="button twelve" onclick="document.forms['login-form-header'].submit(); return false;">Sign
+                        in</a>
+
+                    <?php $this->endWidget('CActiveForm'); ?>
+
+                    <p>
+                        <a href="#">I forgot</a> | <?php echo CHtml::link('Sign up', array('/user/create')); ?> | <a
+                            href="#"
+                            class="closelogin">Close</a>
+                    </p>
+                </div>
+            </div>
+            <!--- End login box dropdown---->
+            <script>
+                $(document).ready(function ()
+                {
+                    $('.navLogin').click(function (e)
+                    {
+                        e.preventDefault();
+                        $('.loginbox').slideToggle('fast');
+                    });
+
+                    $('.closelogin').click(function (e)
+                    {
+                        e.preventDefault();
+                        $('.loginbox').slideToggle('fast');
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>
@@ -66,7 +119,7 @@
         <div class="three columns">
             <div class="logo">
                 <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
-                activities &amp; classes for<br/> kids &amp; families
+                activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
 
@@ -120,7 +173,7 @@
                 <div class="submenu" style="display: none;">
                     <ul class="root">
                         <li>
-                            <?php echo CHtml::link("post on Kowop", $this->createUrl("/experience/create")); ?>
+                            <?php echo CHtml::link("post on Kowop", $this->createUrl("site/page", array('view' => 'postingAgreement'))); ?>
                         </li>
                         <li>
                             <?php echo CHtml::link("sign out", $this->createUrl("site/logout")); ?>

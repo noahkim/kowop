@@ -16,7 +16,7 @@ class Mail
             'region' => Yii::app()->params['AmazonSESRegion'],
         ));
 
-        $defaultFrom = 'noreply@kowop.com';
+        $this->defaultFrom = 'noreply@kowop.com';
     }
 
     protected function __clone()
