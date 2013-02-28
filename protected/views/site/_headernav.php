@@ -8,7 +8,7 @@
     <div class="row">
         <div class="three columns">
             <div class="logo">
-                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                <?php echo CHtml::link('<img src="' . Yii::app()->params['siteBase'] . '/images/logo_small.png">', Yii::app()->homeUrl); ?>
                 activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="three columns">
                     <?php echo $form->textField($model, 'location', array('value' => $model->location,
-                    'placeholder' => 'city,state or zip', 'class' => 'twelve')); ?>
+                    'placeholder' => 'city or zip', 'class' => 'twelve')); ?>
                 </div>
                 <div class="two columns">
                     <a href="#"
@@ -58,7 +58,7 @@
                 <div class="login">
                     <p>Log in using Facebook</p>
                     <a href="<?php echo Yii::app()->params['siteBase']; ?>/hybridauth/default/login/?provider=facebook">
-                        <img src="/ui/sitev2/images/facebook.jpg"> </a>
+                        <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/facebook.jpg"> </a>
 
                     <p>- or -</p>
 
@@ -118,7 +118,7 @@
     <div class="row">
         <div class="three columns">
             <div class="logo">
-                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                <?php echo CHtml::link('<img src="' . Yii::app()->params['siteBase'] . '/images/logo_small.png">', Yii::app()->homeUrl); ?>
                 activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="three columns">
                     <?php echo $form->textField($model, 'location', array('value' => $model->location,
-                    'placeholder' => 'city,state or zip', 'class' => 'twelve')); ?>
+                    'placeholder' => 'city or zip', 'class' => 'twelve')); ?>
                 </div>
                 <div class="two columns">
                     <a href="#"

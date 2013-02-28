@@ -16,7 +16,7 @@
         <div class="three columns">
             <?php echo $form->textField($model, 'location', array('value' => $model->location,
             'class' => 'homeSearchinput twelve searchInput',
-            'placeholder' => 'city,state or zip')); ?>
+            'placeholder' => 'city or zip')); ?>
         </div>
         <div class="two columns">
             <a href="#" onclick="document.forms['search-form'].submit(); return false;" class="large button twelve">Search</a>

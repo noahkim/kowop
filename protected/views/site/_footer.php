@@ -7,18 +7,16 @@
             <h5>Discover</h5>
             <ul>
                 <li>
-                    <?php echo CHtml::link("how it works", $this->createUrl("site/page", array('view' => 'howitworks'))); ?>
+                    <?php echo CHtml::link("how it works", array("site/page", 'view' => 'howitworks')); ?>
                 </li>
                 <li>
-                    <?php
-                    echo CHtml::link("post on kowop", $this->createUrl("site/page", array('view' => 'postingAgreement')));
-                    ?>
+                    <?php echo CHtml::link("post on kowop", array("site/page", 'view' => 'postingAgreement')); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("explore classes &amp; activities", $this->createUrl("experience/search")); ?>
+                    <?php echo CHtml::link("explore classes &amp; activities", array("experience/search")); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("make a request", $this->createUrl("request/create")); ?>
+                    <?php echo CHtml::link("make a request", array("request/create")); ?>
                 </li>
             </ul>
         </div>
@@ -26,13 +24,17 @@
             <h5>Company</h5>
             <ul>
                 <li>
-                    <?php echo CHtml::link("about Kowop", $this->createUrl("site/page", array('view' => 'about'))); ?>
+                    <?php echo CHtml::link("about Kowop", array("site/page", 'view' => 'about')); ?>
                 </li>
                 <li>
-                    <?php echo CHtml::link("FAQ", $this->createUrl("site/page", array('view' => 'faq'))); ?>
+                    <?php echo CHtml::link("FAQ", array("site/page", 'view' => 'faq')); ?>
                 </li>
-                <li><a href="#">policies</a></li>
-                <li><a href="#">contact</a></li>
+                <li>
+                    <?php echo CHtml::link("policies", array("site/page", 'view' => 'policies')); ?>
+                </li>
+                <li>
+                    <?php echo CHtml::link("contact", array("site/contact")); ?>
+                </li>
                 <li><a href="#">terms &amp; privacy</a></li>
             </ul>
         </div>
@@ -45,6 +47,6 @@
         <div class="six columns"></div>
     </div>
     <div class="row">
-        <div class="two columns offset-by-five footerlogo"><img src="/ui/sitev2/images/logo_small.png"></div>
+        <div class="two columns offset-by-five footerlogo"><img src="<?php echo Yii::app()->params['siteBase']; ?>/images/logo_small.png"></div>
     </div>
 </div>

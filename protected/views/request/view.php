@@ -88,15 +88,15 @@
     <!---- legend ---->
     <div class="row">
         <div class="twelve columns legend">
-            <img src="/ui/sitev2/images/icon_dontknow.png">
+            <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/icon_dontknow.png">
             <span>Don't know</span>
-            <img src="/ui/sitev2/images/icon_na.png">
+            <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/icon_na.png">
             <span>Not Available</span>
-            <img src="/ui/sitev2/images/icon_daytime.png">
+            <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/icon_daytime.png">
             <span>Daytime</span>
-            <img src="/ui/sitev2/images/icon_evening.png">
+            <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/icon_evening.png">
             <span>Evening</span>
-            <img src="/ui/sitev2/images/icon_allday.png">
+            <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/icon_allday.png">
             <span>All Day</span>
         </div>
     </div>

@@ -13,7 +13,7 @@
             <div class="login">
                 <span class="homeBlurbcopy">Create an account using Facebook...</span>
                 <a href="<?php echo Yii::app()->params['siteBase']; ?>/hybridauth/default/login/?provider=facebook">
-                    <img src="/ui/sitev2/images/facebook.jpg"> </a>
+                    <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/facebook.jpg"> </a>
 
                 <span class="homeBlurbcopy">...or create an account using your e-mail...</span>
 

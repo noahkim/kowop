@@ -51,15 +51,20 @@ class Mail
     {
         $alertTo = array("ilija1@gmail.com", "ilija@kowop.com", "noah@kowop.com");
 
-        $args = array(
-            'Source' => $this->defaultFrom,
-            'Destination' => array('ToAddresses' => $alertTo),
-            'Message' => array(
-                'Subject' => array('Data' => $subject),
-                'Body' => array('Html' => array('Data' => $message))
-            )
-        );
+        $errors = '';
 
-        $this->emailClient->sendEmail($args);
+        foreach ($alertTo as $to)
+        {
+            try
+            {
+                Mail::Instance()->Send($to, $subject, $message);
+            }
+            catch (Exception $e)
+            {
+                $errors .= "Error sending mail to {$to}.\n";
+            }
+        }
+
+        Yii::log($errors, 'info', 'email');
     }
 }

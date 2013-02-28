@@ -102,6 +102,12 @@ return array(
                     'categories' => 'BalancedCallback',
                     'logFile' => 'balancedCallback.log',
                 ),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'info',
+                    'categories' => 'Email',
+                    'logFile' => 'email.log',
+                ),
                 // uncomment the following to show log messages on web pages
                 /*
                 array(
@@ -125,7 +131,7 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
-        'siteBase' => '/yii/kowop',
+        'siteBase' => '',
         'uploads' => '/var/www/yii/kowop/uploads',
         'temp' => '/var/www/yii/kowop/temp',
         'balancedMarketPlaceURI' => '/v1/marketplaces/TEST-MPShQ51qyQNTEoxoNRJA9zW',

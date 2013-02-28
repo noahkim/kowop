@@ -44,7 +44,7 @@
             cancel:'Cancel',
             rows:20,
             submit:'OK',
-            indicator:'<img src="/ui/sitev2/images/loading.gif">',
+            indicator:'<img src="<?php echo Yii::app()->params['siteBase']; ?>/images/loading.gif">',
             tooltip:'Click to edit...'
         });
 

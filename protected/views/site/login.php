@@ -12,7 +12,7 @@
             <div class="login">
                 <span class="homeBlurbcopy">Log in using your Facebook account</span>
                 <a href="<?php echo Yii::app()->params['siteBase']; ?>/hybridauth/default/login/?provider=facebook">
-                    <img src="/ui/sitev2/images/facebook.jpg"> </a>
+                    <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/facebook.jpg"> </a>
 
                 <span class="homeBlurbcopy">Log in with your Kowop account</span>
 

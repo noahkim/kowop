@@ -17,7 +17,7 @@ class SiteController extends Controller
             // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
                 'class' => 'CViewAction',
-                'layout' => '//layouts/mainNoSearch'
+                'layout' => '//layouts/main'
             ),
         );
     }
@@ -100,5 +100,22 @@ class SiteController extends Controller
 
         $results = file_get_contents($url);
         echo $results;
+    }
+
+    public function actionContact()
+    {
+        $model = new ContactForm;
+
+        if (isset($_POST['ContactForm']))
+        {
+            $model->attributes = $_POST['ContactForm'];
+
+            if ($model->save())
+            {
+                $this->redirect(Yii::app()->homeUrl);
+            }
+        }
+
+        $this->render('contact', array('model' => $model));
     }
 }

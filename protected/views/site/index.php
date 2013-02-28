@@ -6,19 +6,19 @@
     <!-- Set the viewport width to device width for mobile -->
     <meta name="viewport" content="width=device-width" />
 
-    <link rel="stylesheet" href="/ui/sitev2/fonts/proxima/stylesheet.css">
-    <link rel="stylesheet" href="/ui/sitev2/fonts/susa/stylesheet.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/fonts/proxima/stylesheet.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/fonts/susa/stylesheet.css">
     <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/ui/sitev2/stylesheets/foundation.css">
-    <link rel="stylesheet" href="/ui/sitev2/stylesheets/main.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/css/foundation.css">
+    <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/css/main.css">
 
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script src="/ui/sitev2/javascripts/modernizr.foundation.js"></script>
-    <script src="/ui/sitev2/javascripts/foundation.min.js"></script>
-    <script src="/ui/sitev2/javascripts/app.js"></script>
-    <script src="/ui/sitev2/javascripts/account_toggle.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/modernizr.foundation.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/foundation.min.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/app.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/account_toggle.js"></script>
 
     <script type="text/javascript"
             src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
@@ -41,7 +41,7 @@
     <div class="row">
         <div class="three columns">
             <div class="logo">
-                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                <?php echo CHtml::link('<img src="' . Yii::app()->params['siteBase'] . '/images/logo_small.png">', Yii::app()->homeUrl); ?>
                 activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <div class="login">
                     <p>Log in using Facebook</p>
                     <a href="<?php echo Yii::app()->params['siteBase']; ?>/hybridauth/default/login/?provider=facebook">
-                        <img src="/ui/sitev2/images/facebook.jpg"> </a>
+                        <img src="<?php echo Yii::app()->params['siteBase']; ?>/images/facebook.jpg"> </a>
 
                     <p>- or -</p>
 
@@ -110,7 +110,7 @@
     <div class="row">
         <div class="three columns">
             <div class="logo">
-                <?php echo CHtml::link('<img src="/ui/sitev2/images/logo_small.png">', Yii::app()->homeUrl); ?>
+                <?php echo CHtml::link('<img src="' . Yii::app()->params['siteBase'] . '/images/logo_small.png">', Yii::app()->homeUrl); ?>
                 activities &amp; classes for<br /> kids &amp; families
             </div>
         </div>
@@ -199,7 +199,7 @@
             </div>
             <div class="three columns">
                 <?php echo $form->textField($model, 'location', array('value' => $model->location,
-                'placeholder' => 'city,state or zip')); ?>
+                'placeholder' => 'city or zip')); ?>
             </div>
             <div class="one columns">
                 <a href="#" onclick="document.forms['search-form'].submit(); return false;" class="button">Search</a>
@@ -222,7 +222,7 @@
         <div class="four columns">
             <div class="homeIntro">
                 <?php
-                echo CHtml::link("<img src='/ui/sitev2/images/icon_homepage_post.gif'/><h5>Post an activity or class</h5>",
+                echo CHtml::link("<img src='" . Yii::app()->params['siteBase'] . "/images/icon_homepage_post.gif'/><h5>Post an activity or class</h5>",
                     $this->createUrl("site/page", array('view' => 'postingAgreement')));
                 ?>
             </div>
@@ -231,7 +231,7 @@
             <div class="homeIntro">
                 <?php
                 echo CHtml::link(
-                    "<img src='/ui/sitev2/images/icon_homepage_discover.gif' /><h5>Find something for the whole family</h5>",
+                    "<img src='" . Yii::app()->params['siteBase'] . "/images/icon_homepage_discover.gif' /><h5>Find something for the whole family</h5>",
                     array('/experience/search')
                 );
                 ?>
@@ -254,7 +254,7 @@
                 <?php $this->endWidget('CActiveForm'); ?>
 
                 <a href="#" onclick="document.forms['search-form-kids'].submit(); return false;">
-                    <img src='/ui/sitev2/images/icon_homepage_kids.gif' /><h5>Find classes &amp; activities for
+                    <img src='<?php echo Yii::app()->params['siteBase']; ?>/images/icon_homepage_kids.gif' /><h5>Find classes &amp; activities for
                     kids</h5>
                 </a>
             </div>

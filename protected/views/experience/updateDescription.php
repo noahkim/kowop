@@ -132,7 +132,7 @@
     {
         var editor = new wysihtml5.Editor("description", {
             toolbar    :"toolbar",
-            stylesheets:"/ui/sitev2/stylesheets/wysiwyg.css",
+            stylesheets:"<?php echo Yii::app()->params['siteBase']; ?>/css/wysiwyg.css",
             parserRules:wysihtml5ParserRules
         });
 

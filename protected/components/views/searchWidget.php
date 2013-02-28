@@ -10,7 +10,7 @@
         <?php echo $form->textField($model, 'keywords', array('value' => $model->keywords, 'class' => 'twelve', 'placeholder' => 'What are you looking for?')); ?>
     </div>
     <div class="three columns">
-        <input type="text" class="twelve" placeholder="city,state or zip">
+        <input type="text" class="twelve" placeholder="city or zip">
     </div>
     <div class="two columns">
         <a href="#" onclick="document.forms['search-form'].submit(); return false;"
