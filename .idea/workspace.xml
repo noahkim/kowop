@@ -25,19 +25,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="_headernav.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/site/_headernav.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="128" column="45" selection-start="5297" selection-end="5297" vertical-scroll-proportion="-11.769231">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="236" column="18" selection-start="10637" selection-end="10637" vertical-scroll-proportion="-0.17075893">
+            <state line="275" column="39" selection-start="12451" selection-end="12451" vertical-scroll-proportion="-11.769231">
               <folding>
                 <marker date="1362094051726" expanded="true" signature="2902:2987" placeholder="..." />
                 <marker date="1362094051726" expanded="true" signature="2943:2987" placeholder="..." />
@@ -46,6 +37,24 @@
                 <marker date="1362094051726" expanded="true" signature="3671:3780" placeholder="..." />
                 <marker date="1362094051726" expanded="true" signature="4973:5048" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/views/site/login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="102" selection-start="673" selection-end="673" vertical-scroll-proportion="-9.153846">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/config/main.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="130" column="49" selection-start="4808" selection-end="4808" vertical-scroll-proportion="1.390539">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,11 +83,11 @@
         <option value="$PROJECT_DIR$/protected/views/experience/_createForm5.php" />
         <option value="$PROJECT_DIR$/protected/views/layouts/createSessions.php" />
         <option value="$PROJECT_DIR$/protected/views/request/view.php" />
-        <option value="$PROJECT_DIR$/protected/config/main.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/protected/views/site/_headernav.php" />
         <option value="$PROJECT_DIR$/protected/views/site/_footer.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
+        <option value="$PROJECT_DIR$/protected/config/main.php" />
       </list>
     </option>
   </component>
@@ -526,13 +535,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="61" selection-start="632" selection-end="632" vertical-scroll-proportion="-7.6923075">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/user/create.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="61" selection-start="634" selection-end="634" vertical-scroll-proportion="-7.6923075">
@@ -561,23 +563,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/config/main.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="36" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.41144115">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/content/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="0" selection-start="405" selection-end="405" vertical-scroll-proportion="0.3740374">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/views/site/_headernav.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="45" selection-start="5297" selection-end="5297" vertical-scroll-proportion="-11.769231">
           <folding />
         </state>
       </provider>
@@ -589,9 +577,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/site/_headernav.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="45" selection-start="5297" selection-end="5297" vertical-scroll-proportion="0.33663365">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="236" column="18" selection-start="10637" selection-end="10637" vertical-scroll-proportion="-0.17075893">
+        <state line="275" column="39" selection-start="12451" selection-end="12451" vertical-scroll-proportion="-11.769231">
           <folding>
             <marker date="1362094051726" expanded="true" signature="2902:2987" placeholder="..." />
             <marker date="1362094051726" expanded="true" signature="2943:2987" placeholder="..." />
@@ -600,6 +595,20 @@
             <marker date="1362094051726" expanded="true" signature="3671:3780" placeholder="..." />
             <marker date="1362094051726" expanded="true" signature="4973:5048" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/views/site/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="102" selection-start="673" selection-end="673" vertical-scroll-proportion="-9.153846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/config/main.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="49" selection-start="4808" selection-end="4808" vertical-scroll-proportion="1.390539">
+          <folding />
         </state>
       </provider>
     </entry>
