@@ -210,6 +210,14 @@ class Payment extends CActiveRecord
         {
             $data = json_decode($post);
 
+            if(! isset($data->type))
+            {
+                $log .= "Error parsing data: \n";
+                $log .= $post . "\n";
+                $log .= print_r($data, true) . "\n";
+                throw new Exception("Error parsing data");
+            }
+
             if ($data->type == 'debit.succeeded')
             {
                 try
