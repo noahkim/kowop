@@ -45,6 +45,8 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->loadModel($id);
+
         $section = 0;
 
         if (isset($_REQUEST['s']))
@@ -57,10 +59,87 @@ class UserController extends Controller
             $section = 0;
         }
 
-        $this->render('view', array(
-            'section' => $section,
-            'model' => $this->loadModel($id),
-        ));
+        if ($section == AccountSections::MyCustomers)
+        {
+            $allPayments = $model->customerPayments;
+
+            $experienceID = null;
+            if (isset($_REQUEST['experience']))
+            {
+                $experienceID = $_REQUEST['experience'];
+                if (is_numeric($experienceID))
+                {
+                    $allPayments = $model->customerPayments(array('condition' => 'customerPayments.Experience_ID = ' . $experienceID));
+                }
+            }
+
+            $search = null;
+            if (isset($_REQUEST['search']))
+            {
+                $search = $_REQUEST['search'];
+
+                $results = array();
+                foreach ($allPayments as $payment)
+                {
+                    if (stristr($payment->code, $search))
+                    {
+                        $results[] = $payment;
+                    }
+                    elseif (stristr($payment->buyer->display, $search))
+                    {
+                        $results[] = $payment;
+                    }
+                    elseif (stristr($payment->buyer->fullname, $search))
+                    {
+                        $results[] = $payment;
+                    }
+                }
+
+                $allPayments = $results;
+            }
+
+            $paymentsPerPage = 20;
+            $totalPages = ceil(count($allPayments) / $paymentsPerPage);
+
+            if ($totalPages == 0)
+            {
+                $totalPages = 1;
+            }
+
+            $page = 1;
+            if (isset($_REQUEST['page']))
+            {
+                $page = $_REQUEST['page'];
+            }
+
+            $offset = ($page - 1) * $paymentsPerPage;
+            $payments = array_slice($allPayments, $offset, $paymentsPerPage);
+
+            $data = array(
+                'payments' => $payments,
+                'page' => $page,
+                'totalPages' => $totalPages,
+                'paymentsPerPage' => $paymentsPerPage,
+                'experience' => $experienceID,
+                'search' => $search,
+            );
+
+            $this->render('view', array(
+                'section' => $section,
+                'model' => $model,
+                'data' => $data,
+            ));
+
+        }
+        else
+        {
+            $this->render('view', array(
+                'section' => $section,
+                'model' => $model,
+            ));
+        }
+
+
     }
 
     /**

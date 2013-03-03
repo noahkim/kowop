@@ -70,6 +70,7 @@ class Session extends CActiveRecord
         return array(
             'past' => array('condition' => "{$t}.End <= now()"),
             'current' => array('condition' => "{$t}.End > now()"),
+            'upcoming' => array('condition' => "{$t}.Start >= now()", 'order' => 'Start asc'),
         );
     }
 

@@ -254,8 +254,8 @@
                 <?php $this->endWidget('CActiveForm'); ?>
 
                 <a href="#" onclick="document.forms['search-form-kids'].submit(); return false;">
-                    <img src='<?php echo Yii::app()->params['siteBase']; ?>/images/icon_homepage_kids.gif' /><h5>Find classes &amp; activities for
-                    kids</h5>
+                    <img src='<?php echo Yii::app()->params['siteBase']; ?>/images/icon_homepage_kids.gif' /><h5>Find
+                    classes &amp; activities for kids</h5>
                 </a>
             </div>
         </div>
@@ -267,7 +267,10 @@
         <?php
         $experiences = Experience::model()->active()->current()->findAll(array('select' => '*, rand() as rand',
             'limit' => 4, 'order' => 'rand',));
-        foreach ($experiences as $experience)
+
+        $count = count($experiences);
+
+        foreach ($experiences as $i => $experience)
         {
             $imageHTML = '<img src="' . ($experience->picture ? $experience->picture : 'http://placehold.it/400x300') . '" />';
             $imageLink = CHtml::link($imageHTML, array('/experience/view', 'id' => $experience->Experience_ID));
@@ -313,9 +316,15 @@
                 $sessionHTML = "\${$experience->Price}";
             }
 
+            $end = '';
+            if (($count < 4) && ($i == ($count - 1)))
+            {
+                $end = 'end';
+            }
+
             echo <<<BLOCK
         <!----------- 1 tile ---------->
-        <div class="three columns">
+        <div class="three columns {$end}">
             <div class="classTile">{$imageLink}
                 {$experienceName}
                 <span class="tileInstructor">by {$hostLink}</span>

@@ -136,6 +136,7 @@
 
 <input type="hidden" name="confirm" value="confirm" />
 <input type="hidden" name="CreditCard_ID" id="CreditCard_ID" />
+<input type='hidden' name="quantity" value="<?php echo $quantity; ?>" />
 
 <?php $this->endWidget('CActiveForm'); ?>
 

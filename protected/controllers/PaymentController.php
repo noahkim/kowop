@@ -2,6 +2,8 @@
 
 class PaymentController extends Controller
 {
+    public $layout = false;
+
     /**
      * @return array action filters
      */
@@ -156,6 +158,7 @@ class PaymentController extends Controller
 
         $outcome = array('success' => 0);
 
+        $transaction = Yii::app()->db->beginTransaction();
         try
         {
             if (isset($_POST['data']) && isset($_POST['merchantData']))
@@ -198,15 +201,29 @@ class PaymentController extends Controller
                     $outcome = array('success' => 0, 'Errors' => $account->getErrors());
                 }
             }
+
+            $transaction->commit();
         }
         catch (Balanced\Errors\IdentityVerificationFailed $error)
         {
+            $transaction->rollback();
+
             /* could not identify this account. */
             $outcome = array('success' => 0, 'Errors' => "redirect merchant to:" . $error->redirect_uri . "\n");
+
         }
         catch (Balanced\Errors\HTTPError $error)
         {
+            $transaction->rollback();
+
             /* TODO: handle 400 and 409 exceptions as required */
+            $outcome = array('success' => 0, 'Errors' => print_r($error, true));
+
+        }
+        catch (Exception $error)
+        {
+            $transaction->rollback();
+
             $outcome = array('success' => 0, 'Errors' => print_r($error, true));
         }
 

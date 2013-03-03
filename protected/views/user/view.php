@@ -1,14 +1,6 @@
 <?php if ($section > 0) : ?>
 
 <?php
-
-    $imageLink = 'http://placehold.it/800x800';
-
-    if ($model->profilePic != null)
-    {
-        $imageLink = $model->profilePic;
-    }
-
     $sections = array();
     foreach (AccountSections::$Lookup as $sectionID => $name)
     {
@@ -24,7 +16,7 @@
 
     <!-------------left column------------->
     <div class="three columns sideNav">
-        <img src='<?php echo $imageLink; ?>' />
+        <img src='<?php echo $model->profilePic; ?>' />
 
         <h2>My account</h2>
         <ul class="side-nav">
@@ -89,7 +81,12 @@
             break;
     }
 
-    echo $this->renderPartial($page, array('model' => $model));
+    if (!isset($data))
+    {
+        $data = null;
+    }
+
+    echo $this->renderPartial($page, array('model' => $model, 'data' => $data));
 
     ?>
 

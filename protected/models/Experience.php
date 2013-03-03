@@ -229,7 +229,7 @@ class Experience extends CActiveRecord
             return null;
         }
 
-        $upcoming = $this->sessions(array('condition' => 'Start >= now()', 'order' => 'Start asc'));
+        $upcoming = $this->sessions(array('scopes' => array('upcoming')));
 
         if (count($upcoming) > 0)
         {

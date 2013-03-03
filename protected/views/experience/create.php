@@ -1,0 +1,1 @@
+<?php echo $this->renderPartial('_createForm' . $step, array('model' => $model)); ?>

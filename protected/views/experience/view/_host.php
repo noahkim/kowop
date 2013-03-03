@@ -84,6 +84,72 @@
             <div id="map"></div>
         </div>
     </div>
+
+    <!------- Stats------->
+    <div class="row">
+        <div class="twelve columns">
+            <div class="detailStats">
+                <div class="statBox"> Signed Up<span><?php echo count($model->enrolled); ?></span></div>
+                <div class="statBox"> Views<span></span></div>
+                <div class="statBox"> Available Until<span><?php echo date('n.j.y', strtotime($model->End)); ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="twelve columns">
+            <div class="detailStats">
+                <div class="statBox">
+                    Type<span><?php echo ExperienceType::$Lookup[$model->ExperienceType]; ?></span></div>
+                <div class="statBox"> For
+                    <span>
+                        <?php
+                        $for = 'Everyone';
+
+                        if ($model->AppropriateAges > 0)
+                        {
+                            $minMaxAges = ExperienceAppropriateAges::GetMinMaxAges($model->AppropriateAges);
+
+                            $minAge = $minMaxAges[0];
+                            $maxAge = $minMaxAges[1];
+
+                            $for = 'Ages ' . $minAge . ' to ' . $maxAge;
+                        }
+
+                        echo $for;
+                        ?>
+                    </span>
+                </div>
+                <div class="statBox"> Category<span><?php echo $model->category->Name; ?></span></div>
+            </div>
+        </div>
+    </div>
+
+    <?php if (($model->Min_occupancy != null) || ($model->Max_occupancy != null)) : ?>
+
+    <div class="row">
+        <div class="twelve columns">
+            <div class="detailStats">
+                <?php
+                if ($model->Min_occupancy != null)
+                {
+                    echo "<div class='statBox'> Min. Seats<span>{$model->Min_occupancy}</span></div>\n";
+                }
+                ?>
+
+                <?php
+                if ($model->Max_occupancy != null)
+                {
+                    echo "<div class='statBox'> Max. Seats<span>{$model->Max_occupancy}</span></div>\n";
+                }
+                ?>
+                <div class="statBox"></div>
+            </div>
+        </div>
+    </div>
+
+    <?php endif; ?>
+    <!---- end stats---->
 </div>
 
 <!----------------- Modal--------------------->
@@ -126,7 +192,7 @@
                             position:google.maps.ControlPosition.TOP_RIGHT
                         },
                         zoom              :15,
-                        center            :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>],
+                        center            :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>]
                     },
                     callback:function ()
                     {

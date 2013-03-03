@@ -1,7 +1,7 @@
 <h4>Session Info</h4>
 <ul>
     <?php
-    echo "<li>{$session->Start} - {$session->End}</li>\n";
+    echo "<li>" . date('g a', strtotime($session->Start)) . " - " . date('g a', strtotime($session->End)) . "</li>\n";
     ?>
 </ul>
 <div class="enrollees spacebot10">
@@ -17,7 +17,7 @@
 
 <?php
 echo CHtml::link('Enroll',
-                 array('/experience/signup', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
-                 array('class' => 'button radius stretch')
+    array('/experience/signup', 'id' => $model->Experience_ID, 'session' => $session->Session_ID),
+    array('class' => 'button radius stretch')
 );
 ?>

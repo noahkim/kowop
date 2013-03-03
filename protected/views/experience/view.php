@@ -3,7 +3,9 @@
     <div class="twelve columns classdetails">
         <!---------------------------------------
                      Main class details
-        ----------------------------------------><!----- Experience Title------->
+        ---------------------------------------->
+
+        <!----- Experience Title------->
         <div class="row">
             <div class="twelve columns">
                 <h1><?php echo $model->Name; ?></h1>

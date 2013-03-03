@@ -2,6 +2,7 @@
                  Search
 ---------------------------------------->
 <div class="bigsearchbar">
+    <?php $model = new ExperienceSearchForm; ?>
 
     <?php $form = $this->beginWidget('CActiveForm', array('id' => 'search-form',
     'action' => Yii::app()->createUrl('/experience/search'),
