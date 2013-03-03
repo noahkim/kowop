@@ -206,43 +206,49 @@ class Payment extends CActiveRecord
 
         $log = "Received callback... \n";
 
-        $data = json_decode($post);
-
-        if ($data->type == 'debit.succeeded')
+        try
         {
-            try
+            $data = json_decode($post);
+
+            if ($data->type == 'debit.succeeded')
             {
-                $log .= "Customer debit succeeded. Paying the host...\n";
+                try
+                {
+                    $log .= "Customer debit succeeded. Paying the host...\n";
 
-                $paymentID = $data->entity->meta->Payment_ID;
+                    $paymentID = $data->entity->meta->Payment_ID;
 
-                $log .= "Payment_ID: {$paymentID}\n";
+                    $log .= "Payment_ID: {$paymentID}\n";
 
-                $payment = Payment::model()->findByPk($paymentID);
+                    $payment = Payment::model()->findByPk($paymentID);
 
-                $hostAmount = $payment->Amount * Yii::app()->params['HostPercentage'];
+                    $hostAmount = $payment->Amount * Yii::app()->params['HostPercentage'];
 
-                $log .= "Host's share is \${$hostAmount}\n";
+                    $log .= "Host's share is \${$hostAmount}\n";
 
-                // Convert to cents
-                $hostAmount *= 100;
+                    // Convert to cents
+                    $hostAmount *= 100;
 
-                $hostBankAccount = Balanced\BankAccount::get($payment->bankAccount->URI);
-                $credit = $hostBankAccount->credit($hostAmount);
+                    $hostBankAccount = Balanced\BankAccount::get($payment->bankAccount->URI);
+                    $credit = $hostBankAccount->credit($hostAmount);
 
-                $log .= 'Sent credit, response is: ' . print_r($credit, true) . "\n";
+                    $log .= 'Sent credit, response is: ' . print_r($credit, true) . "\n";
+                }
+                catch (Exception $e)
+                {
+                    Mail::Instance()->Alert("Error crediting host account", print_r($e));
+                    throw $e;
+                }
             }
-            catch (Exception $e)
+            else
             {
-                Mail::Instance()->Alert("Error crediting host account", print_r($e));
+                $log .= print_r($data, true) . "\n";
 
-                Yii::log(print_r($e, true), 'info', 'BalancedCallback');
             }
         }
-        else
+        catch (Exception $e)
         {
-            $log .= print_r($data, true) . "\n";
-
+            $log .= '\n' . print_r($e, true);
         }
 
         Yii::log($log, 'info', 'BalancedCallback');
