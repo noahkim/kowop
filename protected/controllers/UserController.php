@@ -267,6 +267,14 @@ class UserController extends Controller
             $this->layout = false;
             echo $value;
         }
+        elseif (isset($_POST['profilePicUpload']))
+        {
+            $file = CUploadedFile::getInstanceByName('profilePic');
+            $content = Content::AddContent($file, 'User Image', ContentType::ImageID, 1);
+            $model->profilePic = $content->Content_ID;
+
+            $this->redirect(array('/user/view', 'id' => $model->User_ID, 's' => AccountSections::AccountInformation));
+        }
     }
 
     public function actionSendMessage($id)
@@ -286,7 +294,7 @@ class UserController extends Controller
             Message::SendNotification($sender, "Replied to {$toLink}", $text);
         }
 
-        $this->redirect(array('/user/view', 'id' => $sender, 's' => '1'));
+        $this->redirect(array('/user/view', 'id' => $sender, 's' => AccountSections::Notifications));
     }
 
     public function actionGetReplyDialog($id)
@@ -341,7 +349,7 @@ class UserController extends Controller
             Message::SendNotification($id, "{$friendLink} has accepted your homie request!");
         }
 
-        $this->redirect(array('/user/view', 'id' => Yii::app()->user->id, 's' => '1'));
+        $this->redirect(array('/user/view', 'id' => Yii::app()->user->id, 's' => AccountSections::Notifications));
     }
 
     /**

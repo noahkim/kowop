@@ -118,7 +118,9 @@
                 <label class="right inline">What do you get?</label>
             </div>
             <div class="eight columns">
-                <?php echo $form->textArea($model, 'Offering', array('rows' => '10')); ?>
+                <?php echo $form->textArea($model, 'Offering', array('rows' => '10', 'id' => 'offering')); ?>
+
+                <span id="offeringCount">1000</span> characters left <br /><br />
             </div>
         </div>
         <div class="row">
@@ -156,9 +158,14 @@
 
                 <?php echo $form->textArea($model, 'Description', array('rows' => '20', 'id' => 'description')); ?>
 
+                <span id="descriptionCount">2000</span> characters left <br /><br />
+
                 <label>Provide any conditions, or fine print</label>
 
-                <?php echo $form->textArea($model, 'FinePrint', array('rows' => '10')); ?>
+                <?php echo $form->textArea($model, 'FinePrint', array('rows' => '10', 'id' => 'finePrint')); ?>
+
+                <span id="finePrintCount">1000</span> characters left
+
             </div>
         </div>
 
@@ -182,6 +189,42 @@
             toolbar    :"toolbar",
             stylesheets:"<?php echo Yii::app()->params['siteBase']; ?>/css/wysiwyg.css",
             parserRules:wysihtml5ParserRules
+        });
+
+        $('#offering').NobleCount('#offeringCount', {
+            on_negative:function ()
+            {
+                $('#offering').addClass('error');
+            },
+            on_positive:function ()
+            {
+                $('#offering').removeClass('error');
+            },
+            max_chars  :1000
+        });
+
+        $('#description').NobleCount('#descriptionCount', {
+            on_negative:function ()
+            {
+                $('#description').addClass('error');
+            },
+            on_positive:function ()
+            {
+                $('#description').removeClass('error');
+            },
+            max_chars  :2000
+        });
+
+        $('#finePrint').NobleCount('#finePrintCount', {
+            on_negative:function ()
+            {
+                $('#finePrint').addClass('error');
+            },
+            on_positive:function ()
+            {
+                $('#finePrint').removeClass('error');
+            },
+            max_chars  :1000
         });
     });
 </script>

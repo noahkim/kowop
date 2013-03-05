@@ -66,7 +66,7 @@ class User extends CActiveRecord
             array('Email', 'unique', 'allowEmpty' => false, 'caseSensitive' => false),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('User_ID, First_name, Last_name, Email, Phone_number, Description, DisplayName, AccountURI, IsAdmin, Created, Updated', 'safe'),
+            array('User_ID, First_name, Last_name, Email, Phone_number, Description, DisplayName, AccountURI, IsAdmin, Created, Updated, profilePic', 'safe'),
             array('Updated', 'default',
                 'value' => new CDbExpression('NOW()'),
                 'setOnEmpty' => false, 'on' => 'update'),
@@ -172,6 +172,26 @@ class User extends CActiveRecord
         }
 
         return 'http://placehold.it/300x300';
+    }
+
+    public function setProfilePic($value)
+    {
+        if (!is_numeric($value))
+        {
+            return false;
+        }
+
+        while (count($this->userToContents) > 0)
+        {
+            $this->userToContents[0]->delete();
+        }
+
+        $userToContent = new UserToContent;
+        $userToContent->Content_ID = $value;
+        $userToContent->User_ID = $this->User_ID;
+        $saved = $userToContent->save();
+
+        return $saved;
     }
 
     public function getFriends()

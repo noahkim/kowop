@@ -24,7 +24,7 @@
                 <?php
                 foreach ($model->nextAvailableSession->enrolled as $enrollee)
                 {
-                    echo CHtml::link("<img src='{$user->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
+                    echo CHtml::link("<img src='{$enrollee->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
                 }
                 ?>
             </div>
@@ -37,6 +37,51 @@
             <a href="#enrolllater" class="button large twelve enrollButton">Sign up for a later session</a>
         </div>
 
+        <div class="sharebuttons">
+                    <span>
+                        <?php
+                        $shareURL = urlencode($this->createAbsoluteUrl('/experience/view', array('id' => $model->Experience_ID)));
+                        $shareImage = $model->picture;
+                        if (strncmp($shareImage, '/', strlen('/')) == 0)
+                        {
+                            $shareImage = 'http://' . $_SERVER['SERVER_NAME'] . $shareImage;
+                        }
+                        $shareImage = urlencode($shareImage);
+                        $shareName = urlencode($model->Name);
+                        ?>
+
+                        <a data-pin-config="beside"
+                           href="//pinterest.com/pin/create/button/?url=<?php echo $shareURL; ?>&media=<?php echo $shareImage; ?>&description=<?php echo $shareName; ?>"
+                           data-pin-do="buttonPin">
+
+                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
+
+                        </a>
+                    </span>
+
+            <div class="fb-like"
+                 data-send="true"
+                 data-layout="button_count"
+                 data-width="100"
+                 data-show-faces="false"></div>
+
+            <!--- facebook like script---->
+            <div id="fb-root"></div>
+            <script>
+                (function (d, s, id)
+                {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id))
+                    {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+        </div>
     </div>
 
     <?php else : ?>
@@ -76,6 +121,52 @@
                 }
                 ?>
             </div>
+        </div>
+
+        <div class="sharebuttons">
+                    <span>
+                        <?php
+                        $shareURL = urlencode($this->createAbsoluteUrl('/experience/view', array('id' => $model->Experience_ID)));
+                        $shareImage = $model->picture;
+                        if (strncmp($shareImage, '/', strlen('/')) == 0)
+                        {
+                            $shareImage = 'http://' . $_SERVER['SERVER_NAME'] . $shareImage;
+                        }
+                        $shareImage = urlencode($shareImage);
+                        $shareName = urlencode($model->Name);
+                        ?>
+
+                        <a data-pin-config="beside"
+                           href="//pinterest.com/pin/create/button/?url=<?php echo $shareURL; ?>&media=<?php echo $shareImage; ?>&description=<?php echo $shareName; ?>"
+                           data-pin-do="buttonPin">
+
+                            <img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" />
+
+                        </a>
+                    </span>
+
+            <div class="fb-like"
+                 data-send="true"
+                 data-layout="button_count"
+                 data-width="100"
+                 data-show-faces="false"></div>
+
+            <!--- facebook like script---->
+            <div id="fb-root"></div>
+            <script>
+                (function (d, s, id)
+                {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id))
+                    {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
         </div>
     </div>
 

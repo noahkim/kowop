@@ -58,13 +58,15 @@ class ExperienceCreateForm extends CFormModel
     public function rules()
     {
         return array(array('free', 'required', 'on' => 'step1'),
-                     array('ExperienceType', 'required', 'on' => 'step2'),
-                     array('Audience', 'required', 'on' => 'step3'),
-                     array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip',
-                           'required', 'on' => 'step4'),
-                     array('Offering, Description', 'required', 'on' => 'step5'),
-                     array('free,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID,MaxPerPerson,MultipleAllowed',
-                           'safe'),);
+            array('ExperienceType', 'required', 'on' => 'step2'),
+            array('Audience', 'required', 'on' => 'step3'),
+            array('Name, Category_ID, Start, End, locationStreet, locationCity, locationState, locationZip',
+                'required', 'on' => 'step4'),
+            array('Offering, Description', 'required', 'on' => 'step5'),
+            array('Offering, FinePrint', 'length', 'max' => 1000),
+            array('Description', 'length', 'max' => 2000),
+            array('free,ExperienceType,Audience,Name,Category_ID,Start,End,AppropriateAges,tags,imageFiles,locationStreet,locationCity,locationState,locationZip,Price,Offering,Description,FinePrint,sessions,Min_occupancy,Max_occupancy,experience,fromRequest_ID,MaxPerPerson,MultipleAllowed',
+                'safe'),);
     }
 
     private function getLocation()
@@ -161,14 +163,14 @@ class ExperienceCreateForm extends CFormModel
                         if ($user->User_ID != $this->experience->Create_User_ID)
                         {
                             $userName = CHtml::link($this->experience->createUser->fullName, array('//user/view',
-                                                                                                   'id' => $this->experience->createUser->User_ID));
+                                'id' => $this->experience->createUser->User_ID));
                             $requestName = CHtml::link($request->Name,
-                                                       array('//request/view', 'id' => $request->Request_ID));
+                                array('//request/view', 'id' => $request->Request_ID));
                             $experienceName = CHtml::link($this->experience->Name, array('//experience/view',
-                                                                                    'id' => $this->experience->Experience_ID));
+                                'id' => $this->experience->Experience_ID));
 
                             Message::SendNotification($user->User_ID,
-                                                      "{$userName} has picked up the request \"{$requestName}\" and created the experience \"{$experienceName}\".");
+                                "{$userName} has picked up the request \"{$requestName}\" and created the experience \"{$experienceName}\".");
                         }
                     }
                 }

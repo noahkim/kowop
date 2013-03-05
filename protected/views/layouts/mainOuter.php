@@ -45,6 +45,7 @@
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
     <script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.NobleCount.min.js"></script>
 
 
     <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>

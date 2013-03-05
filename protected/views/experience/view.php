@@ -66,7 +66,6 @@
 
                 <!------------ Right column ------------------>
                 <?php echo $this->renderPartial($view, array('model' => $model, 'section' => 'rightColumnTop', 'user' => $user)); ?>
-
             </div>
         </div>
         <!---------------------------------------
@@ -158,4 +157,6 @@
         });
     });
 </script>
+
+<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
 

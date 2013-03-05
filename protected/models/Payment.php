@@ -210,11 +210,11 @@ class Payment extends CActiveRecord
         {
             $data = json_decode($post);
 
-            if(! isset($data->type))
+            if (!isset($data->type))
             {
                 $log .= "Error parsing data: \n";
-                $log .= $post . "\n";
-                $log .= print_r($data, true) . "\n";
+                $log .= "Raw post: \n" . $post . "\n";
+                $log .= "Parsed data: \n" . print_r($data, true) . "\n";
                 throw new Exception("Error parsing data");
             }
 
@@ -256,7 +256,7 @@ class Payment extends CActiveRecord
         }
         catch (Exception $e)
         {
-            $log .= '\n' . print_r($e, true);
+            $log .= "\n" . print_r($e, true);
         }
 
         Yii::log($log, 'info', 'BalancedCallback');
