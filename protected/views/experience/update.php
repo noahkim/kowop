@@ -16,6 +16,26 @@
     <div class="nine columns">
         <h1>Editing "<?php echo $model->Name; ?>"</h1>
 
+        <div class="row">
+            <div class="four columns"></div>
+            <div class="eight columns">
+                <?php
+                foreach ($model->errors as $error)
+                {
+                    foreach ($error as $message)
+                    {
+                        echo <<<BLOCK
+                        <div class="alert-box alert">
+                            {$message}
+                            <a href="" class="close">&times;</a>
+                        </div>
+BLOCK;
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
         <?php
         $form = $this->beginWidget('CActiveForm',
             array('id' => 'experience-update-form', 'enableAjaxValidation' => false,
@@ -136,7 +156,7 @@
 
         <div class="row">
             <div class="four columns offset-by-four">
-                <?php echo CHtml::link('Cancel', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
+                <?php echo CHtml::link('Return to listing', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
             </div>
             <div class="four columns">
                 <a href="#"

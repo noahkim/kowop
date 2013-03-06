@@ -4,8 +4,8 @@
 
         <?php
         $navForm = $this->beginWidget('CActiveForm',
-                                      array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
-                                            'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
+            array('id' => 'experience-create-form-nav', 'enableAjaxValidation' => false,
+                'stateful' => true, 'htmlOptions' => array('style' => 'margin: 0;'),));
         ?>
         <input id="step" name="step" type="hidden" />
         <?php $this->endWidget(); ?>
@@ -35,11 +35,31 @@
 
         <h1>Let's start with the basics...</h1>
 
+        <div class="row">
+            <div class="four columns"></div>
+            <div class="eight columns">
+                <?php
+                foreach ($model->errors as $error)
+                {
+                    foreach ($error as $message)
+                    {
+                        echo <<<BLOCK
+                        <div class="alert-box alert">
+                            {$message}
+                            <a href="" class="close">&times;</a>
+                        </div>
+BLOCK;
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
         <?php
         $form = $this->beginWidget('CActiveForm',
-                                   array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
-                                         'stateful' => true,
-                                         'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+            array('id' => 'experience-create-form', 'enableAjaxValidation' => false,
+                'stateful' => true,
+                'htmlOptions' => array('enctype' => 'multipart/form-data'),));
         ?>
 
         <input name="step" type="hidden" value="5" />
@@ -58,19 +78,21 @@
             </div>
             <div class="eight columns">
                 <?php echo $form->dropDownList($model, 'Category_ID', Category::GetCategories(),
-                                               array('class' => 'five')); ?>
+                array('class' => 'five')); ?>
             </div>
         </div>
         <div class="row">
             <div class="four columns">
                 <div class="helptip">
-                    <span class="has-tip tip-top noradius" data-width="300" title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
+                    <span class="has-tip tip-top noradius"
+                          data-width="300"
+                          title="Tags are any words you'd like to associate with your experience. It'll help people discover it when they search.">?</span>
                 </div>
                 <label class="right inline">Tags</label>
             </div>
             <div class="eight columns">
                 <?php echo $form->textField($model, 'tags',
-                                            array('placeholder' => 'ex. risky, adrenaline, skydiving, birthday suit, bucket list')); ?>
+                array('placeholder' => 'ex. risky, adrenaline, skydiving, birthday suit, bucket list')); ?>
             </div>
         </div>
         <div class="row">
@@ -80,18 +102,20 @@
             <div class="eight columns">
                 <?php
                 $this->widget('xupload.XUpload',
-                              array('url' => Yii::app()->createUrl("//experience/uploadImages"), 'model' => $images,
-                                    //We set this for the widget to be able to target our own form
-                                    'htmlOptions' => array('id' => 'experience-create-form'), 'attribute' => 'file',
-                                    'multiple' => true, 'showForm' => false,
-                                    'options' => array('acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'),));
+                    array('url' => Yii::app()->createUrl("//experience/uploadImages"), 'model' => $images,
+                        //We set this for the widget to be able to target our own form
+                        'htmlOptions' => array('id' => 'experience-create-form'), 'attribute' => 'file',
+                        'multiple' => true, 'showForm' => false,
+                        'options' => array('acceptFileTypes' => 'js:/(\.|\/)(gif|jpe?g|png)$/i'),));
                 ?>
             </div>
         </div>
         <div class="row">
             <div class="four columns">
                 <div class="helptip">
-                    <span class="has-tip tip-top noradius" data-width="300" title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
+                    <span class="has-tip tip-top noradius"
+                          data-width="300"
+                          title="These are the dates your class or activity will remain available on Kowop. It can be as short or as long as you'd like.">?</span>
                 </div>
                 <label class="right inline">Availability</label>
             </div>
@@ -108,13 +132,13 @@
             </div>
             <div class="eight columns">
                 <?php echo $form->textField($model, 'locationStreet', array('maxlength' => 2000,
-                                                                            'placeholder' => 'Street ex. 444 Charles Ave')); ?>
+                'placeholder' => 'Street ex. 444 Charles Ave')); ?>
             </div>
         </div>
         <div class="row">
             <div class="three columns offset-by-four">
                 <?php echo $form->textField($model, 'locationCity',
-                                            array('maxlength' => 255, 'placeholder' => 'City')); ?>
+                array('maxlength' => 255, 'placeholder' => 'City')); ?>
             </div>
             <div class="three columns">
                 <?php echo $form->dropDownList($model, 'locationState', Location::GetStates()); ?>
@@ -134,7 +158,7 @@
             <div class="eight columns">
                 <div class="checkboxDiv">
                     <?php echo $form->checkBoxList($model, 'AppropriateAges', ExperienceAppropriateAges::$Lookup,
-                                                   array('template' => '{input} {label}', 'separator' => "\n")); ?>
+                    array('template' => '{input} {label}', 'separator' => "\n")); ?>
                 </div>
             </div>
         </div>
@@ -146,8 +170,10 @@
 
         <div class="row">
             <div class="four columns offset-by-eight">
-                <a href="#" class="button twelve" onclick="document.forms['experience-create-form'].submit(); return false;">
-                    Pricing &amp; Description </a>
+                <a href="#"
+                   class="button twelve"
+                   onclick="document.forms['experience-create-form'].submit(); return false;"> Pricing &amp;
+                    Description </a>
             </div>
         </div>
     </div>

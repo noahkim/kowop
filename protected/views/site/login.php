@@ -16,6 +16,21 @@
 
                 <span class="homeBlurbcopy">Log in with your Kowop account</span>
 
+                <?php
+                foreach ($model->errors as $error)
+                {
+                    foreach ($error as $message)
+                    {
+                        echo <<<BLOCK
+                        <div class="alert-box alert">
+                            {$message}
+                            <a href="" class="close">&times;</a>
+                        </div>
+BLOCK;
+                    }
+                }
+                ?>
+
                 <?php $form = $this->beginWidget(
                 'CActiveForm', array(
                 'id' => 'login-form',

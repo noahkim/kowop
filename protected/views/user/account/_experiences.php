@@ -1,8 +1,7 @@
 <!------- right column ------------->
 <div class="nine columns accountClasses">
     <h1>My Experiences</h1>
-    <!---- Need to review ---------->
-<!--    <span class="profileCount">0</span>
+    <!---- Need to review ----------><!--    <span class="profileCount">0</span>
 
     <h2>Leave Feedback for the following experiences</h2>
 
@@ -20,15 +19,9 @@
         $index = 1;
 
 
-        foreach ($model->enrolledIn as $class)
+        foreach ($model->enrolledIn as $experience)
         {
-            $imgLink = 'http://placehold.it/400x300';
-            if (count($class->contents) > 0)
-            {
-                $imgLink = $class->contents[0]->Link;
-            }
-
-            $classLink = CHtml::link($class->Name, array('/experience/view', 'id' => $class->Experience_ID));
+            $link = CHtml::link($experience->Name, array('/experience/view', 'id' => $experience->Experience_ID));
 
             $end = '';
             if ($index == count($model->enrolledIn))
@@ -39,9 +32,9 @@
             echo <<<BLOCK
         <div class="three columns {$end}">
             <div class="profileTile">
-                <img src="{$imgLink}">
+                <img src="{$experience->picture}" />
                     <span class="profileClassTitle">
-                        {$classLink}
+                        {$link}
                     </span>
             </div>
         </div>
@@ -87,11 +80,41 @@ BLOCK;
         ?>
     </div>
     <!---- copmleted classes ---------->
-    <span class="profileCount">0</span>
+    <span class="profileCount"><?php echo count($model->pastExperiences); ?></span>
 
-    <h2>Experiences you've completed</h2>
+    <h2>Past experiences</h2>
 
     <div class="row">
+        <?php
+
+        $index = 1;
+
+
+        foreach ($model->pastExperiences as $experience)
+        {
+            $link = CHtml::link($experience->Name, array('/experience/view', 'id' => $experience->Experience_ID));
+
+            $end = '';
+            if ($index == count($model->pastExperiences))
+            {
+                $end = 'end';
+            }
+
+            echo <<<BLOCK
+        <div class="three columns {$end}">
+            <div class="profileTile">
+                <img src="{$experience->picture}" />
+                    <span class="profileClassTitle">
+                        {$link}
+                    </span>
+            </div>
+        </div>
+BLOCK;
+
+            $index++;
+        }
+
+        ?>
     </div>
     <!-------- end right column --------->
 </div>

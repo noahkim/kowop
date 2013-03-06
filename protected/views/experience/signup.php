@@ -1,7 +1,7 @@
 <!--------- main content container------>
 <div class="row" id="wrapper">
     <div class="twelve columns">
-        <h1>...one last look</h1>
+        <h1>Payment</h1>
 
         <div class="detailsMain">
             <div class="row">
@@ -42,7 +42,7 @@
 
                     <select id="savedCards"></select>
 
-                    <p> Enter in a new credit card </p>
+                    <p>Or enter in a new credit card </p>
 
                     <div class="row">
                         <div class="eight columns">

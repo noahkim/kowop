@@ -23,6 +23,7 @@
  * @property integer $MaxPerPerson
  * @property integer $MultipleAllowed
  * @property integer $Status
+ * @property integer $Views
  * @property string $Created
  * @property string $Updated
  *
@@ -75,7 +76,7 @@ class Experience extends CActiveRecord
             // Please remove those attributes that should not be searched.
             array('Experience_ID, Create_User_ID, Name, Description, Start, End, Min_occupancy, Max_occupancy', 'safe'),
             array('Location_ID, Category_ID, Price, Audience, ExperienceType, AppropriateAges, Offering, FinePrint', 'safe'),
-            array('MaxPerPerson, MultipleAllowed, Status, Created, Updated', 'safe'),
+            array('MaxPerPerson, MultipleAllowed, Status, Views, Created, Updated', 'safe'),
 
             // Virtual attributes
             array('tagString, locationStreet, locationCity, locationState, locationZip, sessionsJSON', 'safe'),
@@ -139,7 +140,7 @@ class Experience extends CActiveRecord
             'Audience' => 'Audience', 'ExperienceType' => 'Experience Type',
             'AppropriateAges' => 'AppropriateAges', 'Offering' => 'Offering', 'FinePrint' => 'Fine Print',
             'MaxPerPerson' => 'Max per person', 'MultipleAllowed' => 'Multiple allowed', 'Status' => 'Status',
-            'Created' => 'Created', 'Updated' => 'Updated',);
+            'Views' => 'Views', 'Created' => 'Created', 'Updated' => 'Updated',);
     }
 
     /**
@@ -172,6 +173,7 @@ class Experience extends CActiveRecord
         $criteria->compare('MaxPerPerson', $this->MaxPerPerson);
         $criteria->compare('MultipleAllowed', $this->MultipleAllowed);
         $criteria->compare('Status', $this->Status);
+        $criteria->compare('Views', $this->Views);
         $criteria->compare('Created', $this->Created, true);
         $criteria->compare('Updated', $this->Updated, true);
 
@@ -313,7 +315,17 @@ class Experience extends CActiveRecord
 
     public function setSessionsJSON($value)
     {
+        if (strlen($value) == 0)
+        {
+            return;
+        }
+
         $sessionData = json_decode($value);
+
+        if (($sessionData == null) || !is_array($value))
+        {
+            return;
+        }
 
         foreach ($sessionData as $sessionItem)
         {
@@ -345,7 +357,10 @@ class Experience extends CActiveRecord
             unset($this->Price);
         }
 
-        $this->Create_User_ID = Yii::app()->user->id;
+        if (!isset($this->Create_User_ID))
+        {
+            $this->Create_User_ID = Yii::app()->user->id;
+        }
 
         return parent::beforeSave();
     }

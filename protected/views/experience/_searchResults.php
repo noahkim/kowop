@@ -19,7 +19,9 @@ foreach ($results as $i => $item)
     {
         if (($item->Price == null) || ($item->Price == 0))
         {
-            $sessionHTML = 'This experience is free!';
+            $type = strtolower(ExperienceType::$Lookup[$item->ExperienceType]);
+
+            $sessionHTML = "This {$type} is free!";
         }
         else
         {
@@ -30,7 +32,7 @@ foreach ($results as $i => $item)
     $itemNumber = $i + 1;
 
     $itemName = $item->Name;
-    if(strlen($itemName) > 50)
+    if (strlen($itemName) > 50)
     {
         $itemName = substr($itemName, 0, 50);
         $itemName .= ' ...';

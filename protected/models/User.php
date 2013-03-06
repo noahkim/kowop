@@ -100,6 +100,7 @@ class User extends CActiveRecord
             'contents' => array(self::HAS_MANY, 'Content', array('Content_ID' => 'Content_ID'), 'through' => 'userToContents'),
             'sessions' => array(self::HAS_MANY, 'Session', array('Session_ID' => 'Session_ID'), 'through' => 'userToExperiences'),
             'enrolledIn' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'userToExperiences', 'scopes' => array('active', 'current')),
+            'pastExperiences' => array(self::HAS_MANY, 'Experience', array('Experience_ID' => 'Experience_ID'), 'through' => 'userToExperiences', 'scopes' => array('active', 'past')),
             'pastExperiencesHosted' => array(self::HAS_MANY, 'Experience', 'Create_user_ID', 'scopes' => array('active', 'past')),
             'allExperiencesHosted' => array(self::HAS_MANY, 'Experience', 'Create_user_ID'),
 
@@ -171,7 +172,7 @@ class User extends CActiveRecord
             return $this->contents[$numContents - 1]->Link;
         }
 
-        return 'http://placehold.it/300x300';
+        return Yii::app()->params['siteBase'] . "/images/profile_default.jpg";
     }
 
     public function setProfilePic($value)

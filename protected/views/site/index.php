@@ -8,12 +8,12 @@
 
     <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/fonts/proxima/stylesheet.css">
     <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/fonts/susa/stylesheet.css">
-    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/css/foundation.css">
     <link rel="stylesheet" href="<?php echo Yii::app()->params['siteBase']; ?>/css/main.css">
 
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery-1.9.1.min.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery-ui-1.9.2.custom.min.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/modernizr.foundation.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/foundation.min.js"></script>
@@ -21,10 +21,10 @@
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/account_toggle.js"></script>
 
     <script type="text/javascript"
-            src="https://www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
+            src="//www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
     <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
     <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
-    <script src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script src="//www.geoplugin.net/javascript.gp" type="text/javascript"></script>
 
     <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>
 </head>
@@ -309,7 +309,9 @@
 
             if (($experience->Price == null) || ($experience->Price == 0))
             {
-                $sessionHTML = 'This experience is free!';
+                $type = strtolower(ExperienceType::$Lookup[$experience->ExperienceType]);
+
+                $sessionHTML = "This {$type} is free!";
             }
             else
             {

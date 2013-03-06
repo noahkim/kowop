@@ -113,6 +113,7 @@
         </div>
         <div class="detailsNextSession">
             <div class="enrollees">
+                <?php if (count($model->enrolled) > 0) : ?>
                 <h5>Recently signed up</h5>
                 <?php
                 foreach ($model->enrolled as $enrollee)
@@ -120,6 +121,7 @@
                     echo CHtml::link("<img src='{$enrollee->profilePic}' />", array('/user/view', 'id' => $enrollee->User_ID));
                 }
                 ?>
+                <?php endif; ?>
             </div>
         </div>
 
@@ -188,7 +190,7 @@
             <div class="twelve columns">
                 <div class="detailStats">
                     <div class="statBox"> Signed Up<span><?php echo count($model->enrolled); ?></span></div>
-                    <div class="statBox"> Views<span></span></div>
+                    <div class="statBox"> Views<span><?php echo $model->Views; ?></span></div>
                     <div class="statBox"> Available
                         Until<span><?php echo date('n.j.y', strtotime($model->End)); ?></span>
                     </div>
@@ -326,7 +328,7 @@ BLOCK;
             google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
             {
                 $("#map").gmap3({
-                    map   :{
+                    map       :{
                         options :{
                             mapTypeId         :google.maps.MapTypeId.ROADMAP,
                             mapTypeControl    :false,
@@ -344,8 +346,17 @@ BLOCK;
                         {
                         }
                     },
-                    marker:{
+                    marker    :{
                         latLng:[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>]
+                    },
+                    infowindow:{
+                        latLng :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>],
+                        options:{
+                            <?php
+                            $content = "<div id='infotip' class='selfclear bubble'> {$model->location->Address} <br /> {$model->location->City}, {$model->location->State} {$model->location->Zip} </div>";
+                            ?>
+                            content:"<?php echo $content; ?>"
+                        }
                     }
                 });
             }});
@@ -367,7 +378,7 @@ BLOCK;
             <div class="twelve columns">
                 <div class="detailStats">
                     <div class="statBox"> Signed Up<span><?php echo count($model->enrolled); ?></span></div>
-                    <div class="statBox"> Views<span></span></div>
+                    <div class="statBox"> Views<span><?php echo $model->Views; ?></span></div>
                     <div class="statBox"> Available
                         Until<span><?php echo date('n.j.y', strtotime($model->End)); ?></span>
                     </div>
@@ -442,7 +453,7 @@ BLOCK;
             google.load('maps', '3.x', {other_params:'sensor=true', callback:function ()
             {
                 $("#map").gmap3({
-                    map   :{
+                    map       :{
                         options :{
                             mapTypeId         :google.maps.MapTypeId.ROADMAP,
                             mapTypeControl    :false,
@@ -460,8 +471,17 @@ BLOCK;
                         {
                         }
                     },
-                    marker:{
+                    marker    :{
                         latLng:[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>]
+                    },
+                    infowindow:{
+                        latLng :[<?php echo $model->location->Latitude . ', ' . $model->location->Longitude; ?>],
+                        options:{
+                            <?php
+                            $content = "<div id='infotip' class='selfclear'> {$model->location->Address} <br /> {$model->location->City}, {$model->location->State} {$model->location->Zip} </div>";
+                            ?>
+                            content:"<?php echo $content; ?>"
+                        }
                     }
                 });
             }});

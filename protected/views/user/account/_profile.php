@@ -160,7 +160,7 @@ BLOCK;
     </div>
     <span class="profileCount"><?php echo count($model->pastExperiencesHosted); ?></span>
 
-    <h2>Experiences I've hosted in the past</h2>
+    <h2>Past listings</h2>
 
     <div class="row">
         <?php

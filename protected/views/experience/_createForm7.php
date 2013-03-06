@@ -130,9 +130,6 @@
         ---------------------------------------->
         <div class="row">
             <div class="six columns ">
-                <dl class="tabs">
-                    <dd class="active"><a href="#simple1">Description</a></dd>
-                </dl>
                 <ul class="tabs-content">
                     <li class="active" id="simple1Tab">
                         <h5>Description</h5>
@@ -153,7 +150,6 @@
                             <?php echo $model->FinePrint; ?>
                         </p>
                     </li>
-                    <li id="simple2Tab">This is where instagram photos will go!</li>
                 </ul>
             </div>
             <!--- end left column---->

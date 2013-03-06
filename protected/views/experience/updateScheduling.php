@@ -53,7 +53,7 @@
 
         <div class="row">
             <div class="four columns offset-by-four">
-                <?php echo CHtml::link('Cancel', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
+                <?php echo CHtml::link('Return to listing', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
             </div>
             <div class="four columns">
                 <a href="#" class="button twelve" onclick="submitForm(); return false;">Save</a>

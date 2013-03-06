@@ -23,7 +23,7 @@ class ExperienceController extends Controller
             'actions' => array('index', 'view', 'search', 'enrollDialog', 'viewDialog', 'searchResults', 'getPictures'),
             'users' => array('*'),),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'updateDescription', 'updateScheduling', 'signUp', 'leave', 'delete',
+                'actions' => array('create', 'update', 'updateDescription', 'updateScheduling', 'signup', 'signupConfirmation', 'leave', 'delete',
                     'uploadImages', 'deletePicture'), 'users' => array('@'),),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin'), 'users' => array('admin'),), array('deny', // deny all users
@@ -60,6 +60,12 @@ class ExperienceController extends Controller
                     $view = 'view/_enrolled';
                 }
             }
+        }
+
+        if (!isset($_SERVER['HTTP_REFERER']) || ($_SERVER['HTTP_REFERER'] != $this->createAbsoluteUrl('/experience/view', array('id' => $id))))
+        {
+            $model->Views++;
+            $model->save(false);
         }
 
         $this->render('view', array('model' => $model, 'view' => $view, 'user' => $user));
@@ -186,7 +192,7 @@ class ExperienceController extends Controller
                 Yii::app()->user->setState('imageFileNames', array());
             }
 
-            if ($model->save(false))
+            if ($model->save())
             {
                 // Notify the students
                 foreach ($model->enrolled as $enrollee)
@@ -202,8 +208,6 @@ class ExperienceController extends Controller
                             "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
-
-                $this->redirect(array('view', 'id' => $model->Experience_ID));
             }
         }
         else
@@ -224,7 +228,7 @@ class ExperienceController extends Controller
         {
             $model->attributes = $_POST['Experience'];
 
-            if ($model->save(false))
+            if ($model->save())
             {
                 // Notify the students
                 foreach ($model->enrolled as $enrollee)
@@ -240,8 +244,6 @@ class ExperienceController extends Controller
                             "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
-
-                $this->redirect(array('view', 'id' => $model->Experience_ID));
             }
         }
 
@@ -276,8 +278,6 @@ class ExperienceController extends Controller
                             "{$userName} has updated the experience details for \"{$experienceName}\".");
                     }
                 }
-
-                $this->redirect(array('view', 'id' => $model->Experience_ID));
             }
         }
 
@@ -515,7 +515,7 @@ BLOCK;
         $this->render('admin', array('model' => $model,));
     }
 
-    public function actionSignUp($id)
+    public function actionSignup($id)
     {
         $model = $this->loadModel($id);
 
@@ -550,11 +550,16 @@ BLOCK;
 
             if ($model->SignUp($sessionID, $quantity, $creditCard))
             {
-                $this->redirect(array('view', 'id' => $model->Experience_ID));
+                $this->redirect(array('/experience/signupConfirmation'));
             }
         }
 
         $this->render('signup', array('model' => $model, 'session' => $session, 'quantity' => $quantity));
+    }
+
+    public function actionSignupConfirmation()
+    {
+        $this->render('signupConfirmation');
     }
 
     public function actionLeave($id)

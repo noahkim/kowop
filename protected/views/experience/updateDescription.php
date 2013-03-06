@@ -15,6 +15,26 @@
     <div class="nine columns">
         <h1>Editing "<?php echo $model->Name; ?>"</h1>
 
+        <div class="row">
+            <div class="four columns"></div>
+            <div class="eight columns">
+                <?php
+                foreach ($model->errors as $error)
+                {
+                    foreach ($error as $message)
+                    {
+                        echo <<<BLOCK
+                        <div class="alert-box alert">
+                            {$message}
+                            <a href="" class="close">&times;</a>
+                        </div>
+BLOCK;
+                    }
+                }
+                ?>
+            </div>
+        </div>
+
         <?php
         $form = $this->beginWidget('CActiveForm', array('id' => 'experience-update-form', 'enableAjaxValidation' => false));
         ?>
@@ -67,7 +87,33 @@
                 <label class="right inline">What do you get?</label>
             </div>
             <div class="eight columns">
-                <?php echo $form->textArea($model, 'Offering', array('rows' => '10')); ?>
+                <div id="toolbarOffering" style="display: none;">
+                    <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> | <a data-wysihtml5-command="italic"
+                                                                                  title="CTRL+I">italic</a> | <a
+                        data-wysihtml5-command="formatBlock"
+                        data-wysihtml5-command-value="h2">Heading</a> | <a data-wysihtml5-command="insertUnorderedList">List</a>
+                    | <a data-wysihtml5-command="insertOrderedList">Ordered List</a> | <a data-wysihtml5-command="insertSpeech">Speech
+                    Input</a>
+
+                    <div data-wysihtml5-dialog="createLink" style="display: none;">
+                        <label> Link: <input data-wysihtml5-dialog-field="href" value="http://"> </label> <a
+                            data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+
+                    <div data-wysihtml5-dialog="insertImage" style="display: none;">
+                        <label> Image: <input data-wysihtml5-dialog-field="src" value="http://"> </label> <label> Align: <select
+                            data-wysihtml5-dialog-field="className">
+                        <option value="">default</option>
+                        <option value="wysiwyg-float-left">left</option>
+                        <option value="wysiwyg-float-right">right</option>
+                    </select> </label>
+                        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+                </div>
+
+                <?php echo $form->textArea($model, 'Offering', array('rows' => '10', 'id' => 'offering')); ?>
+
+                1000 characters max <br /><br />
             </div>
         </div>
         <div class="row">
@@ -78,7 +124,7 @@
                 <p>Provide a detailed description of what your experience is all about, as well as any instructions or
                     information people should know.</p>
 
-                <div id="toolbar" style="display: none;">
+                <div id="toolbarDescription" style="display: none;">
                     <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> | <a data-wysihtml5-command="italic"
                                                                                   title="CTRL+I">italic</a> | <a
                         data-wysihtml5-command="formatBlock"
@@ -105,9 +151,37 @@
 
                 <?php echo $form->textArea($model, 'Description', array('rows' => '20', 'id' => 'description')); ?>
 
+                2000 characters max <br /><br />
+
                 <label>Provide any conditions, or fine print</label>
 
-                <?php echo $form->textArea($model, 'FinePrint', array('rows' => '10')); ?>
+                <div id="toolbarFinePrint" style="display: none;">
+                    <a data-wysihtml5-command="bold" title="CTRL+B">bold</a> | <a data-wysihtml5-command="italic"
+                                                                                  title="CTRL+I">italic</a> | <a
+                        data-wysihtml5-command="formatBlock"
+                        data-wysihtml5-command-value="h2">Heading</a> | <a data-wysihtml5-command="insertUnorderedList">List</a>
+                    | <a data-wysihtml5-command="insertOrderedList">Ordered List</a> | <a data-wysihtml5-command="insertSpeech">Speech
+                    Input</a>
+
+                    <div data-wysihtml5-dialog="createLink" style="display: none;">
+                        <label> Link: <input data-wysihtml5-dialog-field="href" value="http://"> </label> <a
+                            data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+
+                    <div data-wysihtml5-dialog="insertImage" style="display: none;">
+                        <label> Image: <input data-wysihtml5-dialog-field="src" value="http://"> </label> <label> Align: <select
+                            data-wysihtml5-dialog-field="className">
+                        <option value="">default</option>
+                        <option value="wysiwyg-float-left">left</option>
+                        <option value="wysiwyg-float-right">right</option>
+                    </select> </label>
+                        <a data-wysihtml5-dialog-action="save">OK</a>&nbsp;<a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+                </div>
+
+                <?php echo $form->textArea($model, 'FinePrint', array('rows' => '10', 'id' => 'finePrint')); ?>
+
+                1000 characters max
             </div>
         </div>
 
@@ -115,7 +189,7 @@
 
         <div class="row">
             <div class="four columns offset-by-four">
-                <?php echo CHtml::link('Cancel', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
+                <?php echo CHtml::link('Return to listing', array('/experience/view', 'id' => $model->Experience_ID), array('class' => 'button twelve')); ?>
             </div>
             <div class="four columns">
                 <a href="#"
@@ -130,8 +204,20 @@
 <script>
     $(document).ready(function ()
     {
-        var editor = new wysihtml5.Editor("description", {
-            toolbar    :"toolbar",
+        var editorOffering = new wysihtml5.Editor("offering", {
+            toolbar    :"toolbarOffering",
+            stylesheets:"<?php echo Yii::app()->params['siteBase']; ?>/css/wysiwyg.css",
+            parserRules:wysihtml5ParserRules
+        });
+
+        var editorDescription = new wysihtml5.Editor("description", {
+            toolbar    :"toolbarDescription",
+            stylesheets:"<?php echo Yii::app()->params['siteBase']; ?>/css/wysiwyg.css",
+            parserRules:wysihtml5ParserRules
+        });
+
+        var editorFinePrint = new wysihtml5.Editor("finePrint", {
+            toolbar    :"toolbarFinePrint",
             stylesheets:"<?php echo Yii::app()->params['siteBase']; ?>/css/wysiwyg.css",
             parserRules:wysihtml5ParserRules
         });

@@ -53,14 +53,12 @@
                         array('/user/view', 'id' => $model->Create_User_ID));
                     ?>
 
-                    <div class="detailsInstructor"> Host
+                    <div class="detailsInstructor"> Posted by
                         <span class="detailsName">
                             <?php
                             echo CHtml::link($model->createUser->display, array('/user/view', 'id' => $model->Create_User_ID));
                             ?>
                         </span>
-
-                        <!--<div class="detailsReccomendations"><a href="user_profile_reviews.html">31</a></div>-->
                     </div>
                 </div>
 
@@ -73,10 +71,6 @@
         ---------------------------------------->
         <div class="row">
             <div class="six columns ">
-                <dl class="tabs">
-                    <dd class="active"><a href="#simple1">Description</a></dd>
-                    <!--<dd><a href="#simple2">Photos</a></dd>-->
-                </dl>
                 <ul class="tabs-content">
                     <li class="active" id="simple1Tab">
                         <h5>Description</h5>
@@ -85,7 +79,7 @@
                             <?php echo $model->Description; ?>
                         </p>
 
-                        <h5>What to expect</h5>
+                        <h5>What you get</h5>
 
                         <p>
                             <?php echo $model->Offering; ?>
@@ -97,7 +91,6 @@
                             <?php echo $model->FinePrint; ?>
                         </p>
                     </li>
-                    <li id="simple2Tab">This is where instagram photos will go!</li>
                 </ul>
             </div>
             <!--- end left column---->
@@ -118,6 +111,20 @@
         width: 100%;
         height: 200px;
     }
+
+    .selfclear:after {
+        /* self clearing for browsers that support after*/
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    #infotip {
+        overflow: hidden;
+    }
+
 </style>
 
 <script type="text/javascript">
