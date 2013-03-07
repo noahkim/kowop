@@ -41,6 +41,9 @@
  */
 class Experience extends CActiveRecord
 {
+    const CODE_BASE = 36;
+    const CODE_OFFSET = 50000;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $experienceName active record class name.
@@ -340,6 +343,22 @@ class Experience extends CActiveRecord
         }
     }
 
+    public function getCode()
+    {
+        $value = $this->Experience_ID + Experience::CODE_OFFSET;
+        $code = strtoupper(base_convert($value, 10, Experience::CODE_BASE));
+
+        return $code;
+    }
+
+    public static function GetExperienceFromCode($code)
+    {
+        $id = intval($code, Experience::CODE_BASE) - Experience::CODE_OFFSET;
+        $experience = Experience::model()->findByPk($id);
+
+        return $experience;
+    }
+
     public function beforeSave()
     {
         if (isset($this->Start))
@@ -413,6 +432,7 @@ class Experience extends CActiveRecord
                 throw new Exception("Can't sign up multiple times.");
             }
 
+            $confirmationCode = $this->code;
             if (isset($this->Price) && ($this->Price != null) && ($this->Price > 0))
             {
                 $amount = $quantity * $this->Price;
@@ -444,6 +464,8 @@ class Experience extends CActiveRecord
                 $payment->ScheduledFor = date('Y-m-d H:i:s', $scheduledFor);
                 $payment->Status = PaymentStatus::Scheduled;
                 $payment->save();
+
+                $confirmationCode = $payment->code;
             }
 
             $userToExperience->save();
@@ -453,7 +475,6 @@ class Experience extends CActiveRecord
 
             Message::SendNotification($this->Create_User_ID,
                 "{$userName} has joined your experience \"{$experienceName}\".");
-
 
             // Notify the enrollees
             foreach ($this->enrolled as $enrollee)
@@ -467,6 +488,15 @@ class Experience extends CActiveRecord
                         "{$userName} has also joined the experience \"{$experienceName}\".");
                 }
             }
+
+            if (!is_numeric($quantity))
+            {
+                $quantity = 1;
+            }
+
+            $models = array('model' => $this, 'confirmationCode' => $confirmationCode, 'quantity' => $quantity);
+
+            Mail::Instance()->SendTemplate($user->Email, 'Signup Confirmation', '/experience/_emailConfirmation', $models);
 
             $transaction->commit();
         }

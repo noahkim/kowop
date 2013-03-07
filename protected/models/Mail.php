@@ -47,6 +47,22 @@ class Mail
         $this->emailClient->sendEmail($args);
     }
 
+    public function SendTemplate($to, $subject, $template, $models)
+    {
+        $message = Yii::app()->controller->renderPartial($template, $models, true);
+
+        $args = array(
+            'Source' => $this->defaultFrom,
+            'Destination' => array('ToAddresses' => array($to)),
+            'Message' => array(
+                'Subject' => array('Data' => $subject),
+                'Body' => array('Html' => array('Data' => $message))
+            )
+        );
+
+        $this->emailClient->sendEmail($args);
+    }
+
     public function Alert($subject, $message)
     {
         $alertTo = array("ilija1@gmail.com", "ilija@kowop.com", "noah@kowop.com");

@@ -23,6 +23,7 @@
 class Payment extends CActiveRecord
 {
     const CODE_BASE = 36;
+    const CODE_OFFSET = 50000;
 
     /**
      * Returns the static model of the specified AR class.
@@ -125,12 +126,16 @@ class Payment extends CActiveRecord
 
     public function getCode()
     {
-        return base_convert($this->Payment_ID, 10, Payment::CODE_BASE);
+        $value = $this->Payment_ID + Payment::CODE_OFFSET;
+        $code = base_convert($value, 10, Payment::CODE_BASE);
+
+        return $code;
     }
 
     public static function GetPaymentFromCode($code)
     {
-        $payment = Payment::model()->findByPk(intval($code, Payment::CODE_BASE));
+        $id = intval($code, Payment::CODE_BASE) - Payment::CODE_OFFSET;
+        $payment = Payment::model()->findByPk($id);
 
         return $payment;
     }

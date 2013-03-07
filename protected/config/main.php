@@ -34,7 +34,7 @@ return array(
             //'params'=>array('directory'=>'C:/ImageMagick'),
         ),
         'hybridauth' => array(
-            'baseUrl' => 'http://' . $_SERVER['SERVER_NAME'] . '/hybridauth',
+            'baseUrl' => 'https://' . $_SERVER['SERVER_NAME'] . '/hybridauth',
             'withYiiUser' => false, // Set to true if using yii-user
             "providers" => array(
                 /*"Google" => array(
