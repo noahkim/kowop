@@ -19,6 +19,9 @@ Yii::import('ext.iwi.Iwi');
  */
 class Content extends CActiveRecord
 {
+    const MAX_WIDTH = 800;
+    const MAX_HEIGHT = 600;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $experienceName active record class name.
@@ -168,17 +171,35 @@ class Content extends CActiveRecord
         if ($sourceRatio > $targetRatio)
         {
             $height = $image->height;
+
+            if ($height > Content::MAX_HEIGHT)
+            {
+                $height = Content::MAX_HEIGHT;
+            }
+
             $width = (int)$height * $targetRatio;
         }
         elseif ($sourceRatio < $targetRatio)
         {
             $width = $image->width;
+
+            if ($width > Content::MAX_WIDTH)
+            {
+                $width = Content::MAX_WIDTH;
+            }
+
             $height = (int)$width / $targetRatio;
         }
         else
         {
             $height = $image->height;
             $width = $image->width;
+
+            if ($height > Content::MAX_HEIGHT)
+            {
+                $height = Content::MAX_HEIGHT;
+                $width = (int)$height * $targetRatio;
+            }
         }
 
         $image->adaptive($width, $height);

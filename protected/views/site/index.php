@@ -20,11 +20,11 @@
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/app.js"></script>
     <script src="<?php echo Yii::app()->params['siteBase']; ?>/js/account_toggle.js"></script>
 
-    <script type="text/javascript"
-            src="//www.google.com/jsapi?key=AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4"></script>
+    <script type="text/javascript" src="//www.google.com/jsapi?key=<?php echo Yii::app()->params['googleAPIKey']; ?>"></script>
     <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/gmap3.min.js"></script>
     <script type="text/javascript" src="<?php echo Yii::app()->params['siteBase']; ?>/js/jquery.cookie.js"></script>
-    <script src="//www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+    <script src="//ssl.geoplugin.net/javascript.gp?k=<?php echo Yii::app()->params['geoPluginKey']; ?>"
+            type="text/javascript"></script>
 
     <title>Kowop | Neighborhood activites &amp; classes for kids and families</title>
 </head>

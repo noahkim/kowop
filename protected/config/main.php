@@ -139,6 +139,8 @@ return array(
         'AmazonSESKey'    => 'AKIAI7UQ3ZYLL5SGGILA',
         'AmazonSESSecret' => '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',
         'AmazonSESRegion' => 'us-east-1',
+        'googleAPIKey' => 'AIzaSyDP2gShdAHGCHYoJLjoxhLjZITx5XKHYa4',
+        'geoPluginKey' => 'zWNuHBVmyorzI9fa',
         'PaymentDelay' => '3',
         'HostPercentage' => 0.9,
     ),
